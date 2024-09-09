@@ -1,21 +1,15 @@
-package com.thigas.quack.adapter.persistence.entity;
-
-import java.util.Set;
+package com.thigas.quack.infrastructure.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "lesson")
-public class LessonModel {
+@Table(name = "roadmap")
+public class RoadmapModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,17 +21,8 @@ public class LessonModel {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = true)
-    private String language;
-
     @Column(name = "image_path", nullable = false)
     private String imagePath;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "lesson_roadmap", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
-    private Set<RoadmapModel> roadmaps;
-
-    // Getters e Setters
 
     /**
      * @return Long return the id
@@ -82,20 +67,6 @@ public class LessonModel {
     }
 
     /**
-     * @return String return the language
-     */
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     * @param language the language to set
-     */
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    /**
      * @return String return the imagePath
      */
     public String getImagePath() {
@@ -107,20 +78,6 @@ public class LessonModel {
      */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
-    }
-
-    /**
-     * @return Set<RoadmapModel> return the roadmaps
-     */
-    public Set<RoadmapModel> getRoadmaps() {
-        return roadmaps;
-    }
-
-    /**
-     * @param roadmaps the roadmaps to set
-     */
-    public void setRoadmaps(Set<RoadmapModel> roadmaps) {
-        this.roadmaps = roadmaps;
     }
 
 }

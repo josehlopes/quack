@@ -1,4 +1,4 @@
-package com.thigas.quack.adapter.persistence.entity;
+package com.thigas.quack.infrastructure.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
