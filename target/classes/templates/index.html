@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quack()</title>
+  <!-- Incluindo o CSS do CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+  <!-- Tema opcional do CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css">
+</head>
+
+<body>
+  <h1>Insira o Código Python</h1>
+  <h3>Atividade:</h3>
+  <h4>Faça um programa que receba dois valores inteiros e mostre a soma de todos os números ímpares existentes entre
+    eles.</h4>
+  <p>Depois, clique em enviar para que possamos corrigir a atividade</p>
+
+  <!-- Área para o editor de código -->
+  <form action="/submit" method="post">
+    <textarea id="code" name="code"></textarea><br>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- Incluindo o JS do CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+  <!-- Incluindo o modo Python -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+
+  <script>
+    // Inicializando o CodeMirror no textarea
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+      lineNumbers: true,
+      mode: "python",
+      theme: "dracula", // opcional, pode escolher outro tema
+      indentUnit: 4,
+      indentWithTabs: true,
+      tabMode: "indent"
+    });
+  </script>
+</body>
+
+</html>
