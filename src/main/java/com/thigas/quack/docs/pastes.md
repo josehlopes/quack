@@ -18,7 +18,7 @@ src
 │ │ ├── persistence
 │ │ ├── configuration
 │ │ └── messaging
-│ ├── interface
+│ ├── presentation
 │ │ ├── controller
 │ │ ├── dto
 │ │ └── mapper
