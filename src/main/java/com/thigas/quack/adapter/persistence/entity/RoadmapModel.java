@@ -1,11 +1,11 @@
 package com.thigas.quack.adapter.persistence.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roadmap")
@@ -15,13 +15,13 @@ public class RoadmapModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(name = "image_path", nullable = false)
     private String imagePath;
 
     /**

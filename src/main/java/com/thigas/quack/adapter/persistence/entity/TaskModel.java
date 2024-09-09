@@ -2,8 +2,10 @@ package com.thigas.quack.adapter.persistence.entity;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,14 +22,14 @@ public class TaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "task_lesson", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String imagePath;
 
     // Getters e Setters

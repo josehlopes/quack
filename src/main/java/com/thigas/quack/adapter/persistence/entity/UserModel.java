@@ -11,38 +11,38 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "app_user")
 public class UserModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String phone;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String email;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(name = "born_at", columnDefinition = "varchar(255)", nullable = false)
+    @Column(name = "born_at", columnDefinition = "DATE", nullable = false)
     private LocalDate bornAt;
 
-    @Column(name = "points", columnDefinition = "varchar(255)", nullable = false)
+    @Column(name = "points", nullable = false)
     private Double points;
 
-    @Column(name = "register_at", columnDefinition = "varchar(255)", nullable = false)
+    @Column(name = "register_at", columnDefinition = "DATE", nullable = false)
     private LocalDateTime registerAt;
 
-    @Column(name = "image_path", columnDefinition = "varchar(255)", nullable = true)
+    @Column(name = "image_path", nullable = true)
     private String imagePath;
 
     // Getters e Setters

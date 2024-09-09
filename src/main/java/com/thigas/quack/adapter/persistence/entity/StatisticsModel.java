@@ -1,17 +1,17 @@
 
 package com.thigas.quack.adapter.persistence.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "statistics")
+@Table(name = "statistic")
 public class StatisticsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class StatisticsModel {
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
 
-    @Column(name = "offensive_days")
-    private Long offensiveDays;
+    @Column(name = "streak_days")
+    private Long streakDays;
 
-    @Column(name = "best_offensive")
-    private Long bestOffensive;
+    @Column(name = "best_streak ")
+    private Long bestStreak;
 
     @Column(name = "level")
     private Long userLevel;
@@ -68,31 +68,31 @@ public class StatisticsModel {
     }
 
     /**
-     * @return Long return the offensiveDays
+     * @return Long return the streakDays
      */
-    public Long getOffensiveDays() {
-        return offensiveDays;
+    public Long getstreakDays() {
+        return streakDays;
     }
 
     /**
-     * @param offensiveDays the offensiveDays to set
+     * @param streakDays the streakDays to set
      */
-    public void setOffensiveDays(Long offensiveDays) {
-        this.offensiveDays = offensiveDays;
+    public void setstreakDays(Long streakDays) {
+        this.streakDays = streakDays;
     }
 
     /**
-     * @return Long return the bestOffensive
+     * @return Long return the bestStreak
      */
-    public Long getBestOffensive() {
-        return bestOffensive;
+    public Long getbestStreak() {
+        return bestStreak;
     }
 
     /**
-     * @param bestOffensive the bestOffensive to set
+     * @param bestStreak the bestStreak to set
      */
-    public void setBestOffensive(Long bestOffensive) {
-        this.bestOffensive = bestOffensive;
+    public void setbestStreak(Long bestStreak) {
+        this.bestStreak = bestStreak;
     }
 
     /**
