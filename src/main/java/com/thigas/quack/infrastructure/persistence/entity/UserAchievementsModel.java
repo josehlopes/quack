@@ -1,16 +1,17 @@
-package com.thigas.quack.adapter.persistence.entity;
+package com.thigas.quack.infrastructure.persistence.entity;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "roadmap_user")
-public class RoadmapUserModel {
+@Table(name = "user_achievement")
+
+public class UserAchievementsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +22,8 @@ public class RoadmapUserModel {
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "roadmap_id", nullable = false)
-    private RoadmapModel roadmap;
+    @JoinColumn(name = "achievement_id", nullable = false)
+    private AchievementModel achievement;
 
     /**
      * @return Long return the id
@@ -53,17 +54,17 @@ public class RoadmapUserModel {
     }
 
     /**
-     * @return RoadmapModel return the roadmap
+     * @return AchievementModel return the achievement
      */
-    public RoadmapModel getRoadmap() {
-        return roadmap;
+    public AchievementModel getAchievement() {
+        return achievement;
     }
 
     /**
-     * @param roadmap the roadmap to set
+     * @param achievement the achievement to set
      */
-    public void setRoadmap(RoadmapModel roadmap) {
-        this.roadmap = roadmap;
+    public void setAchievement(AchievementModel achievement) {
+        this.achievement = achievement;
     }
 
 }

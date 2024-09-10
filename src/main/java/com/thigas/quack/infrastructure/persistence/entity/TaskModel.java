@@ -1,9 +1,13 @@
-package com.thigas.quack.adapter.persistence.entity;
+package com.thigas.quack.infrastructure.persistence.entity;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -11,18 +15,22 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "step")
-public class StepModel {
+@Table(name = "task")
+public class TaskModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "task_lesson", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
+    private String imagePath;
 
     // Getters e Setters
 
@@ -42,18 +50,19 @@ public class StepModel {
         this.lessons = lessons;
     }
 
-    /**
-     * @return String return the description
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * @param description the description to set
-     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

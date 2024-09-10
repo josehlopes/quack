@@ -1,66 +1,84 @@
-package com.thigas.quack.adapter.persistence.entity;
 
-import java.util.Set;
+package com.thigas.quack.infrastructure.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "task")
-public class TaskModel {
+@Table(name = "achievement")
+public class AchievementModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "task_lesson", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
-    private Set<LessonModel> lessons;
+    @Column(nullable = false)
+    private String name;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @Column(columnDefinition = "varchar(255)", nullable = false)
+    @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    // Getters e Setters
-
+    /**
+     * @return Long return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Set<LessonModel> getLessons() {
-        return lessons;
+    /**
+     * @return String return the name
+     */
+    public String getName() {
+        return name;
     }
 
-    public void setLessons(Set<LessonModel> lessons) {
-        this.lessons = lessons;
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
+    /**
+     * @return String return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @param description the description to set
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * @return String return the imagePath
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * @param imagePath the imagePath to set
+     */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
 }
