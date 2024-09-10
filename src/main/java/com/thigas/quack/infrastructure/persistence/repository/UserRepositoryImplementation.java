@@ -1,18 +1,19 @@
 package com.thigas.quack.infrastructure.persistence.repository;
 
-import com.thigas.quack.domain.entity.User;
-import com.thigas.quack.domain.repository.IUserRepository;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.thigas.quack.domain.entity.User;
+import com.thigas.quack.domain.repository.IUserRepository;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
 @Repository
 public class UserRepositoryImplementation implements IUserRepository {
 
     @Autowired
-    private UserModelRepository userModelRepository;
+    private IUserModelRepository userModelRepository;
 
     @Override
     public User save(User user) {
@@ -35,8 +36,7 @@ public class UserRepositoryImplementation implements IUserRepository {
         userModelRepository.deleteById(id);
     }
 
-
-    //Transforma os dados do banco em objeto
+    // Transforma os dados do banco em objeto
     private User mapToUser(UserModel userModel) {
         User user = new User();
         user.setId(userModel.getId());
