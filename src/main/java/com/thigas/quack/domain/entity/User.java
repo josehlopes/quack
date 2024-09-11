@@ -1,6 +1,3 @@
-//INDEPENDENTE DO JPA
-
-
 package com.thigas.quack.domain.entity;
 
 import java.time.LocalDate;

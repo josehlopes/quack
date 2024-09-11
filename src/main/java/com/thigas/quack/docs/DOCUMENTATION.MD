@@ -21,7 +21,7 @@ Este documento explica o funcionamento dos principais componentes do código, co
   - [Controladores (presentation/controller)](#controladores-presentationcontroller)
     - [Descrição](#descrição-4)
     - [Exemplo: UserController](#exemplo-usercontroller)
-    - [FALTA DTO/MAPPERS](#falta-dtomappers)
+    - [DTO/MAPPERS](#dtomappers)
   - [Persistência (infrastructure/persistence)](#persistência-infrastructurepersistence)
     - [Descrição](#descrição-5)
     - [Exemplo: UserModelRepository](#exemplo-usermodelrepository)
@@ -183,7 +183,7 @@ public class UserController {
 }
 ```
 
-### FALTA DTO/MAPPERS
+### DTO/MAPPERS
 
 DTOs e Mapeadores (presentation/dto e presentation/mapper)
 Descrição
