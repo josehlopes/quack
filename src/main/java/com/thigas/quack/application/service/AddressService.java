@@ -1,10 +1,14 @@
 package com.thigas.quack.application.service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.thigas.quack.adapter.dto.AddressDTO;
+import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.entity.Address;
 import com.thigas.quack.domain.repository.IAddressRepository;
 
@@ -14,25 +18,42 @@ public class AddressService {
     @Autowired
     private IAddressRepository addressRepository;
 
-    public Address createAddress(Address address) {
-        return addressRepository.save(address);
+    // Instância do mapper
+    private final AddressMapper addressMapper = AddressMapper.INSTANCE;
+
+    public AddressDTO createAddress(AddressDTO addressDTO) {
+        // Converter DTO para entidade
+        Address address = addressMapper.toAddress(addressDTO);
+        // Salvar a entidade
+        Address toSaveAddress = addressRepository.save(address);
+        // Converter entidade de volta para DTO
+        return addressMapper.toAddressDTO(toSaveAddress);
     }
 
-    public Optional<Address> getAddressById(Long id) {
-        return addressRepository.findById(id);
+    public Optional<AddressDTO> getAddressById(Long id) {
+        // Buscar a entidade do repositório
+        Optional<Address> address = addressRepository.findById(id);
+        // Converter a entidade para DTO
+        return address.map(addressMapper::toAddressDTO);
     }
 
-    public Iterable<Address> getAllAddresss() {
-        return addressRepository.findAll();
+    public Iterable<AddressDTO> getAllAddresses() {
+        // Buscar todas as entidades
+        Iterable<Address> addresses = addressRepository.findAll();
+        // Converter todas as entidades para DTOs
+        return StreamSupport.stream(addresses.spliterator(), false)
+                .map(addressMapper::toAddressDTO)
+                .collect(Collectors.toList());
     }
 
-    // Atualiza um Address
-    public void updateAddress(Address address) {
+    public void updateAddress(AddressDTO addressDTO) {
+        // Converter DTO para entidade
+        Address address = addressMapper.toAddress(addressDTO);
+        // Atualizar a entidade
         addressRepository.save(address);
     }
 
     public void deleteAddress(Long id) {
         addressRepository.deleteById(id);
     }
-
 }
