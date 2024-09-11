@@ -34,7 +34,7 @@ public class AddressRepositoryImplementation implements IAddressRepository {
 
     @Override
     public Iterable<Address> findAll() {
-        return StreamSupport.stream(addressModelRepository.findAll().spliterator(), false)
+        return addressModelRepository.findAll().stream()
                 .map(addressMapper::toAddress)
                 .collect(Collectors.toList());
     }
