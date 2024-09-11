@@ -18,7 +18,6 @@ public class RoadmapService {
         return roadmapRepository.save(roadmap);
     }
 
-    // Busca um Roadmap por ID
     public Optional<Roadmap> getRoadmapById(Long id) {
         return roadmapRepository.findById(id);
     }
@@ -27,7 +26,6 @@ public class RoadmapService {
         return roadmapRepository.findAll();
     }
 
-    // Atualiza um Roadmap
     public void updateRoadmap(Roadmap roadmap) {
         roadmapRepository.save(roadmap);
     }
