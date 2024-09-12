@@ -20,17 +20,17 @@ public class RoadmapUserController {
     private RoadmapUserService roadmapUserService;
 
     @PostMapping
-    public RoadmapUser createRoadmapUser(@RequestBody RoadmapUser roadmapUser) {
-        return roadmapUserService.createRoadmapUser(roadmapUser);
+    public RoadmapUser create(@RequestBody RoadmapUser roadmapUser) {
+        return roadmapUserService.create(roadmapUser);
     }
 
     @GetMapping
-    public Iterable<RoadmapUser> getAllRoadmapUsers() {
-        return roadmapUserService.getAllRoadmapUsers();
+    public Iterable<RoadmapUser> getAll() {
+        return roadmapUserService.getAll();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteRoadmapUser(@PathVariable Long id) {
-        roadmapUserService.deleteRoadmapUser(id);
+    public void delete(@PathVariable Long id) {
+        roadmapUserService.delete(id);
     }
 }

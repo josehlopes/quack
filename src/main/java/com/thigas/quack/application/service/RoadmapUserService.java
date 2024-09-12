@@ -12,15 +12,15 @@ public class RoadmapUserService {
     @Autowired
     private IRoadmapUserRepository roadmapUserRepository;
 
-    public RoadmapUser createRoadmapUser(RoadmapUser roadmapUser) {
+    public RoadmapUser create(RoadmapUser roadmapUser) {
         return roadmapUserRepository.save(roadmapUser);
     }
 
-    public Iterable<RoadmapUser> getAllRoadmapUsers() {
+    public Iterable<RoadmapUser> getAll() {
         return roadmapUserRepository.findAll();
     }
 
-    public void deleteRoadmapUser(Long id) {
+    public void delete(Long id) {
         roadmapUserRepository.deleteById(id);
     }
 }

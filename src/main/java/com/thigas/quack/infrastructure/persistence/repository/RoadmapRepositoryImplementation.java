@@ -1,10 +1,12 @@
 package com.thigas.quack.infrastructure.persistence.repository;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.thigas.quack.adapter.mapper.RoadmapMapper;
 import com.thigas.quack.domain.entity.Roadmap;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
@@ -14,45 +16,29 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
 
     @Autowired
     private IRoadmapModelRepository roadmapModelRepository;
+    private final RoadmapMapper userMapper = RoadmapMapper.INSTANCE;
 
     @Override
     public Roadmap save(Roadmap roadmap) {
-        RoadmapModel roadmapModel = mapToRoadmapModel(roadmap);
-        return mapToRoadmap(roadmapModelRepository.save(roadmapModel));
+        RoadmapModel roadmapModel = userMapper.toRoadmapModel(roadmap);
+        RoadmapModel savedRoadmapModel = roadmapModelRepository.save(roadmapModel);
+        return userMapper.toRoadmap(savedRoadmapModel);
     }
 
     @Override
     public Optional<Roadmap> findById(Long id) {
-        return roadmapModelRepository.findById(id).map(this::mapToRoadmap);
+        return roadmapModelRepository.findById(id).map(userMapper::toRoadmap);
     }
 
     @Override
     public Iterable<Roadmap> findAll() {
-        return roadmapModelRepository.findAll().stream().map(this::mapToRoadmap).toList();
+        return roadmapModelRepository.findAll().stream()
+                .map(userMapper::toRoadmap)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(Long id) {
         roadmapModelRepository.deleteById(id);
-    }
-
-    // Transforma os dados do banco em objeto Roadmap
-    private Roadmap mapToRoadmap(RoadmapModel roadmapModel) {
-        Roadmap roadmap = new Roadmap();
-        roadmap.setId(roadmapModel.getId());
-        roadmap.setTitle(roadmapModel.getTitle());
-        roadmap.setDescription(roadmapModel.getDescription());
-        roadmap.setImagePath(roadmapModel.getImagePath());
-        return roadmap;
-    }
-
-    // Transforma o objeto Roadmap em RoadmapModel para o banco de dados
-    private RoadmapModel mapToRoadmapModel(Roadmap roadmap) {
-        RoadmapModel roadmapModel = new RoadmapModel();
-        roadmapModel.setId(roadmap.getId());
-        roadmapModel.setTitle(roadmap.getTitle());
-        roadmapModel.setDescription(roadmap.getDescription());
-        roadmapModel.setImagePath(roadmap.getImagePath());
-        return roadmapModel;
     }
 }
