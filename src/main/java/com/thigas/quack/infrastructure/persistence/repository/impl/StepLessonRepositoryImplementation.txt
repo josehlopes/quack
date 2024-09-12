@@ -1,0 +1,46 @@
+package com.thigas.quack.infrastructure.persistence.repository.impl;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.thigas.quack.adapter.mapper.StepLessonMapper;
+import com.thigas.quack.domain.entity.StepLessonEntity;
+import com.thigas.quack.domain.repository.IStepLessonRepository;
+import com.thigas.quack.infrastructure.persistence.entity.StepLessonModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.IStepLessonModelRepository;
+
+@Repository
+public class StepLessonRepositoryImplementation implements IStepLessonRepository {
+
+    @Autowired
+    private IStepLessonModelRepository stepLessonModelRepository;
+    private final StepLessonMapper stepLessonMapper = StepLessonMapper.INSTANCE;
+
+    @Override
+    public StepLessonEntity save(StepLessonEntity stepLesson) {
+        StepLessonModel stepLessonModel = stepLessonMapper.toStepLessonModel(stepLesson);
+        StepLessonModel savedStepLessonModel = stepLessonModelRepository.save(stepLessonModel);
+        return stepLessonMapper.toStepLessonEntity(savedStepLessonModel);
+    }
+
+    @Override
+    public Optional<StepLessonEntity> findById(int id) {
+        return stepLessonModelRepository.findById(id).map(stepLessonMapper::toStepLessonEntity);
+    }
+
+    @Override
+    public Iterable<StepLessonEntity> findAll() {
+        return stepLessonModelRepository.findAll().stream()
+                .map(stepLessonMapper::toStepLessonEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteById(int id) {
+        stepLessonModelRepository.deleteById(id);
+    }
+}
+

@@ -1,0 +1,8 @@
+package com.thigas.quack.infrastructure.persistence.repository.jpa;
+
+
+import com.thigas.quack.infrastructure.persistence.entity.StepLessonModel;
+import org.springframework.data.repository.Repository;
+
+public interface IStepLessonModelRepository extends Repository<StepLessonModel, Integer> {
+}
