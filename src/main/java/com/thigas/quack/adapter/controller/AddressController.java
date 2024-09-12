@@ -23,28 +23,28 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
-        AddressDTO createdAddress = addressService.createAddress(addressDTO);
+    public ResponseEntity<AddressDTO> create(@RequestBody AddressDTO addressDTO) {
+        AddressDTO createdAddress = addressService.create(addressDTO);
         return new ResponseEntity<>(createdAddress, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressDTO> getAddressById(@PathVariable Long id) {
-        return addressService.getAddressById(id)
+    public ResponseEntity<AddressDTO> getById(@PathVariable Long id) {
+        return addressService.getById(id)
                 .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<AddressDTO>> getAllAddresses() {
-        Iterable<AddressDTO> addresses = addressService.getAllAddresses();
+    public ResponseEntity<Iterable<AddressDTO>> getAll() {
+        Iterable<AddressDTO> addresses = addressService.getAll();
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
         if (id.equals(addressDTO.getId())) {
-            addressService.updateAddress(addressDTO);
+            addressService.update(addressDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,8 +52,8 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
-        addressService.deleteAddress(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        addressService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

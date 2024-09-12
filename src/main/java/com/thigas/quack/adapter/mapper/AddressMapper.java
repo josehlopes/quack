@@ -26,7 +26,6 @@ public interface AddressMapper {
     @Mapping(source = "user.id", target = "user.id")
     Address toAddress(AddressModel addressModel);
 
-    // Métodos de mapeamento personalizados
     default UserModel map(Long userId) {
         if (userId == null) {
             return null;

@@ -21,7 +21,7 @@ public class AddressService {
     // Instância do mapper
     private final AddressMapper addressMapper = AddressMapper.INSTANCE;
 
-    public AddressDTO createAddress(AddressDTO addressDTO) {
+    public AddressDTO create(AddressDTO addressDTO) {
         // Converter DTO para entidade
         Address address = addressMapper.toAddress(addressDTO);
         // Salvar a entidade
@@ -30,14 +30,14 @@ public class AddressService {
         return addressMapper.toAddressDTO(toSaveAddress);
     }
 
-    public Optional<AddressDTO> getAddressById(Long id) {
+    public Optional<AddressDTO> getById(Long id) {
         // Buscar a entidade do repositório
         Optional<Address> address = addressRepository.findById(id);
         // Converter a entidade para DTO
         return address.map(addressMapper::toAddressDTO);
     }
 
-    public Iterable<AddressDTO> getAllAddresses() {
+    public Iterable<AddressDTO> getAll() {
         // Buscar todas as entidades
         Iterable<Address> addresses = addressRepository.findAll();
         // Converter todas as entidades para DTOs
@@ -46,14 +46,14 @@ public class AddressService {
                 .collect(Collectors.toList());
     }
 
-    public void updateAddress(AddressDTO addressDTO) {
+    public void update(AddressDTO addressDTO) {
         // Converter DTO para entidade
         Address address = addressMapper.toAddress(addressDTO);
         // Atualizar a entidade
         addressRepository.save(address);
     }
 
-    public void deleteAddress(Long id) {
+    public void delete(Long id) {
         addressRepository.deleteById(id);
     }
 }
