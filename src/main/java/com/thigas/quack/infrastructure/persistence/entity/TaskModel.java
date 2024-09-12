@@ -20,7 +20,7 @@ public class TaskModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "task_lesson", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
@@ -34,11 +34,11 @@ public class TaskModel {
 
     // Getters e Setters
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

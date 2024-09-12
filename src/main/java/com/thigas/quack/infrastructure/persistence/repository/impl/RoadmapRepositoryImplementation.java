@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.repository;
+package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +10,7 @@ import com.thigas.quack.adapter.mapper.RoadmapMapper;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.IRoadmapModelRepository;
 
 @Repository
 public class RoadmapRepositoryImplementation implements IRoadmapRepository {
@@ -26,7 +27,7 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     }
 
     @Override
-    public Optional<RoadmapEntity> findById(Long id) {
+    public Optional<RoadmapEntity> findById(int id) {
         return roadmapModelRepository.findById(id).map(userMapper::toRoadmap);
     }
 
@@ -38,7 +39,7 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         roadmapModelRepository.deleteById(id);
     }
 }

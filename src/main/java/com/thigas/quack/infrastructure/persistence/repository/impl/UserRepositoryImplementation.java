@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.repository;
+package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +10,7 @@ import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserModelRepository;
 
 @Repository
 public class UserRepositoryImplementation implements IUserRepository {
@@ -26,7 +27,7 @@ public class UserRepositoryImplementation implements IUserRepository {
     }
 
     @Override
-    public Optional<UserEntity> findById(Long id) {
+    public Optional<UserEntity> findById(int id) {
         return userModelRepository.findById(id).map(userMapper::toUser);
     }
 
@@ -38,7 +39,7 @@ public class UserRepositoryImplementation implements IUserRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         userModelRepository.deleteById(id);
     }
 }

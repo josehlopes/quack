@@ -11,11 +11,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "task_user")
-public class TaskUserModel {
+public class UserTaskModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -32,16 +32,16 @@ public class TaskUserModel {
     private String imagePath;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

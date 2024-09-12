@@ -1,18 +1,18 @@
 package com.thigas.quack.domain.entity;
 
-public class RoadmapUserEntity {
+public class UserRoadmapEntity {
 
-    private Long id;
+    private int id;
     private UserEntity user;
     private RoadmapEntity roadmap;
 
     // Getters e Setters
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

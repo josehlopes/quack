@@ -28,7 +28,7 @@ public class LessonService {
         return lessonMapper.toLessonDTO(savedLesson);
     }
 
-    public Optional<LessonDTO> getLessonById(Long id) {
+    public Optional<LessonDTO> getLessonById(int id) {
         // Buscar a entidade do repositório
         Optional<LessonEntity> lesson = lessonRepository.findById(id);
         // Converter a entidade para DTO
@@ -51,7 +51,7 @@ public class LessonService {
         lessonRepository.save(lesson);
     }
 
-    public void deleteLesson(Long id) {
+    public void deleteLesson(int id) {
         lessonRepository.deleteById(id);
     }
 }

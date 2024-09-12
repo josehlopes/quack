@@ -29,7 +29,7 @@ public class RoadmapController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoadmapDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<RoadmapDTO> getById(@PathVariable Integer id) {
         return roadmapService.getById(id)
                 .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,7 +42,7 @@ public class RoadmapController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody RoadmapDTO addressDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody RoadmapDTO addressDTO) {
         if (id.equals(addressDTO.getId())) {
             roadmapService.update(addressDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class RoadmapController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         roadmapService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

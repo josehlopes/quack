@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class StepModel {
 
     @Id
-    private Long id;
+    private int id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
@@ -28,11 +28,11 @@ public class StepModel {
 
     // Getters e Setters
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

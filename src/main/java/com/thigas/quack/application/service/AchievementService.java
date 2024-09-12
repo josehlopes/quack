@@ -14,6 +14,7 @@ import com.thigas.quack.domain.repository.IAchievementRepository;
 
 @Service
 public class AchievementService {
+
     @Autowired
     private IAchievementRepository achievementRepository;
 
@@ -28,7 +29,7 @@ public class AchievementService {
         return achievementMapper.toAchievementDTO(toSaveAchievement);
     }
 
-    public Optional<AchievementDTO> getById(Long id) {
+    public Optional<AchievementDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<AchievementEntity> achievement = achievementRepository.findById(id);
         // Converter a entidade para DTO
@@ -51,7 +52,7 @@ public class AchievementService {
         achievementRepository.save(achievement);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         achievementRepository.deleteById(id);
     }
 }

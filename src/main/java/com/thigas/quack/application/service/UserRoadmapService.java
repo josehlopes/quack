@@ -8,36 +8,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thigas.quack.adapter.dto.RoadmapUserDTO;
-import com.thigas.quack.adapter.mapper.RoadmapUserMapper;
-import com.thigas.quack.domain.entity.RoadmapUserEntity;
-import com.thigas.quack.domain.repository.IRoadmapUserRepository;
+import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
+import com.thigas.quack.domain.entity.UserRoadmapEntity;
+import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 
 @Service
-public class RoadmapUserService {
+public class UserRoadmapService {
 
     @Autowired
-    private IRoadmapUserRepository roadmapUserRepository;
-    private final RoadmapUserMapper roadmapUserMapper = RoadmapUserMapper.INSTANCE;
+    private IUserRoadmapRepository roadmapUserRepository;
+    private final UserRoadmapMapper roadmapUserMapper = UserRoadmapMapper.INSTANCE;
 
     public RoadmapUserDTO create(RoadmapUserDTO roadmapUserDTO) {
         // Converter DTO para entidade
-        RoadmapUserEntity roadmapUser = roadmapUserMapper.toRoadmapUserEntity(roadmapUserDTO);
+        UserRoadmapEntity roadmapUser = roadmapUserMapper.toRoadmapUserEntity(roadmapUserDTO);
         // Salvar a entidade
-        RoadmapUserEntity toSaveRoadmapUser = roadmapUserRepository.save(roadmapUser);
+        UserRoadmapEntity toSaveRoadmapUser = roadmapUserRepository.save(roadmapUser);
         // Converter entidade de volta para DTO
         return roadmapUserMapper.toRoadmapUserDTO(toSaveRoadmapUser);
     }
 
-    public Optional<RoadmapUserDTO> getById(Long id) {
+    public Optional<RoadmapUserDTO> getById(int id) {
         // Buscar a entidade do repositório
-        Optional<RoadmapUserEntity> roadmapUser = roadmapUserRepository.findById(id);
+        Optional<UserRoadmapEntity> roadmapUser = roadmapUserRepository.findById(id);
         // Converter a entidade para DTO
         return roadmapUser.map(roadmapUserMapper::toRoadmapUserDTO);
     }
 
     public Iterable<RoadmapUserDTO> getAll() {
         // Buscar todas as entidades
-        Iterable<RoadmapUserEntity> roadmapUsers = roadmapUserRepository.findAll();
+        Iterable<UserRoadmapEntity> roadmapUsers = roadmapUserRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(roadmapUsers.spliterator(), false)
                 .map(roadmapUserMapper::toRoadmapUserDTO)
@@ -46,12 +46,12 @@ public class RoadmapUserService {
 
     public void update(RoadmapUserDTO roadmapUserDTO) {
         // Converter DTO para entidade
-        RoadmapUserEntity roadmapUser = roadmapUserMapper.toRoadmapUserEntity(roadmapUserDTO);
+        UserRoadmapEntity roadmapUser = roadmapUserMapper.toRoadmapUserEntity(roadmapUserDTO);
         // Atualizar a entidade
         roadmapUserRepository.save(roadmapUser);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         roadmapUserRepository.deleteById(id);
     }
 }

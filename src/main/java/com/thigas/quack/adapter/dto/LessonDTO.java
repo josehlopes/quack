@@ -4,26 +4,26 @@ import java.util.Set;
 
 public class LessonDTO {
 
-    private Long id;
+    private int id;
     private String title;
     private String description;
     private String language;
     private String imagePath;
-    private Set<Long> roadmapIds; // IDs das roadmaps associadas à lesson
+    private Set<Integer> roadmapIds; // IDs das roadmaps associadas à lesson
 
     // Getters e Setters
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -84,16 +84,16 @@ public class LessonDTO {
     }
 
     /**
-     * @return Set<Long> return the roadmapIds
+     * @return Set<Integer> return the roadmapIds
      */
-    public Set<Long> getRoadmapIds() {
+    public Set<Integer> getRoadmapIds() {
         return roadmapIds;
     }
 
     /**
      * @param roadmapIds the roadmapIds to set
      */
-    public void setRoadmapIds(Set<Long> roadmapIds) {
+    public void setRoadmapIds(Set<Integer> roadmapIds) {
         this.roadmapIds = roadmapIds;
     }
 }

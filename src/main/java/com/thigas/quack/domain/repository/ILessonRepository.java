@@ -7,9 +7,9 @@ import com.thigas.quack.domain.entity.LessonEntity;
 public interface ILessonRepository {
     LessonEntity save(LessonEntity lesson);
 
-    Optional<LessonEntity> findById(Long id);
+    Optional<LessonEntity> findById(int id);
 
     Iterable<LessonEntity> findAll();
 
-    void deleteById(Long id);
+    void deleteById(int id);
 }

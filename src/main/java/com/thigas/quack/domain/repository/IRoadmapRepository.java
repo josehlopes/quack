@@ -8,9 +8,9 @@ public interface IRoadmapRepository {
 
     RoadmapEntity save(RoadmapEntity roadmap);
 
-    Optional<RoadmapEntity> findById(Long id);
+    Optional<RoadmapEntity> findById(int id);
 
     Iterable<RoadmapEntity> findAll();
 
-    void deleteById(Long id);
+    void deleteById(int id);
 }

@@ -7,9 +7,9 @@ import com.thigas.quack.domain.entity.AddressEntity;
 public interface IAddressRepository {
     AddressEntity save(AddressEntity address);
 
-    Optional<AddressEntity> findById(Long id);
+    Optional<AddressEntity> findById(int id);
 
     Iterable<AddressEntity> findAll();
 
-    void deleteById(Long id);
+    void deleteById(int id);
 }

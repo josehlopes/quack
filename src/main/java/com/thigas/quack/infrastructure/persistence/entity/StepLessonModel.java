@@ -19,7 +19,7 @@ public class StepLessonModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "step_lesson_mapping", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
@@ -28,16 +28,16 @@ public class StepLessonModel {
     // Getters e Setters
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

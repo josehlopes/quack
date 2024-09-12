@@ -29,7 +29,7 @@ public class AddressController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<AddressDTO> getById(@PathVariable Integer id) {
         return addressService.getById(id)
                 .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,7 +42,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AddressDTO addressDTO) {
         if (id.equals(addressDTO.getId())) {
             addressService.update(addressDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         addressService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

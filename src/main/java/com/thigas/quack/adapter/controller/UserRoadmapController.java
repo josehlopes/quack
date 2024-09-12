@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thigas.quack.adapter.dto.RoadmapUserDTO;
-import com.thigas.quack.application.service.RoadmapUserService;
+import com.thigas.quack.application.service.UserRoadmapService;
 
 @RestController
 @RequestMapping("/roadmap-users")
-public class RoadmapUserController {
+public class UserRoadmapController {
 
     @Autowired
-    private RoadmapUserService roadmapUserService;
+    private UserRoadmapService roadmapUserService;
 
     @PostMapping
     public ResponseEntity<RoadmapUserDTO> create(@RequestBody RoadmapUserDTO roadmapUserDTO) {
@@ -29,7 +29,7 @@ public class RoadmapUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoadmapUserDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<RoadmapUserDTO> getById(@PathVariable Integer id) {
         return roadmapUserService.getById(id)
                 .map(roadmapUserDTO -> new ResponseEntity<>(roadmapUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,7 +42,7 @@ public class RoadmapUserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody RoadmapUserDTO roadmapUserDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody RoadmapUserDTO roadmapUserDTO) {
         if (id.equals(roadmapUserDTO.getId())) {
             roadmapUserService.update(roadmapUserDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class RoadmapUserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         roadmapUserService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

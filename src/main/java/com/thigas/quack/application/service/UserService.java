@@ -29,7 +29,7 @@ public class UserService {
         return userMapper.toUserDTO(toSaveUser);
     }
 
-    public Optional<UserDTO> getById(Long id) {
+    public Optional<UserDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<UserEntity> user = userRepository.findById(id);
         // Converter a entidade para DTO
@@ -52,7 +52,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         userRepository.deleteById(id);
     }
 }

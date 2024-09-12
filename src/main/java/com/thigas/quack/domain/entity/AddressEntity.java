@@ -2,7 +2,7 @@ package com.thigas.quack.domain.entity;
 
 public class AddressEntity {
 
-    private Long id;
+    private int id;
     private UserEntity user;
     private String street;
     private String city;
@@ -12,16 +12,16 @@ public class AddressEntity {
     private String number;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -123,7 +123,7 @@ public class AddressEntity {
         this.number = number;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return user != null ? user.getId() : null;
     }
 

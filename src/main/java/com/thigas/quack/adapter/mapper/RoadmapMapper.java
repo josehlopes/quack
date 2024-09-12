@@ -42,7 +42,7 @@ public interface RoadmapMapper {
     RoadmapEntity toRoadmap(RoadmapModel roadmapModel);
 
     // Métodos de mapeamento customizados para IDs
-    default RoadmapModel map(Long userId) {
+    default RoadmapModel map(Integer userId) {
         if (userId == null) {
             return null;
         }
@@ -51,7 +51,7 @@ public interface RoadmapMapper {
         return userModel;
     }
 
-    default Long map(RoadmapModel userModel) {
+    default Integer map(RoadmapModel userModel) {
         if (userModel == null) {
             return null;
         }

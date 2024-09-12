@@ -54,7 +54,7 @@ public interface LessonMapper {
     @Mapping(source = "roadmapIds", target = "roadmaps")
     LessonEntity toLesson(LessonDTO lessonDTO);
 
-    default Set<RoadmapModel> mapIdsToRoadmapModels(Set<Long> roadmapIds) {
+    default Set<RoadmapModel> mapIdsToRoadmapModels(Set<Integer> roadmapIds) {
         if (roadmapIds == null) {
             return null;
         }
@@ -67,8 +67,8 @@ public interface LessonMapper {
                 .collect(Collectors.toSet());
     }
 
-    // Mapeia Set<Roadmap> para Set<Long> (caso necessário)
-    default Set<Long> mapRoadmapsToIds(Set<RoadmapEntity> roadmaps) {
+    // Mapeia Set<Roadmap> para Set<Integer> (caso necessário)
+    default Set<Integer> mapRoadmapsToIds(Set<RoadmapEntity> roadmaps) {
         if (roadmaps == null) {
             return null;
         }
@@ -77,8 +77,8 @@ public interface LessonMapper {
                 .collect(Collectors.toSet());
     }
 
-    // Mapeia Set<Long> para Set<Roadmap> (caso necessário)
-    default Set<RoadmapEntity> mapIdsToRoadmaps(Set<Long> roadmapIds) {
+    // Mapeia Set<Integer> para Set<Roadmap> (caso necessário)
+    default Set<RoadmapEntity> mapIdsToRoadmaps(Set<Integer> roadmapIds) {
         if (roadmapIds == null) {
             return null;
         }

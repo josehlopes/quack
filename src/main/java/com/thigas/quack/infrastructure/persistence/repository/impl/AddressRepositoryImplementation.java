@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.repository;
+package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +10,7 @@ import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.IAddressModelRepository;
 
 @Repository
 public class AddressRepositoryImplementation implements IAddressRepository {
@@ -27,7 +28,7 @@ public class AddressRepositoryImplementation implements IAddressRepository {
     }
 
     @Override
-    public Optional<AddressEntity> findById(Long id) {
+    public Optional<AddressEntity> findById(int id) {
         return addressModelRepository.findById(id).map(addressMapper::toAddress);
     }
 
@@ -39,7 +40,7 @@ public class AddressRepositoryImplementation implements IAddressRepository {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         addressModelRepository.deleteById(id);
     }
 }

@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roadmap_user")
-public class RoadmapUserModel {
+public class UserRoadmapModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

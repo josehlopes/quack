@@ -29,7 +29,7 @@ public class AchievementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AchievementDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<AchievementDTO> getById(@PathVariable Integer id) {
         return achievementService.getById(id)
                 .map(achievementDTO -> new ResponseEntity<>(achievementDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,7 +42,7 @@ public class AchievementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody AchievementDTO achievementDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AchievementDTO achievementDTO) {
         if (id.equals(achievementDTO.getId())) {
             achievementService.update(achievementDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class AchievementController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         achievementService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

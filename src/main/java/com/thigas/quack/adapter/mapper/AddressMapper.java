@@ -26,7 +26,7 @@ public interface AddressMapper {
     @Mapping(source = "user.id", target = "user.id")
     AddressEntity toAddress(AddressModel addressModel);
 
-    default UserModel map(Long userId) {
+    default UserModel map(Integer userId) {
         if (userId == null) {
             return null;
         }
@@ -35,7 +35,7 @@ public interface AddressMapper {
         return userModel;
     }
 
-    default Long map(UserModel userModel) {
+    default Integer map(UserModel userModel) {
         if (userModel == null) {
             return null;
         }

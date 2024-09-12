@@ -4,18 +4,18 @@ import java.util.Set;
 
 public class LessonEntity {
 
-    private Long id;
+    private int id;
     private String title;
     private String description;
     private String language;
     private String imagePath;
     private Set<RoadmapEntity> roadmaps;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

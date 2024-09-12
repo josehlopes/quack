@@ -5,18 +5,18 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.thigas.quack.adapter.dto.RoadmapUserDTO;
-import com.thigas.quack.domain.entity.RoadmapUserEntity;
+import com.thigas.quack.domain.entity.UserRoadmapEntity;
 
 @Mapper(uses = { UserMapper.class, RoadmapMapper.class })
-public interface RoadmapUserMapper {
+public interface UserRoadmapMapper {
 
-    RoadmapUserMapper INSTANCE = Mappers.getMapper(RoadmapUserMapper.class);
+    UserRoadmapMapper INSTANCE = Mappers.getMapper(UserRoadmapMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    RoadmapUserDTO toRoadmapUserDTO(RoadmapUserEntity roadmapUserEntity);
+    RoadmapUserDTO toRoadmapUserDTO(UserRoadmapEntity roadmapUserEntity);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    RoadmapUserEntity toRoadmapUserEntity(RoadmapUserDTO roadmapUserDTO);
+    UserRoadmapEntity toRoadmapUserEntity(RoadmapUserDTO roadmapUserDTO);
 }

@@ -14,7 +14,7 @@ public class AchievementModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
     private String name;
@@ -26,16 +26,16 @@ public class AchievementModel {
     private String imagePath;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

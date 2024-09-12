@@ -2,49 +2,49 @@ package com.thigas.quack.adapter.dto;
 
 public class RoadmapUserDTO {
 
-    private Long id;
-    private Long userId;
-    private Long roadmapId;
+    private int id;
+    private int userId;
+    private int roadmapId;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * @return Long return the userId
+     * @return int return the userId
      */
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
     /**
      * @param userId the userId to set
      */
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
     /**
-     * @return Long return the roadmapId
+     * @return int return the roadmapId
      */
-    public Long getRoadmapId() {
+    public int getRoadmapId() {
         return roadmapId;
     }
 
     /**
      * @param roadmapId the roadmapId to set
      */
-    public void setRoadmapId(Long roadmapId) {
+    public void setRoadmapId(int roadmapId) {
         this.roadmapId = roadmapId;
     }
 

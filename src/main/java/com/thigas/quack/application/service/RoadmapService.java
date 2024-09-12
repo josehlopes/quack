@@ -30,7 +30,7 @@ public class RoadmapService {
         return roadmapMapper.toRoadmapDTO(toSaveRoadmap);
     }
 
-    public Optional<RoadmapDTO> getById(Long id) {
+    public Optional<RoadmapDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<RoadmapEntity> roadmap = roadmapRepository.findById(id);
         // Converter a entidade para DTO
@@ -53,7 +53,7 @@ public class RoadmapService {
         roadmapRepository.save(roadmap);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         roadmapRepository.deleteById(id);
     }
 }

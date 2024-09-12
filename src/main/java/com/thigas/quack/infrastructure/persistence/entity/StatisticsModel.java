@@ -15,41 +15,41 @@ import jakarta.persistence.Table;
 public class StatisticsModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserModel user;
 
     @Column(name = "streak_days")
-    private Long streakDays;
+    private int streakDays;
 
     @Column(name = "best_streak ")
-    private Long bestStreak;
+    private int bestStreak;
 
     @Column(name = "level")
-    private Long userLevel;
+    private int userLevel;
 
     @Column(name = "experience")
     private Double userExperience;
 
     @Column(name = "challenges_completed")
-    private Long challengesCompleted;
+    private int challengesCompleted;
 
     @Column(name = "lessons_completed")
-    private Long lessonsCompleted;
+    private int lessonsCompleted;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -68,44 +68,44 @@ public class StatisticsModel {
     }
 
     /**
-     * @return Long return the streakDays
+     * @return int return the streakDays
      */
-    public Long getstreakDays() {
+    public int getstreakDays() {
         return streakDays;
     }
 
     /**
      * @param streakDays the streakDays to set
      */
-    public void setstreakDays(Long streakDays) {
+    public void setstreakDays(int streakDays) {
         this.streakDays = streakDays;
     }
 
     /**
-     * @return Long return the bestStreak
+     * @return int return the bestStreak
      */
-    public Long getbestStreak() {
+    public int getbestStreak() {
         return bestStreak;
     }
 
     /**
      * @param bestStreak the bestStreak to set
      */
-    public void setbestStreak(Long bestStreak) {
+    public void setbestStreak(int bestStreak) {
         this.bestStreak = bestStreak;
     }
 
     /**
-     * @return Long return the userLevel
+     * @return int return the userLevel
      */
-    public Long getUserLevel() {
+    public int getUserLevel() {
         return userLevel;
     }
 
     /**
      * @param userLevel the userLevel to set
      */
-    public void setUserLevel(Long userLevel) {
+    public void setUserLevel(int userLevel) {
         this.userLevel = userLevel;
     }
 
@@ -124,30 +124,30 @@ public class StatisticsModel {
     }
 
     /**
-     * @return Long return the challengesCompleted
+     * @return int return the challengesCompleted
      */
-    public Long getChallengesCompleted() {
+    public int getChallengesCompleted() {
         return challengesCompleted;
     }
 
     /**
      * @param challengesCompleted the challengesCompleted to set
      */
-    public void setChallengesCompleted(Long challengesCompleted) {
+    public void setChallengesCompleted(int challengesCompleted) {
         this.challengesCompleted = challengesCompleted;
     }
 
     /**
-     * @return Long return the lessonsCompleted
+     * @return int return the lessonsCompleted
      */
-    public Long getLessonsCompleted() {
+    public int getLessonsCompleted() {
         return lessonsCompleted;
     }
 
     /**
      * @param lessonsCompleted the lessonsCompleted to set
      */
-    public void setLessonsCompleted(Long lessonsCompleted) {
+    public void setLessonsCompleted(int lessonsCompleted) {
         this.lessonsCompleted = lessonsCompleted;
     }
 

@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-12T14:00:43-0300",
+    date = "2024-09-12T17:15:28-0300",
     comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -32,14 +32,14 @@ public class UserMapperImpl implements UserMapper {
         if ( user.getRegisterAt() != null ) {
             userDTO.setRegisterAt( dateTimeFormatter_yyyy_MM_dd_T_HH_mm_ss_11798231098.format( user.getRegisterAt() ) );
         }
-        userDTO.setCpf( user.getCpf() );
-        userDTO.setEmail( user.getEmail() );
         userDTO.setId( user.getId() );
-        userDTO.setImagePath( user.getImagePath() );
         userDTO.setName( user.getName() );
-        userDTO.setPassword( user.getPassword() );
         userDTO.setPhone( user.getPhone() );
+        userDTO.setEmail( user.getEmail() );
+        userDTO.setPassword( user.getPassword() );
+        userDTO.setCpf( user.getCpf() );
         userDTO.setPoints( user.getPoints() );
+        userDTO.setImagePath( user.getImagePath() );
 
         return userDTO;
     }
@@ -58,14 +58,14 @@ public class UserMapperImpl implements UserMapper {
         if ( userDTO.getRegisterAt() != null ) {
             userEntity.setRegisterAt( LocalDateTime.parse( userDTO.getRegisterAt(), dateTimeFormatter_yyyy_MM_dd_T_HH_mm_ss_11798231098 ) );
         }
-        userEntity.setCpf( userDTO.getCpf() );
-        userEntity.setEmail( userDTO.getEmail() );
         userEntity.setId( userDTO.getId() );
-        userEntity.setImagePath( userDTO.getImagePath() );
         userEntity.setName( userDTO.getName() );
-        userEntity.setPassword( userDTO.getPassword() );
         userEntity.setPhone( userDTO.getPhone() );
+        userEntity.setEmail( userDTO.getEmail() );
+        userEntity.setPassword( userDTO.getPassword() );
+        userEntity.setCpf( userDTO.getCpf() );
         userEntity.setPoints( userDTO.getPoints() );
+        userEntity.setImagePath( userDTO.getImagePath() );
 
         return userEntity;
     }

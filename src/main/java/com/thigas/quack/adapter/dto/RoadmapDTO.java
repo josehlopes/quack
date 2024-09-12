@@ -2,22 +2,22 @@ package com.thigas.quack.adapter.dto;
 
 public class RoadmapDTO {
 
-    private Long id;
+    private int id;
     private String title;
     private String description;
     private String imagePath;
 
     /**
-     * @return Long return the id
+     * @return int return the id
      */
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

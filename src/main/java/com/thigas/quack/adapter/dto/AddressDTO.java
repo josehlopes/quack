@@ -2,8 +2,8 @@ package com.thigas.quack.adapter.dto;
 
 public class AddressDTO {
 
-    private Long id;
-    private Long userId;
+    private int id;
+    private int userId;
     private String street;
     private String city;
     private String state;
@@ -12,19 +12,19 @@ public class AddressDTO {
     private String number;
 
     // Getters e Setters
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

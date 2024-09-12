@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getById(@PathVariable Integer id) {
         return userService.getById(id)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
         if (id.equals(userDTO.getId())) {
             userService.update(userDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

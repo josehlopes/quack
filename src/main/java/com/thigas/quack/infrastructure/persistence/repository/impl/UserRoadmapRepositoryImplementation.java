@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.repository;
+package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -7,45 +7,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.RoadmapUserEntity;
+import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.repository.IRoadmapUserRepository;
+import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapUserModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserRoadmapModelRepository;
 
 @Repository
-public class RoadmapUserRepositoryImplementation implements IRoadmapUserRepository {
+public class UserRoadmapRepositoryImplementation implements IUserRoadmapRepository {
 
     @Autowired
-    private IRoadmapUserModelRepository roadmapUserModelRepository;
+    private IUserRoadmapModelRepository roadmapUserModelRepository;
 
     @Override
-    public RoadmapUserEntity save(RoadmapUserEntity roadmapUser) {
-        RoadmapUserModel roadmapUserModel = mapToRoadmapUserModel(roadmapUser);
+    public UserRoadmapEntity save(UserRoadmapEntity roadmapUser) {
+        UserRoadmapModel roadmapUserModel = mapToRoadmapUserModel(roadmapUser);
         return mapToRoadmapUser(roadmapUserModelRepository.save(roadmapUserModel));
     }
 
     @Override
-    public Optional<RoadmapUserEntity> findById(Long id) {
+    public Optional<UserRoadmapEntity> findById(int id) {
         return roadmapUserModelRepository.findById(id).map(this::mapToRoadmapUser);
     }
 
     @Override
-    public Iterable<RoadmapUserEntity> findAll() {
+    public Iterable<UserRoadmapEntity> findAll() {
         return StreamSupport.stream(roadmapUserModelRepository.findAll().spliterator(), false)
                 .map(this::mapToRoadmapUser)
                 .toList();
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         roadmapUserModelRepository.deleteById(id);
     }
 
     // Transforma RoadmapUserModel em RoadmapUser
-    private RoadmapUserEntity mapToRoadmapUser(RoadmapUserModel roadmapUserModel) {
-        RoadmapUserEntity roadmapUser = new RoadmapUserEntity();
+    private UserRoadmapEntity mapToRoadmapUser(UserRoadmapModel roadmapUserModel) {
+        UserRoadmapEntity roadmapUser = new UserRoadmapEntity();
         roadmapUser.setId(roadmapUserModel.getId());
         roadmapUser.setUser(mapToUser(roadmapUserModel.getUser()));
         roadmapUser.setRoadmap(mapToRoadmap(roadmapUserModel.getRoadmap()));
@@ -53,8 +54,8 @@ public class RoadmapUserRepositoryImplementation implements IRoadmapUserReposito
     }
 
     // Transforma RoadmapUser em RoadmapUserModel
-    private RoadmapUserModel mapToRoadmapUserModel(RoadmapUserEntity roadmapUser) {
-        RoadmapUserModel roadmapUserModel = new RoadmapUserModel();
+    private UserRoadmapModel mapToRoadmapUserModel(UserRoadmapEntity roadmapUser) {
+        UserRoadmapModel roadmapUserModel = new UserRoadmapModel();
         roadmapUserModel.setId(roadmapUser.getId());
         roadmapUserModel.setUser(mapToUserModel(roadmapUser.getUser()));
         roadmapUserModel.setRoadmap(mapToRoadmapModel(roadmapUser.getRoadmap()));

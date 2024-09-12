@@ -30,7 +30,7 @@ public class AddressService {
         return addressMapper.toAddressDTO(toSaveAddress);
     }
 
-    public Optional<AddressDTO> getById(Long id) {
+    public Optional<AddressDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<AddressEntity> address = addressRepository.findById(id);
         // Converter a entidade para DTO
@@ -53,7 +53,7 @@ public class AddressService {
         addressRepository.save(address);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         addressRepository.deleteById(id);
     }
 }

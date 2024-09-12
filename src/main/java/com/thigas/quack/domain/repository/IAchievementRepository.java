@@ -8,9 +8,9 @@ public interface IAchievementRepository {
 
     AchievementEntity save(AchievementEntity achievement);
 
-    Optional<AchievementEntity> findById(Long id);
+    Optional<AchievementEntity> findById(int id);
 
     Iterable<AchievementEntity> findAll();
 
-    void deleteById(Long id);
+    void deleteById(int id);
 }

@@ -2,16 +2,16 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.RoadmapUserDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
+import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-12T13:08:34-0300",
+    date = "2024-09-12T17:15:27-0300",
     comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
-public class RoadmapUserMapperImpl implements RoadmapUserMapper {
+public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
     @Override
     public RoadmapUserDTO toRoadmapUserDTO(UserRoadmapEntity roadmapUserEntity) {
@@ -34,27 +34,27 @@ public class RoadmapUserMapperImpl implements RoadmapUserMapper {
             return null;
         }
 
-        UserRoadmapEntity roadmapUserEntity = new UserRoadmapEntity();
+        UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
 
-        roadmapUserEntity.setUser( roadmapUserDTOToUserEntity( roadmapUserDTO ) );
-        roadmapUserEntity.setRoadmap( roadmapUserDTOToRoadmapEntity( roadmapUserDTO ) );
-        roadmapUserEntity.setId( roadmapUserDTO.getId() );
+        userRoadmapEntity.setUser( roadmapUserDTOToUserEntity( roadmapUserDTO ) );
+        userRoadmapEntity.setRoadmap( roadmapUserDTOToRoadmapEntity( roadmapUserDTO ) );
+        userRoadmapEntity.setId( roadmapUserDTO.getId() );
 
-        return roadmapUserEntity;
+        return userRoadmapEntity;
     }
 
-    private Long roadmapUserEntityUserId(UserRoadmapEntity roadmapUserEntity) {
-        UserEntity user = roadmapUserEntity.getUser();
+    private int roadmapUserEntityUserId(UserRoadmapEntity userRoadmapEntity) {
+        UserEntity user = userRoadmapEntity.getUser();
         if ( user == null ) {
-            return null;
+            return 0;
         }
         return user.getId();
     }
 
-    private Long roadmapUserEntityRoadmapId(UserRoadmapEntity roadmapUserEntity) {
-        RoadmapEntity roadmap = roadmapUserEntity.getRoadmap();
+    private int roadmapUserEntityRoadmapId(UserRoadmapEntity userRoadmapEntity) {
+        RoadmapEntity roadmap = userRoadmapEntity.getRoadmap();
         if ( roadmap == null ) {
-            return null;
+            return 0;
         }
         return roadmap.getId();
     }

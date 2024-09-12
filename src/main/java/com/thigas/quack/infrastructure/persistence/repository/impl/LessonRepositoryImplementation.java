@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.repository;
+package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +11,7 @@ import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import com.thigas.quack.infrastructure.persistence.repository.jpa.ILessonModelRepository;
 
 @Repository
 public class LessonRepositoryImplementation implements ILessonRepository {
@@ -20,7 +21,7 @@ public class LessonRepositoryImplementation implements ILessonRepository {
 
     private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
-    public Optional<LessonEntity> findById(Long id) {
+    public Optional<LessonEntity> findById(int id) {
         Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
         return lessonModelOptional.map(lessonMapper::toLesson);
     }
@@ -32,7 +33,7 @@ public class LessonRepositoryImplementation implements ILessonRepository {
                 .collect(Collectors.toList());
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         lessonModelRepository.deleteById(id);
     }
 
