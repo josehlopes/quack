@@ -2,12 +2,11 @@ package com.thigas.quack.infrastructure.persistence.repository;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import com.thigas.quack.adapter.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.entity.User;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;

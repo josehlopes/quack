@@ -2,7 +2,6 @@ package com.thigas.quack.infrastructure.persistence.repository;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
