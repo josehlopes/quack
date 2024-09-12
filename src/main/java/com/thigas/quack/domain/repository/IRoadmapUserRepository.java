@@ -2,15 +2,15 @@ package com.thigas.quack.domain.repository;
 
 import java.util.Optional;
 
-import com.thigas.quack.domain.entity.RoadmapUser;
+import com.thigas.quack.domain.entity.RoadmapUserEntity;
 
 public interface IRoadmapUserRepository {
 
-    RoadmapUser save(RoadmapUser roadmapUser);
+    RoadmapUserEntity save(RoadmapUserEntity roadmapUser);
 
-    Optional<RoadmapUser> findById(Long id);
+    Optional<RoadmapUserEntity> findById(Long id);
 
-    Iterable<RoadmapUser> findAll();
+    Iterable<RoadmapUserEntity> findAll();
 
     void deleteById(Long id);
 }
