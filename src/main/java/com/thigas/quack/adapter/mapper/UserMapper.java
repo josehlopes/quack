@@ -34,7 +34,7 @@ public interface UserMapper {
     @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
-    UserModel toUserModel(UserEntity user);
+    UserModel toUserModel(UserEntity userEntity);
 
     // Mapeia UserModel para User
     @Mapping(source = "id", target = "id")
