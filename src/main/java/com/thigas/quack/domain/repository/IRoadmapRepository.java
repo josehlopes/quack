@@ -1,15 +1,16 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.Roadmap;
 import java.util.Optional;
+
+import com.thigas.quack.domain.entity.RoadmapEntity;
 
 public interface IRoadmapRepository {
 
-    Roadmap save(Roadmap roadmap);
+    RoadmapEntity save(RoadmapEntity roadmap);
 
-    Optional<Roadmap> findById(Long id);
+    Optional<RoadmapEntity> findById(Long id);
 
-    Iterable<Roadmap> findAll();
+    Iterable<RoadmapEntity> findAll();
 
     void deleteById(Long id);
 }

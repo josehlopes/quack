@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.thigas.quack.adapter.mapper.LessonMapper;
-import com.thigas.quack.domain.entity.Lesson;
+import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 
@@ -20,12 +20,12 @@ public class LessonRepositoryImplementation implements ILessonRepository {
 
     private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
-    public Optional<Lesson> findById(Long id) {
+    public Optional<LessonEntity> findById(Long id) {
         Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
         return lessonModelOptional.map(lessonMapper::toLesson);
     }
 
-    public List<Lesson> findAll() {
+    public List<LessonEntity> findAll() {
         List<LessonModel> lessonModels = lessonModelRepository.findAll();
         return lessonModels.stream()
                 .map(lessonMapper::toLesson)
@@ -36,7 +36,7 @@ public class LessonRepositoryImplementation implements ILessonRepository {
         lessonModelRepository.deleteById(id);
     }
 
-    public Lesson save(Lesson lesson) {
+    public LessonEntity save(LessonEntity lesson) {
         LessonModel lessonModel = lessonMapper.toLessonModel(lesson);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
         return lessonMapper.toLesson(savedLessonModel);

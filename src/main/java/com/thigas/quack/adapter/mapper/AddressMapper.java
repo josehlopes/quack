@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.domain.entity.Address;
+import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
@@ -15,16 +15,16 @@ public interface AddressMapper {
     AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
-    AddressDTO toAddressDTO(Address address);
+    AddressDTO toAddressDTO(AddressEntity address);
 
     @Mapping(source = "userId", target = "user.id")
-    Address toAddress(AddressDTO addressDTO);
+    AddressEntity toAddress(AddressDTO addressDTO);
 
     @Mapping(source = "user.id", target = "user.id")
-    AddressModel toAddressModel(Address address);
+    AddressModel toAddressModel(AddressEntity address);
 
     @Mapping(source = "user.id", target = "user.id")
-    Address toAddress(AddressModel addressModel);
+    AddressEntity toAddress(AddressModel addressModel);
 
     default UserModel map(Long userId) {
         if (userId == null) {

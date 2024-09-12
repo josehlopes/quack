@@ -3,7 +3,7 @@ package com.thigas.quack.domain.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class User {
+public class UserEntity {
 
     private Long id;
     private String name;

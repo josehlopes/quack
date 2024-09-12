@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
-import com.thigas.quack.domain.entity.Lesson;
-import com.thigas.quack.domain.entity.Roadmap;
+import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 
@@ -25,7 +25,7 @@ public interface LessonMapper {
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmaps")
-    LessonModel toLessonModel(Lesson lesson);
+    LessonModel toLessonModel(LessonEntity lesson);
 
     // Mapeia LessonModel para Lesson
     @Mapping(source = "id", target = "id")
@@ -34,7 +34,7 @@ public interface LessonMapper {
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmaps")
-    Lesson toLesson(LessonModel lessonModel);
+    LessonEntity toLesson(LessonModel lessonModel);
 
     // Mapeia Lesson para LessonDTO
     @Mapping(source = "id", target = "id")
@@ -43,7 +43,7 @@ public interface LessonMapper {
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmapIds")
-    LessonDTO toLessonDTO(Lesson lesson);
+    LessonDTO toLessonDTO(LessonEntity lesson);
 
     // Mapeia LessonDTO para Lesson
     @Mapping(source = "id", target = "id")
@@ -52,7 +52,7 @@ public interface LessonMapper {
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmapIds", target = "roadmaps")
-    Lesson toLesson(LessonDTO lessonDTO);
+    LessonEntity toLesson(LessonDTO lessonDTO);
 
     default Set<RoadmapModel> mapIdsToRoadmapModels(Set<Long> roadmapIds) {
         if (roadmapIds == null) {
@@ -68,23 +68,23 @@ public interface LessonMapper {
     }
 
     // Mapeia Set<Roadmap> para Set<Long> (caso necessário)
-    default Set<Long> mapRoadmapsToIds(Set<Roadmap> roadmaps) {
+    default Set<Long> mapRoadmapsToIds(Set<RoadmapEntity> roadmaps) {
         if (roadmaps == null) {
             return null;
         }
         return roadmaps.stream()
-                .map(Roadmap::getId)
+                .map(RoadmapEntity::getId)
                 .collect(Collectors.toSet());
     }
 
     // Mapeia Set<Long> para Set<Roadmap> (caso necessário)
-    default Set<Roadmap> mapIdsToRoadmaps(Set<Long> roadmapIds) {
+    default Set<RoadmapEntity> mapIdsToRoadmaps(Set<Long> roadmapIds) {
         if (roadmapIds == null) {
             return null;
         }
         return roadmapIds.stream()
                 .map(id -> {
-                    Roadmap roadmap = new Roadmap();
+                    RoadmapEntity roadmap = new RoadmapEntity();
                     roadmap.setId(id);
                     return roadmap;
                 })

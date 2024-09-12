@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.domain.entity.Address;
+import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 
@@ -20,19 +20,19 @@ public class AddressRepositoryImplementation implements IAddressRepository {
     private final AddressMapper addressMapper = AddressMapper.INSTANCE;
 
     @Override
-    public Address save(Address address) {
+    public AddressEntity save(AddressEntity address) {
         AddressModel addressModel = addressMapper.toAddressModel(address);
         AddressModel savedAddressModel = addressModelRepository.save(addressModel);
         return addressMapper.toAddress(savedAddressModel);
     }
 
     @Override
-    public Optional<Address> findById(Long id) {
+    public Optional<AddressEntity> findById(Long id) {
         return addressModelRepository.findById(id).map(addressMapper::toAddress);
     }
 
     @Override
-    public Iterable<Address> findAll() {
+    public Iterable<AddressEntity> findAll() {
         return addressModelRepository.findAll().stream()
                 .map(addressMapper::toAddress)
                 .collect(Collectors.toList());

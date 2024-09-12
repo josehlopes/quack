@@ -1,61 +1,66 @@
 package com.thigas.quack.domain.entity;
 
-import java.util.Set;
-
-public class Lesson {
+public class RoadmapEntity {
 
     private Long id;
     private String title;
     private String description;
-    private String language;
     private String imagePath;
-    private Set<Roadmap> roadmaps;
 
+    /**
+     * @return Long return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * @return String return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * @param title the title to set
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * @return String return the description
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @param description the description to set
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
+    /**
+     * @return String return the imagePath
+     */
     public String getImagePath() {
         return imagePath;
     }
 
+    /**
+     * @param imagePath the imagePath to set
+     */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    public Set<Roadmap> getRoadmaps() {
-        return roadmaps;
-    }
-
-    public void setRoadmaps(Set<Roadmap> roadmaps) {
-        this.roadmaps = roadmaps;
-    }
 }

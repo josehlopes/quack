@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.domain.entity.Address;
+import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 
 @Service
@@ -23,23 +23,23 @@ public class AddressService {
 
     public AddressDTO create(AddressDTO addressDTO) {
         // Converter DTO para entidade
-        Address address = addressMapper.toAddress(addressDTO);
+        AddressEntity address = addressMapper.toAddress(addressDTO);
         // Salvar a entidade
-        Address toSaveAddress = addressRepository.save(address);
+        AddressEntity toSaveAddress = addressRepository.save(address);
         // Converter entidade de volta para DTO
         return addressMapper.toAddressDTO(toSaveAddress);
     }
 
     public Optional<AddressDTO> getById(Long id) {
         // Buscar a entidade do repositório
-        Optional<Address> address = addressRepository.findById(id);
+        Optional<AddressEntity> address = addressRepository.findById(id);
         // Converter a entidade para DTO
         return address.map(addressMapper::toAddressDTO);
     }
 
     public Iterable<AddressDTO> getAll() {
         // Buscar todas as entidades
-        Iterable<Address> addresses = addressRepository.findAll();
+        Iterable<AddressEntity> addresses = addressRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(addresses.spliterator(), false)
                 .map(addressMapper::toAddressDTO)
@@ -48,7 +48,7 @@ public class AddressService {
 
     public void update(AddressDTO addressDTO) {
         // Converter DTO para entidade
-        Address address = addressMapper.toAddress(addressDTO);
+        AddressEntity address = addressMapper.toAddress(addressDTO);
         // Atualizar a entidade
         addressRepository.save(address);
     }

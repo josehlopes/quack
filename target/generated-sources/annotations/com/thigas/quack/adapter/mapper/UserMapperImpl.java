@@ -1,7 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.domain.entity.User;
+import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-12T10:40:41-0300",
+    date = "2024-09-12T12:25:45-0300",
     comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -19,7 +19,7 @@ public class UserMapperImpl implements UserMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_T_HH_mm_ss_11798231098 = DateTimeFormatter.ofPattern( "yyyy-MM-dd'T'HH:mm:ss" );
 
     @Override
-    public UserDTO toUserDTO(User user) {
+    public UserDTO toUserDTO(UserEntity user) {
         if ( user == null ) {
             return null;
         }
@@ -45,33 +45,33 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User toUser(UserDTO userDTO) {
+    public UserEntity toUser(UserDTO userDTO) {
         if ( userDTO == null ) {
             return null;
         }
 
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
         if ( userDTO.getBornAt() != null ) {
-            user.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
+            userEntity.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
         if ( userDTO.getRegisterAt() != null ) {
-            user.setRegisterAt( LocalDateTime.parse( userDTO.getRegisterAt(), dateTimeFormatter_yyyy_MM_dd_T_HH_mm_ss_11798231098 ) );
+            userEntity.setRegisterAt( LocalDateTime.parse( userDTO.getRegisterAt(), dateTimeFormatter_yyyy_MM_dd_T_HH_mm_ss_11798231098 ) );
         }
-        user.setId( userDTO.getId() );
-        user.setName( userDTO.getName() );
-        user.setPhone( userDTO.getPhone() );
-        user.setEmail( userDTO.getEmail() );
-        user.setPassword( userDTO.getPassword() );
-        user.setCpf( userDTO.getCpf() );
-        user.setPoints( userDTO.getPoints() );
-        user.setImagePath( userDTO.getImagePath() );
+        userEntity.setId( userDTO.getId() );
+        userEntity.setName( userDTO.getName() );
+        userEntity.setPhone( userDTO.getPhone() );
+        userEntity.setEmail( userDTO.getEmail() );
+        userEntity.setPassword( userDTO.getPassword() );
+        userEntity.setCpf( userDTO.getCpf() );
+        userEntity.setPoints( userDTO.getPoints() );
+        userEntity.setImagePath( userDTO.getImagePath() );
 
-        return user;
+        return userEntity;
     }
 
     @Override
-    public UserModel toUserModel(User user) {
+    public UserModel toUserModel(UserEntity user) {
         if ( user == null ) {
             return null;
         }
@@ -93,24 +93,24 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public User toUser(UserModel userModel) {
+    public UserEntity toUser(UserModel userModel) {
         if ( userModel == null ) {
             return null;
         }
 
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
-        user.setId( userModel.getId() );
-        user.setName( userModel.getName() );
-        user.setPhone( userModel.getPhone() );
-        user.setEmail( userModel.getEmail() );
-        user.setPassword( userModel.getPassword() );
-        user.setCpf( userModel.getCpf() );
-        user.setBornAt( userModel.getBornAt() );
-        user.setPoints( userModel.getPoints() );
-        user.setRegisterAt( userModel.getRegisterAt() );
-        user.setImagePath( userModel.getImagePath() );
+        userEntity.setId( userModel.getId() );
+        userEntity.setName( userModel.getName() );
+        userEntity.setPhone( userModel.getPhone() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setBornAt( userModel.getBornAt() );
+        userEntity.setPoints( userModel.getPoints() );
+        userEntity.setRegisterAt( userModel.getRegisterAt() );
+        userEntity.setImagePath( userModel.getImagePath() );
 
-        return user;
+        return userEntity;
     }
 }

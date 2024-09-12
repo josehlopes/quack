@@ -2,14 +2,14 @@ package com.thigas.quack.domain.repository;
 
 import java.util.Optional;
 
-import com.thigas.quack.domain.entity.Address;
+import com.thigas.quack.domain.entity.AddressEntity;
 
 public interface IAddressRepository {
-    Address save(Address address);
+    AddressEntity save(AddressEntity address);
 
-    Optional<Address> findById(Long id);
+    Optional<AddressEntity> findById(Long id);
 
-    Iterable<Address> findAll();
+    Iterable<AddressEntity> findAll();
 
     void deleteById(Long id);
 }

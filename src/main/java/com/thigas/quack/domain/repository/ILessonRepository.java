@@ -1,15 +1,15 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.Lesson;
-
 import java.util.Optional;
 
+import com.thigas.quack.domain.entity.LessonEntity;
+
 public interface ILessonRepository {
-    Lesson save(Lesson lesson);
+    LessonEntity save(LessonEntity lesson);
 
-    Optional<Lesson> findById(Long id);
+    Optional<LessonEntity> findById(Long id);
 
-    Iterable<Lesson> findAll();
+    Iterable<LessonEntity> findAll();
 
     void deleteById(Long id);
 }

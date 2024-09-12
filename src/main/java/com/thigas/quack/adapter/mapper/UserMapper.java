@@ -1,11 +1,12 @@
 package com.thigas.quack.adapter.mapper;
 
-import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.domain.entity.User;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.domain.entity.UserEntity;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
 @Mapper
 public interface UserMapper {
@@ -15,12 +16,12 @@ public interface UserMapper {
     // Mapeia User para UserDTO
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserDTO toUserDTO(User user);
+    UserDTO toUserDTO(UserEntity user);
 
     // Mapeia UserDTO para User
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    User toUser(UserDTO userDTO);
+    UserEntity toUser(UserDTO userDTO);
 
     // Mapeia User para UserModel
     @Mapping(source = "id", target = "id")
@@ -33,7 +34,7 @@ public interface UserMapper {
     @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
-    UserModel toUserModel(User user);
+    UserModel toUserModel(UserEntity user);
 
     // Mapeia UserModel para User
     @Mapping(source = "id", target = "id")
@@ -46,5 +47,5 @@ public interface UserMapper {
     @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
-    User toUser(UserModel userModel);
+    UserEntity toUser(UserModel userModel);
 }

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.thigas.quack.adapter.mapper.RoadmapMapper;
-import com.thigas.quack.domain.entity.Roadmap;
+import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 
@@ -19,19 +19,19 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     private final RoadmapMapper userMapper = RoadmapMapper.INSTANCE;
 
     @Override
-    public Roadmap save(Roadmap roadmap) {
+    public RoadmapEntity save(RoadmapEntity roadmap) {
         RoadmapModel roadmapModel = userMapper.toRoadmapModel(roadmap);
         RoadmapModel savedRoadmapModel = roadmapModelRepository.save(roadmapModel);
         return userMapper.toRoadmap(savedRoadmapModel);
     }
 
     @Override
-    public Optional<Roadmap> findById(Long id) {
+    public Optional<RoadmapEntity> findById(Long id) {
         return roadmapModelRepository.findById(id).map(userMapper::toRoadmap);
     }
 
     @Override
-    public Iterable<Roadmap> findAll() {
+    public Iterable<RoadmapEntity> findAll() {
         return roadmapModelRepository.findAll().stream()
                 .map(userMapper::toRoadmap)
                 .collect(Collectors.toList());

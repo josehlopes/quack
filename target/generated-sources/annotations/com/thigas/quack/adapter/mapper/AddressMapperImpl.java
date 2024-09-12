@@ -1,21 +1,21 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.domain.entity.Address;
-import com.thigas.quack.domain.entity.User;
+import com.thigas.quack.domain.entity.AddressEntity;
+import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-12T10:55:40-0300",
+    date = "2024-09-12T13:10:37-0300",
     comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class AddressMapperImpl implements AddressMapper {
 
     @Override
-    public AddressDTO toAddressDTO(Address address) {
+    public AddressDTO toAddressDTO(AddressEntity address) {
         if ( address == null ) {
             return null;
         }
@@ -35,34 +35,34 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public Address toAddress(AddressDTO addressDTO) {
+    public AddressEntity toAddress(AddressDTO addressDTO) {
         if ( addressDTO == null ) {
             return null;
         }
 
-        Address address = new Address();
+        AddressEntity addressEntity = new AddressEntity();
 
-        address.setUser( addressDTOToUser( addressDTO ) );
-        address.setCity( addressDTO.getCity() );
-        address.setCountry( addressDTO.getCountry() );
-        address.setId( addressDTO.getId() );
-        address.setNumber( addressDTO.getNumber() );
-        address.setState( addressDTO.getState() );
-        address.setStreet( addressDTO.getStreet() );
-        address.setZipCode( addressDTO.getZipCode() );
+        addressEntity.setUser( addressDTOToUserEntity( addressDTO ) );
+        addressEntity.setCity( addressDTO.getCity() );
+        addressEntity.setCountry( addressDTO.getCountry() );
+        addressEntity.setId( addressDTO.getId() );
+        addressEntity.setNumber( addressDTO.getNumber() );
+        addressEntity.setState( addressDTO.getState() );
+        addressEntity.setStreet( addressDTO.getStreet() );
+        addressEntity.setZipCode( addressDTO.getZipCode() );
 
-        return address;
+        return addressEntity;
     }
 
     @Override
-    public AddressModel toAddressModel(Address address) {
+    public AddressModel toAddressModel(AddressEntity address) {
         if ( address == null ) {
             return null;
         }
 
         AddressModel addressModel = new AddressModel();
 
-        addressModel.setUser( userToUserModel( address.getUser() ) );
+        addressModel.setUser( userEntityToUserModel( address.getUser() ) );
         addressModel.setCity( address.getCity() );
         addressModel.setCountry( address.getCountry() );
         addressModel.setId( address.getId() );
@@ -75,84 +75,84 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public Address toAddress(AddressModel addressModel) {
+    public AddressEntity toAddress(AddressModel addressModel) {
         if ( addressModel == null ) {
             return null;
         }
 
-        Address address = new Address();
+        AddressEntity addressEntity = new AddressEntity();
 
-        address.setUser( userModelToUser( addressModel.getUser() ) );
-        address.setCity( addressModel.getCity() );
-        address.setCountry( addressModel.getCountry() );
-        address.setId( addressModel.getId() );
-        address.setNumber( addressModel.getNumber() );
-        address.setState( addressModel.getState() );
-        address.setStreet( addressModel.getStreet() );
-        address.setZipCode( addressModel.getZipCode() );
+        addressEntity.setUser( userModelToUserEntity( addressModel.getUser() ) );
+        addressEntity.setCity( addressModel.getCity() );
+        addressEntity.setCountry( addressModel.getCountry() );
+        addressEntity.setId( addressModel.getId() );
+        addressEntity.setNumber( addressModel.getNumber() );
+        addressEntity.setState( addressModel.getState() );
+        addressEntity.setStreet( addressModel.getStreet() );
+        addressEntity.setZipCode( addressModel.getZipCode() );
 
-        return address;
+        return addressEntity;
     }
 
-    private Long addressUserId(Address address) {
-        User user = address.getUser();
+    private Long addressUserId(AddressEntity addressEntity) {
+        UserEntity user = addressEntity.getUser();
         if ( user == null ) {
             return null;
         }
         return user.getId();
     }
 
-    protected User addressDTOToUser(AddressDTO addressDTO) {
+    protected UserEntity addressDTOToUserEntity(AddressDTO addressDTO) {
         if ( addressDTO == null ) {
             return null;
         }
 
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
-        user.setId( addressDTO.getUserId() );
+        userEntity.setId( addressDTO.getUserId() );
 
-        return user;
+        return userEntity;
     }
 
-    protected UserModel userToUserModel(User user) {
-        if ( user == null ) {
+    protected UserModel userEntityToUserModel(UserEntity userEntity) {
+        if ( userEntity == null ) {
             return null;
         }
 
         UserModel userModel = new UserModel();
 
-        userModel.setId( user.getId() );
-        userModel.setBornAt( user.getBornAt() );
-        userModel.setCpf( user.getCpf() );
-        userModel.setEmail( user.getEmail() );
-        userModel.setImagePath( user.getImagePath() );
-        userModel.setName( user.getName() );
-        userModel.setPassword( user.getPassword() );
-        userModel.setPhone( user.getPhone() );
-        userModel.setPoints( user.getPoints() );
-        userModel.setRegisterAt( user.getRegisterAt() );
+        userModel.setId( userEntity.getId() );
+        userModel.setBornAt( userEntity.getBornAt() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setImagePath( userEntity.getImagePath() );
+        userModel.setName( userEntity.getName() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setPhone( userEntity.getPhone() );
+        userModel.setPoints( userEntity.getPoints() );
+        userModel.setRegisterAt( userEntity.getRegisterAt() );
 
         return userModel;
     }
 
-    protected User userModelToUser(UserModel userModel) {
+    protected UserEntity userModelToUserEntity(UserModel userModel) {
         if ( userModel == null ) {
             return null;
         }
 
-        User user = new User();
+        UserEntity userEntity = new UserEntity();
 
-        user.setId( userModel.getId() );
-        user.setBornAt( userModel.getBornAt() );
-        user.setCpf( userModel.getCpf() );
-        user.setEmail( userModel.getEmail() );
-        user.setImagePath( userModel.getImagePath() );
-        user.setName( userModel.getName() );
-        user.setPassword( userModel.getPassword() );
-        user.setPhone( userModel.getPhone() );
-        user.setPoints( userModel.getPoints() );
-        user.setRegisterAt( userModel.getRegisterAt() );
+        userEntity.setId( userModel.getId() );
+        userEntity.setBornAt( userModel.getBornAt() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setImagePath( userModel.getImagePath() );
+        userEntity.setName( userModel.getName() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setPhone( userModel.getPhone() );
+        userEntity.setPoints( userModel.getPoints() );
+        userEntity.setRegisterAt( userModel.getRegisterAt() );
 
-        return user;
+        return userEntity;
     }
 }

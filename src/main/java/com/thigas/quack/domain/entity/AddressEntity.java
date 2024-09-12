@@ -1,9 +1,9 @@
 package com.thigas.quack.domain.entity;
 
-public class Address {
+public class AddressEntity {
 
     private Long id;
-    private User user;
+    private UserEntity user;
     private String street;
     private String city;
     private String state;
@@ -28,14 +28,14 @@ public class Address {
     /**
      * @return User return the user
      */
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
     /**
      * @param user the user to set
      */
-    public void setUser(User user) {
+    public void setUser(UserEntity user) {
         this.user = user;
     }
 

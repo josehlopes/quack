@@ -2,14 +2,14 @@ package com.thigas.quack.domain.repository;
 
 import java.util.Optional;
 
-import com.thigas.quack.domain.entity.User;
+import com.thigas.quack.domain.entity.UserEntity;
 
 public interface IUserRepository {
-    User save(User user);
+    UserEntity save(UserEntity user);
 
-    Optional<User> findById(Long id);
+    Optional<UserEntity> findById(Long id);
 
-    Iterable<User> findAll();
+    Iterable<UserEntity> findAll();
 
     void deleteById(Long id);
 }
