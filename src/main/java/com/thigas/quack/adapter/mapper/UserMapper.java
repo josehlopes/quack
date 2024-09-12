@@ -23,29 +23,11 @@ public interface UserMapper {
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     UserEntity toUser(UserDTO userDTO);
 
-    // Mapeia User para UserModel
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "phone", target = "phone")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "password", target = "password")
-    @Mapping(source = "cpf", target = "cpf")
     @Mapping(source = "bornAt", target = "bornAt")
-    @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
-    @Mapping(source = "imagePath", target = "imagePath")
     UserModel toUserModel(UserEntity userEntity);
 
-    // Mapeia UserModel para User
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "phone", target = "phone")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "password", target = "password")
-    @Mapping(source = "cpf", target = "cpf")
     @Mapping(source = "bornAt", target = "bornAt")
-    @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
-    @Mapping(source = "imagePath", target = "imagePath")
     UserEntity toUser(UserModel userModel);
 }

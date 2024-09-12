@@ -13,35 +13,17 @@ public interface RoadmapMapper {
 
     RoadmapMapper INSTANCE = Mappers.getMapper(RoadmapMapper.class);
 
-    // Mapeando todos os campos do Roadmap para o DTO
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
     RoadmapDTO toRoadmapDTO(RoadmapEntity roadmap);
 
-    // Mapeando o DTO de volta para o Roadmap
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
     RoadmapEntity toRoadmap(RoadmapDTO roadmapDTO);
 
-    // Mapeando o Roadmap para o modelo de persistência
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
     RoadmapModel toRoadmapModel(RoadmapEntity roadmap);
 
-    // Mapeando o modelo de persistência de volta para o Roadmap
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
     RoadmapEntity toRoadmap(RoadmapModel roadmapModel);
 
-    // Métodos de mapeamento customizados para IDs
     default RoadmapModel map(Integer userId) {
         if (userId == null) {
             return null;

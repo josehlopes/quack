@@ -18,39 +18,15 @@ public interface LessonMapper {
 
     LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
 
-    // Mapeia Lesson para LessonModel
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "language", target = "language")
-    @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmaps")
     LessonModel toLessonModel(LessonEntity lesson);
 
-    // Mapeia LessonModel para Lesson
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "language", target = "language")
-    @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmaps")
     LessonEntity toLesson(LessonModel lessonModel);
 
-    // Mapeia Lesson para LessonDTO
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "language", target = "language")
-    @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmaps", target = "roadmapIds")
     LessonDTO toLessonDTO(LessonEntity lesson);
 
-    // Mapeia LessonDTO para Lesson
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "title", target = "title")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "language", target = "language")
-    @Mapping(source = "imagePath", target = "imagePath")
     @Mapping(source = "roadmapIds", target = "roadmaps")
     LessonEntity toLesson(LessonDTO lessonDTO);
 
@@ -67,7 +43,6 @@ public interface LessonMapper {
                 .collect(Collectors.toSet());
     }
 
-    // Mapeia Set<Roadmap> para Set<Integer> (caso necessário)
     default Set<Integer> mapRoadmapsToIds(Set<RoadmapEntity> roadmaps) {
         if (roadmaps == null) {
             return null;
@@ -77,7 +52,6 @@ public interface LessonMapper {
                 .collect(Collectors.toSet());
     }
 
-    // Mapeia Set<Integer> para Set<Roadmap> (caso necessário)
     default Set<RoadmapEntity> mapIdsToRoadmaps(Set<Integer> roadmapIds) {
         if (roadmapIds == null) {
             return null;
