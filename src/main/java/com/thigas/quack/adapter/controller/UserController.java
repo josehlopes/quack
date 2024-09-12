@@ -23,28 +23,28 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> createAddress(@RequestBody UserDTO userDTO) {
-        UserDTO createdUser = userService.createUser(userDTO);
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+        UserDTO createdUser = userService.create(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getAddressById(@PathVariable Long id) {
-        return userService.getUserById(id)
+    public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
+        return userService.getById(id)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<UserDTO>> getAllAddresses() {
-        Iterable<UserDTO> addresses = userService.getAllUsers();
+    public ResponseEntity<Iterable<UserDTO>> getAll() {
+        Iterable<UserDTO> addresses = userService.getAll();
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         if (id.equals(userDTO.getId())) {
-            userService.updateUser(userDTO);
+            userService.update(userDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,8 +52,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
