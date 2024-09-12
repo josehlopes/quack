@@ -20,8 +20,10 @@ public interface AddressMapper {
     @Mapping(source = "userId", target = "user.id")
     AddressEntity toAddress(AddressDTO addressDTO);
 
+    @Mapping(source = "user.id", target = "user.id")
     AddressModel toAddressModel(AddressEntity address);
 
+    @Mapping(source = "user.id", target = "user.id")
     AddressEntity toAddress(AddressModel addressModel);
 
     default UserModel map(Integer userId) {
