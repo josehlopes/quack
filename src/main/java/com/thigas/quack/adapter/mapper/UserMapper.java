@@ -16,12 +16,12 @@ public interface UserMapper {
     // Mapeia User para UserDTO
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserDTO toUserDTO(UserEntity user);
+    UserDTO EntityToDto(UserEntity user);
 
     // Mapeia UserDTO para User
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserEntity toUser(UserDTO userDTO);
+    UserEntity DtoToEntity(UserDTO userDTO);
 
     // Mapeia User para UserModel
     @Mapping(source = "id", target = "id")
@@ -34,7 +34,7 @@ public interface UserMapper {
     @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
-    UserModel toUserModel(UserEntity userEntity);
+    UserModel EntityToModel(UserEntity userEntity);
 
     // Mapeia UserModel para User
     @Mapping(source = "id", target = "id")
@@ -47,5 +47,5 @@ public interface UserMapper {
     @Mapping(source = "points", target = "points")
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
-    UserEntity toUser(UserModel userModel);
+    UserEntity ModelToEntity(UserModel userModel);
 }

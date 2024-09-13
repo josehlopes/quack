@@ -22,18 +22,18 @@ public class AchievementService {
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
         // Converter DTO para entidade
-        AchievementEntity achievement = achievementMapper.toAchievement(achievementDTO);
+        AchievementEntity achievement = achievementMapper.DtoToEntity(achievementDTO);
         // Salvar a entidade
         AchievementEntity toSaveAchievement = achievementRepository.save(achievement);
         // Converter entidade de volta para DTO
-        return achievementMapper.toAchievementDTO(toSaveAchievement);
+        return achievementMapper.EntityToDto(toSaveAchievement);
     }
 
     public Optional<AchievementDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<AchievementEntity> achievement = achievementRepository.findById(id);
         // Converter a entidade para DTO
-        return achievement.map(achievementMapper::toAchievementDTO);
+        return achievement.map(achievementMapper::EntityToDto);
     }
 
     public Iterable<AchievementDTO> getAll() {
@@ -41,13 +41,13 @@ public class AchievementService {
         Iterable<AchievementEntity> achievements = achievementRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(achievements.spliterator(), false)
-                .map(achievementMapper::toAchievementDTO)
+                .map(achievementMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AchievementDTO achievementDTO) {
         // Converter DTO para entidade
-        AchievementEntity achievement = achievementMapper.toAchievement(achievementDTO);
+        AchievementEntity achievement = achievementMapper.DtoToEntity(achievementDTO);
         // Atualizar a entidade
         achievementRepository.save(achievement);
     }

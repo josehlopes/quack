@@ -1,10 +1,12 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +29,8 @@ public class LessonModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    // Getters e Setters
+    @ManyToMany(mappedBy = "lessons")
+    private Set<StepModel> steps;
 
     /**
      * @return int return the id
@@ -97,6 +100,20 @@ public class LessonModel {
      */
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    /**
+     * @return Set<StepModel> return the steps
+     */
+    public Set<StepModel> getSteps() {
+        return steps;
+    }
+
+    /**
+     * @param steps the steps to set
+     */
+    public void setSteps(Set<StepModel> steps) {
+        this.steps = steps;
     }
 
 }

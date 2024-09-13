@@ -22,20 +22,20 @@ public class AchievementRepositoryImplementation implements IAchievementReposito
 
     @Override
     public AchievementEntity save(AchievementEntity achievement) {
-        AchievementModel achievementModel = achievementMapper.toAchievementModel(achievement);
+        AchievementModel achievementModel = achievementMapper.EntityToModel(achievement);
         AchievementModel savedAchievementModel = achievementModelRepository.save(achievementModel);
-        return achievementMapper.toAchievement(savedAchievementModel);
+        return achievementMapper.ModelToEntity(savedAchievementModel);
     }
 
     @Override
     public Optional<AchievementEntity> findById(int id) {
-        return achievementModelRepository.findById(id).map(achievementMapper::toAchievement);
+        return achievementModelRepository.findById(id).map(achievementMapper::ModelToEntity);
     }
 
     @Override
     public Iterable<AchievementEntity> findAll() {
         return achievementModelRepository.findAll().stream()
-                .map(achievementMapper::toAchievement)
+                .map(achievementMapper::ModelToEntity)
                 .collect(Collectors.toList());
     }
 

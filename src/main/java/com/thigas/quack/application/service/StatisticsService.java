@@ -23,18 +23,18 @@ public class StatisticsService {
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
         // Converter DTO para entidade
-        StatisticsEntity statistics = statisticsMapper.toStatistics(statisticsDTO);
+        StatisticsEntity statistics = statisticsMapper.DtoToEntity(statisticsDTO);
         // Salvar a entidade
         StatisticsEntity toSaveStatistics = statisticsRepository.save(statistics);
         // Converter entidade de volta para DTO
-        return statisticsMapper.toStatisticsDTO(toSaveStatistics);
+        return statisticsMapper.EntityToDto(toSaveStatistics);
     }
 
     public Optional<StatisticsDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<StatisticsEntity> statistics = statisticsRepository.findById(id);
         // Converter a entidade para DTO
-        return statistics.map(statisticsMapper::toStatisticsDTO);
+        return statistics.map(statisticsMapper::EntityToDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
@@ -42,13 +42,13 @@ public class StatisticsService {
         Iterable<StatisticsEntity> statisticss = statisticsRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(statisticss.spliterator(), false)
-                .map(statisticsMapper::toStatisticsDTO)
+                .map(statisticsMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StatisticsDTO statisticsDTO) {
         // Converter DTO para entidade
-        StatisticsEntity statistics = statisticsMapper.toStatistics(statisticsDTO);
+        StatisticsEntity statistics = statisticsMapper.DtoToEntity(statisticsDTO);
         // Atualizar a entidade
         statisticsRepository.save(statistics);
     }

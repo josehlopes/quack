@@ -21,20 +21,20 @@ public class UserRepositoryImplementation implements IUserRepository {
 
     @Override
     public UserEntity save(UserEntity address) {
-        UserModel userModel = userMapper.toUserModel(address);
+        UserModel userModel = userMapper.EntityToModel(address);
         UserModel savedUserModel = userModelRepository.save(userModel);
-        return userMapper.toUser(savedUserModel);
+        return userMapper.ModelToEntity(savedUserModel);
     }
 
     @Override
     public Optional<UserEntity> findById(int id) {
-        return userModelRepository.findById(id).map(userMapper::toUser);
+        return userModelRepository.findById(id).map(userMapper::ModelToEntity);
     }
 
     @Override
     public Iterable<UserEntity> findAll() {
         return userModelRepository.findAll().stream()
-                .map(userMapper::toUser)
+                .map(userMapper::ModelToEntity)
                 .collect(Collectors.toList());
     }
 

@@ -26,27 +26,51 @@ public class StepModel {
     @JoinTable(name = "roadmap_step_mapping", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     private Set<RoadmapModel> roadmaps;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
     @Column(nullable = false)
     private String description;
 
-    // Getters e Setters
-
+    /**
+     * @return int return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return Set<RoadmapModel> return the roadmaps
+     */
+    public Set<RoadmapModel> getRoadmaps() {
+        return roadmaps;
+    }
+
+    /**
+     * @param roadmaps the roadmaps to set
+     */
+    public void setRoadmaps(Set<RoadmapModel> roadmaps) {
+        this.roadmaps = roadmaps;
+    }
+
+    /**
+     * @return Set<LessonModel> return the lessons
+     */
     public Set<LessonModel> getLessons() {
         return lessons;
     }
 
+    /**
+     * @param lessons the lessons to set
+     */
     public void setLessons(Set<LessonModel> lessons) {
         this.lessons = lessons;
     }

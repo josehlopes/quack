@@ -15,16 +15,16 @@ public interface StatisticsMapper {
     StatisticsMapper INSTANCE = Mappers.getMapper(StatisticsMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
-    StatisticsDTO toStatisticsDTO(StatisticsEntity statistics);
+    StatisticsDTO EntityToDto(StatisticsEntity statistics);
 
     @Mapping(source = "userId", target = "user.id")
-    StatisticsEntity toStatistics(StatisticsDTO statisticsDTO);
+    StatisticsEntity DtoToEntity(StatisticsDTO statisticsDTO);
 
     @Mapping(source = "user.id", target = "user.id")
-    StatisticsModel toStatisticsModel(StatisticsEntity statistics);
+    StatisticsModel EntityToModel(StatisticsEntity statistics);
 
     @Mapping(source = "user.id", target = "user.id")
-    StatisticsEntity toStatistics(StatisticsModel statisticsModel);
+    StatisticsEntity ModelToEntity(StatisticsModel statisticsModel);
 
     default UserModel map(Integer userId) {
         if (userId == null) {

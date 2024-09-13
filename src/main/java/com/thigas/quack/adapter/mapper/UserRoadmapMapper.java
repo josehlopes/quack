@@ -14,9 +14,9 @@ public interface UserRoadmapMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    RoadmapUserDTO toRoadmapUserDTO(UserRoadmapEntity roadmapUserEntity);
+    RoadmapUserDTO EntityToDto(UserRoadmapEntity roadmapUserEntity);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    UserRoadmapEntity toRoadmapUserEntity(RoadmapUserDTO roadmapUserDTO);
+    UserRoadmapEntity DtoToEntity(RoadmapUserDTO roadmapUserDTO);
 }

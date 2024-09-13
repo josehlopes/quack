@@ -23,18 +23,18 @@ public class RoadmapService {
 
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
         // Converter DTO para entidade
-        RoadmapEntity roadmap = roadmapMapper.toRoadmap(roadmapDTO);
+        RoadmapEntity roadmap = roadmapMapper.DtoToEntity(roadmapDTO);
         // Salvar a entidade
         RoadmapEntity toSaveRoadmap = roadmapRepository.save(roadmap);
         // Converter entidade de volta para DTO
-        return roadmapMapper.toRoadmapDTO(toSaveRoadmap);
+        return roadmapMapper.EntityToDto(toSaveRoadmap);
     }
 
     public Optional<RoadmapDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<RoadmapEntity> roadmap = roadmapRepository.findById(id);
         // Converter a entidade para DTO
-        return roadmap.map(roadmapMapper::toRoadmapDTO);
+        return roadmap.map(roadmapMapper::EntityToDto);
     }
 
     public Iterable<RoadmapDTO> getAll() {
@@ -42,13 +42,13 @@ public class RoadmapService {
         Iterable<RoadmapEntity> roadmaps = roadmapRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(roadmaps.spliterator(), false)
-                .map(roadmapMapper::toRoadmapDTO)
+                .map(roadmapMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(RoadmapDTO roadmapDTO) {
         // Converter DTO para entidade
-        RoadmapEntity roadmap = roadmapMapper.toRoadmap(roadmapDTO);
+        RoadmapEntity roadmap = roadmapMapper.DtoToEntity(roadmapDTO);
         // Atualizar a entidade
         roadmapRepository.save(roadmap);
     }

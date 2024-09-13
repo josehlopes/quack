@@ -23,13 +23,13 @@ public class LessonRepositoryImplementation implements ILessonRepository {
 
     public Optional<LessonEntity> findById(int id) {
         Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
-        return lessonModelOptional.map(lessonMapper::toLesson);
+        return lessonModelOptional.map(lessonMapper::ModelToEntity);
     }
 
     public List<LessonEntity> findAll() {
         List<LessonModel> lessonModels = lessonModelRepository.findAll();
         return lessonModels.stream()
-                .map(lessonMapper::toLesson)
+                .map(lessonMapper::ModelToEntity)
                 .collect(Collectors.toList());
     }
 
@@ -38,8 +38,8 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     }
 
     public LessonEntity save(LessonEntity lesson) {
-        LessonModel lessonModel = lessonMapper.toLessonModel(lesson);
+        LessonModel lessonModel = lessonMapper.EntityToModel(lesson);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
-        return lessonMapper.toLesson(savedLessonModel);
+        return lessonMapper.ModelToEntity(savedLessonModel);
     }
 }

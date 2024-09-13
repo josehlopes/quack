@@ -7,13 +7,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T09:45:18-0300",
+    date = "2024-09-13T11:05:46-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class RoadmapMapperImpl implements RoadmapMapper {
 
     @Override
-    public RoadmapDTO toRoadmapDTO(RoadmapEntity roadmap) {
+    public RoadmapDTO EntityToDto(RoadmapEntity roadmap) {
         if ( roadmap == null ) {
             return null;
         }
@@ -29,7 +29,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapEntity toRoadmap(RoadmapDTO roadmapDTO) {
+    public RoadmapEntity DtoToEntity(RoadmapDTO roadmapDTO) {
         if ( roadmapDTO == null ) {
             return null;
         }
@@ -45,7 +45,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapModel toRoadmapModel(RoadmapEntity roadmap) {
+    public RoadmapModel EntityToModel(RoadmapEntity roadmap) {
         if ( roadmap == null ) {
             return null;
         }
@@ -61,7 +61,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapEntity toRoadmap(RoadmapModel roadmapModel) {
+    public RoadmapEntity ModelToEntity(RoadmapModel roadmapModel) {
         if ( roadmapModel == null ) {
             return null;
         }

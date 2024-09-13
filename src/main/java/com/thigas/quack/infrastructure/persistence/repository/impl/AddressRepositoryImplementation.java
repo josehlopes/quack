@@ -22,20 +22,20 @@ public class AddressRepositoryImplementation implements IAddressRepository {
 
     @Override
     public AddressEntity save(AddressEntity address) {
-        AddressModel addressModel = addressMapper.toAddressModel(address);
+        AddressModel addressModel = addressMapper.EntityToModel(address);
         AddressModel savedAddressModel = addressModelRepository.save(addressModel);
-        return addressMapper.toAddress(savedAddressModel);
+        return addressMapper.ModelToEntity(savedAddressModel);
     }
 
     @Override
     public Optional<AddressEntity> findById(int id) {
-        return addressModelRepository.findById(id).map(addressMapper::toAddress);
+        return addressModelRepository.findById(id).map(addressMapper::ModelToEntity);
     }
 
     @Override
     public Iterable<AddressEntity> findAll() {
         return addressModelRepository.findAll().stream()
-                .map(addressMapper::toAddress)
+                .map(addressMapper::ModelToEntity)
                 .collect(Collectors.toList());
     }
 

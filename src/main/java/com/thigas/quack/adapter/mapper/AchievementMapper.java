@@ -17,23 +17,23 @@ public interface AchievementMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "imagePath", target = "imagePath")
-    AchievementEntity toAchievement(AchievementDTO achievementDTO);
+    AchievementEntity DtoToEntity(AchievementDTO achievementDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "imagePath", target = "imagePath")
-    AchievementDTO toAchievementDTO(AchievementEntity achievementEntity);
+    AchievementDTO EntityToDto(AchievementEntity achievementEntity);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "imagePath", target = "imagePath")
-    AchievementModel toAchievementModel(AchievementEntity achievementEntity);
+    AchievementModel EntityToModel(AchievementEntity achievementEntity);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     @Mapping(source = "imagePath", target = "imagePath")
-    AchievementEntity toAchievement(AchievementModel achievementModel);
+    AchievementEntity ModelToEntity(AchievementModel achievementModel);
 }

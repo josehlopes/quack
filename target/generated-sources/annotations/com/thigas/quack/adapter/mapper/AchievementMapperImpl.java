@@ -7,13 +7,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T09:45:18-0300",
+    date = "2024-09-13T11:06:54-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class AchievementMapperImpl implements AchievementMapper {
 
     @Override
-    public AchievementEntity toAchievement(AchievementDTO achievementDTO) {
+    public AchievementEntity DtoToEntity(AchievementDTO achievementDTO) {
         if ( achievementDTO == null ) {
             return null;
         }
@@ -29,7 +29,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementDTO toAchievementDTO(AchievementEntity achievementEntity) {
+    public AchievementDTO EntityToDto(AchievementEntity achievementEntity) {
         if ( achievementEntity == null ) {
             return null;
         }
@@ -45,7 +45,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementModel toAchievementModel(AchievementEntity achievementEntity) {
+    public AchievementModel EntityToModel(AchievementEntity achievementEntity) {
         if ( achievementEntity == null ) {
             return null;
         }
@@ -61,7 +61,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementEntity toAchievement(AchievementModel achievementModel) {
+    public AchievementEntity ModelToEntity(AchievementModel achievementModel) {
         if ( achievementModel == null ) {
             return null;
         }

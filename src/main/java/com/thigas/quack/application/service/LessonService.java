@@ -21,18 +21,18 @@ public class LessonService {
 
     public LessonDTO createLesson(LessonDTO lessonDTO) {
         // Converter DTO para entidade
-        LessonEntity lesson = lessonMapper.toLesson(lessonDTO);
+        LessonEntity lesson = lessonMapper.DtoToEntity(lessonDTO);
         // Salvar a entidade
         LessonEntity savedLesson = lessonRepository.save(lesson);
         // Converter entidade de volta para DTO
-        return lessonMapper.toLessonDTO(savedLesson);
+        return lessonMapper.EntityToDto(savedLesson);
     }
 
     public Optional<LessonDTO> getLessonById(int id) {
         // Buscar a entidade do repositório
         Optional<LessonEntity> lesson = lessonRepository.findById(id);
         // Converter a entidade para DTO
-        return lesson.map(lessonMapper::toLessonDTO);
+        return lesson.map(lessonMapper::EntityToDto);
     }
 
     public Iterable<LessonDTO> getAllLessons() {
@@ -40,13 +40,13 @@ public class LessonService {
         Iterable<LessonEntity> lessons = lessonRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(lessons.spliterator(), false)
-                .map(lessonMapper::toLessonDTO)
+                .map(lessonMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void updateLesson(LessonDTO lessonDTO) {
         // Converter DTO para entidade
-        LessonEntity lesson = lessonMapper.toLesson(lessonDTO);
+        LessonEntity lesson = lessonMapper.DtoToEntity(lessonDTO);
         // Atualizar a entidade
         lessonRepository.save(lesson);
     }

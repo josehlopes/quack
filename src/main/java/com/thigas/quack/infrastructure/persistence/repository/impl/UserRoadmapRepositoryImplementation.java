@@ -23,7 +23,7 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
 
     @Override
     public UserRoadmapEntity save(UserRoadmapEntity roadmapUser) {
-        UserRoadmapModel roadmapUserModel = mapToRoadmapUserModel(roadmapUser);
+        UserRoadmapModel roadmapUserModel = EntityToModel(roadmapUser);
         return mapToRoadmapUser(roadmapUserModelRepository.save(roadmapUserModel));
     }
 
@@ -54,11 +54,11 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
     }
 
     // Transforma RoadmapUser em RoadmapUserModel
-    private UserRoadmapModel mapToRoadmapUserModel(UserRoadmapEntity roadmapUser) {
+    private UserRoadmapModel EntityToModel(UserRoadmapEntity roadmapUser) {
         UserRoadmapModel roadmapUserModel = new UserRoadmapModel();
         roadmapUserModel.setId(roadmapUser.getId());
         roadmapUserModel.setUser(mapToUserModel(roadmapUser.getUser()));
-        roadmapUserModel.setRoadmap(mapToRoadmapModel(roadmapUser.getRoadmap()));
+        roadmapUserModel.setRoadmap(ModelToEntity(roadmapUser.getRoadmap()));
         return roadmapUserModel;
     }
 
@@ -84,7 +84,7 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
         return userModel;
     }
 
-    private RoadmapModel mapToRoadmapModel(RoadmapEntity roadmap) {
+    private RoadmapModel ModelToEntity(RoadmapEntity roadmap) {
         RoadmapModel roadmapModel = new RoadmapModel();
         roadmapModel.setId(roadmap.getId());
         // Preencha outros campos necessários

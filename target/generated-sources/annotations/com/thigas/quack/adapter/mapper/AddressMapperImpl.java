@@ -9,13 +9,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T09:45:18-0300",
+    date = "2024-09-13T11:06:35-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class AddressMapperImpl implements AddressMapper {
 
     @Override
-    public AddressDTO toAddressDTO(AddressEntity address) {
+    public AddressDTO EntityToDto(AddressEntity address) {
         if ( address == null ) {
             return null;
         }
@@ -23,19 +23,19 @@ public class AddressMapperImpl implements AddressMapper {
         AddressDTO addressDTO = new AddressDTO();
 
         addressDTO.setUserId( addressUserId( address ) );
-        addressDTO.setId( address.getId() );
-        addressDTO.setStreet( address.getStreet() );
         addressDTO.setCity( address.getCity() );
-        addressDTO.setState( address.getState() );
         addressDTO.setCountry( address.getCountry() );
-        addressDTO.setZipCode( address.getZipCode() );
+        addressDTO.setId( address.getId() );
         addressDTO.setNumber( address.getNumber() );
+        addressDTO.setState( address.getState() );
+        addressDTO.setStreet( address.getStreet() );
+        addressDTO.setZipCode( address.getZipCode() );
 
         return addressDTO;
     }
 
     @Override
-    public AddressEntity toAddress(AddressDTO addressDTO) {
+    public AddressEntity DtoToEntity(AddressDTO addressDTO) {
         if ( addressDTO == null ) {
             return null;
         }
@@ -43,19 +43,19 @@ public class AddressMapperImpl implements AddressMapper {
         AddressEntity addressEntity = new AddressEntity();
 
         addressEntity.setUser( addressDTOToUserEntity( addressDTO ) );
-        addressEntity.setId( addressDTO.getId() );
-        addressEntity.setStreet( addressDTO.getStreet() );
         addressEntity.setCity( addressDTO.getCity() );
-        addressEntity.setState( addressDTO.getState() );
         addressEntity.setCountry( addressDTO.getCountry() );
-        addressEntity.setZipCode( addressDTO.getZipCode() );
+        addressEntity.setId( addressDTO.getId() );
         addressEntity.setNumber( addressDTO.getNumber() );
+        addressEntity.setState( addressDTO.getState() );
+        addressEntity.setStreet( addressDTO.getStreet() );
+        addressEntity.setZipCode( addressDTO.getZipCode() );
 
         return addressEntity;
     }
 
     @Override
-    public AddressModel toAddressModel(AddressEntity address) {
+    public AddressModel EntityToModel(AddressEntity address) {
         if ( address == null ) {
             return null;
         }
@@ -63,19 +63,19 @@ public class AddressMapperImpl implements AddressMapper {
         AddressModel addressModel = new AddressModel();
 
         addressModel.setUser( userEntityToUserModel( address.getUser() ) );
-        addressModel.setId( address.getId() );
-        addressModel.setStreet( address.getStreet() );
         addressModel.setCity( address.getCity() );
-        addressModel.setState( address.getState() );
         addressModel.setCountry( address.getCountry() );
-        addressModel.setZipCode( address.getZipCode() );
+        addressModel.setId( address.getId() );
         addressModel.setNumber( address.getNumber() );
+        addressModel.setState( address.getState() );
+        addressModel.setStreet( address.getStreet() );
+        addressModel.setZipCode( address.getZipCode() );
 
         return addressModel;
     }
 
     @Override
-    public AddressEntity toAddress(AddressModel addressModel) {
+    public AddressEntity ModelToEntity(AddressModel addressModel) {
         if ( addressModel == null ) {
             return null;
         }
@@ -83,13 +83,13 @@ public class AddressMapperImpl implements AddressMapper {
         AddressEntity addressEntity = new AddressEntity();
 
         addressEntity.setUser( userModelToUserEntity( addressModel.getUser() ) );
-        addressEntity.setId( addressModel.getId() );
-        addressEntity.setStreet( addressModel.getStreet() );
         addressEntity.setCity( addressModel.getCity() );
-        addressEntity.setState( addressModel.getState() );
         addressEntity.setCountry( addressModel.getCountry() );
-        addressEntity.setZipCode( addressModel.getZipCode() );
+        addressEntity.setId( addressModel.getId() );
         addressEntity.setNumber( addressModel.getNumber() );
+        addressEntity.setState( addressModel.getState() );
+        addressEntity.setStreet( addressModel.getStreet() );
+        addressEntity.setZipCode( addressModel.getZipCode() );
 
         return addressEntity;
     }
@@ -126,15 +126,15 @@ public class AddressMapperImpl implements AddressMapper {
         UserModel userModel = new UserModel();
 
         userModel.setId( userEntity.getId() );
-        userModel.setName( userEntity.getName() );
-        userModel.setPhone( userEntity.getPhone() );
-        userModel.setEmail( userEntity.getEmail() );
-        userModel.setPassword( userEntity.getPassword() );
-        userModel.setCpf( userEntity.getCpf() );
         userModel.setBornAt( userEntity.getBornAt() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setImagePath( userEntity.getImagePath() );
+        userModel.setName( userEntity.getName() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setPhone( userEntity.getPhone() );
         userModel.setPoints( userEntity.getPoints() );
         userModel.setRegisterAt( userEntity.getRegisterAt() );
-        userModel.setImagePath( userEntity.getImagePath() );
 
         return userModel;
     }
@@ -147,15 +147,15 @@ public class AddressMapperImpl implements AddressMapper {
         UserEntity userEntity = new UserEntity();
 
         userEntity.setId( userModel.getId() );
-        userEntity.setName( userModel.getName() );
-        userEntity.setPhone( userModel.getPhone() );
-        userEntity.setEmail( userModel.getEmail() );
-        userEntity.setPassword( userModel.getPassword() );
-        userEntity.setCpf( userModel.getCpf() );
         userEntity.setBornAt( userModel.getBornAt() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setImagePath( userModel.getImagePath() );
+        userEntity.setName( userModel.getName() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setPhone( userModel.getPhone() );
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
-        userEntity.setImagePath( userModel.getImagePath() );
 
         return userEntity;
     }

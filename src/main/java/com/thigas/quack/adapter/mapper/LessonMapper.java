@@ -19,7 +19,7 @@ public interface LessonMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
-    LessonModel toLessonModel(LessonEntity lesson);
+    LessonModel EntityToModel(LessonEntity lesson);
 
     // Mapeia LessonModel para Lesson
     @Mapping(source = "id", target = "id")
@@ -27,7 +27,7 @@ public interface LessonMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
-    LessonEntity toLesson(LessonModel lessonModel);
+    LessonEntity ModelToEntity(LessonModel lessonModel);
 
     // Mapeia Lesson para LessonDTO
     @Mapping(source = "id", target = "id")
@@ -35,7 +35,7 @@ public interface LessonMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
-    LessonDTO toLessonDTO(LessonEntity lesson);
+    LessonDTO EntityToDto(LessonEntity lesson);
 
     // Mapeia LessonDTO para Lesson
     @Mapping(source = "id", target = "id")
@@ -43,6 +43,6 @@ public interface LessonMapper {
     @Mapping(source = "description", target = "description")
     @Mapping(source = "language", target = "language")
     @Mapping(source = "imagePath", target = "imagePath")
-    LessonEntity toLesson(LessonDTO lessonDTO);
+    LessonEntity DtoToEntity(LessonDTO lessonDTO);
 
 }

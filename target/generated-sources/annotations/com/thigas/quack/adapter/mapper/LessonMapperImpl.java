@@ -7,13 +7,13 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T09:45:19-0300",
+    date = "2024-09-13T11:42:56-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class LessonMapperImpl implements LessonMapper {
 
     @Override
-    public LessonModel toLessonModel(LessonEntity lesson) {
+    public LessonModel EntityToModel(LessonEntity lesson) {
         if ( lesson == null ) {
             return null;
         }
@@ -30,7 +30,7 @@ public class LessonMapperImpl implements LessonMapper {
     }
 
     @Override
-    public LessonEntity toLesson(LessonModel lessonModel) {
+    public LessonEntity ModelToEntity(LessonModel lessonModel) {
         if ( lessonModel == null ) {
             return null;
         }
@@ -47,7 +47,7 @@ public class LessonMapperImpl implements LessonMapper {
     }
 
     @Override
-    public LessonDTO toLessonDTO(LessonEntity lesson) {
+    public LessonDTO EntityToDto(LessonEntity lesson) {
         if ( lesson == null ) {
             return null;
         }
@@ -64,7 +64,7 @@ public class LessonMapperImpl implements LessonMapper {
     }
 
     @Override
-    public LessonEntity toLesson(LessonDTO lessonDTO) {
+    public LessonEntity DtoToEntity(LessonDTO lessonDTO) {
         if ( lessonDTO == null ) {
             return null;
         }

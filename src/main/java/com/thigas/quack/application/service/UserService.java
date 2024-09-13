@@ -22,18 +22,18 @@ public class UserService {
 
     public UserDTO create(UserDTO userDTO) {
         // Converter DTO para entidade
-        UserEntity user = userMapper.toUser(userDTO);
+        UserEntity user = userMapper.DtoToEntity(userDTO);
         // Salvar a entidade
         UserEntity toSaveUser = userRepository.save(user);
         // Converter entidade de volta para DTO
-        return userMapper.toUserDTO(toSaveUser);
+        return userMapper.EntityToDto(toSaveUser);
     }
 
     public Optional<UserDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<UserEntity> user = userRepository.findById(id);
         // Converter a entidade para DTO
-        return user.map(userMapper::toUserDTO);
+        return user.map(userMapper::EntityToDto);
     }
 
     public Iterable<UserDTO> getAll() {
@@ -41,13 +41,13 @@ public class UserService {
         Iterable<UserEntity> users = userRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(users.spliterator(), false)
-                .map(userMapper::toUserDTO)
+                .map(userMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(UserDTO userDTO) {
         // Converter DTO para entidade
-        UserEntity user = userMapper.toUser(userDTO);
+        UserEntity user = userMapper.DtoToEntity(userDTO);
         // Atualizar a entidade
         userRepository.save(user);
     }

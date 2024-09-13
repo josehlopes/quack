@@ -23,18 +23,18 @@ public class AddressService {
 
     public AddressDTO create(AddressDTO addressDTO) {
         // Converter DTO para entidade
-        AddressEntity address = addressMapper.toAddress(addressDTO);
+        AddressEntity address = addressMapper.DtoToEntity(addressDTO);
         // Salvar a entidade
         AddressEntity toSaveAddress = addressRepository.save(address);
         // Converter entidade de volta para DTO
-        return addressMapper.toAddressDTO(toSaveAddress);
+        return addressMapper.EntityToDto(toSaveAddress);
     }
 
     public Optional<AddressDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<AddressEntity> address = addressRepository.findById(id);
         // Converter a entidade para DTO
-        return address.map(addressMapper::toAddressDTO);
+        return address.map(addressMapper::EntityToDto);
     }
 
     public Iterable<AddressDTO> getAll() {
@@ -42,13 +42,13 @@ public class AddressService {
         Iterable<AddressEntity> addresses = addressRepository.findAll();
         // Converter todas as entidades para DTOs
         return StreamSupport.stream(addresses.spliterator(), false)
-                .map(addressMapper::toAddressDTO)
+                .map(addressMapper::EntityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AddressDTO addressDTO) {
         // Converter DTO para entidade
-        AddressEntity address = addressMapper.toAddress(addressDTO);
+        AddressEntity address = addressMapper.DtoToEntity(addressDTO);
         // Atualizar a entidade
         addressRepository.save(address);
     }
