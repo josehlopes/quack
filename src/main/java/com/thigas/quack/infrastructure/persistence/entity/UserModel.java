@@ -2,6 +2,7 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,13 +40,12 @@ public class UserModel {
     @Column(name = "points", nullable = false)
     private Double points;
 
-    @Column(name = "register_at", columnDefinition = "DATE", nullable = false)
-    private LocalDateTime registerAt;
+    @Column(name = "register_at", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
+    private OffsetDateTime registerAt;
 
     @Column(name = "image_path", nullable = true)
     private String imagePath;
 
-    // Getters e Setters
     /**
      * @return int return the id
      */
@@ -159,16 +159,16 @@ public class UserModel {
     }
 
     /**
-     * @return LocalDateTime return the registerAt
+     * @return OffsetDateTime return the registerAt
      */
-    public LocalDateTime getRegisterAt() {
+    public OffsetDateTime getRegisterAt() {
         return registerAt;
     }
 
     /**
      * @param registerAt the registerAt to set
      */
-    public void setRegisterAt(LocalDateTime registerAt) {
+    public void setRegisterAt(OffsetDateTime registerAt) {
         this.registerAt = registerAt;
     }
 

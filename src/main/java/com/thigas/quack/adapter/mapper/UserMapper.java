@@ -1,12 +1,17 @@
 package com.thigas.quack.adapter.mapper;
 
+import org.hibernate.mapping.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import java.time.OffsetDateTime;
 
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import java.util.stream.Collectors;
 
 @Mapper
 public interface UserMapper {
@@ -48,4 +53,20 @@ public interface UserMapper {
     @Mapping(source = "registerAt", target = "registerAt")
     @Mapping(source = "imagePath", target = "imagePath")
     UserEntity ModelToEntity(UserModel userModel);
+
+    default OffsetDateTime offSetToString(String date) {
+        if (date == null) {
+            return null;
+        }
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(date);
+        return offsetDateTime;
+    }
+
+    default String stringToOffSet(OffsetDateTime date) {
+        if (date == null) {
+            return null;
+        }
+        String offsetDateTime = date.toString();
+        return offsetDateTime;
+    }
 }

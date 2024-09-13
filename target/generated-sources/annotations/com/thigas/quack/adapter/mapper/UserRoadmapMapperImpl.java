@@ -1,6 +1,6 @@
 package com.thigas.quack.adapter.mapper;
 
-import com.thigas.quack.adapter.dto.RoadmapUserDTO;
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
@@ -8,36 +8,42 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T15:28:57-0300",
+    date = "2024-09-13T17:44:56-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
     @Override
-    public RoadmapUserDTO EntityToDto(UserRoadmapEntity roadmapUserEntity) {
+    public UserRoadmapDTO EntityToDto(UserRoadmapEntity roadmapUserEntity) {
         if ( roadmapUserEntity == null ) {
             return null;
         }
 
-        RoadmapUserDTO roadmapUserDTO = new RoadmapUserDTO();
+        UserRoadmapDTO userRoadmapDTO = new UserRoadmapDTO();
 
-        roadmapUserDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
-        roadmapUserDTO.setRoadmapId( roadmapUserEntityRoadmapId( roadmapUserEntity ) );
-        roadmapUserDTO.setId( roadmapUserEntity.getId() );
+        userRoadmapDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
+        userRoadmapDTO.setRoadmapId( roadmapUserEntityRoadmapId( roadmapUserEntity ) );
+        userRoadmapDTO.setProgress( roadmapUserEntity.getProgress() );
+        userRoadmapDTO.setStartedAt( stringToOffSet( roadmapUserEntity.getStartedAt() ) );
+        userRoadmapDTO.setFinishedAt( stringToOffSet( roadmapUserEntity.getFinishedAt() ) );
+        userRoadmapDTO.setId( roadmapUserEntity.getId() );
 
-        return roadmapUserDTO;
+        return userRoadmapDTO;
     }
 
     @Override
-    public UserRoadmapEntity DtoToEntity(RoadmapUserDTO roadmapUserDTO) {
+    public UserRoadmapEntity DtoToEntity(UserRoadmapDTO roadmapUserDTO) {
         if ( roadmapUserDTO == null ) {
             return null;
         }
 
         UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
 
-        userRoadmapEntity.setUser( roadmapUserDTOToUserEntity( roadmapUserDTO ) );
-        userRoadmapEntity.setRoadmap( roadmapUserDTOToRoadmapEntity( roadmapUserDTO ) );
+        userRoadmapEntity.setUser( userRoadmapDTOToUserEntity( roadmapUserDTO ) );
+        userRoadmapEntity.setRoadmap( userRoadmapDTOToRoadmapEntity( roadmapUserDTO ) );
+        userRoadmapEntity.setProgress( roadmapUserDTO.getProgress() );
+        userRoadmapEntity.setStartedAt( localDateToString( roadmapUserDTO.getStartedAt() ) );
+        userRoadmapEntity.setFinishedAt( localDateToString( roadmapUserDTO.getFinishedAt() ) );
         userRoadmapEntity.setId( roadmapUserDTO.getId() );
 
         return userRoadmapEntity;
@@ -67,26 +73,26 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         return id;
     }
 
-    protected UserEntity roadmapUserDTOToUserEntity(RoadmapUserDTO roadmapUserDTO) {
-        if ( roadmapUserDTO == null ) {
+    protected UserEntity userRoadmapDTOToUserEntity(UserRoadmapDTO userRoadmapDTO) {
+        if ( userRoadmapDTO == null ) {
             return null;
         }
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( roadmapUserDTO.getUserId() );
+        userEntity.setId( userRoadmapDTO.getUserId() );
 
         return userEntity;
     }
 
-    protected RoadmapEntity roadmapUserDTOToRoadmapEntity(RoadmapUserDTO roadmapUserDTO) {
-        if ( roadmapUserDTO == null ) {
+    protected RoadmapEntity userRoadmapDTOToRoadmapEntity(UserRoadmapDTO userRoadmapDTO) {
+        if ( userRoadmapDTO == null ) {
             return null;
         }
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( roadmapUserDTO.getRoadmapId() );
+        roadmapEntity.setId( userRoadmapDTO.getRoadmapId() );
 
         return roadmapEntity;
     }

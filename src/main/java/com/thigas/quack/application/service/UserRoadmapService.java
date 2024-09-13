@@ -7,7 +7,7 @@ import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thigas.quack.adapter.dto.RoadmapUserDTO;
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
@@ -19,7 +19,7 @@ public class UserRoadmapService {
     private IUserRoadmapRepository roadmapUserRepository;
     private final UserRoadmapMapper roadmapUserMapper = UserRoadmapMapper.INSTANCE;
 
-    public RoadmapUserDTO create(RoadmapUserDTO roadmapUserDTO) {
+    public UserRoadmapDTO create(UserRoadmapDTO roadmapUserDTO) {
         // Converter DTO para entidade
         UserRoadmapEntity roadmapUser = roadmapUserMapper.DtoToEntity(roadmapUserDTO);
         // Salvar a entidade
@@ -28,14 +28,14 @@ public class UserRoadmapService {
         return roadmapUserMapper.EntityToDto(toSaveRoadmapUser);
     }
 
-    public Optional<RoadmapUserDTO> getById(int id) {
+    public Optional<UserRoadmapDTO> getById(int id) {
         // Buscar a entidade do repositório
         Optional<UserRoadmapEntity> roadmapUser = roadmapUserRepository.findById(id);
         // Converter a entidade para DTO
         return roadmapUser.map(roadmapUserMapper::EntityToDto);
     }
 
-    public Iterable<RoadmapUserDTO> getAll() {
+    public Iterable<UserRoadmapDTO> getAll() {
         // Buscar todas as entidades
         Iterable<UserRoadmapEntity> roadmapUsers = roadmapUserRepository.findAll();
         // Converter todas as entidades para DTOs
@@ -44,7 +44,7 @@ public class UserRoadmapService {
                 .collect(Collectors.toList());
     }
 
-    public void update(RoadmapUserDTO roadmapUserDTO) {
+    public void update(UserRoadmapDTO roadmapUserDTO) {
         // Converter DTO para entidade
         UserRoadmapEntity roadmapUser = roadmapUserMapper.DtoToEntity(roadmapUserDTO);
         // Atualizar a entidade
