@@ -22,8 +22,8 @@ public class TaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "task_lesson", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ManyToMany
+    @JoinTable(name = "task_lesson_mapping", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
     @Column(nullable = false)
@@ -64,5 +64,6 @@ public class TaskModel {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+
     }
 }

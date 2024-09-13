@@ -32,6 +32,9 @@ public class LessonModel {
     @ManyToMany(mappedBy = "lessons")
     private Set<StepModel> steps;
 
+    @ManyToMany(mappedBy = "lessons")
+    private Set<TaskModel> tasks;
+
     /**
      * @return int return the id
      */
@@ -114,6 +117,20 @@ public class LessonModel {
      */
     public void setSteps(Set<StepModel> steps) {
         this.steps = steps;
+    }
+
+    /**
+     * @return Set<TaskModel> return the tasks
+     */
+    public Set<TaskModel> getTasks() {
+        return tasks;
+    }
+
+    /**
+     * @param tasks the tasks to set
+     */
+    public void setTasks(Set<TaskModel> tasks) {
+        this.tasks = tasks;
     }
 
 }

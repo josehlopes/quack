@@ -30,8 +30,8 @@ public class StatisticsController {
 
     @GetMapping
     public ResponseEntity<Iterable<StatisticsDTO>> getAll() {
-        Iterable<StatisticsDTO> addresses = statisticsService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<StatisticsDTO> statistics = statisticsService.getAll();
+        return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

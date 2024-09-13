@@ -30,8 +30,8 @@ public class UserRoadmapController {
 
     @GetMapping
     public ResponseEntity<Iterable<RoadmapUserDTO>> getAll() {
-        Iterable<RoadmapUserDTO> addresses = roadmapUserService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<RoadmapUserDTO> userRoadmaps = roadmapUserService.getAll();
+        return new ResponseEntity<>(userRoadmaps, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

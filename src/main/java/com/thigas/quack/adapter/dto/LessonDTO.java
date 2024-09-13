@@ -1,7 +1,5 @@
 package com.thigas.quack.adapter.dto;
 
-import java.util.Set;
-
 public class LessonDTO {
 
     private int id;
@@ -9,7 +7,6 @@ public class LessonDTO {
     private String description;
     private String language;
     private String imagePath;
-    private Set<Integer> roadmapIds;
 
     // Getters e Setters
 
@@ -86,14 +83,4 @@ public class LessonDTO {
     /**
      * @return Set<Integer> return the roadmapIds
      */
-    public Set<Integer> getRoadmapIds() {
-        return roadmapIds;
-    }
-
-    /**
-     * @param roadmapIds the roadmapIds to set
-     */
-    public void setRoadmapIds(Set<Integer> roadmapIds) {
-        this.roadmapIds = roadmapIds;
-    }
 }

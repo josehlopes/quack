@@ -1,17 +1,14 @@
 package com.thigas.quack.domain.entity;
 
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import java.util.Set;
 
 public class StepEntity {
 
     private int id;
 
-    private Set<RoadmapModel> roadmaps;
+    private Set<RoadmapEntity> roadmaps;
 
-    private Set<LessonModel> lessons;
+    private Set<LessonEntity> lessons;
 
     private String description;
 
@@ -30,30 +27,30 @@ public class StepEntity {
     }
 
     /**
-     * @return Set<RoadmapModel> return the roadmaps
+     * @return Set<RoadmapEntity> return the roadmaps
      */
-    public Set<RoadmapModel> getRoadmaps() {
+    public Set<RoadmapEntity> getRoadmaps() {
         return roadmaps;
     }
 
     /**
      * @param roadmaps the roadmaps to set
      */
-    public void setRoadmaps(Set<RoadmapModel> roadmaps) {
+    public void setRoadmaps(Set<RoadmapEntity> roadmaps) {
         this.roadmaps = roadmaps;
     }
 
     /**
-     * @return Set<LessonModel> return the lessons
+     * @return Set<LessonEntity> return the lessons
      */
-    public Set<LessonModel> getLessons() {
+    public Set<LessonEntity> getLessons() {
         return lessons;
     }
 
     /**
      * @param lessons the lessons to set
      */
-    public void setLessons(Set<LessonModel> lessons) {
+    public void setLessons(Set<LessonEntity> lessons) {
         this.lessons = lessons;
     }
 

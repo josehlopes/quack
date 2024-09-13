@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.application.service.LessonService;
 
@@ -16,9 +18,9 @@ public class LessonController {
     private LessonService lessonService;
 
     @PostMapping
-    public ResponseEntity<LessonDTO> createLesson(@RequestBody LessonDTO lessonDTO) {
-        LessonDTO createdLesson = lessonService.createLesson(lessonDTO);
-        return new ResponseEntity<>(createdLesson, HttpStatus.CREATED);
+    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> lessonDTOs) {
+        Set<LessonDTO> createdLessons = lessonService.createLessons(lessonDTOs);
+        return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

@@ -37,8 +37,8 @@ public class StepController {
 
     @GetMapping
     public ResponseEntity<Iterable<StepDTO>> getAll() {
-        Iterable<StepDTO> addresses = stepService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<StepDTO> steps = stepService.getAll();
+        return new ResponseEntity<>(steps, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

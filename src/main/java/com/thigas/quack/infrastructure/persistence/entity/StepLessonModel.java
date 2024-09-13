@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,9 @@ public class StepLessonModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", nullable = false)
     private LessonModel lesson;
+
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
 
     // Getters e Setters
 

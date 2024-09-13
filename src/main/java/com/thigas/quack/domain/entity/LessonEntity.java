@@ -1,7 +1,5 @@
 package com.thigas.quack.domain.entity;
 
-import java.util.Set;
-
 public class LessonEntity {
 
     private int id;
@@ -9,7 +7,6 @@ public class LessonEntity {
     private String description;
     private String language;
     private String imagePath;
-    private Set<RoadmapEntity> roadmaps;
 
     public int getId() {
         return id;
@@ -51,11 +48,4 @@ public class LessonEntity {
         this.imagePath = imagePath;
     }
 
-    public Set<RoadmapEntity> getRoadmaps() {
-        return roadmaps;
-    }
-
-    public void setRoadmaps(Set<RoadmapEntity> roadmaps) {
-        this.roadmaps = roadmaps;
-    }
 }

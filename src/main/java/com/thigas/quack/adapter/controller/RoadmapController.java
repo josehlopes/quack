@@ -37,8 +37,8 @@ public class RoadmapController {
 
     @GetMapping
     public ResponseEntity<Iterable<RoadmapDTO>> getAll() {
-        Iterable<RoadmapDTO> addresses = roadmapService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<RoadmapDTO> roadmaps = roadmapService.getAll();
+        return new ResponseEntity<>(roadmaps, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

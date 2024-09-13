@@ -26,8 +26,8 @@ public class StepModel {
     @JoinTable(name = "roadmap_step_mapping", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     private Set<RoadmapModel> roadmaps;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-    @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ManyToMany
+    @JoinTable(name = "step_lesson_mapping", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
     @Column(nullable = false)

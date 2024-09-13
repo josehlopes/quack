@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -19,13 +20,16 @@ public class LessonService {
 
     private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
-    public LessonDTO createLesson(LessonDTO lessonDTO) {
-        // Converter DTO para entidade
-        LessonEntity lesson = lessonMapper.DtoToEntity(lessonDTO);
-        // Salvar a entidade
-        LessonEntity savedLesson = lessonRepository.save(lesson);
-        // Converter entidade de volta para DTO
-        return lessonMapper.EntityToDto(savedLesson);
+    public Set<LessonDTO> createLessons(Set<LessonDTO> lessonDTOs) {
+        Set<LessonEntity> lessons = lessonDTOs.stream()
+                .map(lessonMapper::DtoToEntity)
+                .collect(Collectors.toSet());
+
+        Set<LessonEntity> savedLessons = lessonRepository.saveAll(lessons);
+
+        return savedLessons.stream()
+                .map(lessonMapper::EntityToDto)
+                .collect(Collectors.toSet());
     }
 
     public Optional<LessonDTO> getLessonById(int id) {

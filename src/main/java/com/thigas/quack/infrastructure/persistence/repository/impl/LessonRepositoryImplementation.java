@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import java.util.Set;
 
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
@@ -41,5 +42,16 @@ public class LessonRepositoryImplementation implements ILessonRepository {
         LessonModel lessonModel = lessonMapper.EntityToModel(lesson);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
         return lessonMapper.ModelToEntity(savedLessonModel);
+    }
+
+    @Override
+    public Set<LessonEntity> saveAll(Set<LessonEntity> lessons) {
+        List<LessonModel> lessonModels = lessons.stream()
+                .map(lessonMapper::EntityToModel)
+                .collect(Collectors.toList());
+        List<LessonModel> savedLessonModels = lessonModelRepository.saveAll(lessonModels);
+        return savedLessonModels.stream()
+                .map(lessonMapper::ModelToEntity)
+                .collect(Collectors.toSet());
     }
 }

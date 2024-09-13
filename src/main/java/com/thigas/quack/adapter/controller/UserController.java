@@ -30,8 +30,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Iterable<UserDTO>> getAll() {
-        Iterable<UserDTO> addresses = userService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<UserDTO> users = userService.getAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

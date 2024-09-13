@@ -7,9 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,23 +36,23 @@ public interface StepMapper {
     StepEntity ModelToEntity(StepModel stepModel);
 
     @Named("roadmapsToIds")
-    default Set<Integer> roadmapsToIds(Set<RoadmapModel> roadmaps) {
+    default Set<Integer> roadmapsToIds(Set<RoadmapEntity> roadmaps) {
         if (roadmaps == null) {
             return null;
         }
         return roadmaps.stream()
-                .map(RoadmapModel::getId)
+                .map(RoadmapEntity::getId)
                 .collect(Collectors.toSet());
     }
 
     @Named("idsToRoadmaps")
-    default Set<RoadmapModel> idsToRoadmaps(Set<Integer> roadmapIds) {
+    default Set<RoadmapEntity> idsToRoadmaps(Set<Integer> roadmapIds) {
         if (roadmapIds == null) {
             return null;
         }
         return roadmapIds.stream()
                 .map(id -> {
-                    RoadmapModel roadmap = new RoadmapModel();
+                    RoadmapEntity roadmap = new RoadmapEntity();
                     roadmap.setId(id);
                     return roadmap;
                 })
@@ -60,23 +60,23 @@ public interface StepMapper {
     }
 
     @Named("lessonsToIds")
-    default Set<Integer> lessonsToIds(Set<LessonModel> lessons) {
+    default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
         if (lessons == null) {
             return null;
         }
         return lessons.stream()
-                .map(LessonModel::getId)
+                .map(LessonEntity::getId)
                 .collect(Collectors.toSet());
     }
 
     @Named("idsToLessons")
-    default Set<LessonModel> idsToLessons(Set<Integer> lessonIds) {
+    default Set<LessonEntity> idsToLessons(Set<Integer> lessonIds) {
         if (lessonIds == null) {
             return null;
         }
         return lessonIds.stream()
                 .map(id -> {
-                    LessonModel lesson = new LessonModel();
+                    LessonEntity lesson = new LessonEntity();
                     lesson.setId(id);
                     return lesson;
                 })

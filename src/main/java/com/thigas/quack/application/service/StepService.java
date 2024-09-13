@@ -48,13 +48,8 @@ public class StepService {
             lesson.ifPresent(lessonEntities::add); // Adiciona a lição ao conjunto se estiver presente
         }
 
-        // Converter Set<LessonEntity> para Set<LessonModel>
-        Set<LessonModel> lessonModels = lessonEntities.stream()
-                .map(lessonMapper::EntityToModel) // Converte de LessonEntity para LessonModel
-                .collect(Collectors.toSet());
-
         // Definir as lições na entidade
-        stepEntity.setLessons(lessonModels);
+        stepEntity.setLessons(lessonEntities);
 
         // Persistir a entidade
         StepEntity savedStep = stepRepository.save(stepEntity);

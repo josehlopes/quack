@@ -29,8 +29,8 @@ public class AchievementController {
 
     @GetMapping
     public ResponseEntity<Iterable<AchievementDTO>> getAll() {
-        Iterable<AchievementDTO> addresses = achievementService.getAll();
-        return new ResponseEntity<>(addresses, HttpStatus.OK);
+        Iterable<AchievementDTO> achievements = achievementService.getAll();
+        return new ResponseEntity<>(achievements, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
