@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T11:05:20-0300",
+    date = "2024-09-13T15:28:57-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class StatisticsMapperImpl implements StatisticsMapper {
@@ -23,13 +23,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsDTO statisticsDTO = new StatisticsDTO();
 
         statisticsDTO.setUserId( statisticsUserId( statistics ) );
-        statisticsDTO.setBestStreak( statistics.getBestStreak() );
-        statisticsDTO.setChallengesCompleted( statistics.getChallengesCompleted() );
         statisticsDTO.setId( statistics.getId() );
-        statisticsDTO.setLessonsCompleted( statistics.getLessonsCompleted() );
         statisticsDTO.setStreakDays( statistics.getStreakDays() );
-        statisticsDTO.setUserExperience( statistics.getUserExperience() );
+        statisticsDTO.setBestStreak( statistics.getBestStreak() );
         statisticsDTO.setUserLevel( statistics.getUserLevel() );
+        statisticsDTO.setUserExperience( statistics.getUserExperience() );
+        statisticsDTO.setChallengesCompleted( statistics.getChallengesCompleted() );
+        statisticsDTO.setLessonsCompleted( statistics.getLessonsCompleted() );
 
         return statisticsDTO;
     }
@@ -43,13 +43,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
         statisticsEntity.setUser( statisticsDTOToUserEntity( statisticsDTO ) );
-        statisticsEntity.setBestStreak( statisticsDTO.getBestStreak() );
-        statisticsEntity.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
         statisticsEntity.setId( statisticsDTO.getId() );
-        statisticsEntity.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
         statisticsEntity.setStreakDays( statisticsDTO.getStreakDays() );
-        statisticsEntity.setUserExperience( statisticsDTO.getUserExperience() );
+        statisticsEntity.setBestStreak( statisticsDTO.getBestStreak() );
         statisticsEntity.setUserLevel( statisticsDTO.getUserLevel() );
+        statisticsEntity.setUserExperience( statisticsDTO.getUserExperience() );
+        statisticsEntity.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
+        statisticsEntity.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
 
         return statisticsEntity;
     }
@@ -63,13 +63,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsModel statisticsModel = new StatisticsModel();
 
         statisticsModel.setUser( userEntityToUserModel( statistics.getUser() ) );
-        statisticsModel.setChallengesCompleted( statistics.getChallengesCompleted() );
         statisticsModel.setId( statistics.getId() );
-        statisticsModel.setLessonsCompleted( statistics.getLessonsCompleted() );
-        statisticsModel.setUserExperience( statistics.getUserExperience() );
-        statisticsModel.setUserLevel( statistics.getUserLevel() );
-        statisticsModel.setbestStreak( statistics.getBestStreak() );
         statisticsModel.setstreakDays( statistics.getStreakDays() );
+        statisticsModel.setbestStreak( statistics.getBestStreak() );
+        statisticsModel.setUserLevel( statistics.getUserLevel() );
+        statisticsModel.setUserExperience( statistics.getUserExperience() );
+        statisticsModel.setChallengesCompleted( statistics.getChallengesCompleted() );
+        statisticsModel.setLessonsCompleted( statistics.getLessonsCompleted() );
 
         return statisticsModel;
     }
@@ -83,13 +83,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
         statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser() ) );
-        statisticsEntity.setBestStreak( statisticsModel.getbestStreak() );
-        statisticsEntity.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
         statisticsEntity.setId( statisticsModel.getId() );
-        statisticsEntity.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
         statisticsEntity.setStreakDays( statisticsModel.getstreakDays() );
-        statisticsEntity.setUserExperience( statisticsModel.getUserExperience() );
+        statisticsEntity.setBestStreak( statisticsModel.getbestStreak() );
         statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
+        statisticsEntity.setUserExperience( statisticsModel.getUserExperience() );
+        statisticsEntity.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
+        statisticsEntity.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
 
         return statisticsEntity;
     }
@@ -126,15 +126,15 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         UserModel userModel = new UserModel();
 
         userModel.setId( userEntity.getId() );
-        userModel.setBornAt( userEntity.getBornAt() );
-        userModel.setCpf( userEntity.getCpf() );
-        userModel.setEmail( userEntity.getEmail() );
-        userModel.setImagePath( userEntity.getImagePath() );
         userModel.setName( userEntity.getName() );
-        userModel.setPassword( userEntity.getPassword() );
         userModel.setPhone( userEntity.getPhone() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setBornAt( userEntity.getBornAt() );
         userModel.setPoints( userEntity.getPoints() );
         userModel.setRegisterAt( userEntity.getRegisterAt() );
+        userModel.setImagePath( userEntity.getImagePath() );
 
         return userModel;
     }
@@ -147,15 +147,15 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         UserEntity userEntity = new UserEntity();
 
         userEntity.setId( userModel.getId() );
-        userEntity.setBornAt( userModel.getBornAt() );
-        userEntity.setCpf( userModel.getCpf() );
-        userEntity.setEmail( userModel.getEmail() );
-        userEntity.setImagePath( userModel.getImagePath() );
         userEntity.setName( userModel.getName() );
-        userEntity.setPassword( userModel.getPassword() );
         userEntity.setPhone( userModel.getPhone() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setBornAt( userModel.getBornAt() );
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
+        userEntity.setImagePath( userModel.getImagePath() );
 
         return userEntity;
     }
