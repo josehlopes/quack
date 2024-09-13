@@ -1,7 +1,5 @@
 package com.thigas.quack.domain.entity;
 
-import com.thigas.quack.domain.entity.UserEntity;
-
 public class StatisticsEntity {
 
     private int id;

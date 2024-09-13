@@ -9,7 +9,7 @@ public class LessonDTO {
     private String description;
     private String language;
     private String imagePath;
-    private Set<Integer> roadmapIds; // IDs das roadmaps associadas à lesson
+    private Set<Integer> roadmapIds;
 
     // Getters e Setters
 

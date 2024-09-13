@@ -1,0 +1,25 @@
+package com.thigas.quack.adapter.dto;
+
+import java.util.Set;
+
+public class StepLessonDTO {
+
+    private int id;
+    private Set<Integer> lessonsIds;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Set<Integer> getLessonsIds() {
+        return lessonsIds;
+    }
+
+    public void setLessonsIds(Set<Integer> lessonsIds) {
+        this.lessonsIds = lessonsIds;
+    }
+}
