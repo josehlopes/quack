@@ -8,8 +8,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T00:51:01-0300",
-    comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-13T09:45:19-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
@@ -44,19 +44,27 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
     }
 
     private int roadmapUserEntityUserId(UserRoadmapEntity userRoadmapEntity) {
+        if ( userRoadmapEntity == null ) {
+            return 0;
+        }
         UserEntity user = userRoadmapEntity.getUser();
         if ( user == null ) {
             return 0;
         }
-        return user.getId();
+        int id = user.getId();
+        return id;
     }
 
     private int roadmapUserEntityRoadmapId(UserRoadmapEntity userRoadmapEntity) {
+        if ( userRoadmapEntity == null ) {
+            return 0;
+        }
         RoadmapEntity roadmap = userRoadmapEntity.getRoadmap();
         if ( roadmap == null ) {
             return 0;
         }
-        return roadmap.getId();
+        int id = roadmap.getId();
+        return id;
     }
 
     protected UserEntity roadmapUserDTOToUserEntity(RoadmapUserDTO roadmapUserDTO) {

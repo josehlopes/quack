@@ -9,8 +9,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T00:51:01-0300",
-    comments = "version: 1.6.0, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-13T09:45:19-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 public class StatisticsMapperImpl implements StatisticsMapper {
 
@@ -95,11 +95,15 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     private int statisticsUserId(StatisticsEntity statisticsEntity) {
+        if ( statisticsEntity == null ) {
+            return 0;
+        }
         UserEntity user = statisticsEntity.getUser();
         if ( user == null ) {
             return 0;
         }
-        return user.getId();
+        int id = user.getId();
+        return id;
     }
 
     protected UserEntity statisticsDTOToUserEntity(StatisticsDTO statisticsDTO) {
