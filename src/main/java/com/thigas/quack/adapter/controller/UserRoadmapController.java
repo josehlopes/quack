@@ -18,6 +18,7 @@ public class UserRoadmapController {
     @PostMapping
     public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO roadmapUserDTO) {
         UserRoadmapDTO createdRoadmapUser = roadmapUserService.create(roadmapUserDTO);
+        System.out.println(roadmapUserDTO);
         return new ResponseEntity<>(createdRoadmapUser, HttpStatus.CREATED);
     }
 

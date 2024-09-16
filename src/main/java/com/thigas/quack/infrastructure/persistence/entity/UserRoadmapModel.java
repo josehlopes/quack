@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "roadmap_user")
+@Table(name = "user_roadmap")
 public class UserRoadmapModel {
 
     @Id
@@ -20,11 +20,11 @@ public class UserRoadmapModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel user;
+    private UserModel userId;
 
     @ManyToOne
     @JoinColumn(name = "roadmap_id", nullable = false)
-    private RoadmapModel roadmap;
+    private RoadmapModel roadmapId;
 
     @Column(name = "progress", nullable = false)
     private Double progress;
@@ -50,31 +50,31 @@ public class UserRoadmapModel {
     }
 
     /**
-     * @return UserModel return the user
+     * @return UserModel return the userId
      */
-    public UserModel getUser() {
-        return user;
+    public UserModel getUserId() {
+        return userId;
     }
 
     /**
-     * @param user the user to set
+     * @param userId the userId to set
      */
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setUserId(UserModel userId) {
+        this.userId = userId;
     }
 
     /**
-     * @return RoadmapModel return the roadmap
+     * @return RoadmapModel return the roadmapId
      */
-    public RoadmapModel getRoadmap() {
-        return roadmap;
+    public RoadmapModel getRoadmapId() {
+        return roadmapId;
     }
 
     /**
-     * @param roadmap the roadmap to set
+     * @param roadmapId the roadmapId to set
      */
-    public void setRoadmap(RoadmapModel roadmap) {
-        this.roadmap = roadmap;
+    public void setRoadmapId(RoadmapModel roadmapId) {
+        this.roadmapId = roadmapId;
     }
 
     /**

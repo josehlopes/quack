@@ -7,7 +7,7 @@ public class UserRoadmapEntity {
     private int id;
     private UserEntity user;
     private RoadmapEntity roadmap;
-    private double progress;
+    private Double progress;
     private LocalDate startedAt;
     private LocalDate finishedAt;
 
@@ -54,16 +54,16 @@ public class UserRoadmapEntity {
     }
 
     /**
-     * @return double return the progress
+     * @return Double return the progress
      */
-    public double getProgress() {
+    public Double getProgress() {
         return progress;
     }
 
     /**
      * @param progress the progress to set
      */
-    public void setProgress(double progress) {
+    public void setProgress(Double progress) {
         this.progress = progress;
     }
 

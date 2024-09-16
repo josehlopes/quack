@@ -5,7 +5,7 @@ public class UserRoadmapDTO {
     private int id;
     private int userId;
     private int roadmapId;
-    private double progress;
+    private Double progress;
     private String startedAt;
     private String finishedAt;
 
@@ -52,16 +52,16 @@ public class UserRoadmapDTO {
     }
 
     /**
-     * @return double return the progress
+     * @return Double return the progress
      */
-    public double getProgress() {
+    public Double getProgress() {
         return progress;
     }
 
     /**
      * @param progress the progress to set
      */
-    public void setProgress(double progress) {
+    public void setProgress(Double progress) {
         this.progress = progress;
     }
 

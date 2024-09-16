@@ -9,8 +9,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-13T17:09:10-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-16T15:11:41-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 public class UserMapperImpl implements UserMapper {
 
@@ -28,14 +28,14 @@ public class UserMapperImpl implements UserMapper {
             userDTO.setBornAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getBornAt() ) );
         }
         userDTO.setRegisterAt( stringToOffSet( user.getRegisterAt() ) );
-        userDTO.setCpf( user.getCpf() );
-        userDTO.setEmail( user.getEmail() );
         userDTO.setId( user.getId() );
-        userDTO.setImagePath( user.getImagePath() );
         userDTO.setName( user.getName() );
-        userDTO.setPassword( user.getPassword() );
         userDTO.setPhone( user.getPhone() );
+        userDTO.setEmail( user.getEmail() );
+        userDTO.setPassword( user.getPassword() );
+        userDTO.setCpf( user.getCpf() );
         userDTO.setPoints( user.getPoints() );
+        userDTO.setImagePath( user.getImagePath() );
 
         return userDTO;
     }
@@ -52,14 +52,14 @@ public class UserMapperImpl implements UserMapper {
             userEntity.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
         userEntity.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
-        userEntity.setCpf( userDTO.getCpf() );
-        userEntity.setEmail( userDTO.getEmail() );
         userEntity.setId( userDTO.getId() );
-        userEntity.setImagePath( userDTO.getImagePath() );
         userEntity.setName( userDTO.getName() );
-        userEntity.setPassword( userDTO.getPassword() );
         userEntity.setPhone( userDTO.getPhone() );
+        userEntity.setEmail( userDTO.getEmail() );
+        userEntity.setPassword( userDTO.getPassword() );
+        userEntity.setCpf( userDTO.getCpf() );
         userEntity.setPoints( userDTO.getPoints() );
+        userEntity.setImagePath( userDTO.getImagePath() );
 
         return userEntity;
     }

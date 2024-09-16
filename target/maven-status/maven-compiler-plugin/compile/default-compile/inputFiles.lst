@@ -6,7 +6,6 @@ C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\c
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StatisticsDTO.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserAchievementsModel.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapUserDTO.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\StatisticsService.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StatisticsEntity.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ITaskRepository.java
@@ -49,6 +48,7 @@ C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\en
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AddressMapper.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserEntity.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapDTO.java
+C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserRoadmapDTO.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAddressRepository.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAchievementRepository.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\QuackApplication.java
@@ -71,6 +71,7 @@ C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastru
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\TaskRepositoryImplementation.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AchievementDTO.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserRoadmapMapper.java
+C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\LessonController.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\TaskController.java
 C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LessonDTO.java

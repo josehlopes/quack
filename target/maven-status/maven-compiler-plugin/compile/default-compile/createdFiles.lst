@@ -32,6 +32,7 @@ com\thigas\quack\adapter\mapper\LessonMapper.class
 com\thigas\quack\infrastructure\persistence\entity\StatisticsModel.class
 com\thigas\quack\infrastructure\persistence\repository\impl\UserRepositoryImplementation.class
 com\thigas\quack\infrastructure\persistence\repository\impl\UserRoadmapRepositoryImplementation.class
+com\thigas\quack\adapter\dto\UserRoadmapDTO.class
 com\thigas\quack\domain\entity\TaskEntity.class
 com\thigas\quack\infrastructure\persistence\repository\impl\AddressRepositoryImplementation.class
 com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.class
@@ -55,11 +56,11 @@ com\thigas\quack\domain\entity\AddressEntity.class
 com\thigas\quack\adapter\dto\TaskDTO.class
 com\thigas\quack\infrastructure\persistence\entity\AddressModel.class
 com\thigas\quack\infrastructure\persistence\entity\TaskModel.class
-com\thigas\quack\adapter\dto\RoadmapUserDTO.class
 com\thigas\quack\adapter\dto\UserDTO.class
 com\thigas\quack\application\service\UserService.class
 com\thigas\quack\adapter\controller\UserController.class
 com\thigas\quack\adapter\controller\StatisticsController.class
+com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.class
 com\thigas\quack\domain\repository\IRoadmapRepository.class
 com\thigas\quack\domain\repository\IUserRepository.class
 com\thigas\quack\adapter\mapper\UserRoadmapMapperImpl.class
