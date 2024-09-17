@@ -16,15 +16,15 @@ public class StatisticsController {
     private StatisticsService statisticsService;
 
     @PostMapping
-    public ResponseEntity<StatisticsDTO> create(@RequestBody StatisticsDTO statisticsDTO) {
-        StatisticsDTO createdStatistics = statisticsService.create(statisticsDTO);
+    public ResponseEntity<StatisticsDTO> create(@RequestBody StatisticsDTO DTO) {
+        StatisticsDTO createdStatistics = statisticsService.create(DTO);
         return new ResponseEntity<>(createdStatistics, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StatisticsDTO> getById(@PathVariable Integer id) {
         return statisticsService.getById(id)
-                .map(statisticsDTO -> new ResponseEntity<>(statisticsDTO, HttpStatus.OK))
+                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -35,9 +35,9 @@ public class StatisticsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StatisticsDTO statisticsDTO) {
-        if (id.equals(statisticsDTO.getId())) {
-            statisticsService.update(statisticsDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StatisticsDTO DTO) {
+        if (id.equals(DTO.getId())) {
+            statisticsService.update(DTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

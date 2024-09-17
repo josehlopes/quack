@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "task_user")
+@Table(name = "user_task")
 public class UserTaskModel {
 
     @Id
@@ -19,14 +19,14 @@ public class UserTaskModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel user;
+    private UserModel userId;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private TaskModel task;
+    private TaskModel taskId;
 
     @Column(nullable = false)
-    private String status;
+    private Boolean status;
 
     @Column(nullable = false)
     private String imagePath;
@@ -46,44 +46,44 @@ public class UserTaskModel {
     }
 
     /**
-     * @return UserModel return the user
+     * @return UserModel return the userId
      */
-    public UserModel getUser() {
-        return user;
+    public UserModel getUserId() {
+        return userId;
     }
 
     /**
-     * @param user the user to set
+     * @param userId the userId to set
      */
-    public void setUser(UserModel user) {
-        this.user = user;
+    public void setUserId(UserModel userId) {
+        this.userId = userId;
     }
 
     /**
-     * @return TaskModel return the task
+     * @return TaskModel return the taskId
      */
-    public TaskModel getTask() {
-        return task;
+    public TaskModel getTaskId() {
+        return taskId;
     }
 
     /**
-     * @param task the task to set
+     * @param taskId the taskId to set
      */
-    public void setTask(TaskModel task) {
-        this.task = task;
+    public void setTaskId(TaskModel taskId) {
+        this.taskId = taskId;
     }
 
     /**
-     * @return String return the status
+     * @return Boolean return the status
      */
-    public String getStatus() {
+    public Boolean isStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

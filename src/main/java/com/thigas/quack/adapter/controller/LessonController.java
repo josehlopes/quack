@@ -18,8 +18,8 @@ public class LessonController {
     private LessonService lessonService;
 
     @PostMapping
-    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> lessonDTOs) {
-        Set<LessonDTO> createdLessons = lessonService.createLessons(lessonDTOs);
+    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> DTO) {
+        Set<LessonDTO> createdLessons = lessonService.createLessons(DTO);
         return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 

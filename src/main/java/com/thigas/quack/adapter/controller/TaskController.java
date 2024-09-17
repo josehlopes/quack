@@ -23,15 +23,15 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO taskDTO) {
-        TaskDTO createdTaskDTO = taskService.create(taskDTO);
+    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO DTO) {
+        TaskDTO createdTaskDTO = taskService.create(DTO);
         return new ResponseEntity<>(createdTaskDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getById(@PathVariable Integer id) {
         return taskService.getById(id)
-                .map(taskDTO -> new ResponseEntity<>(taskDTO, HttpStatus.OK))
+                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -42,9 +42,9 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDTO taskDTO) {
-        if (id.equals(taskDTO.getId())) {
-            taskService.update(taskDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDTO DTO) {
+        if (id.equals(DTO.getId())) {
+            taskService.update(DTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

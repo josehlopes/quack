@@ -23,8 +23,8 @@ public class RoadmapController {
     private RoadmapService roadmapService;
 
     @PostMapping
-    public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO roadmapDTO) {
-        RoadmapDTO createdRoadmap = roadmapService.create(roadmapDTO);
+    public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO DTO) {
+        RoadmapDTO createdRoadmap = roadmapService.create(DTO);
         return new ResponseEntity<>(createdRoadmap, HttpStatus.CREATED);
     }
 

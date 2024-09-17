@@ -23,15 +23,15 @@ public class StepController {
     private StepService stepService;
 
     @PostMapping
-    public ResponseEntity<StepDTO> create(@RequestBody StepDTO stepDTO) {
-        StepDTO createdStepDTO = stepService.create(stepDTO);
+    public ResponseEntity<StepDTO> create(@RequestBody StepDTO DTO) {
+        StepDTO createdStepDTO = stepService.create(DTO);
         return new ResponseEntity<>(createdStepDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StepDTO> getById(@PathVariable Integer id) {
         return stepService.getById(id)
-                .map(stepDTO -> new ResponseEntity<>(stepDTO, HttpStatus.OK))
+                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -42,9 +42,9 @@ public class StepController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StepDTO stepDTO) {
-        if (id.equals(stepDTO.getId())) {
-            stepService.update(stepDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StepDTO DTO) {
+        if (id.equals(DTO.getId())) {
+            stepService.update(DTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -16,16 +16,15 @@ public class UserRoadmapController {
     private UserRoadmapService roadmapUserService;
 
     @PostMapping
-    public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO roadmapUserDTO) {
-        UserRoadmapDTO createdRoadmapUser = roadmapUserService.create(roadmapUserDTO);
-        System.out.println(roadmapUserDTO);
+    public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO DTO) {
+        UserRoadmapDTO createdRoadmapUser = roadmapUserService.create(DTO);
         return new ResponseEntity<>(createdRoadmapUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserRoadmapDTO> getById(@PathVariable Integer id) {
         return roadmapUserService.getById(id)
-                .map(roadmapUserDTO -> new ResponseEntity<>(roadmapUserDTO, HttpStatus.OK))
+                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -36,9 +35,9 @@ public class UserRoadmapController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRoadmapDTO roadmapUserDTO) {
-        if (id.equals(roadmapUserDTO.getId())) {
-            roadmapUserService.update(roadmapUserDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRoadmapDTO DTO) {
+        if (id.equals(DTO.getId())) {
+            roadmapUserService.update(DTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
