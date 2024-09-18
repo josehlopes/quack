@@ -8,37 +8,39 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+    DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     UserDTO entityToDto(UserEntity user);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     UserEntity dtoToEntity(UserDTO userDTO);
 
     UserModel entityToModel(UserEntity userEntity);
 
     UserEntity modelToEntity(UserModel userModel);
 
-    default OffsetDateTime offSetToString(String date) {
+    default OffsetDateTime stringToOffsetDateTime(String date) {
         if (date == null) {
             return null;
         }
-        OffsetDateTime offsetDateTime = OffsetDateTime.parse(date);
-        return offsetDateTime;
+        return OffsetDateTime.parse(date, DATE_TIME_FORMATTER);
     }
 
-    default String stringToOffSet(OffsetDateTime date) {
+    default String offsetDateTimeToString(OffsetDateTime date) {
         if (date == null) {
             return null;
         }
-        String offsetDateTime = date.toString();
-        return offsetDateTime;
+        return date.format(DATE_TIME_FORMATTER);
     }
 }
