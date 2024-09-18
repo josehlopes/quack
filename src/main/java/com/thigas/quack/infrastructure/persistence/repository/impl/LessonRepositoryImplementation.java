@@ -1,26 +1,24 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import java.util.Set;
-
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.ILessonModelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class LessonRepositoryImplementation implements ILessonRepository {
 
+    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
     @Autowired
     private ILessonModelRepository lessonModelRepository;
-
-    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
     public Optional<LessonEntity> findById(int id) {
         Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);

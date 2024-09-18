@@ -1,12 +1,11 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.application.service.UserRoadmapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.application.service.UserRoadmapService;
 
 @RestController
 @RequestMapping("/roadmap-users")

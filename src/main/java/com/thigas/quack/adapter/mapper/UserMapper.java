@@ -1,26 +1,23 @@
 package com.thigas.quack.adapter.mapper;
 
-import org.hibernate.mapping.Set;
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.domain.entity.UserEntity;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
 import java.time.OffsetDateTime;
 
-import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-import java.util.stream.Collectors;
-
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     // Mapeia User para UserDTO
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat =
+    "yyyy-MM-dd'T'HH:mm:ss")
     UserDTO EntityToDto(UserEntity user);
 
     // Mapeia UserDTO para User

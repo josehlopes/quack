@@ -1,66 +1,42 @@
 package com.thigas.quack.adapter.mapper;
 
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.domain.entity.UserRoadmapEntity;
+import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
-
 import java.time.LocalDate;
 
-@Mapper(uses = { UserMapper.class, RoadmapMapper.class })
+@Mapper(uses = {UserMapper.class, RoadmapMapper.class}, componentModel = "spring")
 public interface UserRoadmapMapper {
 
     UserRoadmapMapper INSTANCE = Mappers.getMapper(UserRoadmapMapper.class);
 
+    // Mapeia UserRoadmapEntity para UserRoadmapDTO
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    @Mapping(source = "progress", target = "progress")
-    @Mapping(source = "startedAt", target = "startedAt")
-    @Mapping(source = "finishedAt", target = "finishedAt")
-    UserRoadmapDTO EntityToDto(UserRoadmapEntity roadmapUserEntity);
+    UserRoadmapDTO EntityToDto(UserRoadmapEntity userRoadmapEntity);
 
+    // Mapeia UserRoadmapDTO para UserRoadmapEntity
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    @Mapping(source = "progress", target = "progress")
-    @Mapping(source = "startedAt", target = "startedAt")
-    @Mapping(source = "finishedAt", target = "finishedAt")
-    UserRoadmapEntity DtoToEntity(UserRoadmapDTO roadmapUserDTO);
+    UserRoadmapEntity DtoToEntity(UserRoadmapDTO userRoadmapDTO);
 
+    // Mapeia UserRoadmapEntity para UserRoadmapModel
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    @Mapping(source = "progress", target = "progress")
-    @Mapping(source = "startedAt", target = "startedAt")
-    @Mapping(source = "finishedAt", target = "finishedAt")
-    UserRoadmapModel EntityToModel(UserRoadmapEntity userEntity);
+    UserRoadmapModel EntityToModel(UserRoadmapEntity userRoadmapEntity);
 
+    // Mapeia UserRoadmapModel para UserRoadmapEntity
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    @Mapping(source = "progress", target = "progress")
-    @Mapping(source = "startedAt", target = "startedAt")
-    @Mapping(source = "finishedAt", target = "finishedAt")
-    UserRoadmapEntity ModelToEntity(UserRoadmapModel userModel);
+    UserRoadmapEntity ModelToEntity(UserRoadmapModel userRoadmapModel);
 
-    default LocalDate localDateToString(String date) {
-        if (date == null) {
-            return null;
-        }
-        LocalDate localDate = LocalDate.parse(date);
-        return localDate;
-    }
-
-    default String stringToOffSet(LocalDate date) {
-        if (date == null) {
-            return null;
-        }
-        String localDate = date.toString();
-        return localDate;
-    }
-
+    // Métodos de mapeamento customizados para IDs
     default UserModel map(Integer userId) {
         if (userId == null) {
             return null;
@@ -77,4 +53,19 @@ public interface UserRoadmapMapper {
         return userModel.getId();
     }
 
+    default RoadmapModel mapRoadmap(Integer roadmapId) {
+        if (roadmapId == null) {
+            return null;
+        }
+        RoadmapModel roadmapModel = new RoadmapModel();
+        roadmapModel.setId(roadmapId);
+        return roadmapModel;
+    }
+
+    default Integer map(RoadmapModel roadmapModel) {
+        if (roadmapModel == null) {
+            return null;
+        }
+        return roadmapModel.getId();
+    }
 }

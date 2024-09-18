@@ -1,25 +1,23 @@
 package com.thigas.quack.application.service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class StatisticsService {
 
-    @Autowired
-    private IStatisticsRepository statisticsRepository;
-
     // Instância do mapper
     private final StatisticsMapper statisticsMapper = StatisticsMapper.INSTANCE;
+    @Autowired
+    private IStatisticsRepository statisticsRepository;
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
         // Converter DTO para entidade

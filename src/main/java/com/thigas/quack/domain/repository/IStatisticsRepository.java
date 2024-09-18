@@ -1,7 +1,8 @@
 package com.thigas.quack.domain.repository;
 
-import java.util.Optional;
 import com.thigas.quack.domain.entity.StatisticsEntity;
+
+import java.util.Optional;
 
 public interface IStatisticsRepository {
 

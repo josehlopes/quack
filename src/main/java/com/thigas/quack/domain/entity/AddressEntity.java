@@ -1,12 +1,12 @@
 package com.thigas.quack.domain.entity;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddressEntity {
 
     private int id;
@@ -17,7 +17,5 @@ public class AddressEntity {
     private String country;
     private String zipCode;
     private String number;
-
-
 
 }

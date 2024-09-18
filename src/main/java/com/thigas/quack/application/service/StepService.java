@@ -1,15 +1,5 @@
 package com.thigas.quack.application.service;
 
-import java.util.Optional;
-
-import java.util.HashSet;
-import java.util.Set;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
@@ -17,22 +7,25 @@ import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import jakarta.websocket.server.ServerEndpoint;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class StepService {
 
-    @Autowired
-    private IStepRepository stepRepository;
-
-    @Autowired
-    private ILessonRepository lessonRepository;
-
     private final StepMapper stepMapper = StepMapper.INSTANCE;
     private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
+    @Autowired
+    private IStepRepository stepRepository;
+    @Autowired
+    private ILessonRepository lessonRepository;
 
     @Transactional
     public StepDTO create(StepDTO stepDTO) {

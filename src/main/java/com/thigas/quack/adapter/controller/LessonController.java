@@ -1,14 +1,13 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.LessonDTO;
+import com.thigas.quack.application.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
-
-import com.thigas.quack.adapter.dto.LessonDTO;
-import com.thigas.quack.application.service.LessonService;
 
 @RestController
 @RequestMapping("/lessons")

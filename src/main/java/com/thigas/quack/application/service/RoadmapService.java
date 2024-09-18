@@ -1,25 +1,23 @@
 package com.thigas.quack.application.service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.mapper.RoadmapMapper;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class RoadmapService {
 
-    @Autowired
-    private IRoadmapRepository roadmapRepository;
-
     // Instância do mapper
     private final RoadmapMapper roadmapMapper = RoadmapMapper.INSTANCE;
+    @Autowired
+    private IRoadmapRepository roadmapRepository;
 
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
         // Converter DTO para entidade

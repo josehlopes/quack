@@ -1,24 +1,22 @@
 package com.thigas.quack.application.service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.thigas.quack.adapter.dto.AchievementDTO;
 import com.thigas.quack.adapter.mapper.AchievementMapper;
 import com.thigas.quack.domain.entity.AchievementEntity;
 import com.thigas.quack.domain.repository.IAchievementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class AchievementService {
 
+    private final AchievementMapper achievementMapper = AchievementMapper.INSTANCE;
     @Autowired
     private IAchievementRepository achievementRepository;
-
-    private final AchievementMapper achievementMapper = AchievementMapper.INSTANCE;
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
         // Converter DTO para entidade

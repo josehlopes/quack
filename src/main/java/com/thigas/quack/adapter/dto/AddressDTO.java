@@ -1,12 +1,8 @@
 package com.thigas.quack.adapter.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class AddressDTO {
 
     private int id;
@@ -17,6 +13,5 @@ public class AddressDTO {
     private String country;
     private String zipCode;
     private String number;
-
 
 }

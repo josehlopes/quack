@@ -1,25 +1,23 @@
 package com.thigas.quack.application.service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class AddressService {
 
-    @Autowired
-    private IAddressRepository addressRepository;
-
     // Instância do mapper
     private final AddressMapper addressMapper = AddressMapper.INSTANCE;
+    @Autowired
+    private IAddressRepository addressRepository;
 
     public AddressDTO create(AddressDTO addressDTO) {
         // Converter DTO para entidade

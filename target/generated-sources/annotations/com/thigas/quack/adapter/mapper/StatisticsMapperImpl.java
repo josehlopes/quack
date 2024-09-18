@@ -6,12 +6,14 @@ import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-17T14:55:10-0300",
+    date = "2024-09-18T11:57:35-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
+@Component
 public class StatisticsMapperImpl implements StatisticsMapper {
 
     @Override
@@ -23,13 +25,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsDTO statisticsDTO = new StatisticsDTO();
 
         statisticsDTO.setUserId( statisticsUserId( statistics ) );
-        statisticsDTO.setId( statistics.getId() );
-        statisticsDTO.setStreakDays( statistics.getStreakDays() );
         statisticsDTO.setBestStreak( statistics.getBestStreak() );
-        statisticsDTO.setUserLevel( statistics.getUserLevel() );
-        statisticsDTO.setUserExperience( statistics.getUserExperience() );
         statisticsDTO.setChallengesCompleted( statistics.getChallengesCompleted() );
+        statisticsDTO.setId( statistics.getId() );
         statisticsDTO.setLessonsCompleted( statistics.getLessonsCompleted() );
+        statisticsDTO.setStreakDays( statistics.getStreakDays() );
+        statisticsDTO.setUserExperience( statistics.getUserExperience() );
+        statisticsDTO.setUserLevel( statistics.getUserLevel() );
 
         return statisticsDTO;
     }
@@ -43,13 +45,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
         statisticsEntity.setUser( statisticsDTOToUserEntity( statisticsDTO ) );
-        statisticsEntity.setId( statisticsDTO.getId() );
-        statisticsEntity.setStreakDays( statisticsDTO.getStreakDays() );
         statisticsEntity.setBestStreak( statisticsDTO.getBestStreak() );
-        statisticsEntity.setUserLevel( statisticsDTO.getUserLevel() );
-        statisticsEntity.setUserExperience( statisticsDTO.getUserExperience() );
         statisticsEntity.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
+        statisticsEntity.setId( statisticsDTO.getId() );
         statisticsEntity.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
+        statisticsEntity.setStreakDays( statisticsDTO.getStreakDays() );
+        statisticsEntity.setUserExperience( statisticsDTO.getUserExperience() );
+        statisticsEntity.setUserLevel( statisticsDTO.getUserLevel() );
 
         return statisticsEntity;
     }
@@ -62,14 +64,14 @@ public class StatisticsMapperImpl implements StatisticsMapper {
 
         StatisticsModel statisticsModel = new StatisticsModel();
 
-        statisticsModel.setUser( userEntityToUserModel( statistics.getUser() ) );
-        statisticsModel.setId( statistics.getId() );
-        statisticsModel.setstreakDays( statistics.getStreakDays() );
-        statisticsModel.setbestStreak( statistics.getBestStreak() );
-        statisticsModel.setUserLevel( statistics.getUserLevel() );
-        statisticsModel.setUserExperience( statistics.getUserExperience() );
+        statisticsModel.setUser( map( statisticsUserId1( statistics ) ) );
+        statisticsModel.setBestStreak( statistics.getBestStreak() );
         statisticsModel.setChallengesCompleted( statistics.getChallengesCompleted() );
+        statisticsModel.setId( statistics.getId() );
         statisticsModel.setLessonsCompleted( statistics.getLessonsCompleted() );
+        statisticsModel.setStreakDays( statistics.getStreakDays() );
+        statisticsModel.setUserExperience( statistics.getUserExperience() );
+        statisticsModel.setUserLevel( statistics.getUserLevel() );
 
         return statisticsModel;
     }
@@ -83,13 +85,13 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
         statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser() ) );
-        statisticsEntity.setId( statisticsModel.getId() );
-        statisticsEntity.setStreakDays( statisticsModel.getstreakDays() );
-        statisticsEntity.setBestStreak( statisticsModel.getbestStreak() );
-        statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
-        statisticsEntity.setUserExperience( statisticsModel.getUserExperience() );
+        statisticsEntity.setBestStreak( statisticsModel.getBestStreak() );
         statisticsEntity.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
+        statisticsEntity.setId( statisticsModel.getId() );
         statisticsEntity.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
+        statisticsEntity.setStreakDays( statisticsModel.getStreakDays() );
+        statisticsEntity.setUserExperience( statisticsModel.getUserExperience() );
+        statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
 
         return statisticsEntity;
     }
@@ -118,25 +120,16 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return userEntity;
     }
 
-    protected UserModel userEntityToUserModel(UserEntity userEntity) {
-        if ( userEntity == null ) {
+    private Integer statisticsUserId1(StatisticsEntity statisticsEntity) {
+        if ( statisticsEntity == null ) {
             return null;
         }
-
-        UserModel userModel = new UserModel();
-
-        userModel.setId( userEntity.getId() );
-        userModel.setName( userEntity.getName() );
-        userModel.setPhone( userEntity.getPhone() );
-        userModel.setEmail( userEntity.getEmail() );
-        userModel.setPassword( userEntity.getPassword() );
-        userModel.setCpf( userEntity.getCpf() );
-        userModel.setBornAt( userEntity.getBornAt() );
-        userModel.setPoints( userEntity.getPoints() );
-        userModel.setRegisterAt( userEntity.getRegisterAt() );
-        userModel.setImagePath( userEntity.getImagePath() );
-
-        return userModel;
+        UserEntity user = statisticsEntity.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        int id = user.getId();
+        return id;
     }
 
     protected UserEntity userModelToUserEntity(UserModel userModel) {
@@ -147,15 +140,15 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         UserEntity userEntity = new UserEntity();
 
         userEntity.setId( userModel.getId() );
-        userEntity.setName( userModel.getName() );
-        userEntity.setPhone( userModel.getPhone() );
-        userEntity.setEmail( userModel.getEmail() );
-        userEntity.setPassword( userModel.getPassword() );
-        userEntity.setCpf( userModel.getCpf() );
         userEntity.setBornAt( userModel.getBornAt() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setImagePath( userModel.getImagePath() );
+        userEntity.setName( userModel.getName() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setPhone( userModel.getPhone() );
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
-        userEntity.setImagePath( userModel.getImagePath() );
 
         return userEntity;
     }

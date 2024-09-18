@@ -14,7 +14,7 @@ import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserTaskModelRepository;
 
 @Repository
-public class UserTaskRepository implements IUserTaskRepository {
+public class UserTaskRepositoryImplementation implements IUserTaskRepository {
 
     @Autowired
     private IUserTaskModelRepository userTaskModelRepository;

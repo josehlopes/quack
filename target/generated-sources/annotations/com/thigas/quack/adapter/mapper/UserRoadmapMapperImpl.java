@@ -5,90 +5,100 @@ import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-17T14:55:10-0300",
+    date = "2024-09-18T11:57:35-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
+@Component
 public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
-    private final RoadmapMapper roadmapMapper = RoadmapMapper.INSTANCE;
-
     @Override
-    public UserRoadmapDTO EntityToDto(UserRoadmapEntity roadmapUserEntity) {
-        if ( roadmapUserEntity == null ) {
+    public UserRoadmapDTO EntityToDto(UserRoadmapEntity userRoadmapEntity) {
+        if ( userRoadmapEntity == null ) {
             return null;
         }
 
         UserRoadmapDTO userRoadmapDTO = new UserRoadmapDTO();
 
-        userRoadmapDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
-        userRoadmapDTO.setRoadmapId( roadmapUserEntityRoadmapId( roadmapUserEntity ) );
-        userRoadmapDTO.setProgress( roadmapUserEntity.getProgress() );
-        userRoadmapDTO.setStartedAt( stringToOffSet( roadmapUserEntity.getStartedAt() ) );
-        userRoadmapDTO.setFinishedAt( stringToOffSet( roadmapUserEntity.getFinishedAt() ) );
-        userRoadmapDTO.setId( roadmapUserEntity.getId() );
+        userRoadmapDTO.setUserId( userRoadmapEntityUserId( userRoadmapEntity ) );
+        userRoadmapDTO.setRoadmapId( userRoadmapEntityRoadmapId( userRoadmapEntity ) );
+        if ( userRoadmapEntity.getFinishedAt() != null ) {
+            userRoadmapDTO.setFinishedAt( DateTimeFormatter.ISO_LOCAL_DATE.format( userRoadmapEntity.getFinishedAt() ) );
+        }
+        userRoadmapDTO.setId( userRoadmapEntity.getId() );
+        userRoadmapDTO.setProgress( userRoadmapEntity.getProgress() );
+        if ( userRoadmapEntity.getStartedAt() != null ) {
+            userRoadmapDTO.setStartedAt( DateTimeFormatter.ISO_LOCAL_DATE.format( userRoadmapEntity.getStartedAt() ) );
+        }
 
         return userRoadmapDTO;
     }
 
     @Override
-    public UserRoadmapEntity DtoToEntity(UserRoadmapDTO roadmapUserDTO) {
-        if ( roadmapUserDTO == null ) {
+    public UserRoadmapEntity DtoToEntity(UserRoadmapDTO userRoadmapDTO) {
+        if ( userRoadmapDTO == null ) {
             return null;
         }
 
         UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
 
-        userRoadmapEntity.setUser( userRoadmapDTOToUserEntity( roadmapUserDTO ) );
-        userRoadmapEntity.setRoadmap( userRoadmapDTOToRoadmapEntity( roadmapUserDTO ) );
-        userRoadmapEntity.setProgress( roadmapUserDTO.getProgress() );
-        userRoadmapEntity.setStartedAt( localDateToString( roadmapUserDTO.getStartedAt() ) );
-        userRoadmapEntity.setFinishedAt( localDateToString( roadmapUserDTO.getFinishedAt() ) );
-        userRoadmapEntity.setId( roadmapUserDTO.getId() );
+        userRoadmapEntity.setUser( userRoadmapDTOToUserEntity( userRoadmapDTO ) );
+        userRoadmapEntity.setRoadmap( userRoadmapDTOToRoadmapEntity( userRoadmapDTO ) );
+        if ( userRoadmapDTO.getFinishedAt() != null ) {
+            userRoadmapEntity.setFinishedAt( LocalDate.parse( userRoadmapDTO.getFinishedAt() ) );
+        }
+        userRoadmapEntity.setId( userRoadmapDTO.getId() );
+        userRoadmapEntity.setProgress( userRoadmapDTO.getProgress() );
+        if ( userRoadmapDTO.getStartedAt() != null ) {
+            userRoadmapEntity.setStartedAt( LocalDate.parse( userRoadmapDTO.getStartedAt() ) );
+        }
 
         return userRoadmapEntity;
     }
 
     @Override
-    public UserRoadmapModel EntityToModel(UserRoadmapEntity userEntity) {
-        if ( userEntity == null ) {
+    public UserRoadmapModel EntityToModel(UserRoadmapEntity userRoadmapEntity) {
+        if ( userRoadmapEntity == null ) {
             return null;
         }
 
         UserRoadmapModel userRoadmapModel = new UserRoadmapModel();
 
-        userRoadmapModel.setUserId( map( userEntityUserId( userEntity ) ) );
-        userRoadmapModel.setRoadmapId( roadmapMapper.map( userEntityRoadmapId( userEntity ) ) );
-        userRoadmapModel.setProgress( userEntity.getProgress() );
-        userRoadmapModel.setStartedAt( userEntity.getStartedAt() );
-        userRoadmapModel.setFinishedAt( userEntity.getFinishedAt() );
-        userRoadmapModel.setId( userEntity.getId() );
+        userRoadmapModel.setUserId( map( userRoadmapEntityUserId1( userRoadmapEntity ) ) );
+        userRoadmapModel.setRoadmapId( mapRoadmap( userRoadmapEntityRoadmapId1( userRoadmapEntity ) ) );
+        userRoadmapModel.setFinishedAt( userRoadmapEntity.getFinishedAt() );
+        userRoadmapModel.setId( userRoadmapEntity.getId() );
+        userRoadmapModel.setProgress( userRoadmapEntity.getProgress() );
+        userRoadmapModel.setStartedAt( userRoadmapEntity.getStartedAt() );
 
         return userRoadmapModel;
     }
 
     @Override
-    public UserRoadmapEntity ModelToEntity(UserRoadmapModel userModel) {
-        if ( userModel == null ) {
+    public UserRoadmapEntity ModelToEntity(UserRoadmapModel userRoadmapModel) {
+        if ( userRoadmapModel == null ) {
             return null;
         }
 
         UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
 
-        userRoadmapEntity.setUser( userRoadmapModelToUserEntity( userModel ) );
-        userRoadmapEntity.setRoadmap( userRoadmapModelToRoadmapEntity( userModel ) );
-        userRoadmapEntity.setProgress( userModel.getProgress() );
-        userRoadmapEntity.setStartedAt( userModel.getStartedAt() );
-        userRoadmapEntity.setFinishedAt( userModel.getFinishedAt() );
-        userRoadmapEntity.setId( userModel.getId() );
+        userRoadmapEntity.setUser( userRoadmapModelToUserEntity( userRoadmapModel ) );
+        userRoadmapEntity.setRoadmap( userRoadmapModelToRoadmapEntity( userRoadmapModel ) );
+        userRoadmapEntity.setFinishedAt( userRoadmapModel.getFinishedAt() );
+        userRoadmapEntity.setId( userRoadmapModel.getId() );
+        userRoadmapEntity.setProgress( userRoadmapModel.getProgress() );
+        userRoadmapEntity.setStartedAt( userRoadmapModel.getStartedAt() );
 
         return userRoadmapEntity;
     }
 
-    private int roadmapUserEntityUserId(UserRoadmapEntity userRoadmapEntity) {
+    private int userRoadmapEntityUserId(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return 0;
         }
@@ -100,7 +110,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         return id;
     }
 
-    private int roadmapUserEntityRoadmapId(UserRoadmapEntity userRoadmapEntity) {
+    private int userRoadmapEntityRoadmapId(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return 0;
         }
@@ -136,7 +146,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         return roadmapEntity;
     }
 
-    private Integer userEntityUserId(UserRoadmapEntity userRoadmapEntity) {
+    private Integer userRoadmapEntityUserId1(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return null;
         }
@@ -148,7 +158,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         return id;
     }
 
-    private Integer userEntityRoadmapId(UserRoadmapEntity userRoadmapEntity) {
+    private Integer userRoadmapEntityRoadmapId1(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return null;
         }
@@ -179,7 +189,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( roadmapMapper.map( userRoadmapModel.getRoadmapId() ) );
+        roadmapEntity.setId( map( userRoadmapModel.getRoadmapId() ) );
 
         return roadmapEntity;
     }

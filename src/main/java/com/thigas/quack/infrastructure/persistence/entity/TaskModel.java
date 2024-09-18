@@ -1,19 +1,13 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "task")
 public class TaskModel {
@@ -31,39 +25,4 @@ public class TaskModel {
 
     @Column(nullable = false)
     private String imagePath;
-
-    // Getters e Setters
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Set<LessonModel> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(Set<LessonModel> lessons) {
-        this.lessons = lessons;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-
-    }
 }

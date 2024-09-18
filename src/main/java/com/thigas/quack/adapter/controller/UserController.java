@@ -1,12 +1,11 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.application.service.UserService;
 
 @RestController
 @RequestMapping("/users")

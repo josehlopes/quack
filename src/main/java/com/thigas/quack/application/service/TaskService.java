@@ -1,14 +1,5 @@
 package com.thigas.quack.application.service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.StreamSupport;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.adapter.mapper.TaskMapper;
@@ -16,21 +7,25 @@ import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class TaskService {
 
-    @Autowired
-    private ITaskRepository taskRepository;
-
-    @Autowired
-    private ILessonRepository lessonRepository;
-
     private final TaskMapper taskMapper = TaskMapper.INSTANCE;
     private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
+    @Autowired
+    private ITaskRepository taskRepository;
+    @Autowired
+    private ILessonRepository lessonRepository;
 
     @Transactional
     public TaskDTO create(TaskDTO taskDTO) {

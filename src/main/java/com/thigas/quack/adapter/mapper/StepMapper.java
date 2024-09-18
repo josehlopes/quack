@@ -1,20 +1,19 @@
 package com.thigas.quack.adapter.mapper;
 
+import com.thigas.quack.adapter.dto.StepDTO;
+import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import com.thigas.quack.adapter.dto.StepDTO;
-import com.thigas.quack.domain.entity.StepEntity;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StepMapper {
 
     StepMapper INSTANCE = Mappers.getMapper(StepMapper.class);
@@ -40,9 +39,7 @@ public interface StepMapper {
         if (roadmaps == null) {
             return null;
         }
-        return roadmaps.stream()
-                .map(RoadmapEntity::getId)
-                .collect(Collectors.toSet());
+        return roadmaps.stream().map(RoadmapEntity::getId).collect(Collectors.toSet());
     }
 
     @Named("idsToRoadmaps")
@@ -50,13 +47,11 @@ public interface StepMapper {
         if (roadmapIds == null) {
             return null;
         }
-        return roadmapIds.stream()
-                .map(id -> {
-                    RoadmapEntity roadmap = new RoadmapEntity();
-                    roadmap.setId(id);
-                    return roadmap;
-                })
-                .collect(Collectors.toSet());
+        return roadmapIds.stream().map(id -> {
+            RoadmapEntity roadmap = new RoadmapEntity();
+            roadmap.setId(id);
+            return roadmap;
+        }).collect(Collectors.toSet());
     }
 
     @Named("lessonsToIds")
@@ -64,9 +59,7 @@ public interface StepMapper {
         if (lessons == null) {
             return null;
         }
-        return lessons.stream()
-                .map(LessonEntity::getId)
-                .collect(Collectors.toSet());
+        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
     }
 
     @Named("idsToLessons")
@@ -74,12 +67,10 @@ public interface StepMapper {
         if (lessonIds == null) {
             return null;
         }
-        return lessonIds.stream()
-                .map(id -> {
-                    LessonEntity lesson = new LessonEntity();
-                    lesson.setId(id);
-                    return lesson;
-                })
-                .collect(Collectors.toSet());
+        return lessonIds.stream().map(id -> {
+            LessonEntity lesson = new LessonEntity();
+            lesson.setId(id);
+            return lesson;
+        }).collect(Collectors.toSet());
     }
 }

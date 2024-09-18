@@ -1,8 +1,8 @@
 package com.thigas.quack.domain.repository;
 
-import java.util.Optional;
-
 import com.thigas.quack.domain.entity.UserEntity;
+
+import java.util.Optional;
 
 public interface IUserRepository {
     UserEntity save(UserEntity user);

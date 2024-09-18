@@ -1,21 +1,22 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import java.util.stream.Collectors;
 import com.thigas.quack.adapter.mapper.StepMapper;
 import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IStepModelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class StepRepositoryImplementation implements IStepRepository {
 
+    private final StepMapper stepMapper = StepMapper.INSTANCE;
     @Autowired
     private IStepModelRepository stepModelRepository;
-    private final StepMapper stepMapper = StepMapper.INSTANCE;
 
     @Override
     public StepEntity save(StepEntity step) {

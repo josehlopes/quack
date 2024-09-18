@@ -1,8 +1,8 @@
 package com.thigas.quack.domain.repository;
 
-import java.util.Optional;
-
 import com.thigas.quack.domain.entity.UserTaskEntity;
+
+import java.util.Optional;
 
 public interface IUserTaskRepository {
     UserTaskEntity save(UserTaskEntity userTask);

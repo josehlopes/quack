@@ -1,18 +1,12 @@
 package com.thigas.quack.adapter.controller;
 
+import javax.tools.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-
-import javax.tools.Diagnostic;
-import javax.tools.DiagnosticCollector;
-import javax.tools.JavaCompiler;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 
 public class CodeExecutor {
     public static String runCode(String code) {
@@ -59,7 +53,7 @@ public class CodeExecutor {
 
         // Executa o código compilado
         try (URLClassLoader classLoader = URLClassLoader
-                .newInstance(new URL[] { sourceFile.getParentFile().toURI().toURL() })) {
+                .newInstance(new URL[]{sourceFile.getParentFile().toURI().toURL()})) {
             Class<?> userClass = classLoader.loadClass(className);
             Object instance = userClass.getDeclaredConstructor().newInstance();
 
@@ -73,15 +67,15 @@ public class CodeExecutor {
 
             // Executa os testes
             int[][] testCases = {
-                    { 0, 100 }, { 1, 10 }, { 0, 0 }, { 1, 1 }, { 10, 5 }, { -10, -1 }
+                    {0, 100}, {1, 10}, {0, 0}, {1, 1}, {10, 5}, {-10, -1}
             };
-            int[] expectedResults = { 2500, 25, 0, 1, 0, -25 };
+            int[] expectedResults = {2500, 25, 0, 1, 0, -25};
 
             for (int i = 0; i < testCases.length; i++) {
                 int[] testCase = testCases[i];
                 int expectedResult = expectedResults[i];
                 int resultValue = (int) calculateMethod.invoke(instance, testCase[0], testCase[1]); // resultValue é
-                                                                                                    // temporário
+                // temporário
                 result.append("Test ").append(i + 1).append(": ") // Aqui você usa result para armazenar os resultados
                         .append(resultValue == expectedResult ? "Passed" : "Failed").append("\n");
             }

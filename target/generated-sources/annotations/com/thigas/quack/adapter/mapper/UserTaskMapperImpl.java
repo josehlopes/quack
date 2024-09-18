@@ -6,12 +6,14 @@ import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-17T15:14:19-0300",
+    date = "2024-09-18T11:57:34-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
+@Component
 public class UserTaskMapperImpl implements UserTaskMapper {
 
     @Override
@@ -24,7 +26,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         userTaskDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
         userTaskDTO.setTaskId( roadmapUserEntityTaskId( roadmapUserEntity ) );
-        userTaskDTO.setStatus( roadmapUserEntity.isStatus() );
+        userTaskDTO.setStatus( roadmapUserEntity.getStatus() );
         userTaskDTO.setImagePath( roadmapUserEntity.getImagePath() );
         userTaskDTO.setId( roadmapUserEntity.getId() );
 
@@ -41,7 +43,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         userTaskEntity.setUser( userTaskDTOToUserEntity( roadmapUserDTO ) );
         userTaskEntity.setTask( userTaskDTOToTaskEntity( roadmapUserDTO ) );
-        userTaskEntity.setStatus( roadmapUserDTO.isStatus() );
+        userTaskEntity.setStatus( roadmapUserDTO.getStatus() );
         userTaskEntity.setImagePath( roadmapUserDTO.getImagePath() );
         userTaskEntity.setId( roadmapUserDTO.getId() );
 
@@ -58,7 +60,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         userTaskModel.setUserId( userIdToModel( userEntityUserId( userEntity ) ) );
         userTaskModel.setTaskId( taskIdToModel( userEntityTaskId( userEntity ) ) );
-        userTaskModel.setStatus( userEntity.isStatus() );
+        userTaskModel.setStatus( userEntity.getStatus() );
         userTaskModel.setImagePath( userEntity.getImagePath() );
         userTaskModel.setId( userEntity.getId() );
 
@@ -75,7 +77,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         userTaskEntity.setUser( userTaskModelToUserEntity( userModel ) );
         userTaskEntity.setTask( userTaskModelToTaskEntity( userModel ) );
-        userTaskEntity.setStatus( userModel.isStatus() );
+        userTaskEntity.setStatus( userModel.getStatus() );
         userTaskEntity.setImagePath( userModel.getImagePath() );
         userTaskEntity.setId( userModel.getId() );
 

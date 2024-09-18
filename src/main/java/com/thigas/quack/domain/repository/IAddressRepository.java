@@ -1,8 +1,8 @@
 package com.thigas.quack.domain.repository;
 
-import java.util.Optional;
-
 import com.thigas.quack.domain.entity.AddressEntity;
+
+import java.util.Optional;
 
 public interface IAddressRepository {
     AddressEntity save(AddressEntity address);

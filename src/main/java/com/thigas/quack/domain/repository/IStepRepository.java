@@ -1,7 +1,8 @@
 package com.thigas.quack.domain.repository;
 
-import java.util.Optional;
 import com.thigas.quack.domain.entity.StepEntity;
+
+import java.util.Optional;
 
 public interface IStepRepository {
     StepEntity save(StepEntity step);

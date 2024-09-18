@@ -15,10 +15,9 @@ import java.util.stream.StreamSupport;
 @Service
 public class LessonService {
 
+    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
     @Autowired
     private ILessonRepository lessonRepository;
-
-    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
 
     public Set<LessonDTO> createLessons(Set<LessonDTO> lessonDTOs) {
         Set<LessonEntity> lessons = lessonDTOs.stream()

@@ -1,89 +1,97 @@
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AddressDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\AddressEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\TaskModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\StepService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StatisticsDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserAchievementsModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\StatisticsService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StatisticsEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ITaskRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StepMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IAddressModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ILessonRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IRoadmapModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StepRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\RoadmapMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\UserRoadmapService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRoadmapRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\AddressService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStepRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AchievementController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StatisticsModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\TaskMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\usecase\RunUserCodeUseCase.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AddressController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\LessonService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StatisticsRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StepDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeExecutor.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\LessonMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StatisticsMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IRoadmapRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AchievementMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\AddressRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\TaskEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\LessonModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserRoadmapController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\LessonEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\RoadmapService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\AchievementRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStatisticsModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\ITaskModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserRoadmapEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AddressMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserRoadmapDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAddressRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAchievementRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\QuackApplication.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\RoadmapModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\RoadmapRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\UserService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStatisticsRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\example\UserCode.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\AddressModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\TaskService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StepEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IAchievementModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserRoadmapModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRoadmapRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\application\service\AchievementService.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStepModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\TaskRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AchievementDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserRoadmapMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\LessonController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\TaskController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LessonDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\RoadmapEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StatisticsController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\ILessonModelRepository.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\TaskDTO.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\AchievementModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StepController.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserTaskModel.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\domain\entity\AchievementEntity.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\LessonRepositoryImplementation.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserMapper.java
-C:\Users\José Henrique\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\RoadmapController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AchievementController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AddressController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeExecutor.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\LessonController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\RoadmapController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StatisticsController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StepController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\TaskController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserRoadmapController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserTaskController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AchievementDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AddressDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LessonDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StatisticsDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StepDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\TaskDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserRoadmapDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserTaskDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AchievementMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AddressMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\LessonMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\RoadmapMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StatisticsMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StepMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\TaskMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserRoadmapMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserTaskMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\AchievementService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\AddressService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\LessonService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\RoadmapService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\StatisticsService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\StepService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\TaskService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserRoadmapService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserTaskService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\usecase\RunUserCodeUseCase.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\AchievementEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\AddressEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\LessonEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\RoadmapEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StatisticsEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StepEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\TaskEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserRoadmapEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserTaskEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\example\UserCode.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAchievementRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAddressRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ILessonRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IRoadmapRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStatisticsRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStepRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ITaskRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRoadmapRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserTaskRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\AchievementModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\AddressModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\LessonModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\RoadmapModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StatisticsModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\TaskModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserAchievementsModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserTaskModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\AchievementRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\AddressRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\LessonRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\RoadmapRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StatisticsRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StepRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\TaskRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRoadmapRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserTaskRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IAchievementModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IAddressModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\ILessonModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IRoadmapModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStatisticsModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStepModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\ITaskModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserRoadmapModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserTaskModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\QuackApplication.java

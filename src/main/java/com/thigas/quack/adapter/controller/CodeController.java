@@ -1,11 +1,10 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.application.usecase.RunUserCodeUseCase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.thigas.quack.application.usecase.RunUserCodeUseCase;
 
 @Controller
 public class CodeController {

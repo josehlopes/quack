@@ -8,12 +8,14 @@ import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-17T14:55:10-0300",
+    date = "2024-09-18T11:57:35-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
+@Component
 public class TaskMapperImpl implements TaskMapper {
 
     @Override
@@ -25,8 +27,8 @@ public class TaskMapperImpl implements TaskMapper {
         TaskDTO taskDTO = new TaskDTO();
 
         taskDTO.setLessonIds( lessonsToIds( taskEntity.getLessons() ) );
-        taskDTO.setId( taskEntity.getId() );
         taskDTO.setDescription( taskEntity.getDescription() );
+        taskDTO.setId( taskEntity.getId() );
         taskDTO.setImagePath( taskEntity.getImagePath() );
 
         return taskDTO;
@@ -41,8 +43,8 @@ public class TaskMapperImpl implements TaskMapper {
         TaskEntity taskEntity = new TaskEntity();
 
         taskEntity.setLessons( idsToLessons( taskDTO.getLessonIds() ) );
-        taskEntity.setId( taskDTO.getId() );
         taskEntity.setDescription( taskDTO.getDescription() );
+        taskEntity.setId( taskDTO.getId() );
         taskEntity.setImagePath( taskDTO.getImagePath() );
 
         return taskEntity;
@@ -57,8 +59,8 @@ public class TaskMapperImpl implements TaskMapper {
         TaskModel taskModel = new TaskModel();
 
         taskModel.setLessons( lessonEntitySetToLessonModelSet( taskEntity.getLessons() ) );
-        taskModel.setId( taskEntity.getId() );
         taskModel.setDescription( taskEntity.getDescription() );
+        taskModel.setId( taskEntity.getId() );
         taskModel.setImagePath( taskEntity.getImagePath() );
 
         return taskModel;
@@ -73,8 +75,8 @@ public class TaskMapperImpl implements TaskMapper {
         TaskEntity taskEntity = new TaskEntity();
 
         taskEntity.setLessons( lessonModelSetToLessonEntitySet( taskModel.getLessons() ) );
-        taskEntity.setId( taskModel.getId() );
         taskEntity.setDescription( taskModel.getDescription() );
+        taskEntity.setId( taskModel.getId() );
         taskEntity.setImagePath( taskModel.getImagePath() );
 
         return taskEntity;
@@ -87,11 +89,11 @@ public class TaskMapperImpl implements TaskMapper {
 
         LessonModel lessonModel = new LessonModel();
 
-        lessonModel.setId( lessonEntity.getId() );
-        lessonModel.setTitle( lessonEntity.getTitle() );
         lessonModel.setDescription( lessonEntity.getDescription() );
-        lessonModel.setLanguage( lessonEntity.getLanguage() );
+        lessonModel.setId( lessonEntity.getId() );
         lessonModel.setImagePath( lessonEntity.getImagePath() );
+        lessonModel.setLanguage( lessonEntity.getLanguage() );
+        lessonModel.setTitle( lessonEntity.getTitle() );
 
         return lessonModel;
     }
@@ -116,11 +118,11 @@ public class TaskMapperImpl implements TaskMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setId( lessonModel.getId() );
-        lessonEntity.setTitle( lessonModel.getTitle() );
         lessonEntity.setDescription( lessonModel.getDescription() );
-        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setId( lessonModel.getId() );
         lessonEntity.setImagePath( lessonModel.getImagePath() );
+        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setTitle( lessonModel.getTitle() );
 
         return lessonEntity;
     }

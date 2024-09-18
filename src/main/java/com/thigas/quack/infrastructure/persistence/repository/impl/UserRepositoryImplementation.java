@@ -1,23 +1,22 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserModelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImplementation implements IUserRepository {
 
+    private final UserMapper userMapper = UserMapper.INSTANCE;
     @Autowired
     private IUserModelRepository userModelRepository;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
 
     @Override
     public UserEntity save(UserEntity address) {

@@ -1,16 +1,15 @@
 package com.thigas.quack.adapter.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import com.thigas.quack.adapter.dto.UserTaskDTO;
 import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserMapper.class, TaskMapper.class })
+@Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface UserTaskMapper {
 
     UserTaskMapper INSTANCE = Mappers.getMapper(UserTaskMapper.class);

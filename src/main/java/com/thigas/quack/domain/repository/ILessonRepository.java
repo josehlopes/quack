@@ -1,9 +1,9 @@
 package com.thigas.quack.domain.repository;
 
+import com.thigas.quack.domain.entity.LessonEntity;
+
 import java.util.Optional;
 import java.util.Set;
-
-import com.thigas.quack.domain.entity.LessonEntity;
 
 public interface ILessonRepository {
     LessonEntity save(LessonEntity lesson);

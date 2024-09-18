@@ -1,18 +1,18 @@
 package com.thigas.quack.adapter.mapper;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.thigas.quack.adapter.dto.TaskDTO;
+import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.TaskEntity;
+import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.domain.entity.TaskEntity;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TaskMapper {
 
     TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
@@ -34,9 +34,7 @@ public interface TaskMapper {
         if (lessons == null) {
             return null;
         }
-        return lessons.stream()
-                .map(LessonEntity::getId)
-                .collect(Collectors.toSet());
+        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
     }
 
     @Named("idsToLessons")
@@ -44,12 +42,10 @@ public interface TaskMapper {
         if (lessonIds == null) {
             return null;
         }
-        return lessonIds.stream()
-                .map(id -> {
-                    LessonEntity lesson = new LessonEntity();
-                    lesson.setId(id);
-                    return lesson;
-                })
-                .collect(Collectors.toSet());
+        return lessonIds.stream().map(id -> {
+            LessonEntity lesson = new LessonEntity();
+            lesson.setId(id);
+            return lesson;
+        }).collect(Collectors.toSet());
     }
 }
