@@ -11,19 +11,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tasks")
 public class TaskController {
 
+    private final TaskService taskService;
+
     @Autowired
-    private TaskService taskService;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO DTO) {
-        TaskDTO createdTaskDTO = taskService.create(DTO);
+    public ResponseEntity<TaskDTO> create(@RequestBody TaskDTO taskDTO) {
+        TaskDTO createdTaskDTO = taskService.create(taskDTO);
         return new ResponseEntity<>(createdTaskDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskDTO> getById(@PathVariable Integer id) {
-        return taskService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return taskService.getById(id).map(taskDTO -> new ResponseEntity<>(taskDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +37,9 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            taskService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDTO taskDTO) {
+        if (id.equals(taskDTO.getId())) {
+            taskService.update(taskDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -48,5 +51,4 @@ public class TaskController {
         taskService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

@@ -19,22 +19,20 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     private IRoadmapModelRepository roadmapModelRepository;
 
     @Override
-    public RoadmapEntity save(RoadmapEntity roadmap) {
-        RoadmapModel roadmapModel = userMapper.EntityToModel(roadmap);
+    public RoadmapEntity save(RoadmapEntity roadmapEntity) {
+        RoadmapModel roadmapModel = userMapper.entityToModel(roadmapEntity);
         RoadmapModel savedRoadmapModel = roadmapModelRepository.save(roadmapModel);
-        return userMapper.ModelToEntity(savedRoadmapModel);
+        return userMapper.modelToEntity(savedRoadmapModel);
     }
 
     @Override
     public Optional<RoadmapEntity> findById(int id) {
-        return roadmapModelRepository.findById(id).map(userMapper::ModelToEntity);
+        return roadmapModelRepository.findById(id).map(userMapper::modelToEntity);
     }
 
     @Override
     public Iterable<RoadmapEntity> findAll() {
-        return roadmapModelRepository.findAll().stream()
-                .map(userMapper::ModelToEntity)
-                .collect(Collectors.toList());
+        return roadmapModelRepository.findAll().stream().map(userMapper::modelToEntity).collect(Collectors.toList());
     }
 
     @Override

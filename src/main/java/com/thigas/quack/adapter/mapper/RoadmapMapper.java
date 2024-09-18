@@ -12,13 +12,11 @@ public interface RoadmapMapper {
 
     RoadmapMapper INSTANCE = Mappers.getMapper(RoadmapMapper.class);
 
+    RoadmapDTO entityToDto(RoadmapEntity roadmap);
 
-    RoadmapDTO EntityToDto(RoadmapEntity roadmap);
+    RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO);
 
+    RoadmapModel entityToModel(RoadmapEntity roadmap);
 
-    RoadmapEntity DtoToEntity(RoadmapDTO roadmapDTO);
-
-    RoadmapModel EntityToModel(RoadmapEntity roadmap);
-
-    RoadmapEntity ModelToEntity(RoadmapModel roadmapModel);
+    RoadmapEntity modelToEntity(RoadmapModel roadmapModel);
 }

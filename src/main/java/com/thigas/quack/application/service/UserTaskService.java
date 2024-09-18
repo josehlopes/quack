@@ -19,34 +19,24 @@ public class UserTaskService {
     private IUserTaskRepository userTaskRepository;
 
     public UserTaskDTO create(UserTaskDTO userTaskDTO) {
-        // Converter DTO para entidade
-        UserTaskEntity userTask = userTaskMapper.DtoToEntity(userTaskDTO);
-        // Salvar a entidade
+        UserTaskEntity userTask = userTaskMapper.dtoToEntity(userTaskDTO);
         UserTaskEntity toSaveRoadmapUser = userTaskRepository.save(userTask);
-        // Converter entidade de volta para DTO
-        return userTaskMapper.EntityToDto(toSaveRoadmapUser);
+        return userTaskMapper.entityToDto(toSaveRoadmapUser);
     }
 
     public Optional<UserTaskDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<UserTaskEntity> userTask = userTaskRepository.findById(id);
-        // Converter a entidade para DTO
-        return userTask.map(userTaskMapper::EntityToDto);
+        return userTask.map(userTaskMapper::entityToDto);
     }
 
     public Iterable<UserTaskDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<UserTaskEntity> userTasks = userTaskRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(userTasks.spliterator(), false)
-                .map(userTaskMapper::EntityToDto)
+        return StreamSupport.stream(userTasks.spliterator(), false).map(userTaskMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(UserTaskDTO userTaskDTO) {
-        // Converter DTO para entidade
-        UserTaskEntity userTask = userTaskMapper.DtoToEntity(userTaskDTO);
-        // Atualizar a entidade
+        UserTaskEntity userTask = userTaskMapper.dtoToEntity(userTaskDTO);
         userTaskRepository.save(userTask);
     }
 

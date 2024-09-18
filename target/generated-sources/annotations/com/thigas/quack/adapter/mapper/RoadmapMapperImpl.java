@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:34-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class RoadmapMapperImpl implements RoadmapMapper {
 
     @Override
-    public RoadmapDTO EntityToDto(RoadmapEntity roadmap) {
+    public RoadmapDTO entityToDto(RoadmapEntity roadmap) {
         if ( roadmap == null ) {
             return null;
         }
@@ -31,7 +31,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapEntity DtoToEntity(RoadmapDTO roadmapDTO) {
+    public RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO) {
         if ( roadmapDTO == null ) {
             return null;
         }
@@ -47,7 +47,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapModel EntityToModel(RoadmapEntity roadmap) {
+    public RoadmapModel entityToModel(RoadmapEntity roadmap) {
         if ( roadmap == null ) {
             return null;
         }
@@ -63,7 +63,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
     }
 
     @Override
-    public RoadmapEntity ModelToEntity(RoadmapModel roadmapModel) {
+    public RoadmapEntity modelToEntity(RoadmapModel roadmapModel) {
         if ( roadmapModel == null ) {
             return null;
         }

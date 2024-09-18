@@ -10,20 +10,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/roadmaps")
 public class RoadmapController {
-    @Autowired
 
-    private RoadmapService roadmapService;
+    private final RoadmapService roadmapService;
+
+    @Autowired
+    public RoadmapController(RoadmapService roadmapService) {
+        this.roadmapService = roadmapService;
+    }
 
     @PostMapping
-    public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO DTO) {
-        RoadmapDTO createdRoadmap = roadmapService.create(DTO);
+    public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO roadmapDTO) {
+        RoadmapDTO createdRoadmap = roadmapService.create(roadmapDTO);
         return new ResponseEntity<>(createdRoadmap, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoadmapDTO> getById(@PathVariable Integer id) {
-        return roadmapService.getById(id)
-                .map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
+        return roadmapService.getById(id).map(roadmapDTO -> new ResponseEntity<>(roadmapDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +37,9 @@ public class RoadmapController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody RoadmapDTO addressDTO) {
-        if (id.equals(addressDTO.getId())) {
-            roadmapService.update(addressDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody RoadmapDTO roadmapDTO) {
+        if (id.equals(roadmapDTO.getId())) {
+            roadmapService.update(roadmapDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

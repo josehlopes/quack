@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:35-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
@@ -19,7 +19,7 @@ public class UserMapperImpl implements UserMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
-    public UserDTO EntityToDto(UserEntity user) {
+    public UserDTO entityToDto(UserEntity user) {
         if ( user == null ) {
             return null;
         }
@@ -43,7 +43,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserEntity DtoToEntity(UserDTO userDTO) {
+    public UserEntity dtoToEntity(UserDTO userDTO) {
         if ( userDTO == null ) {
             return null;
         }
@@ -67,45 +67,45 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserModel EntityToModel(UserEntity userEntity) {
+    public UserModel entityToModel(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
         }
 
         UserModel userModel = new UserModel();
 
-        userModel.setId( userEntity.getId() );
-        userModel.setName( userEntity.getName() );
-        userModel.setPhone( userEntity.getPhone() );
-        userModel.setEmail( userEntity.getEmail() );
-        userModel.setPassword( userEntity.getPassword() );
-        userModel.setCpf( userEntity.getCpf() );
         userModel.setBornAt( userEntity.getBornAt() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setId( userEntity.getId() );
+        userModel.setImagePath( userEntity.getImagePath() );
+        userModel.setName( userEntity.getName() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setPhone( userEntity.getPhone() );
         userModel.setPoints( userEntity.getPoints() );
         userModel.setRegisterAt( userEntity.getRegisterAt() );
-        userModel.setImagePath( userEntity.getImagePath() );
 
         return userModel;
     }
 
     @Override
-    public UserEntity ModelToEntity(UserModel userModel) {
+    public UserEntity modelToEntity(UserModel userModel) {
         if ( userModel == null ) {
             return null;
         }
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userModel.getId() );
-        userEntity.setName( userModel.getName() );
-        userEntity.setPhone( userModel.getPhone() );
-        userEntity.setEmail( userModel.getEmail() );
-        userEntity.setPassword( userModel.getPassword() );
-        userEntity.setCpf( userModel.getCpf() );
         userEntity.setBornAt( userModel.getBornAt() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setId( userModel.getId() );
+        userEntity.setImagePath( userModel.getImagePath() );
+        userEntity.setName( userModel.getName() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setPhone( userModel.getPhone() );
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
-        userEntity.setImagePath( userModel.getImagePath() );
 
         return userEntity;
     }

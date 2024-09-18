@@ -13,30 +13,33 @@ import java.util.Set;
 @RequestMapping("/lessons")
 public class LessonController {
 
+    private final LessonService lessonService;
+
     @Autowired
-    private LessonService lessonService;
+    public LessonController(LessonService lessonService) {
+        this.lessonService = lessonService;
+    }
 
     @PostMapping
-    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> DTO) {
-        Set<LessonDTO> createdLessons = lessonService.createLessons(DTO);
+    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> lessonDTOs) {
+        Set<LessonDTO> createdLessons = lessonService.createLessons(lessonDTOs);
         return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LessonDTO> getLessonById(@PathVariable Integer id) {
-        return lessonService.getLessonById(id)
-                .map(lessonDTO -> new ResponseEntity<>(lessonDTO, HttpStatus.OK))
+    public ResponseEntity<LessonDTO> getById(@PathVariable Integer id) {
+        return lessonService.getLessonById(id).map(lessonDTO -> new ResponseEntity<>(lessonDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<LessonDTO>> getAllLessons() {
+    public ResponseEntity<Iterable<LessonDTO>> getAll() {
         Iterable<LessonDTO> lessons = lessonService.getAllLessons();
         return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateLesson(@PathVariable Integer id, @RequestBody LessonDTO lessonDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody LessonDTO lessonDTO) {
         if (id.equals(lessonDTO.getId())) {
             lessonService.updateLesson(lessonDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -46,7 +49,7 @@ public class LessonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLesson(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         lessonService.deleteLesson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

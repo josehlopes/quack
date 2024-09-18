@@ -11,32 +11,35 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/roadmap-users")
 public class UserRoadmapController {
 
+    private final UserRoadmapService userRoadmapService;
+
     @Autowired
-    private UserRoadmapService roadmapUserService;
+    public UserRoadmapController(UserRoadmapService userRoadmapService) {
+        this.userRoadmapService = userRoadmapService;
+    }
 
     @PostMapping
-    public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO DTO) {
-        UserRoadmapDTO createdRoadmapUser = roadmapUserService.create(DTO);
-        return new ResponseEntity<>(createdRoadmapUser, HttpStatus.CREATED);
+    public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+        UserRoadmapDTO createdUserRoadmapDTO = userRoadmapService.create(userRoadmapDTO);
+        return new ResponseEntity<>(createdUserRoadmapDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserRoadmapDTO> getById(@PathVariable Integer id) {
-        return roadmapUserService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return userRoadmapService.getById(id).map(userRoadmapDTO -> new ResponseEntity<>(userRoadmapDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
     public ResponseEntity<Iterable<UserRoadmapDTO>> getAll() {
-        Iterable<UserRoadmapDTO> userRoadmaps = roadmapUserService.getAll();
+        Iterable<UserRoadmapDTO> userRoadmaps = userRoadmapService.getAll();
         return new ResponseEntity<>(userRoadmaps, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRoadmapDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            roadmapUserService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRoadmapDTO userRoadmapDTO) {
+        if (id.equals(userRoadmapDTO.getId())) {
+            userRoadmapService.update(userRoadmapDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +48,7 @@ public class UserRoadmapController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        roadmapUserService.delete(id);
+        userRoadmapService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -16,8 +16,8 @@ public class CodeController {
     }
 
     @PostMapping("/submit")
-    public String submitCode(@RequestParam("code") String code, Model model) {
-        String result = runUserCodeUseCase.runTests(code); // Passa o código do usuário para o Use Case
+    public String submitCode(@RequestParam("code") String userCode, Model model) {
+        String result = runUserCodeUseCase.runTests(userCode);
         model.addAttribute("result", result);
         return "results";
     }

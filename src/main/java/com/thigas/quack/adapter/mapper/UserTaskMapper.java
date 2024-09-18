@@ -9,34 +9,26 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
+@Mapper(uses = { UserMapper.class, TaskMapper.class }, componentModel = "spring")
 public interface UserTaskMapper {
 
     UserTaskMapper INSTANCE = Mappers.getMapper(UserTaskMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "task.id", target = "taskId")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserTaskDTO EntityToDto(UserTaskEntity roadmapUserEntity);
+    UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "taskId", target = "task.id")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserTaskEntity DtoToEntity(UserTaskDTO roadmapUserDTO);
+    UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO);
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "task.id", target = "taskId")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserTaskModel EntityToModel(UserTaskEntity userEntity);
+    UserTaskModel entityToModel(UserTaskEntity userEntity);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "taskId", target = "task.id")
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserTaskEntity ModelToEntity(UserTaskModel userModel);
+    UserTaskEntity modelToEntity(UserTaskModel userModel);
 
     default UserModel userIdToModel(Integer userId) {
         if (userId == null) {

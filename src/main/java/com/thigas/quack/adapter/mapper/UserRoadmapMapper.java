@@ -9,34 +9,27 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import java.time.LocalDate;
-
-@Mapper(uses = {UserMapper.class, RoadmapMapper.class}, componentModel = "spring")
+@Mapper(uses = { UserMapper.class, RoadmapMapper.class }, componentModel = "spring")
 public interface UserRoadmapMapper {
 
     UserRoadmapMapper INSTANCE = Mappers.getMapper(UserRoadmapMapper.class);
 
-    // Mapeia UserRoadmapEntity para UserRoadmapDTO
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    UserRoadmapDTO EntityToDto(UserRoadmapEntity userRoadmapEntity);
+    UserRoadmapDTO entityToDto(UserRoadmapEntity userRoadmapEntity);
 
-    // Mapeia UserRoadmapDTO para UserRoadmapEntity
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    UserRoadmapEntity DtoToEntity(UserRoadmapDTO userRoadmapDTO);
+    UserRoadmapEntity dtoToEntity(UserRoadmapDTO userRoadmapDTO);
 
-    // Mapeia UserRoadmapEntity para UserRoadmapModel
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
-    UserRoadmapModel EntityToModel(UserRoadmapEntity userRoadmapEntity);
+    UserRoadmapModel entityToModel(UserRoadmapEntity userRoadmapEntity);
 
-    // Mapeia UserRoadmapModel para UserRoadmapEntity
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
-    UserRoadmapEntity ModelToEntity(UserRoadmapModel userRoadmapModel);
+    UserRoadmapEntity modelToEntity(UserRoadmapModel userRoadmapModel);
 
-    // Métodos de mapeamento customizados para IDs
     default UserModel map(Integer userId) {
         if (userId == null) {
             return null;

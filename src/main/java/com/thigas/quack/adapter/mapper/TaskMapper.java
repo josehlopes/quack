@@ -18,16 +18,16 @@ public interface TaskMapper {
     TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
 
     @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
-    TaskDTO EntityToDto(TaskEntity taskEntity);
+    TaskDTO entityToDto(TaskEntity taskEntity);
 
     @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
-    TaskEntity DtoToEntity(TaskDTO taskDTO);
+    TaskEntity dtoToEntity(TaskDTO taskDTO);
 
     @Mapping(source = "lessons", target = "lessons")
-    TaskModel EntityToModel(TaskEntity taskEntity);
+    TaskModel entityToModel(TaskEntity taskEntity);
 
     @Mapping(source = "lessons", target = "lessons")
-    TaskEntity ModelToEntity(TaskModel taskModel);
+    TaskEntity modelToEntity(TaskModel taskModel);
 
     @Named("lessonsToIds")
     default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {

@@ -15,15 +15,14 @@ public class AchievementController {
     private AchievementService achievementService;
 
     @PostMapping
-    public ResponseEntity<AchievementDTO> create(@RequestBody AchievementDTO DTO) {
-        AchievementDTO createdAchievement = achievementService.create(DTO);
+    public ResponseEntity<AchievementDTO> create(@RequestBody AchievementDTO achievementDTO) {
+        AchievementDTO createdAchievement = achievementService.create(achievementDTO);
         return new ResponseEntity<>(createdAchievement, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AchievementDTO> getById(@PathVariable Integer id) {
-        return achievementService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return achievementService.getById(id).map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +33,9 @@ public class AchievementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AchievementDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            achievementService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AchievementDTO achievementDTO) {
+        if (id.equals(achievementDTO.getId())) {
+            achievementService.update(achievementDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

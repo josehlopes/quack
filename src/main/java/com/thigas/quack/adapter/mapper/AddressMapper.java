@@ -14,16 +14,16 @@ public interface AddressMapper {
     AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     @Mapping(source = "user.id", target = "userId")
-    AddressDTO EntityToDto(AddressEntity address);
+    AddressDTO entityToDto(AddressEntity address);
 
     @Mapping(source = "userId", target = "user.id")
-    AddressEntity DtoToEntity(AddressDTO addressDTO);
+    AddressEntity dtoToEntity(AddressDTO addressDTO);
 
     @Mapping(source = "user.id", target = "user.id")
-    AddressModel EntityToModel(AddressEntity address);
+    AddressModel entityToModel(AddressEntity address);
 
     @Mapping(source = "user.id", target = "user.id")
-    AddressEntity ModelToEntity(AddressModel addressModel);
+    AddressEntity modelToEntity(AddressModel addressModel);
 
     default UserModel map(Integer userId) {
         if (userId == null) {

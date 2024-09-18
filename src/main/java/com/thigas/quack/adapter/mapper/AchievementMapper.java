@@ -12,27 +12,11 @@ public interface AchievementMapper {
 
     AchievementMapper INSTANCE = Mappers.getMapper(AchievementMapper.class);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
-    AchievementEntity DtoToEntity(AchievementDTO achievementDTO);
+    AchievementEntity dtoToEntity(AchievementDTO achievementDTO);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
-    AchievementDTO EntityToDto(AchievementEntity achievementEntity);
+    AchievementDTO entityToDto(AchievementEntity achievementEntity);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
-    AchievementModel EntityToModel(AchievementEntity achievementEntity);
+    AchievementModel entityToModel(AchievementEntity achievementEntity);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "description", target = "description")
-    @Mapping(source = "imagePath", target = "imagePath")
-    AchievementEntity ModelToEntity(AchievementModel achievementModel);
+    AchievementEntity modelToEntity(AchievementModel achievementModel);
 }

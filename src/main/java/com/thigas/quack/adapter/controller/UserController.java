@@ -11,19 +11,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO DTO) {
-        UserDTO createdUser = userService.create(DTO);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+        UserDTO createdUserDTO = userService.create(userDTO);
+        return new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getById(@PathVariable Integer id) {
-        return userService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return userService.getById(id).map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +37,9 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            userService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        if (id.equals(userDTO.getId())) {
+            userService.update(userDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

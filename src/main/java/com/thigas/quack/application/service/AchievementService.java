@@ -15,38 +15,29 @@ import java.util.stream.StreamSupport;
 public class AchievementService {
 
     private final AchievementMapper achievementMapper = AchievementMapper.INSTANCE;
+
     @Autowired
     private IAchievementRepository achievementRepository;
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
-        // Converter DTO para entidade
-        AchievementEntity achievement = achievementMapper.DtoToEntity(achievementDTO);
-        // Salvar a entidade
+        AchievementEntity achievement = achievementMapper.dtoToEntity(achievementDTO);
         AchievementEntity toSaveAchievement = achievementRepository.save(achievement);
-        // Converter entidade de volta para DTO
-        return achievementMapper.EntityToDto(toSaveAchievement);
+        return achievementMapper.entityToDto(toSaveAchievement);
     }
 
     public Optional<AchievementDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<AchievementEntity> achievement = achievementRepository.findById(id);
-        // Converter a entidade para DTO
-        return achievement.map(achievementMapper::EntityToDto);
+        return achievement.map(achievementMapper::entityToDto);
     }
 
     public Iterable<AchievementDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<AchievementEntity> achievements = achievementRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(achievements.spliterator(), false)
-                .map(achievementMapper::EntityToDto)
+        return StreamSupport.stream(achievements.spliterator(), false).map(achievementMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AchievementDTO achievementDTO) {
-        // Converter DTO para entidade
-        AchievementEntity achievement = achievementMapper.DtoToEntity(achievementDTO);
-        // Atualizar a entidade
+        AchievementEntity achievement = achievementMapper.dtoToEntity(achievementDTO);
         achievementRepository.save(achievement);
     }
 

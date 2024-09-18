@@ -22,34 +22,28 @@ public class LessonRepositoryImplementation implements ILessonRepository {
 
     public Optional<LessonEntity> findById(int id) {
         Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
-        return lessonModelOptional.map(lessonMapper::ModelToEntity);
+        return lessonModelOptional.map(lessonMapper::modelToEntity);
     }
 
     public List<LessonEntity> findAll() {
         List<LessonModel> lessonModels = lessonModelRepository.findAll();
-        return lessonModels.stream()
-                .map(lessonMapper::ModelToEntity)
-                .collect(Collectors.toList());
+        return lessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toList());
     }
 
     public void deleteById(int id) {
         lessonModelRepository.deleteById(id);
     }
 
-    public LessonEntity save(LessonEntity lesson) {
-        LessonModel lessonModel = lessonMapper.EntityToModel(lesson);
+    public LessonEntity save(LessonEntity lessonEntity) {
+        LessonModel lessonModel = lessonMapper.entityToModel(lessonEntity);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
-        return lessonMapper.ModelToEntity(savedLessonModel);
+        return lessonMapper.modelToEntity(savedLessonModel);
     }
 
     @Override
     public Set<LessonEntity> saveAll(Set<LessonEntity> lessons) {
-        List<LessonModel> lessonModels = lessons.stream()
-                .map(lessonMapper::EntityToModel)
-                .collect(Collectors.toList());
+        List<LessonModel> lessonModels = lessons.stream().map(lessonMapper::entityToModel).collect(Collectors.toList());
         List<LessonModel> savedLessonModels = lessonModelRepository.saveAll(lessonModels);
-        return savedLessonModels.stream()
-                .map(lessonMapper::ModelToEntity)
-                .collect(Collectors.toSet());
+        return savedLessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toSet());
     }
 }

@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:35-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class StepMapperImpl implements StepMapper {
 
     @Override
-    public StepDTO EntityToDto(StepEntity stepEntity) {
+    public StepDTO entityToDto(StepEntity stepEntity) {
         if ( stepEntity == null ) {
             return null;
         }
@@ -37,7 +37,7 @@ public class StepMapperImpl implements StepMapper {
     }
 
     @Override
-    public StepEntity DtoToEntity(StepDTO stepDTO) {
+    public StepEntity dtoToEntity(StepDTO stepDTO) {
         if ( stepDTO == null ) {
             return null;
         }
@@ -53,7 +53,7 @@ public class StepMapperImpl implements StepMapper {
     }
 
     @Override
-    public StepModel EntityToModel(StepEntity stepEntity) {
+    public StepModel entityToModel(StepEntity stepEntity) {
         if ( stepEntity == null ) {
             return null;
         }
@@ -69,7 +69,7 @@ public class StepMapperImpl implements StepMapper {
     }
 
     @Override
-    public StepEntity ModelToEntity(StepModel stepModel) {
+    public StepEntity modelToEntity(StepModel stepModel) {
         if ( stepModel == null ) {
             return null;
         }

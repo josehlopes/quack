@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:35-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class TaskMapperImpl implements TaskMapper {
 
     @Override
-    public TaskDTO EntityToDto(TaskEntity taskEntity) {
+    public TaskDTO entityToDto(TaskEntity taskEntity) {
         if ( taskEntity == null ) {
             return null;
         }
@@ -35,7 +35,7 @@ public class TaskMapperImpl implements TaskMapper {
     }
 
     @Override
-    public TaskEntity DtoToEntity(TaskDTO taskDTO) {
+    public TaskEntity dtoToEntity(TaskDTO taskDTO) {
         if ( taskDTO == null ) {
             return null;
         }
@@ -51,7 +51,7 @@ public class TaskMapperImpl implements TaskMapper {
     }
 
     @Override
-    public TaskModel EntityToModel(TaskEntity taskEntity) {
+    public TaskModel entityToModel(TaskEntity taskEntity) {
         if ( taskEntity == null ) {
             return null;
         }
@@ -67,7 +67,7 @@ public class TaskMapperImpl implements TaskMapper {
     }
 
     @Override
-    public TaskEntity ModelToEntity(TaskModel taskModel) {
+    public TaskEntity modelToEntity(TaskModel taskModel) {
         if ( taskModel == null ) {
             return null;
         }

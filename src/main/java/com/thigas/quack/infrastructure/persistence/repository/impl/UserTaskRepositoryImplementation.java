@@ -21,21 +21,20 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
     private final UserTaskMapper userTaskMapper = UserTaskMapper.INSTANCE;
 
     @Override
-    public UserTaskEntity save(UserTaskEntity userTask) {
-        UserTaskModel userTaskMODEL = userTaskMapper.EntityToModel(userTask);
+    public UserTaskEntity save(UserTaskEntity userTaskEntity) {
+        UserTaskModel userTaskMODEL = userTaskMapper.entityToModel(userTaskEntity);
         UserTaskModel savedUserTaskModel = userTaskModelRepository.save(userTaskMODEL);
-        return userTaskMapper.ModelToEntity(savedUserTaskModel);
+        return userTaskMapper.modelToEntity(savedUserTaskModel);
     }
 
     @Override
     public Optional<UserTaskEntity> findById(int id) {
-        return userTaskModelRepository.findById(id).map(userTaskMapper::ModelToEntity);
+        return userTaskModelRepository.findById(id).map(userTaskMapper::modelToEntity);
     }
 
     @Override
     public Iterable<UserTaskEntity> findAll() {
-        return userTaskModelRepository.findAll().stream()
-                .map(userTaskMapper::ModelToEntity)
+        return userTaskModelRepository.findAll().stream().map(userTaskMapper::modelToEntity)
                 .collect(Collectors.toList());
     }
 

@@ -8,72 +8,72 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:34-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class AchievementMapperImpl implements AchievementMapper {
 
     @Override
-    public AchievementEntity DtoToEntity(AchievementDTO achievementDTO) {
+    public AchievementEntity dtoToEntity(AchievementDTO achievementDTO) {
         if ( achievementDTO == null ) {
             return null;
         }
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setId( achievementDTO.getId() );
-        achievementEntity.setName( achievementDTO.getName() );
         achievementEntity.setDescription( achievementDTO.getDescription() );
+        achievementEntity.setId( achievementDTO.getId() );
         achievementEntity.setImagePath( achievementDTO.getImagePath() );
+        achievementEntity.setName( achievementDTO.getName() );
 
         return achievementEntity;
     }
 
     @Override
-    public AchievementDTO EntityToDto(AchievementEntity achievementEntity) {
+    public AchievementDTO entityToDto(AchievementEntity achievementEntity) {
         if ( achievementEntity == null ) {
             return null;
         }
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
-        achievementDTO.setId( achievementEntity.getId() );
-        achievementDTO.setName( achievementEntity.getName() );
         achievementDTO.setDescription( achievementEntity.getDescription() );
+        achievementDTO.setId( achievementEntity.getId() );
         achievementDTO.setImagePath( achievementEntity.getImagePath() );
+        achievementDTO.setName( achievementEntity.getName() );
 
         return achievementDTO;
     }
 
     @Override
-    public AchievementModel EntityToModel(AchievementEntity achievementEntity) {
+    public AchievementModel entityToModel(AchievementEntity achievementEntity) {
         if ( achievementEntity == null ) {
             return null;
         }
 
         AchievementModel achievementModel = new AchievementModel();
 
-        achievementModel.setId( achievementEntity.getId() );
-        achievementModel.setName( achievementEntity.getName() );
         achievementModel.setDescription( achievementEntity.getDescription() );
+        achievementModel.setId( achievementEntity.getId() );
         achievementModel.setImagePath( achievementEntity.getImagePath() );
+        achievementModel.setName( achievementEntity.getName() );
 
         return achievementModel;
     }
 
     @Override
-    public AchievementEntity ModelToEntity(AchievementModel achievementModel) {
+    public AchievementEntity modelToEntity(AchievementModel achievementModel) {
         if ( achievementModel == null ) {
             return null;
         }
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setId( achievementModel.getId() );
-        achievementEntity.setName( achievementModel.getName() );
         achievementEntity.setDescription( achievementModel.getDescription() );
+        achievementEntity.setId( achievementModel.getId() );
         achievementEntity.setImagePath( achievementModel.getImagePath() );
+        achievementEntity.setName( achievementModel.getName() );
 
         return achievementEntity;
     }

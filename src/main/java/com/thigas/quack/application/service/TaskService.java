@@ -21,7 +21,6 @@ import java.util.stream.StreamSupport;
 public class TaskService {
 
     private final TaskMapper taskMapper = TaskMapper.INSTANCE;
-    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
     @Autowired
     private ITaskRepository taskRepository;
     @Autowired
@@ -29,48 +28,30 @@ public class TaskService {
 
     @Transactional
     public TaskDTO create(TaskDTO taskDTO) {
-        // Converter DTO para entidade
-        TaskEntity taskEntity = taskMapper.DtoToEntity(taskDTO);
-
-        // Criar um conjunto para armazenar as lições
+        TaskEntity taskEntity = taskMapper.dtoToEntity(taskDTO);
         Set<LessonEntity> lessonEntities = new HashSet<>();
-
-        // Iterar sobre todos os IDs de lições
         for (Integer lessonId : taskDTO.getLessonIds()) {
             Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
-            lesson.ifPresent(lessonEntities::add); // Adiciona a lição ao conjunto se estiver presente
+            lesson.ifPresent(lessonEntities::add);
         }
-
-        // Definir as lições na entidade
         taskEntity.setLessons(lessonEntities);
-
-        // Persistir a entidade
         TaskEntity savedTask = taskRepository.save(taskEntity);
-
-        // Converter a entidade salva de volta para DTO
-        return taskMapper.EntityToDto(savedTask);
+        return taskMapper.entityToDto(savedTask);
     }
 
     public Optional<TaskDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<TaskEntity> step = taskRepository.findById(id);
-        // Converter a entidade para DTO
-        return step.map(taskMapper::EntityToDto);
+        return step.map(taskMapper::entityToDto);
     }
 
     public Iterable<TaskDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<TaskEntity> steps = taskRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(steps.spliterator(), false)
-                .map(taskMapper::EntityToDto)
+        return StreamSupport.stream(steps.spliterator(), false).map(taskMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(TaskDTO taskDTO) {
-        // Converter DTO para entidade
-        TaskEntity step = taskMapper.DtoToEntity(taskDTO);
-        // Atualizar a entidade
+        TaskEntity step = taskMapper.dtoToEntity(taskDTO);
         taskRepository.save(step);
     }
 

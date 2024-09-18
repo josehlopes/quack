@@ -14,40 +14,29 @@ import java.util.stream.StreamSupport;
 @Service
 public class StatisticsService {
 
-    // Instância do mapper
     private final StatisticsMapper statisticsMapper = StatisticsMapper.INSTANCE;
     @Autowired
     private IStatisticsRepository statisticsRepository;
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
-        // Converter DTO para entidade
-        StatisticsEntity statistics = statisticsMapper.DtoToEntity(statisticsDTO);
-        // Salvar a entidade
+        StatisticsEntity statistics = statisticsMapper.dtoToEntity(statisticsDTO);
         StatisticsEntity toSaveStatistics = statisticsRepository.save(statistics);
-        // Converter entidade de volta para DTO
-        return statisticsMapper.EntityToDto(toSaveStatistics);
+        return statisticsMapper.entityToDto(toSaveStatistics);
     }
 
     public Optional<StatisticsDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<StatisticsEntity> statistics = statisticsRepository.findById(id);
-        // Converter a entidade para DTO
-        return statistics.map(statisticsMapper::EntityToDto);
+        return statistics.map(statisticsMapper::entityToDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<StatisticsEntity> statisticss = statisticsRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(statisticss.spliterator(), false)
-                .map(statisticsMapper::EntityToDto)
+        return StreamSupport.stream(statisticss.spliterator(), false).map(statisticsMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StatisticsDTO statisticsDTO) {
-        // Converter DTO para entidade
-        StatisticsEntity statistics = statisticsMapper.DtoToEntity(statisticsDTO);
-        // Atualizar a entidade
+        StatisticsEntity statistics = statisticsMapper.dtoToEntity(statisticsDTO);
         statisticsRepository.save(statistics);
     }
 

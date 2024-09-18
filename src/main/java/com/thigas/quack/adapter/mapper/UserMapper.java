@@ -14,42 +14,17 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    // Mapeia User para UserDTO
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat =
-    "yyyy-MM-dd'T'HH:mm:ss")
-    UserDTO EntityToDto(UserEntity user);
-
-    // Mapeia UserDTO para User
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserEntity DtoToEntity(UserDTO userDTO);
+    UserDTO entityToDto(UserEntity user);
 
-    // Mapeia User para UserModel
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "phone", target = "phone")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "password", target = "password")
-    @Mapping(source = "cpf", target = "cpf")
-    @Mapping(source = "bornAt", target = "bornAt")
-    @Mapping(source = "points", target = "points")
-    @Mapping(source = "registerAt", target = "registerAt")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserModel EntityToModel(UserEntity userEntity);
+    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    UserEntity dtoToEntity(UserDTO userDTO);
 
-    // Mapeia UserModel para User
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name")
-    @Mapping(source = "phone", target = "phone")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "password", target = "password")
-    @Mapping(source = "cpf", target = "cpf")
-    @Mapping(source = "bornAt", target = "bornAt")
-    @Mapping(source = "points", target = "points")
-    @Mapping(source = "registerAt", target = "registerAt")
-    @Mapping(source = "imagePath", target = "imagePath")
-    UserEntity ModelToEntity(UserModel userModel);
+    UserModel entityToModel(UserEntity userEntity);
+
+    UserEntity modelToEntity(UserModel userModel);
 
     default OffsetDateTime offSetToString(String date) {
         if (date == null) {

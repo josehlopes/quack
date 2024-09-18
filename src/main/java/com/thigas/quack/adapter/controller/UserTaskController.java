@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/task-users")
+@RequestMapping("/user-tasks")
 public class UserTaskController {
 
     @Autowired
@@ -23,15 +23,14 @@ public class UserTaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserTaskDTO> getById(@PathVariable Integer id) {
-        return userTaskService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return userTaskService.getById(id).map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
     public ResponseEntity<Iterable<UserTaskDTO>> getAll() {
-        Iterable<UserTaskDTO> userRoadmaps = userTaskService.getAll();
-        return new ResponseEntity<>(userRoadmaps, HttpStatus.OK);
+        Iterable<UserTaskDTO> userTasks = userTaskService.getAll();
+        return new ResponseEntity<>(userTasks, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")

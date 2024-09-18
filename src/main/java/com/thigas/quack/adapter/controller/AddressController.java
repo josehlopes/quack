@@ -15,15 +15,14 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<AddressDTO> create(@RequestBody AddressDTO DTO) {
-        AddressDTO createdAddress = addressService.create(DTO);
+    public ResponseEntity<AddressDTO> create(@RequestBody AddressDTO addressDTO) {
+        AddressDTO createdAddress = addressService.create(addressDTO);
         return new ResponseEntity<>(createdAddress, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AddressDTO> getById(@PathVariable Integer id) {
-        return addressService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return addressService.getById(id).map(addressDTO -> new ResponseEntity<>(addressDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +33,9 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AddressDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            addressService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AddressDTO addressDTO) {
+        if (id.equals(addressDTO.getId())) {
+            addressService.update(addressDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

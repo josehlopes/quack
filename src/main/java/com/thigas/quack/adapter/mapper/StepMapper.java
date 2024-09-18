@@ -20,19 +20,19 @@ public interface StepMapper {
 
     @Mapping(source = "roadmaps", target = "roadmapIds", qualifiedByName = "roadmapsToIds")
     @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
-    StepDTO EntityToDto(StepEntity stepEntity);
+    StepDTO entityToDto(StepEntity stepEntity);
 
     @Mapping(source = "roadmapIds", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
     @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
-    StepEntity DtoToEntity(StepDTO stepDTO);
+    StepEntity dtoToEntity(StepDTO stepDTO);
 
     @Mapping(source = "roadmaps", target = "roadmaps")
     @Mapping(source = "lessons", target = "lessons")
-    StepModel EntityToModel(StepEntity stepEntity);
+    StepModel entityToModel(StepEntity stepEntity);
 
     @Mapping(source = "roadmaps", target = "roadmaps")
     @Mapping(source = "lessons", target = "lessons")
-    StepEntity ModelToEntity(StepModel stepModel);
+    StepEntity modelToEntity(StepModel stepModel);
 
     @Named("roadmapsToIds")
     default Set<Integer> roadmapsToIds(Set<RoadmapEntity> roadmaps) {

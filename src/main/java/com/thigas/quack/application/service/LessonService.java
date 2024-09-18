@@ -20,37 +20,26 @@ public class LessonService {
     private ILessonRepository lessonRepository;
 
     public Set<LessonDTO> createLessons(Set<LessonDTO> lessonDTOs) {
-        Set<LessonEntity> lessons = lessonDTOs.stream()
-                .map(lessonMapper::DtoToEntity)
-                .collect(Collectors.toSet());
+        Set<LessonEntity> lessons = lessonDTOs.stream().map(lessonMapper::dtoToEntity).collect(Collectors.toSet());
 
         Set<LessonEntity> savedLessons = lessonRepository.saveAll(lessons);
 
-        return savedLessons.stream()
-                .map(lessonMapper::EntityToDto)
-                .collect(Collectors.toSet());
+        return savedLessons.stream().map(lessonMapper::entityToDto).collect(Collectors.toSet());
     }
 
     public Optional<LessonDTO> getLessonById(int id) {
-        // Buscar a entidade do repositório
         Optional<LessonEntity> lesson = lessonRepository.findById(id);
-        // Converter a entidade para DTO
-        return lesson.map(lessonMapper::EntityToDto);
+        return lesson.map(lessonMapper::entityToDto);
     }
 
     public Iterable<LessonDTO> getAllLessons() {
-        // Buscar todas as entidades
         Iterable<LessonEntity> lessons = lessonRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(lessons.spliterator(), false)
-                .map(lessonMapper::EntityToDto)
+        return StreamSupport.stream(lessons.spliterator(), false).map(lessonMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void updateLesson(LessonDTO lessonDTO) {
-        // Converter DTO para entidade
-        LessonEntity lesson = lessonMapper.DtoToEntity(lessonDTO);
-        // Atualizar a entidade
+        LessonEntity lesson = lessonMapper.dtoToEntity(lessonDTO);
         lessonRepository.save(lesson);
     }
 

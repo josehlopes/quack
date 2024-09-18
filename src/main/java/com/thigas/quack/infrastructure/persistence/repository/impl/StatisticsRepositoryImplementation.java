@@ -19,21 +19,20 @@ public class StatisticsRepositoryImplementation implements IStatisticsRepository
     private IStatisticsModelRepository statisticsModelRepository;
 
     @Override
-    public StatisticsEntity save(StatisticsEntity statistics) {
-        StatisticsModel statisticsModel = statisticsMapper.EntityToModel(statistics);
+    public StatisticsEntity save(StatisticsEntity statisticsEntity) {
+        StatisticsModel statisticsModel = statisticsMapper.entityToModel(statisticsEntity);
         StatisticsModel savedStatisticsModel = statisticsModelRepository.save(statisticsModel);
-        return statisticsMapper.ModelToEntity(savedStatisticsModel);
+        return statisticsMapper.modelToEntity(savedStatisticsModel);
     }
 
     @Override
     public Optional<StatisticsEntity> findById(int id) {
-        return statisticsModelRepository.findById(id).map(statisticsMapper::ModelToEntity);
+        return statisticsModelRepository.findById(id).map(statisticsMapper::modelToEntity);
     }
 
     @Override
     public Iterable<StatisticsEntity> findAll() {
-        return statisticsModelRepository.findAll().stream()
-                .map(statisticsMapper::ModelToEntity)
+        return statisticsModelRepository.findAll().stream().map(statisticsMapper::modelToEntity)
                 .collect(Collectors.toList());
     }
 

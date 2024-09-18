@@ -11,19 +11,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/steps")
 public class StepController {
 
+    private final StepService stepService;
+
     @Autowired
-    private StepService stepService;
+    public StepController(StepService stepService) {
+        this.stepService = stepService;
+    }
 
     @PostMapping
-    public ResponseEntity<StepDTO> create(@RequestBody StepDTO DTO) {
-        StepDTO createdStepDTO = stepService.create(DTO);
+    public ResponseEntity<StepDTO> create(@RequestBody StepDTO stepDTO) {
+        StepDTO createdStepDTO = stepService.create(stepDTO);
         return new ResponseEntity<>(createdStepDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<StepDTO> getById(@PathVariable Integer id) {
-        return stepService.getById(id)
-                .map(DTO -> new ResponseEntity<>(DTO, HttpStatus.OK))
+        return stepService.getById(id).map(stepDTO -> new ResponseEntity<>(stepDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -34,9 +37,9 @@ public class StepController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StepDTO DTO) {
-        if (id.equals(DTO.getId())) {
-            stepService.update(DTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody StepDTO stepDTO) {
+        if (id.equals(stepDTO.getId())) {
+            stepService.update(stepDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -48,5 +51,4 @@ public class StepController {
         stepService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

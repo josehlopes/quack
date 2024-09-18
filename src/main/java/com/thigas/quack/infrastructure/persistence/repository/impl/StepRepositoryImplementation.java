@@ -19,22 +19,20 @@ public class StepRepositoryImplementation implements IStepRepository {
     private IStepModelRepository stepModelRepository;
 
     @Override
-    public StepEntity save(StepEntity step) {
-        StepModel stepModel = stepMapper.EntityToModel(step);
+    public StepEntity save(StepEntity stepEntity) {
+        StepModel stepModel = stepMapper.entityToModel(stepEntity);
         StepModel savedStepModel = stepModelRepository.save(stepModel);
-        return stepMapper.ModelToEntity(savedStepModel);
+        return stepMapper.modelToEntity(savedStepModel);
     }
 
     @Override
     public Optional<StepEntity> findById(int id) {
-        return stepModelRepository.findById(id).map(stepMapper::ModelToEntity);
+        return stepModelRepository.findById(id).map(stepMapper::modelToEntity);
     }
 
     @Override
     public Iterable<StepEntity> findAll() {
-        return stepModelRepository.findAll().stream()
-                .map(stepMapper::ModelToEntity)
-                .collect(Collectors.toList());
+        return stepModelRepository.findAll().stream().map(stepMapper::modelToEntity).collect(Collectors.toList());
     }
 
     @Override

@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T11:57:35-0300",
+    date = "2024-09-18T14:27:49-0300",
     comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
     @Override
-    public UserRoadmapDTO EntityToDto(UserRoadmapEntity userRoadmapEntity) {
+    public UserRoadmapDTO entityToDto(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return null;
         }
@@ -41,7 +41,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
     }
 
     @Override
-    public UserRoadmapEntity DtoToEntity(UserRoadmapDTO userRoadmapDTO) {
+    public UserRoadmapEntity dtoToEntity(UserRoadmapDTO userRoadmapDTO) {
         if ( userRoadmapDTO == null ) {
             return null;
         }
@@ -63,7 +63,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
     }
 
     @Override
-    public UserRoadmapModel EntityToModel(UserRoadmapEntity userRoadmapEntity) {
+    public UserRoadmapModel entityToModel(UserRoadmapEntity userRoadmapEntity) {
         if ( userRoadmapEntity == null ) {
             return null;
         }
@@ -81,7 +81,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
     }
 
     @Override
-    public UserRoadmapEntity ModelToEntity(UserRoadmapModel userRoadmapModel) {
+    public UserRoadmapEntity modelToEntity(UserRoadmapModel userRoadmapModel) {
         if ( userRoadmapModel == null ) {
             return null;
         }

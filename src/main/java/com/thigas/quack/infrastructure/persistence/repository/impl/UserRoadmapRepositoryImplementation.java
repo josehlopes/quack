@@ -19,21 +19,20 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
     private IUserRoadmapModelRepository userRoadmapModelRepository;
 
     @Override
-    public UserRoadmapEntity save(UserRoadmapEntity userRoadmap) {
-        UserRoadmapModel userRoadmapMODEL = userRoadmapMapper.EntityToModel(userRoadmap);
+    public UserRoadmapEntity save(UserRoadmapEntity userRoadmapEntity) {
+        UserRoadmapModel userRoadmapMODEL = userRoadmapMapper.entityToModel(userRoadmapEntity);
         UserRoadmapModel savedUserRoadmapModel = userRoadmapModelRepository.save(userRoadmapMODEL);
-        return userRoadmapMapper.ModelToEntity(savedUserRoadmapModel);
+        return userRoadmapMapper.modelToEntity(savedUserRoadmapModel);
     }
 
     @Override
     public Optional<UserRoadmapEntity> findById(int id) {
-        return userRoadmapModelRepository.findById(id).map(userRoadmapMapper::ModelToEntity);
+        return userRoadmapModelRepository.findById(id).map(userRoadmapMapper::modelToEntity);
     }
 
     @Override
     public Iterable<UserRoadmapEntity> findAll() {
-        return userRoadmapModelRepository.findAll().stream()
-                .map(userRoadmapMapper::ModelToEntity)
+        return userRoadmapModelRepository.findAll().stream().map(userRoadmapMapper::modelToEntity)
                 .collect(Collectors.toList());
     }
 

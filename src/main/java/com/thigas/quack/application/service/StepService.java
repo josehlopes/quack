@@ -21,7 +21,6 @@ import java.util.stream.StreamSupport;
 public class StepService {
 
     private final StepMapper stepMapper = StepMapper.INSTANCE;
-    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
     @Autowired
     private IStepRepository stepRepository;
     @Autowired
@@ -29,48 +28,34 @@ public class StepService {
 
     @Transactional
     public StepDTO create(StepDTO stepDTO) {
-        // Converter DTO para entidade
-        StepEntity stepEntity = stepMapper.DtoToEntity(stepDTO);
-
-        // Criar um conjunto para armazenar as lições
+        StepEntity stepEntity = stepMapper.dtoToEntity(stepDTO);
         Set<LessonEntity> lessonEntities = new HashSet<>();
 
-        // Iterar sobre todos os IDs de lições
         for (Integer lessonId : stepDTO.getLessonIds()) {
             Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
-            lesson.ifPresent(lessonEntities::add); // Adiciona a lição ao conjunto se estiver presente
+            lesson.ifPresent(lessonEntities::add);
         }
 
-        // Definir as lições na entidade
         stepEntity.setLessons(lessonEntities);
 
-        // Persistir a entidade
         StepEntity savedStep = stepRepository.save(stepEntity);
 
-        // Converter a entidade salva de volta para DTO
-        return stepMapper.EntityToDto(savedStep);
+        return stepMapper.entityToDto(savedStep);
     }
 
     public Optional<StepDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<StepEntity> step = stepRepository.findById(id);
-        // Converter a entidade para DTO
-        return step.map(stepMapper::EntityToDto);
+        return step.map(stepMapper::entityToDto);
     }
 
     public Iterable<StepDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<StepEntity> steps = stepRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(steps.spliterator(), false)
-                .map(stepMapper::EntityToDto)
+        return StreamSupport.stream(steps.spliterator(), false).map(stepMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StepDTO stepDTO) {
-        // Converter DTO para entidade
-        StepEntity step = stepMapper.DtoToEntity(stepDTO);
-        // Atualizar a entidade
+        StepEntity step = stepMapper.dtoToEntity(stepDTO);
         stepRepository.save(step);
     }
 

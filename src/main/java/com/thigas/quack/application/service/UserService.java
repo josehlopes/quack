@@ -21,48 +21,33 @@ public class UserService {
     private IUserRepository userRepository;
 
     public UserDTO create(UserDTO userDTO) {
-        // Converter DTO para entidade
-        UserEntity user = userMapper.DtoToEntity(userDTO);
-        // Salvar a entidade
+        UserEntity user = userMapper.dtoToEntity(userDTO);
         UserEntity toSaveUser = userRepository.save(user);
-        // Converter entidade de volta para DTO
-        return userMapper.EntityToDto(toSaveUser);
+        return userMapper.entityToDto(toSaveUser);
     }
 
     public Optional<UserDTO> getById(int id) {
-        // Buscar a entidade do repositório
         Optional<UserEntity> user = userRepository.findById(id);
-        // Converter a entidade para DTO
-        return user.map(userMapper::EntityToDto);
+        return user.map(userMapper::entityToDto);
     }
 
     public Iterable<UserDTO> getAll() {
-        // Buscar todas as entidades
         Iterable<UserEntity> users = userRepository.findAll();
-        // Converter todas as entidades para DTOs
-        return StreamSupport.stream(users.spliterator(), false)
-                .map(userMapper::EntityToDto)
+        return StreamSupport.stream(users.spliterator(), false).map(userMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(UserDTO userDTO) {
-        // Carregar a entidade existente
         UserEntity existingUser = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        // Atualizar apenas os campos fornecidos no DTO
         if (userDTO.getName() != null) {
             existingUser.setName(userDTO.getName());
         }
         if (userDTO.getBornAt() != null) {
             existingUser.setBornAt(LocalDate.parse(userDTO.getBornAt()));
         }
-        // Atualize outros campos conforme necessário...
-
-        // Salvar a entidade atualizada
         userRepository.save(existingUser);
     }
-
 
     public void delete(int id) {
         userRepository.deleteById(id);

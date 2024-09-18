@@ -19,22 +19,20 @@ public class TaskRepositoryImplementation implements ITaskRepository {
     private ITaskModelRepository taskModelRepository;
 
     @Override
-    public TaskEntity save(TaskEntity task) {
-        TaskModel taskModel = taskMapper.EntityToModel(task);
+    public TaskEntity save(TaskEntity taskEntity) {
+        TaskModel taskModel = taskMapper.entityToModel(taskEntity);
         TaskModel savedTaskModel = taskModelRepository.save(taskModel);
-        return taskMapper.ModelToEntity(savedTaskModel);
+        return taskMapper.modelToEntity(savedTaskModel);
     }
 
     @Override
     public Optional<TaskEntity> findById(int id) {
-        return taskModelRepository.findById(id).map(taskMapper::ModelToEntity);
+        return taskModelRepository.findById(id).map(taskMapper::modelToEntity);
     }
 
     @Override
     public Iterable<TaskEntity> findAll() {
-        return taskModelRepository.findAll().stream()
-                .map(taskMapper::ModelToEntity)
-                .collect(Collectors.toList());
+        return taskModelRepository.findAll().stream().map(taskMapper::modelToEntity).collect(Collectors.toList());
     }
 
     @Override
