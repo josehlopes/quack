@@ -1,25 +1,20 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "lesson")
 public class LessonModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(nullable = false)
     private String title;
@@ -33,94 +28,10 @@ public class LessonModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "lesson_roadmap", joinColumns = @JoinColumn(name = "lesson_id"), inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
-    private Set<RoadmapModel> roadmaps;
+    @ManyToMany(mappedBy = "lessons")
+    private Set<StepModel> steps;
 
-    // Getters e Setters
-
-    /**
-     * @return Long return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * @return String return the title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * @param title the title to set
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * @return String return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * @param description the description to set
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * @return String return the language
-     */
-    public String getLanguage() {
-        return language;
-    }
-
-    /**
-     * @param language the language to set
-     */
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    /**
-     * @return String return the imagePath
-     */
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    /**
-     * @param imagePath the imagePath to set
-     */
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    /**
-     * @return Set<RoadmapModel> return the roadmaps
-     */
-    public Set<RoadmapModel> getRoadmaps() {
-        return roadmaps;
-    }
-
-    /**
-     * @param roadmaps the roadmaps to set
-     */
-    public void setRoadmaps(Set<RoadmapModel> roadmaps) {
-        this.roadmaps = roadmaps;
-    }
+    @ManyToMany(mappedBy = "lessons")
+    private Set<TaskModel> tasks;
 
 }

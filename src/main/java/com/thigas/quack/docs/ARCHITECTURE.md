@@ -7,7 +7,7 @@ src
 └── main
     ├── java
     │   └── com
-    │       └── seuapp
+    │       └── quack
     │           ├── application
     │           │   ├── service
     │           │   └── usecase
