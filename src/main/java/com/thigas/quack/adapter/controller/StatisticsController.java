@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/statistics")
 public class StatisticsController {
 
-    private final StatisticsService statisticsService;
-
     @Autowired
-    public StatisticsController(StatisticsService statisticsService) {
-        this.statisticsService = statisticsService;
-    }
+    private StatisticsService statisticsService;
 
     @PostMapping
     public ResponseEntity<StatisticsDTO> create(@RequestBody StatisticsDTO statisticsDTO) {

@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/roadmap-users")
 public class UserRoadmapController {
 
-    private final UserRoadmapService userRoadmapService;
-
     @Autowired
-    public UserRoadmapController(UserRoadmapService userRoadmapService) {
-        this.userRoadmapService = userRoadmapService;
-    }
+    private UserRoadmapService userRoadmapService;
 
     @PostMapping
     public ResponseEntity<UserRoadmapDTO> create(@RequestBody UserRoadmapDTO userRoadmapDTO) {

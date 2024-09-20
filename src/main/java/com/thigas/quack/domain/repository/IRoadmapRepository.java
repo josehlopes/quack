@@ -13,4 +13,6 @@ public interface IRoadmapRepository {
     Iterable<RoadmapEntity> findAll();
 
     void deleteById(int id);
+
+    Boolean startRoadmap(int userId, int roadmapId);
 }
