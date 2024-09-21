@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.security;
+package com.thigas.quack.infrastructure.security;
 
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
@@ -25,7 +25,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     IUserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         var token = this.recoverToken(request);
 
         // Verifica se a requisição é para o registro ou login
@@ -34,12 +35,12 @@ public class SecurityFilter extends OncePerRequestFilter {
             return;
         }
 
-
         // Para outras rotas, valida o token
-        if(token != null){
+        if (token != null) {
             var login = tokenService.validateToken(token);
 
-            UserEntity user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("User Not Found"));
+            UserEntity user = userRepository.findByEmail(login)
+                    .orElseThrow(() -> new RuntimeException("User Not Found"));
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -47,9 +48,10 @@ public class SecurityFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String recoverToken(HttpServletRequest request){
+    private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
-        if(authHeader == null) return null;
+        if (authHeader == null)
+            return null;
         return authHeader.replace("Bearer ", "");
     }
 }

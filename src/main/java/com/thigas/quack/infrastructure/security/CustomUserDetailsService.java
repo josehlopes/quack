@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.security;
+package com.thigas.quack.infrastructure.security;
 
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
@@ -18,7 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = this.userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        UserEntity user = this.userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+                new ArrayList<>());
     }
 }

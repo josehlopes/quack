@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.security;
+package com.thigas.quack.infrastructure.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -18,15 +18,12 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(UserEntity user){
+    public String generateToken(UserEntity user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            String token = JWT.create()
-                    .withIssuer("quack")
-                    .withSubject(user.getEmail())
-                    .withExpiresAt(this.generateExpirateDate())
-                    .sign(algorithm);
+            String token = JWT.create().withIssuer("quack").withSubject(user.getEmail())
+                    .withExpiresAt(this.generateExpirateDate()).sign(algorithm);
             System.out.println("Generated Token: " + token);
             return token;
         } catch (JWTCreationException exception) {
@@ -34,21 +31,17 @@ public class TokenService {
         }
     }
 
-    public String validateToken(String token){
+    public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm)
-                    .withIssuer("quack")
-                    .build()
-                    .verify(token)
-                    .getSubject();
-        } catch (JWTVerificationException exception){
+            return JWT.require(algorithm).withIssuer("quack").build().verify(token).getSubject();
+        } catch (JWTVerificationException exception) {
             System.out.println("Token Validation Error: " + exception.getMessage());
             throw new RuntimeException("Invalid or expired token");
         }
     }
 
-    private Instant generateExpirateDate(){
+    private Instant generateExpirateDate() {
         return LocalDateTime.now().plusHours(5).toInstant(ZoneOffset.of("-03:00"));
     }
 }

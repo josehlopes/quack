@@ -5,7 +5,8 @@ import com.thigas.quack.adapter.dto.RegisterRequestDTO;
 import com.thigas.quack.adapter.dto.ResponseDTO;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
-import com.thigas.quack.infrastructure.persistence.security.TokenService;
+import com.thigas.quack.infrastructure.security.TokenService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,10 +26,11 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body){
+    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
         System.out.println("Attempting to log in with email: " + body.email());
-        UserEntity user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
-        if(passwordEncoder.matches(body.password(), user.getPassword())) {
+        UserEntity user = this.userRepository.findByEmail(body.email())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
         }
@@ -36,11 +38,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body){
+    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
         System.out.println("Register endpoint hit with email: " + body.email());
         Optional<UserEntity> user = this.userRepository.findByEmail(body.email());
 
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             UserEntity newUser = new UserEntity();
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
@@ -55,12 +57,10 @@ public class AuthController {
 
             this.userRepository.save(newUser);
 
-                String token = this.tokenService.generateToken(newUser);
-                return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
-            }
-            return ResponseEntity.badRequest().build();
+            String token = this.tokenService.generateToken(newUser);
+            return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
         }
-
-
+        return ResponseEntity.badRequest().build();
     }
 
+}
