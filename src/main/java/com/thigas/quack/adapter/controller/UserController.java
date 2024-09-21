@@ -51,4 +51,9 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<String> getUser(){
+        return ResponseEntity.ok("Sucesso!");
+    }
 }

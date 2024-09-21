@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T14:27:49-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-21T00:20:48-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class LessonMapperImpl implements LessonMapper {
@@ -22,11 +22,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonModel lessonModel = new LessonModel();
 
-        lessonModel.setDescription( lesson.getDescription() );
         lessonModel.setId( lesson.getId() );
-        lessonModel.setImagePath( lesson.getImagePath() );
-        lessonModel.setLanguage( lesson.getLanguage() );
         lessonModel.setTitle( lesson.getTitle() );
+        lessonModel.setDescription( lesson.getDescription() );
+        lessonModel.setLanguage( lesson.getLanguage() );
+        lessonModel.setImagePath( lesson.getImagePath() );
 
         return lessonModel;
     }
@@ -39,11 +39,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setDescription( lessonModel.getDescription() );
         lessonEntity.setId( lessonModel.getId() );
-        lessonEntity.setImagePath( lessonModel.getImagePath() );
-        lessonEntity.setLanguage( lessonModel.getLanguage() );
         lessonEntity.setTitle( lessonModel.getTitle() );
+        lessonEntity.setDescription( lessonModel.getDescription() );
+        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setImagePath( lessonModel.getImagePath() );
 
         return lessonEntity;
     }
@@ -56,11 +56,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonDTO lessonDTO = new LessonDTO();
 
-        lessonDTO.setDescription( lesson.getDescription() );
         lessonDTO.setId( lesson.getId() );
-        lessonDTO.setImagePath( lesson.getImagePath() );
-        lessonDTO.setLanguage( lesson.getLanguage() );
         lessonDTO.setTitle( lesson.getTitle() );
+        lessonDTO.setDescription( lesson.getDescription() );
+        lessonDTO.setLanguage( lesson.getLanguage() );
+        lessonDTO.setImagePath( lesson.getImagePath() );
 
         return lessonDTO;
     }
@@ -73,11 +73,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setDescription( lessonDTO.getDescription() );
         lessonEntity.setId( lessonDTO.getId() );
-        lessonEntity.setImagePath( lessonDTO.getImagePath() );
-        lessonEntity.setLanguage( lessonDTO.getLanguage() );
         lessonEntity.setTitle( lessonDTO.getTitle() );
+        lessonEntity.setDescription( lessonDTO.getDescription() );
+        lessonEntity.setLanguage( lessonDTO.getLanguage() );
+        lessonEntity.setImagePath( lessonDTO.getImagePath() );
 
         return lessonEntity;
     }

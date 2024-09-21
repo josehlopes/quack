@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-18T14:27:49-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-21T00:20:48-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class StepMapperImpl implements StepMapper {
@@ -30,8 +30,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepDTO.setRoadmapIds( roadmapsToIds( stepEntity.getRoadmaps() ) );
         stepDTO.setLessonIds( lessonsToIds( stepEntity.getLessons() ) );
-        stepDTO.setDescription( stepEntity.getDescription() );
         stepDTO.setId( stepEntity.getId() );
+        stepDTO.setDescription( stepEntity.getDescription() );
 
         return stepDTO;
     }
@@ -46,8 +46,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepEntity.setRoadmaps( idsToRoadmaps( stepDTO.getRoadmapIds() ) );
         stepEntity.setLessons( idsToLessons( stepDTO.getLessonIds() ) );
-        stepEntity.setDescription( stepDTO.getDescription() );
         stepEntity.setId( stepDTO.getId() );
+        stepEntity.setDescription( stepDTO.getDescription() );
 
         return stepEntity;
     }
@@ -62,8 +62,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps() ) );
         stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons() ) );
-        stepModel.setDescription( stepEntity.getDescription() );
         stepModel.setId( stepEntity.getId() );
+        stepModel.setDescription( stepEntity.getDescription() );
 
         return stepModel;
     }
@@ -78,8 +78,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepEntity.setRoadmaps( roadmapModelSetToRoadmapEntitySet( stepModel.getRoadmaps() ) );
         stepEntity.setLessons( lessonModelSetToLessonEntitySet( stepModel.getLessons() ) );
-        stepEntity.setDescription( stepModel.getDescription() );
         stepEntity.setId( stepModel.getId() );
+        stepEntity.setDescription( stepModel.getDescription() );
 
         return stepEntity;
     }
@@ -91,10 +91,10 @@ public class StepMapperImpl implements StepMapper {
 
         RoadmapModel roadmapModel = new RoadmapModel();
 
-        roadmapModel.setDescription( roadmapEntity.getDescription() );
         roadmapModel.setId( roadmapEntity.getId() );
-        roadmapModel.setImagePath( roadmapEntity.getImagePath() );
         roadmapModel.setTitle( roadmapEntity.getTitle() );
+        roadmapModel.setDescription( roadmapEntity.getDescription() );
+        roadmapModel.setImagePath( roadmapEntity.getImagePath() );
 
         return roadmapModel;
     }
@@ -119,11 +119,11 @@ public class StepMapperImpl implements StepMapper {
 
         LessonModel lessonModel = new LessonModel();
 
-        lessonModel.setDescription( lessonEntity.getDescription() );
         lessonModel.setId( lessonEntity.getId() );
-        lessonModel.setImagePath( lessonEntity.getImagePath() );
-        lessonModel.setLanguage( lessonEntity.getLanguage() );
         lessonModel.setTitle( lessonEntity.getTitle() );
+        lessonModel.setDescription( lessonEntity.getDescription() );
+        lessonModel.setLanguage( lessonEntity.getLanguage() );
+        lessonModel.setImagePath( lessonEntity.getImagePath() );
 
         return lessonModel;
     }
@@ -148,10 +148,10 @@ public class StepMapperImpl implements StepMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setDescription( roadmapModel.getDescription() );
         roadmapEntity.setId( roadmapModel.getId() );
-        roadmapEntity.setImagePath( roadmapModel.getImagePath() );
         roadmapEntity.setTitle( roadmapModel.getTitle() );
+        roadmapEntity.setDescription( roadmapModel.getDescription() );
+        roadmapEntity.setImagePath( roadmapModel.getImagePath() );
 
         return roadmapEntity;
     }
@@ -176,11 +176,11 @@ public class StepMapperImpl implements StepMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setDescription( lessonModel.getDescription() );
         lessonEntity.setId( lessonModel.getId() );
-        lessonEntity.setImagePath( lessonModel.getImagePath() );
-        lessonEntity.setLanguage( lessonModel.getLanguage() );
         lessonEntity.setTitle( lessonModel.getTitle() );
+        lessonEntity.setDescription( lessonModel.getDescription() );
+        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setImagePath( lessonModel.getImagePath() );
 
         return lessonEntity;
     }

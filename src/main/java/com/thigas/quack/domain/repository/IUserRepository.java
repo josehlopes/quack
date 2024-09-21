@@ -12,4 +12,6 @@ public interface IUserRepository {
     Iterable<UserEntity> findAll();
 
     void deleteById(int id);
+
+    Optional<UserEntity> findByEmail(String email);
 }

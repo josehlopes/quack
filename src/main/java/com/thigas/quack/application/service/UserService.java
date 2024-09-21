@@ -52,4 +52,9 @@ public class UserService {
     public void delete(int id) {
         userRepository.deleteById(id);
     }
+
+    public Optional<UserDTO> findByEmail(String email) {
+        Optional<UserEntity> user = userRepository.findByEmail(email);
+        return user.map(userMapper::entityToDto);
+    }
 }

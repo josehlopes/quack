@@ -39,4 +39,13 @@ public class UserRepositoryImplementation implements IUserRepository {
     public void deleteById(int id) {
         userModelRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<UserEntity> findByEmail(String email) {
+        // Busque todos os usuários e filtre pelo e-mail
+        return userModelRepository.findAll().stream()
+                .filter(userModel -> userModel.getEmail().equals(email))
+                .map(userMapper::modelToEntity)
+                .findFirst();
+    }
 }
