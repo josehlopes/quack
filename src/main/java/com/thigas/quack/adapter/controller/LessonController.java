@@ -13,12 +13,8 @@ import java.util.Set;
 @RequestMapping("/lessons")
 public class LessonController {
 
-    private final LessonService lessonService;
-
     @Autowired
-    public LessonController(LessonService lessonService) {
-        this.lessonService = lessonService;
-    }
+    private LessonService lessonService;
 
     @PostMapping
     public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> lessonDTOs) {

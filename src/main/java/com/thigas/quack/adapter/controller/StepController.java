@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/steps")
 public class StepController {
 
-    private final StepService stepService;
-
     @Autowired
-    public StepController(StepService stepService) {
-        this.stepService = stepService;
-    }
+    private StepService stepService;
 
     @PostMapping
     public ResponseEntity<StepDTO> create(@RequestBody StepDTO stepDTO) {

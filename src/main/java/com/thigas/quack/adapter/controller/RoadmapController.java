@@ -1,7 +1,11 @@
 package com.thigas.quack.adapter.controller;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.application.service.RoadmapService;
+import com.thigas.quack.domain.entity.RoadmapEntity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/roadmaps")
 public class RoadmapController {
 
-    private final RoadmapService roadmapService;
-
     @Autowired
-    public RoadmapController(RoadmapService roadmapService) {
-        this.roadmapService = roadmapService;
-    }
+    private RoadmapService roadmapService;
 
     @PostMapping
     public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO roadmapDTO) {
@@ -50,5 +50,17 @@ public class RoadmapController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         roadmapService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/start-roadmap")
+    public ResponseEntity<Void> startRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+        int userId = userRoadmapDTO.getUserId();
+        int roadmapId = userRoadmapDTO.getRoadmapId();
+        if (roadmapService.startRoadmap(userId, roadmapId)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
     }
 }
