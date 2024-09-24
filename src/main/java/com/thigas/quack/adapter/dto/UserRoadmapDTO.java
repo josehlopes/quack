@@ -1,5 +1,7 @@
 package com.thigas.quack.adapter.dto;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data

@@ -1,5 +1,6 @@
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AchievementController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AddressController.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AuthController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeExecutor.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\LessonController.java
@@ -13,6 +14,9 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserTaskCon
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AchievementDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AddressDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LessonDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LoginRequestDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RegisterRequestDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\ResponseDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StatisticsDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StepDTO.java
@@ -94,4 +98,8 @@ I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\rep
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserRoadmapModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserTaskModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\security\CustomUserDetailsService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\security\SecurityConfig.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\security\SecurityFilter.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\security\TokenService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\QuackApplication.java

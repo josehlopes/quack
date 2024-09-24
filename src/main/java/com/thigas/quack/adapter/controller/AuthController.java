@@ -48,6 +48,7 @@ public class AuthController {
             newUser.setEmail(body.email());
             newUser.setId(body.id());
             newUser.setName(body.name());
+            newUser.setUsername(body.username());
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
             newUser.setBornAt(body.bornAt());

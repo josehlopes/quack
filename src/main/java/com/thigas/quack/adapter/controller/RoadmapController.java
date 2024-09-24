@@ -1,10 +1,8 @@
 package com.thigas.quack.adapter.controller;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
-import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.application.service.RoadmapService;
-import com.thigas.quack.domain.entity.RoadmapEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,4 +61,15 @@ public class RoadmapController {
         }
 
     }
+
+    @PutMapping("/end-roadmap")
+    public ResponseEntity<Void> endRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+
+        if (roadmapService.endRoadmap(userRoadmapDTO)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
