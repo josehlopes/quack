@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-23T23:01:13-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    date = "2024-09-24T22:43:01-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class RoadmapMapperImpl implements RoadmapMapper {
@@ -22,10 +22,11 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapDTO roadmapDTO = new RoadmapDTO();
 
-        roadmapDTO.setId( roadmap.getId() );
-        roadmapDTO.setTitle( roadmap.getTitle() );
+        roadmapDTO.setStatus( statusToInt( roadmap.getStatus() ) );
         roadmapDTO.setDescription( roadmap.getDescription() );
+        roadmapDTO.setId( roadmap.getId() );
         roadmapDTO.setImagePath( roadmap.getImagePath() );
+        roadmapDTO.setTitle( roadmap.getTitle() );
 
         return roadmapDTO;
     }
@@ -38,10 +39,11 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( roadmapDTO.getId() );
-        roadmapEntity.setTitle( roadmapDTO.getTitle() );
+        roadmapEntity.setStatus( intToStatus( roadmapDTO.getStatus() ) );
         roadmapEntity.setDescription( roadmapDTO.getDescription() );
+        roadmapEntity.setId( roadmapDTO.getId() );
         roadmapEntity.setImagePath( roadmapDTO.getImagePath() );
+        roadmapEntity.setTitle( roadmapDTO.getTitle() );
 
         return roadmapEntity;
     }
@@ -54,10 +56,11 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapModel roadmapModel = new RoadmapModel();
 
-        roadmapModel.setId( roadmap.getId() );
-        roadmapModel.setTitle( roadmap.getTitle() );
         roadmapModel.setDescription( roadmap.getDescription() );
+        roadmapModel.setId( roadmap.getId() );
         roadmapModel.setImagePath( roadmap.getImagePath() );
+        roadmapModel.setStatus( roadmap.getStatus() );
+        roadmapModel.setTitle( roadmap.getTitle() );
 
         return roadmapModel;
     }
@@ -70,10 +73,11 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( roadmapModel.getId() );
-        roadmapEntity.setTitle( roadmapModel.getTitle() );
         roadmapEntity.setDescription( roadmapModel.getDescription() );
+        roadmapEntity.setId( roadmapModel.getId() );
         roadmapEntity.setImagePath( roadmapModel.getImagePath() );
+        roadmapEntity.setStatus( roadmapModel.getStatus() );
+        roadmapEntity.setTitle( roadmapModel.getTitle() );
 
         return roadmapEntity;
     }

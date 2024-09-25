@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-23T23:01:12-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    date = "2024-09-24T22:43:01-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class AchievementMapperImpl implements AchievementMapper {
@@ -22,10 +22,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setId( achievementDTO.getId() );
-        achievementEntity.setName( achievementDTO.getName() );
         achievementEntity.setDescription( achievementDTO.getDescription() );
+        achievementEntity.setId( achievementDTO.getId() );
         achievementEntity.setImagePath( achievementDTO.getImagePath() );
+        achievementEntity.setName( achievementDTO.getName() );
 
         return achievementEntity;
     }
@@ -38,10 +38,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
-        achievementDTO.setId( achievementEntity.getId() );
-        achievementDTO.setName( achievementEntity.getName() );
         achievementDTO.setDescription( achievementEntity.getDescription() );
+        achievementDTO.setId( achievementEntity.getId() );
         achievementDTO.setImagePath( achievementEntity.getImagePath() );
+        achievementDTO.setName( achievementEntity.getName() );
 
         return achievementDTO;
     }
@@ -54,10 +54,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementModel achievementModel = new AchievementModel();
 
-        achievementModel.setId( achievementEntity.getId() );
-        achievementModel.setName( achievementEntity.getName() );
         achievementModel.setDescription( achievementEntity.getDescription() );
+        achievementModel.setId( achievementEntity.getId() );
         achievementModel.setImagePath( achievementEntity.getImagePath() );
+        achievementModel.setName( achievementEntity.getName() );
 
         return achievementModel;
     }
@@ -70,10 +70,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setId( achievementModel.getId() );
-        achievementEntity.setName( achievementModel.getName() );
         achievementEntity.setDescription( achievementModel.getDescription() );
+        achievementEntity.setId( achievementModel.getId() );
         achievementEntity.setImagePath( achievementModel.getImagePath() );
+        achievementEntity.setName( achievementModel.getName() );
 
         return achievementEntity;
     }

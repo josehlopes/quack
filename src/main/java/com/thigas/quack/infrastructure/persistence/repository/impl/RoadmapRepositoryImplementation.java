@@ -49,36 +49,4 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     public void deleteById(int id) {
         roadmapModelRepository.deleteById(id);
     }
-
-    @Transactional
-    @Override
-    public Boolean startRoadmap(int userId, int roadmapId) {
-
-        UserRoadmapModel userRoadmapModel = new UserRoadmapModel();
-
-        try {
-            // Verificar se o usuário e o roadmap existem
-            Optional<UserModel> userOptional = userModelRepository.findById(userId);
-            Optional<RoadmapModel> roadmapOptional = roadmapModelRepository.findById(roadmapId);
-
-            if (userOptional.isEmpty() || roadmapOptional.isEmpty()) {
-                System.out.println("Usuário ou roadmap não encontrado.");
-                return false;
-            }
-
-            // Criar um novo UserRoadmapEntity para associar o usuário ao roadmap
-            userRoadmapModel.setUserId(userOptional.get());
-            userRoadmapModel.setRoadmapId(roadmapOptional.get());
-            userRoadmapModel.setProgress(0.0);
-            userRoadmapModel.setStartedAt(LocalDate.now());
-
-            // Salvar a associação no banco de dados
-            userRoadmapModelRepository.save(userRoadmapModel);
-            return true;
-
-        } catch (Exception e) {
-            System.out.println("Erro ao iniciar o roadmap: " + e.getMessage());
-            return false;
-        }
-    }
 }

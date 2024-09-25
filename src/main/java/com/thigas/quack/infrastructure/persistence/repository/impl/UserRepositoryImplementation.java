@@ -43,9 +43,7 @@ public class UserRepositoryImplementation implements IUserRepository {
     @Override
     public Optional<UserEntity> findByEmail(String email) {
         // Busque todos os usuários e filtre pelo e-mail
-        return userModelRepository.findAll().stream()
-                .filter(userModel -> userModel.getEmail().equals(email))
-                .map(userMapper::modelToEntity)
-                .findFirst();
+        return userModelRepository.findAll().stream().filter(userModel -> userModel.getEmail().equals(email))
+                .map(userMapper::modelToEntity).findFirst();
     }
 }

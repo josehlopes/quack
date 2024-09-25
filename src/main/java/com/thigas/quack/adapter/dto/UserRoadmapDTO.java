@@ -13,4 +13,5 @@ public class UserRoadmapDTO {
     private Double progress;
     private String startedAt;
     private String finishedAt;
+    private int status;
 }

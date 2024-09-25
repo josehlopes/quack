@@ -1,7 +1,7 @@
 {
   "java.compile.nullAnalysis.mode": "automatic",
   "cSpell.words": ["nullable", "thigas"],
-  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.configuration.updateBuildConfiguration": "automatic",
   "java.debug.settings.onBuildFailureProceed": true,
   "java.format.settings.url": ".vscode/java-formatter.xml",
   "[java]": {

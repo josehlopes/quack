@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,5 @@ public class UserRoadmapEntity {
     private Double progress;
     private LocalDate startedAt;
     private LocalDate finishedAt;
+    private Status status;
 }

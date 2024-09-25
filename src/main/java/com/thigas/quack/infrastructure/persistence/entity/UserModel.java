@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -43,6 +45,10 @@ public class UserModel {
 
     @Column(name = "register_at", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private OffsetDateTime registerAt;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
 
     @Column(name = "image_path", nullable = true)
     private String imagePath;

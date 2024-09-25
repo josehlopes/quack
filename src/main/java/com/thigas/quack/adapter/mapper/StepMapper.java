@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,10 +21,14 @@ public interface StepMapper {
 
     @Mapping(source = "roadmaps", target = "roadmapIds", qualifiedByName = "roadmapsToIds")
     @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
+    @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
+
     StepDTO entityToDto(StepEntity stepEntity);
 
     @Mapping(source = "roadmapIds", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
     @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
+    @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
+
     StepEntity dtoToEntity(StepDTO stepDTO);
 
     @Mapping(source = "roadmaps", target = "roadmaps")
@@ -72,5 +77,15 @@ public interface StepMapper {
             lesson.setId(id);
             return lesson;
         }).collect(Collectors.toSet());
+    }
+
+    @Named("stepStatusToInt")
+    default int statusToInt(Status status) {
+        return status != null ? status.getValue() : 0;
+    }
+
+    @Named("stepIntToStatus")
+    default Status intToStatus(int value) {
+        return Status.fromValue(value);
     }
 }

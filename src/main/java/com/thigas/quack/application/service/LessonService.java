@@ -19,26 +19,32 @@ public class LessonService {
     @Autowired
     private ILessonRepository lessonRepository;
 
-    public Set<LessonDTO> createLessons(Set<LessonDTO> lessonDTOs) {
-        Set<LessonEntity> lessons = lessonDTOs.stream().map(lessonMapper::dtoToEntity).collect(Collectors.toSet());
+    public LessonDTO create(LessonDTO lessonDTO) {
+        LessonEntity lessonEntity = lessonMapper.dtoToEntity(lessonDTO);
+        LessonEntity savedLesson = lessonRepository.save(lessonEntity);
+        return lessonMapper.entityToDto(savedLesson);
+    }
 
-        Set<LessonEntity> savedLessons = lessonRepository.saveAll(lessons);
+    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs) {
+        Set<LessonEntity> lessonEntities = lessonDTOs.stream().map(lessonMapper::dtoToEntity)
+                .collect(Collectors.toSet());
 
+        Set<LessonEntity> savedLessons = lessonRepository.saveAll(lessonEntities);
         return savedLessons.stream().map(lessonMapper::entityToDto).collect(Collectors.toSet());
     }
 
-    public Optional<LessonDTO> getLessonById(int id) {
+    public Optional<LessonDTO> getById(int id) {
         Optional<LessonEntity> lesson = lessonRepository.findById(id);
         return lesson.map(lessonMapper::entityToDto);
     }
 
-    public Iterable<LessonDTO> getAllLessons() {
+    public Iterable<LessonDTO> getAll() {
         Iterable<LessonEntity> lessons = lessonRepository.findAll();
         return StreamSupport.stream(lessons.spliterator(), false).map(lessonMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
-    public void updateLesson(LessonDTO lessonDTO) {
+    public void update(LessonDTO lessonDTO) {
         LessonEntity lesson = lessonMapper.dtoToEntity(lessonDTO);
         lessonRepository.save(lesson);
     }

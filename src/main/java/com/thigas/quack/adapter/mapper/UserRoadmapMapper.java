@@ -2,11 +2,13 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(uses = { UserMapper.class, RoadmapMapper.class }, componentModel = "spring")
@@ -16,10 +18,12 @@ public interface UserRoadmapMapper {
 
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "roadmap.id", target = "roadmapId")
+    @Mapping(target = "status", source = "status", qualifiedByName = "userRoadmapStatusToInt")
     UserRoadmapDTO entityToDto(UserRoadmapEntity userRoadmapEntity);
 
     @Mapping(source = "userId", target = "user.id")
     @Mapping(source = "roadmapId", target = "roadmap.id")
+    @Mapping(target = "status", source = "status", qualifiedByName = "userRoadmapIntToStatus")
     UserRoadmapEntity dtoToEntity(UserRoadmapDTO userRoadmapDTO);
 
     @Mapping(source = "user.id", target = "userId")
@@ -60,5 +64,15 @@ public interface UserRoadmapMapper {
             return null;
         }
         return roadmapModel.getId();
+    }
+
+    @Named("userRoadmapStatusToInt")
+    default int statusToInt(Status status) {
+        return status != null ? status.getValue() : 0;
+    }
+
+    @Named("userRoadmapIntToStatus")
+    default Status intToStatus(int value) {
+        return Status.fromValue(value);
     }
 }

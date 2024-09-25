@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -27,5 +29,9 @@ public class RoadmapModel {
 
     @ManyToMany(mappedBy = "roadmaps")
     private Set<StepModel> steps;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
 
 }

@@ -5,6 +5,7 @@ import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
 import jakarta.transaction.Transactional;
@@ -61,5 +62,17 @@ public class StepService {
 
     public void delete(int id) {
         stepRepository.deleteById(id);
+    }
+
+    public void updateStatus(Integer id, int statusValue) {
+        Optional<StepEntity> optionalStep = stepRepository.findById(id);
+        if (optionalStep.isPresent()) {
+            StepEntity step = optionalStep.get();
+            Status status = Status.fromValue(statusValue); // converte o valor do status para o enum Status
+            step.setStatus(status); // Certifique-se de ter um método setStatus na sua entidade
+            stepRepository.save(step); // Salva a entidade atualizada
+        } else {
+            throw new IllegalArgumentException("Step não encontrado com id: " + id);
+        }
     }
 }

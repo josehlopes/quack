@@ -2,6 +2,7 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.domain.entity.AddressEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
@@ -41,4 +42,12 @@ public interface AddressMapper {
         return userModel.getId();
     }
 
+    default Status map(int value) {
+        return Status.fromValue(value);
+    }
+
+    // Mapeia de Status para int
+    default int map(Status status) {
+        return status.getValue();
+    }
 }

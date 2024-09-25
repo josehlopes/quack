@@ -16,28 +16,34 @@ public class LessonController {
     @Autowired
     private LessonService lessonService;
 
-    @PostMapping
-    public ResponseEntity<Set<LessonDTO>> create(@RequestBody Set<LessonDTO> lessonDTOs) {
-        Set<LessonDTO> createdLessons = lessonService.createLessons(lessonDTOs);
+    @PostMapping // Método para criar uma única lição
+    public ResponseEntity<LessonDTO> create(@RequestBody LessonDTO lessonDTO) {
+        LessonDTO createdLesson = lessonService.create(lessonDTO);
+        return new ResponseEntity<>(createdLesson, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create-several")
+    public ResponseEntity<Set<LessonDTO>> createAll(@RequestBody Set<LessonDTO> lessonDTOs) {
+        Set<LessonDTO> createdLessons = lessonService.createAll(lessonDTOs);
         return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<LessonDTO> getById(@PathVariable Integer id) {
-        return lessonService.getLessonById(id).map(lessonDTO -> new ResponseEntity<>(lessonDTO, HttpStatus.OK))
+        return lessonService.getById(id).map(lessonDTO -> new ResponseEntity<>(lessonDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
     public ResponseEntity<Iterable<LessonDTO>> getAll() {
-        Iterable<LessonDTO> lessons = lessonService.getAllLessons();
+        Iterable<LessonDTO> lessons = lessonService.getAll();
         return new ResponseEntity<>(lessons, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody LessonDTO lessonDTO) {
         if (id.equals(lessonDTO.getId())) {
-            lessonService.updateLesson(lessonDTO);
+            lessonService.update(lessonDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

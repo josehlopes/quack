@@ -8,6 +8,7 @@ import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
@@ -67,26 +68,24 @@ public class RoadmapService {
 
     public Boolean startRoadmap(int userId, int roadmapId) {
         UserRoadmapDTO userRoadmapDTO = new UserRoadmapDTO();
-        UserRoadmapEntity userRoadmapEntity;
+        UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
         RoadmapEntity roadmap;
         UserEntity user;
 
         try {
-            Optional<List<Object>> userRoadmapOptional = findUserAndRoadmap(userId, roadmapId);
+            // Verificar se o usuário e o roadmap existem
+            user = userRepository.findById(userId)
+                    .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado."));
+            roadmap = roadmapRepository.findById(roadmapId)
+                    .orElseThrow(() -> new EntityNotFoundException("Roadmap não encontrado."));
 
-            if (userRoadmapOptional.isEmpty()) {
-                return false;
-            }
+            // Criar um novo UserRoadmapEntity
+            userRoadmapEntity.setId(user.getId());
+            userRoadmapEntity.setId(roadmap.getId());
+            userRoadmapEntity.setProgress(0.0);
+            userRoadmapEntity.setStartedAt(LocalDate.now());
 
-            user = (UserEntity) userRoadmapOptional.get().get(0);
-            roadmap = (RoadmapEntity) userRoadmapOptional.get().get(1);
-
-            userRoadmapDTO.setUserId(user.getId());
-            userRoadmapDTO.setRoadmapId(roadmap.getId());
-            userRoadmapDTO.setProgress(0.0);
-            userRoadmapDTO.setStartedAt(LocalDate.now().toString());
-
-            userRoadmapEntity = userRoadmapMapper.dtoToEntity(userRoadmapDTO);
+            // Salvar a associação no banco de dados
             userRoadmapRepository.save(userRoadmapEntity);
             return true;
 
@@ -116,6 +115,7 @@ public class RoadmapService {
             }
 
             // Atualizando progresso para 100%
+            existingUserRoadmap.setStatus(Status.FINISHED);
             existingUserRoadmap.setFinishedAt(LocalDate.now());
             existingUserRoadmap.setProgress(100.0);
 

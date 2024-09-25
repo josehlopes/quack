@@ -2,6 +2,7 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.domain.entity.StatisticsEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
@@ -39,5 +40,13 @@ public interface StatisticsMapper {
             return null;
         }
         return userModel.getId();
+    }
+
+    default Status map(int value) {
+        return Status.fromValue(value);
+    }
+
+    default int map(Status status) {
+        return status.getValue();
     }
 }

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -26,4 +28,12 @@ public class StepModel {
 
     @Column(nullable = false)
     private String description;
+
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
+
 }

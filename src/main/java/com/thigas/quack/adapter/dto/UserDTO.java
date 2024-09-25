@@ -16,4 +16,5 @@ public class UserDTO {
     private Double points;
     private String registerAt;
     private String imagePath;
+    private int status;
 }

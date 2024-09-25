@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,5 +25,6 @@ public class UserEntity {
     private Double points;
     private OffsetDateTime registerAt;
     private String imagePath;
+    private Status status;
 
 }

@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.dto.LoginRequestDTO;
 import com.thigas.quack.adapter.dto.RegisterRequestDTO;
 import com.thigas.quack.adapter.dto.ResponseDTO;
 import com.thigas.quack.domain.entity.UserEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.security.TokenService;
 
@@ -27,7 +28,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        System.out.println("Attempting to log in with email: " + body.email());
         UserEntity user = this.userRepository.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
@@ -39,7 +39,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        System.out.println("Register endpoint hit with email: " + body.email());
         Optional<UserEntity> user = this.userRepository.findByEmail(body.email());
 
         if (user.isEmpty()) {
@@ -55,6 +54,7 @@ public class AuthController {
             newUser.setRegisterAt(body.registerAt());
             newUser.setPoints(body.points());
             newUser.setImagePath(body.imagePath());
+            newUser.setStatus(Status.fromValue(1)); // Aqui, 1 representa o status ATIVO
 
             this.userRepository.save(newUser);
 

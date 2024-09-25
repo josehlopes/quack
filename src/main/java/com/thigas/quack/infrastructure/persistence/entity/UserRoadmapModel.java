@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.thigas.quack.domain.model.Status;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -32,5 +34,9 @@ public class UserRoadmapModel {
 
     @Column(name = "finished_at", columnDefinition = "DATE", nullable = true)
     private LocalDate finishedAt;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
 
 }

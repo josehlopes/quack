@@ -9,4 +9,5 @@ public class RoadmapDTO {
     private String title;
     private String description;
     private String imagePath;
+    private int status;
 }
