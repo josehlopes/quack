@@ -72,11 +72,12 @@ com\thigas\quack\application\service\UserService.class
 com\thigas\quack\adapter\controller\UserController.class
 com\thigas\quack\adapter\dto\LoginRequestDTO.class
 com\thigas\quack\adapter\controller\StatisticsController.class
-com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.class
+com\thigas\quack\domain\model\Status.class
 com\thigas\quack\domain\repository\IRoadmapRepository.class
 com\thigas\quack\domain\repository\IUserRepository.class
 com\thigas\quack\adapter\mapper\UserRoadmapMapperImpl.class
 com\thigas\quack\infrastructure\security\TokenService.class
+com\thigas\quack\application\service\FakerService.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\ILessonModelRepository.class
 com\thigas\quack\adapter\mapper\StatisticsMapper.class
 com\thigas\quack\domain\repository\ITaskRepository.class
@@ -107,6 +108,7 @@ com\thigas\quack\infrastructure\persistence\repository\jpa\IRoadmapModelReposito
 com\thigas\quack\domain\entity\StatisticsEntity.class
 com\thigas\quack\adapter\mapper\RoadmapMapper.class
 com\thigas\quack\infrastructure\persistence\entity\UserModel.class
+com\thigas\quack\application\service\DataInitializer.class
 com\thigas\quack\adapter\mapper\AchievementMapper.class
 com\thigas\quack\infrastructure\persistence\repository\impl\RoadmapRepositoryImplementation.class
 com\thigas\quack\adapter\controller\CodeController.class

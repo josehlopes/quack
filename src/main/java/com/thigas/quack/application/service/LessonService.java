@@ -4,6 +4,9 @@ import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +22,12 @@ public class LessonService {
     @Autowired
     private ILessonRepository lessonRepository;
 
+    @Transactional
     public LessonDTO create(LessonDTO lessonDTO) {
         LessonEntity lessonEntity = lessonMapper.dtoToEntity(lessonDTO);
+        System.out.println("Before saving: " + lessonEntity);
         LessonEntity savedLesson = lessonRepository.save(lessonEntity);
+        System.out.println("Saved Lesson: " + savedLesson);
         return lessonMapper.entityToDto(savedLesson);
     }
 

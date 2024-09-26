@@ -20,6 +20,8 @@ public class TaskModel {
     @JoinTable(name = "task_lesson_mapping", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Set<LessonModel> lessons;
 
+    // TODO: Verificar se esse relacionamento entre Task e Lesson faz sentido
+
     @Column(nullable = false)
     private String description;
 

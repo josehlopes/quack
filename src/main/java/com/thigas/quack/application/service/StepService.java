@@ -34,13 +34,16 @@ public class StepService {
 
         for (Integer lessonId : stepDTO.getLessonIds()) {
             Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
-            lesson.ifPresent(lessonEntities::add);
+            if (lesson.isPresent()) {
+                lessonEntities.add(lesson.get());
+            } else {
+                // Lide com o caso em que a lição não foi encontrada
+                throw new IllegalArgumentException("Lesson não encontrada com id: " + lessonId);
+            }
         }
 
         stepEntity.setLessons(lessonEntities);
-
         StepEntity savedStep = stepRepository.save(stepEntity);
-
         return stepMapper.entityToDto(savedStep);
     }
 

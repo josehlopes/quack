@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "achievement")
+@Table(name = "address")
 public class AddressModel {
 
     @Id

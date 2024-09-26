@@ -18,11 +18,12 @@ public interface UserMapper {
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(target = "status", source = "status", qualifiedByName = "userStatusToInt")
+    @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
     UserDTO entityToDto(UserEntity user);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "userIntToStatus")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
     UserEntity dtoToEntity(UserDTO userDTO);
 
     UserModel entityToModel(UserEntity userEntity);
