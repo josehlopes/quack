@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.security;
 
+import com.thigas.quack.application.service.UserService;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,11 @@ import java.util.ArrayList;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = this.userRepository.findByEmail(username)
+        UserEntity user = this.userService.findEntityByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());

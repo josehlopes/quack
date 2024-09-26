@@ -53,8 +53,18 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    // Método para salvar UserEntity (para registro)
+    public UserEntity save(UserEntity userEntity) {
+        return userRepository.save(userEntity);
+    }
+
+    public Optional<UserEntity> findEntityByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public Optional<UserDTO> findByEmail(String email) {
         Optional<UserEntity> user = userRepository.findByEmail(email);
         return user.map(userMapper::entityToDto);
     }
+
 }

@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity {
-
     private int id;
     private String name;
     private String username;
@@ -23,5 +22,4 @@ public class UserEntity {
     private Double points;
     private OffsetDateTime registerAt;
     private String imagePath;
-
 }

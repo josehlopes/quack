@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.security;
 
+import com.thigas.quack.application.service.UserService;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
 import jakarta.servlet.FilterChain;
@@ -22,7 +23,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     TokenService tokenService;
 
     @Autowired
-    IUserRepository userRepository;
+    UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -39,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             var login = tokenService.validateToken(token);
 
-            UserEntity user = userRepository.findByEmail(login)
+            UserEntity user = userService.findEntityByEmail(login)
                     .orElseThrow(() -> new RuntimeException("User Not Found"));
             var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
