@@ -1,8 +1,10 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.*;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,9 @@ public class FakerService {
 
 	@Autowired
 	private TaskService taskService;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	// Geração de usuários
 	public List<UserDTO> generateFakeUsers(int count) {
@@ -146,157 +151,126 @@ public class FakerService {
 
 	public List<RoadmapDTO> generateFakeRoadmaps(int count) {
 		List<RoadmapDTO> roadmaps = new ArrayList<>();
-		for (int i = 1; i < count + 1; i++) {
+		for (int i = 1; i <= count; i++) {
 			RoadmapDTO roadmapDTO = new RoadmapDTO();
 			roadmapDTO.setTitle(faker.book().title());
-			roadmapDTO.setDescription(faker.lorem().paragraph());
+			roadmapDTO.setDescription(faker.lorem().characters(200));
 			roadmapDTO.setImagePath(faker.avatar().image());
 			roadmapDTO.setStatus(1); // 1 para ATIVO
 
-			roadmapService.create(roadmapDTO);
+			// Persistindo e atualizando o objeto com o retorno
+			roadmapDTO = roadmapService.create(roadmapDTO); // Atualize o roadmapDTO com o resultado da persistência
+
+			if (roadmapDTO.getId() <= 0) {
+				throw new IllegalStateException("Failed to create roadmap with valid ID.");
+			}
+
 			roadmaps.add(roadmapDTO);
 		}
 		return roadmaps;
 	}
 
 	public List<LessonDTO> generateFakeLessons(int count) {
-		System.out.println("Generating " + count + " lessons...");
 		List<LessonDTO> lessons = new ArrayList<>();
-		for (int i = 1; i < count + 1; i++) {
-			System.out.println("Generating lesson " + i + "...");
+		for (int i = 1; i <= count; i++) {
+
 			LessonDTO lessonDTO = new LessonDTO();
 			lessonDTO.setTitle(faker.educator().course());
 			lessonDTO.setDescription(faker.lorem().paragraph());
-			lessonDTO.setLanguage(faker.rickAndMorty().character());
+			lessonDTO.setLanguage(faker.educator().course());
 			lessonDTO.setImagePath(faker.avatar().image());
 
-			lessonService.create(lessonDTO);
+			lessonDTO = lessonService.create(lessonDTO);
+
+			if (lessonDTO.getId() <= 0) {
+				throw new IllegalStateException("Failed to create lesson with valid ID.");
+			}
+
 			lessons.add(lessonDTO);
 		}
 		return lessons;
 	}
 
-	private List<StepDTO> generateFakeSteps(int recordCount, Set<Integer> roadmapIds, Set<Integer> lessonIds) {
-		System.out.println("Generating " + recordCount + " steps...");
-		List<StepDTO> steps = new ArrayList<>();
-		Random random = new Random();
-
-		for (int i = 0; i < recordCount; i++) {
-			System.out.println("Generating step " + (i + 1) + "...");
-			StepDTO stepDTO = new StepDTO();
-
-			// Atribui um ID de roadmap aleatório
-			Integer[] roadmapArray = roadmapIds.toArray(new Integer[0]);
-			int randomRoadmapId = roadmapArray[random.nextInt(roadmapArray.length)];
-			System.out.println("Random roadmap ID: " + randomRoadmapId);
-			Set<Integer> roadmapIdSet = new HashSet<>();
-			roadmapIdSet.add(randomRoadmapId);
-			stepDTO.setRoadmapIds(roadmapIdSet);
-
-			// Atribui IDs de lições aleatórios
-			Set<Integer> lessonIdSet = new HashSet<>();
-			if (!lessonIds.isEmpty()) { // Verifica se lessonIds não está vazio
-				int randomLessonCount = Math.min(1, lessonIds.size());
-				for (int j = 0; j < randomLessonCount; j++) {
-					Integer[] lessonArray = lessonIds.toArray(new Integer[0]);
-					int randomLessonId = lessonArray[random.nextInt(lessonArray.length)];
-					lessonIdSet.add(randomLessonId);
-				}
-			} else {
-				// Lide com o caso em que não há lições disponíveis
-				throw new IllegalStateException("No lesson IDs available.");
-			}
-			stepDTO.setLessonIds(lessonIdSet);
-
-			steps.add(stepDTO);
-
+	private Set<Integer> getRandomSubset(Set<Integer> set, int size) {
+		if (set.size() <= size) {
+			return set; // Retorna todo o conjunto se o tamanho for menor ou igual ao solicitado
 		}
 
-		return steps;
+		Random random = new Random();
+		List<Integer> list = new ArrayList<>(set);
+		Collections.shuffle(list, random);
+		return new HashSet<>(list.subList(0, size));
 	}
 
 	public List<TaskDTO> generateFakeTasks(int count) {
 		List<TaskDTO> tasks = new ArrayList<>();
-		for (int i = 1; i < count + 1; i++) {
+		for (int i = 1; i <= count; i++) {
 			TaskDTO taskDTO = new TaskDTO();
 			taskDTO.setDescription(faker.lorem().sentence());
 			taskDTO.setImagePath(faker.avatar().image());
 
-			Set<Integer> lessonIds = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
-			taskDTO.setLessonIds(lessonIds);
+			Set<Integer> stepsIds = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
+			taskDTO.setStepsIds(stepsIds);
 
-			taskService.create(taskDTO);
+			// Persistindo e atualizando o objeto com o retorno
+			taskDTO = taskService.create(taskDTO); // Atualize o taskDTO com o resultado da persistência
+
+			if (taskDTO.getId() <= 0) {
+				throw new IllegalStateException("Failed to create task with valid ID.");
+			}
+
 			tasks.add(taskDTO);
 		}
 		return tasks;
 	}
 
-	private Integer getRandomElement(Set<Integer> set, Random random) {
-		int index = random.nextInt(set.size());
-		return set.stream().skip(index).findFirst().orElse(null);
+	public List<StepDTO> generateFakeSteps(int count, Set<Integer> roadmapId, Set<Integer> taskId,
+			Set<Integer> lessonId) {
+
+		List<StepDTO> steps = new ArrayList<>();
+
+		for (int i = 1; i < count + 1; i++) {
+			StepDTO stepDTO = new StepDTO();
+			stepDTO.setRoadmapIds(roadmapId);
+			stepDTO.setLessonIds(lessonId);
+			stepDTO.setTaskIds(taskId);
+			stepDTO.setDescription(faker.lorem().sentence());
+			stepDTO.setImagePath(faker.avatar().image());
+			stepDTO.setStatus(1);
+			steps.add(stepDTO);
+		}
+		return steps;
 	}
 
 	public void generateAllFakeData(int recordCount) {
 		// Gera usuários
 		List<UserDTO> users = generateFakeUsers(recordCount);
 
-		// Verifica se os usuários foram gerados corretamente
-		if (users.isEmpty() || users.stream().anyMatch(user -> user.getId() < 1)) {
-			throw new IllegalStateException("Invalid users generated.");
-		}
-
 		// Gera roadmaps
 		List<RoadmapDTO> roadmaps = generateFakeRoadmaps(recordCount);
-		if (roadmaps.isEmpty()) {
-			throw new IllegalStateException("No roadmaps generated.");
-		}
-
-		// Gera conquistas
-		List<AchievementDTO> achievements = generateFakeAchievements(recordCount);
-		if (achievements.isEmpty()) {
-			throw new IllegalStateException("No achievements generated.");
-		}
 
 		// Gera lições
 		List<LessonDTO> lessons = generateFakeLessons(recordCount);
-		if (lessons.isEmpty()) {
-			throw new IllegalStateException("No lessons generated.");
-		}
 
-		// Gera tarefas
 		List<TaskDTO> tasks = generateFakeTasks(recordCount);
-		if (tasks.isEmpty()) {
-			throw new IllegalStateException("No tasks generated.");
-		}
 
-		// Gera passos para todos os roadmaps e lições
+		// Certifique-se de que todos os roadmaps e lessons estão persistidos
 		Set<Integer> roadmapIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toSet());
 		Set<Integer> lessonIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toSet());
+		Set<Integer> taskIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toSet());
 
 		// Gera passos
-		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapIds, lessonIds);
-		if (steps.isEmpty()) {
-			throw new IllegalStateException("No steps generated.");
-		}
-
-		// Persistindo os passos
+		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapIds, taskIds, lessonIds);
 		for (StepDTO step : steps) {
-			stepService.create(step); // Certifique-se de que este método não está falhando
+			stepService.create(step); // Persistência do StepModel
 		}
 
-		// Para cada usuário, gera endereços e estatísticas
+		// Continue com a geração de dados para endereços e estatísticas
 		for (UserDTO user : users) {
-			// Verifica se o ID do usuário é válido antes de gerar dados relacionados
-			if (user.getId() <= 0) {
-				throw new IllegalStateException("Invalid user ID: " + user.getId());
-			}
-
-			System.out.println("Generating addresses for user ID: " + user.getId());
-			generateFakeAddresses(1, user.getId()); // Ajustado para criar 3 endereços por usuário
-			generateFakeStatistics(1, user.getId()); // 1 estatística por usuário
+			generateFakeAddresses(1, user.getId());
+			generateFakeStatistics(1, user.getId());
 		}
 
-		// Continue com a geração de dados ou finalize
 		System.out.println("All fake data generated successfully.");
 	}
 

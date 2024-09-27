@@ -6,5 +6,6 @@
   "java.format.settings.url": ".vscode/java-formatter.xml",
   "[java]": {
     "editor.insertSpaces": false
-  }
+  },
+  "java.debug.settings.showStaticVariables": false
 }

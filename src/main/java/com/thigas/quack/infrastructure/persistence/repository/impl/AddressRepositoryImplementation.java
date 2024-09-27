@@ -5,6 +5,9 @@ import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAddressModelRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +22,7 @@ public class AddressRepositoryImplementation implements IAddressRepository {
     private IAddressModelRepository addressModelRepository;
 
     @Override
+    @Transactional
     public AddressEntity save(AddressEntity addressEntity) {
         AddressModel addressModel = addressMapper.entityToModel(addressEntity);
         AddressModel savedAddressModel = addressModelRepository.save(addressModel);
@@ -26,16 +30,19 @@ public class AddressRepositoryImplementation implements IAddressRepository {
     }
 
     @Override
+    @Transactional
     public Optional<AddressEntity> findById(int id) {
         return addressModelRepository.findById(id).map(addressMapper::modelToEntity);
     }
 
     @Override
+    @Transactional
     public Iterable<AddressEntity> findAll() {
         return addressModelRepository.findAll().stream().map(addressMapper::modelToEntity).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         addressModelRepository.deleteById(id);
     }

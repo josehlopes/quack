@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.Mapper;
@@ -21,22 +22,22 @@ public interface StepMapper {
 
     @Mapping(source = "roadmaps", target = "roadmapIds", qualifiedByName = "roadmapsToIds")
     @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
+    @Mapping(source = "tasks", target = "taskIds", ignore = true) // Ignorar mapeamento de tasks
     @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
-
     StepDTO entityToDto(StepEntity stepEntity);
 
     @Mapping(source = "roadmapIds", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
     @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
+    @Mapping(source = "taskIds", target = "tasks", ignore = true) // Ignorar mapeamento de tasks
     @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
-
     StepEntity dtoToEntity(StepDTO stepDTO);
 
-    @Mapping(source = "roadmaps", target = "roadmaps")
-    @Mapping(source = "lessons", target = "lessons")
+    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true) // Ignorar mapeamento recursivo
+    @Mapping(source = "lessons", target = "lessons", ignore = true) // Ignorar mapeamento recursivo
     StepModel entityToModel(StepEntity stepEntity);
 
-    @Mapping(source = "roadmaps", target = "roadmaps")
-    @Mapping(source = "lessons", target = "lessons")
+    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true) // Ignorar mapeamento recursivo
+    @Mapping(source = "lessons", target = "lessons", ignore = true) // Ignorar mapeamento recursivo
     StepEntity modelToEntity(StepModel stepModel);
 
     @Named("roadmapsToIds")
@@ -78,6 +79,26 @@ public interface StepMapper {
             return lesson;
         }).collect(Collectors.toSet());
     }
+
+    // @Named("taskToIds")
+    // default Set<Integer> taskToIds(Set<TaskEntity> tasks) {
+    // if (tasks == null) {
+    // return null;
+    // }
+    // return tasks.stream().map(TaskEntity::getId).collect(Collectors.toSet());
+    // }
+
+    // @Named("idsToTasks")
+    // default Set<TaskEntity> idsToTasks(Set<Integer> tasksIds) {
+    // if (tasksIds == null) {
+    // return null;
+    // }
+    // return tasksIds.stream().map(id -> {
+    // TaskEntity task = new TaskEntity();
+    // task.setId(id);
+    // return task;
+    // }).collect(Collectors.toSet());
+    // }
 
     @Named("stepStatusToInt")
     default int statusToInt(Status status) {

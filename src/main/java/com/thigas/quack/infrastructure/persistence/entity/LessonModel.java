@@ -28,10 +28,7 @@ public class LessonModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @ManyToMany(mappedBy = "lessons")
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     private Set<StepModel> steps;
-
-    @ManyToMany(mappedBy = "lessons")
-    private Set<TaskModel> tasks;
 
 }

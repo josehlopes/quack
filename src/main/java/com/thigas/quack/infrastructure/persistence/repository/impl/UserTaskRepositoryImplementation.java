@@ -13,6 +13,8 @@ import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserTaskModelRepository;
 
+import jakarta.transaction.Transactional;
+
 @Repository
 public class UserTaskRepositoryImplementation implements IUserTaskRepository {
 
@@ -21,6 +23,7 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
     private final UserTaskMapper userTaskMapper = UserTaskMapper.INSTANCE;
 
     @Override
+    @Transactional
     public UserTaskEntity save(UserTaskEntity userTaskEntity) {
         UserTaskModel userTaskMODEL = userTaskMapper.entityToModel(userTaskEntity);
         UserTaskModel savedUserTaskModel = userTaskModelRepository.save(userTaskMODEL);
@@ -28,17 +31,20 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
     }
 
     @Override
+    @Transactional
     public Optional<UserTaskEntity> findById(int id) {
         return userTaskModelRepository.findById(id).map(userTaskMapper::modelToEntity);
     }
 
     @Override
+    @Transactional
     public Iterable<UserTaskEntity> findAll() {
         return userTaskModelRepository.findAll().stream().map(userTaskMapper::modelToEntity)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         userTaskModelRepository.deleteById(id);
     }

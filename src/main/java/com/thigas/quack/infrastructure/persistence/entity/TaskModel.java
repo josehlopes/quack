@@ -16,11 +16,8 @@ public class TaskModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany
-    @JoinTable(name = "task_lesson_mapping", joinColumns = @JoinColumn(name = "task_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
-    private Set<LessonModel> lessons;
-
-    // TODO: Verificar se esse relacionamento entre Task e Lesson faz sentido
+    @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    private Set<StepModel> steps;
 
     @Column(nullable = false)
     private String description;

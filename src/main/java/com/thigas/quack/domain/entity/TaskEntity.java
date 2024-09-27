@@ -12,7 +12,7 @@ import java.util.Set;
 public class TaskEntity {
 
     private int id;
-    private Set<LessonEntity> lessons;
+    private Set<StepEntity> steps;
     private String description;
     private String imagePath;
 

@@ -14,6 +14,7 @@ import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

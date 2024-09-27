@@ -5,6 +5,9 @@ import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.ILessonModelRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,20 +23,8 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     @Autowired
     private ILessonModelRepository lessonModelRepository;
 
-    public Optional<LessonEntity> findById(int id) {
-        Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
-        return lessonModelOptional.map(lessonMapper::modelToEntity);
-    }
-
-    public List<LessonEntity> findAll() {
-        List<LessonModel> lessonModels = lessonModelRepository.findAll();
-        return lessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toList());
-    }
-
-    public void deleteById(int id) {
-        lessonModelRepository.deleteById(id);
-    }
-
+    @Override
+    @Transactional
     public LessonEntity save(LessonEntity lessonEntity) {
         LessonModel lessonModel = lessonMapper.entityToModel(lessonEntity);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
@@ -41,9 +32,31 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     }
 
     @Override
+    @Transactional
     public Set<LessonEntity> saveAll(Set<LessonEntity> lessons) {
         List<LessonModel> lessonModels = lessons.stream().map(lessonMapper::entityToModel).collect(Collectors.toList());
         List<LessonModel> savedLessonModels = lessonModelRepository.saveAll(lessonModels);
         return savedLessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toSet());
     }
+
+    @Override
+    @Transactional
+    public Optional<LessonEntity> findById(int id) {
+        Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
+        return lessonModelOptional.map(lessonMapper::modelToEntity);
+    }
+
+    @Override
+    @Transactional
+    public List<LessonEntity> findAll() {
+        List<LessonModel> lessonModels = lessonModelRepository.findAll();
+        return lessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(int id) {
+        lessonModelRepository.deleteById(id);
+    }
+
 }

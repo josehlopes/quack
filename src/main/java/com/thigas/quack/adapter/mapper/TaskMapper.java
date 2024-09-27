@@ -1,12 +1,11 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
@@ -17,35 +16,33 @@ public interface TaskMapper {
 
     TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
 
-    @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
+    @Mapping(source = "steps", target = "stepsIds", ignore = true)
     TaskDTO entityToDto(TaskEntity taskEntity);
 
-    @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
+    @Mapping(source = "stepsIds", target = "steps", ignore = true)
     TaskEntity dtoToEntity(TaskDTO taskDTO);
 
-    @Mapping(source = "lessons", target = "lessons")
     TaskModel entityToModel(TaskEntity taskEntity);
 
-    @Mapping(source = "lessons", target = "lessons")
     TaskEntity modelToEntity(TaskModel taskModel);
 
-    @Named("lessonsToIds")
-    default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
-        if (lessons == null) {
-            return null;
-        }
-        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
-    }
+    // Mapeia um conjunto de StepEntity para um conjunto de Integer (IDs)
+    // default Set<Integer> stepsToIds(Set<StepEntity> steps) {
+    // if (steps == null) {
+    // return null;
+    // }
+    // return steps.stream().map(StepEntity::getId).collect(Collectors.toSet());
+    // }
 
-    @Named("idsToLessons")
-    default Set<LessonEntity> idsToLessons(Set<Integer> lessonIds) {
-        if (lessonIds == null) {
-            return null;
-        }
-        return lessonIds.stream().map(id -> {
-            LessonEntity lesson = new LessonEntity();
-            lesson.setId(id);
-            return lesson;
-        }).collect(Collectors.toSet());
-    }
+    // // Mapeia um conjunto de Integer (IDs) para um conjunto de StepEntity
+    // default Set<StepEntity> idsToSteps(Set<Integer> stepsIds) {
+    // if (stepsIds == null) {
+    // return null;
+    // }
+    // return stepsIds.stream().map(id -> {
+    // StepEntity step = new StepEntity();
+    // step.setId(id);
+    // return step;
+    // }).collect(Collectors.toSet());
+    // }
 }

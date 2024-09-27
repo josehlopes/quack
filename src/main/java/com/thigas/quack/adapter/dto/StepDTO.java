@@ -10,6 +10,7 @@ public class StepDTO {
     private int id;
     private Set<Integer> roadmapIds;
     private Set<Integer> lessonIds;
+    private Set<Integer> taskIds;
     private String description;
     private String imagePath;
     private int status;

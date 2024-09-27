@@ -1,4 +1,4 @@
-# Created at 2024-09-25T22:32:12.778
+# Created at 2024-09-27T00:28:48.008
 Boot Manifest-JAR contains absolute paths in classpath 'I:\Documents\quack\target\test-classes'
 Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 'other' has different root

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-25T22:32:29-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-27T00:28:42-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class UserRoadmapMapperImpl implements UserRoadmapMapper {
@@ -29,13 +29,13 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         userRoadmapDTO.setUserId( userRoadmapEntityUserId( userRoadmapEntity ) );
         userRoadmapDTO.setRoadmapId( userRoadmapEntityRoadmapId( userRoadmapEntity ) );
         userRoadmapDTO.setStatus( statusToInt( userRoadmapEntity.getStatus() ) );
-        if ( userRoadmapEntity.getFinishedAt() != null ) {
-            userRoadmapDTO.setFinishedAt( DateTimeFormatter.ISO_LOCAL_DATE.format( userRoadmapEntity.getFinishedAt() ) );
-        }
         userRoadmapDTO.setId( userRoadmapEntity.getId() );
         userRoadmapDTO.setProgress( userRoadmapEntity.getProgress() );
         if ( userRoadmapEntity.getStartedAt() != null ) {
             userRoadmapDTO.setStartedAt( DateTimeFormatter.ISO_LOCAL_DATE.format( userRoadmapEntity.getStartedAt() ) );
+        }
+        if ( userRoadmapEntity.getFinishedAt() != null ) {
+            userRoadmapDTO.setFinishedAt( DateTimeFormatter.ISO_LOCAL_DATE.format( userRoadmapEntity.getFinishedAt() ) );
         }
 
         return userRoadmapDTO;
@@ -52,13 +52,13 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
         userRoadmapEntity.setUser( userRoadmapDTOToUserEntity( userRoadmapDTO ) );
         userRoadmapEntity.setRoadmap( userRoadmapDTOToRoadmapEntity( userRoadmapDTO ) );
         userRoadmapEntity.setStatus( intToStatus( userRoadmapDTO.getStatus() ) );
-        if ( userRoadmapDTO.getFinishedAt() != null ) {
-            userRoadmapEntity.setFinishedAt( LocalDate.parse( userRoadmapDTO.getFinishedAt() ) );
-        }
         userRoadmapEntity.setId( userRoadmapDTO.getId() );
         userRoadmapEntity.setProgress( userRoadmapDTO.getProgress() );
         if ( userRoadmapDTO.getStartedAt() != null ) {
             userRoadmapEntity.setStartedAt( LocalDate.parse( userRoadmapDTO.getStartedAt() ) );
+        }
+        if ( userRoadmapDTO.getFinishedAt() != null ) {
+            userRoadmapEntity.setFinishedAt( LocalDate.parse( userRoadmapDTO.getFinishedAt() ) );
         }
 
         return userRoadmapEntity;
@@ -74,10 +74,10 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         userRoadmapModel.setUserId( map( userRoadmapEntityUserId1( userRoadmapEntity ) ) );
         userRoadmapModel.setRoadmapId( mapRoadmap( userRoadmapEntityRoadmapId1( userRoadmapEntity ) ) );
-        userRoadmapModel.setFinishedAt( userRoadmapEntity.getFinishedAt() );
         userRoadmapModel.setId( userRoadmapEntity.getId() );
         userRoadmapModel.setProgress( userRoadmapEntity.getProgress() );
         userRoadmapModel.setStartedAt( userRoadmapEntity.getStartedAt() );
+        userRoadmapModel.setFinishedAt( userRoadmapEntity.getFinishedAt() );
         userRoadmapModel.setStatus( userRoadmapEntity.getStatus() );
 
         return userRoadmapModel;
@@ -93,10 +93,10 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         userRoadmapEntity.setUser( userRoadmapModelToUserEntity( userRoadmapModel ) );
         userRoadmapEntity.setRoadmap( userRoadmapModelToRoadmapEntity( userRoadmapModel ) );
-        userRoadmapEntity.setFinishedAt( userRoadmapModel.getFinishedAt() );
         userRoadmapEntity.setId( userRoadmapModel.getId() );
         userRoadmapEntity.setProgress( userRoadmapModel.getProgress() );
         userRoadmapEntity.setStartedAt( userRoadmapModel.getStartedAt() );
+        userRoadmapEntity.setFinishedAt( userRoadmapModel.getFinishedAt() );
         userRoadmapEntity.setStatus( userRoadmapModel.getStatus() );
 
         return userRoadmapEntity;

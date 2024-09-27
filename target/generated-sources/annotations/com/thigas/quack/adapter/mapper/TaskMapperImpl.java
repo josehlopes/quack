@@ -2,8 +2,12 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,8 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-25T22:32:29-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.39.0.v20240820-0604, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-27T00:28:41-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class TaskMapperImpl implements TaskMapper {
@@ -26,9 +30,8 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setLessonIds( lessonsToIds( taskEntity.getLessons() ) );
-        taskDTO.setDescription( taskEntity.getDescription() );
         taskDTO.setId( taskEntity.getId() );
+        taskDTO.setDescription( taskEntity.getDescription() );
         taskDTO.setImagePath( taskEntity.getImagePath() );
 
         return taskDTO;
@@ -42,9 +45,8 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setLessons( idsToLessons( taskDTO.getLessonIds() ) );
-        taskEntity.setDescription( taskDTO.getDescription() );
         taskEntity.setId( taskDTO.getId() );
+        taskEntity.setDescription( taskDTO.getDescription() );
         taskEntity.setImagePath( taskDTO.getImagePath() );
 
         return taskEntity;
@@ -58,9 +60,9 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskModel taskModel = new TaskModel();
 
-        taskModel.setLessons( lessonEntitySetToLessonModelSet( taskEntity.getLessons() ) );
-        taskModel.setDescription( taskEntity.getDescription() );
         taskModel.setId( taskEntity.getId() );
+        taskModel.setSteps( stepEntitySetToStepModelSet( taskEntity.getSteps() ) );
+        taskModel.setDescription( taskEntity.getDescription() );
         taskModel.setImagePath( taskEntity.getImagePath() );
 
         return taskModel;
@@ -74,12 +76,67 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setLessons( lessonModelSetToLessonEntitySet( taskModel.getLessons() ) );
-        taskEntity.setDescription( taskModel.getDescription() );
         taskEntity.setId( taskModel.getId() );
+        taskEntity.setSteps( stepModelSetToStepEntitySet( taskModel.getSteps() ) );
+        taskEntity.setDescription( taskModel.getDescription() );
         taskEntity.setImagePath( taskModel.getImagePath() );
 
         return taskEntity;
+    }
+
+    protected RoadmapModel roadmapEntityToRoadmapModel(RoadmapEntity roadmapEntity) {
+        if ( roadmapEntity == null ) {
+            return null;
+        }
+
+        RoadmapModel roadmapModel = new RoadmapModel();
+
+        roadmapModel.setId( roadmapEntity.getId() );
+        roadmapModel.setTitle( roadmapEntity.getTitle() );
+        roadmapModel.setDescription( roadmapEntity.getDescription() );
+        roadmapModel.setImagePath( roadmapEntity.getImagePath() );
+        roadmapModel.setStatus( roadmapEntity.getStatus() );
+
+        return roadmapModel;
+    }
+
+    protected Set<RoadmapModel> roadmapEntitySetToRoadmapModelSet(Set<RoadmapEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<RoadmapModel> set1 = new LinkedHashSet<RoadmapModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( RoadmapEntity roadmapEntity : set ) {
+            set1.add( roadmapEntityToRoadmapModel( roadmapEntity ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<TaskModel> taskEntitySetToTaskModelSet(Set<TaskEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<TaskModel> set1 = new LinkedHashSet<TaskModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( TaskEntity taskEntity : set ) {
+            set1.add( entityToModel( taskEntity ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepEntity stepEntity : set ) {
+            set1.add( stepEntityToStepModel( stepEntity ) );
+        }
+
+        return set1;
     }
 
     protected LessonModel lessonEntityToLessonModel(LessonEntity lessonEntity) {
@@ -89,11 +146,12 @@ public class TaskMapperImpl implements TaskMapper {
 
         LessonModel lessonModel = new LessonModel();
 
-        lessonModel.setDescription( lessonEntity.getDescription() );
         lessonModel.setId( lessonEntity.getId() );
-        lessonModel.setImagePath( lessonEntity.getImagePath() );
-        lessonModel.setLanguage( lessonEntity.getLanguage() );
         lessonModel.setTitle( lessonEntity.getTitle() );
+        lessonModel.setDescription( lessonEntity.getDescription() );
+        lessonModel.setLanguage( lessonEntity.getLanguage() );
+        lessonModel.setImagePath( lessonEntity.getImagePath() );
+        lessonModel.setSteps( stepEntitySetToStepModelSet( lessonEntity.getSteps() ) );
 
         return lessonModel;
     }
@@ -111,6 +169,66 @@ public class TaskMapperImpl implements TaskMapper {
         return set1;
     }
 
+    protected StepModel stepEntityToStepModel(StepEntity stepEntity) {
+        if ( stepEntity == null ) {
+            return null;
+        }
+
+        StepModel stepModel = new StepModel();
+
+        stepModel.setId( stepEntity.getId() );
+        stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps() ) );
+        stepModel.setTasks( taskEntitySetToTaskModelSet( stepEntity.getTasks() ) );
+        stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons() ) );
+        stepModel.setDescription( stepEntity.getDescription() );
+        stepModel.setImagePath( stepEntity.getImagePath() );
+        stepModel.setStatus( stepEntity.getStatus() );
+
+        return stepModel;
+    }
+
+    protected RoadmapEntity roadmapModelToRoadmapEntity(RoadmapModel roadmapModel) {
+        if ( roadmapModel == null ) {
+            return null;
+        }
+
+        RoadmapEntity roadmapEntity = new RoadmapEntity();
+
+        roadmapEntity.setId( roadmapModel.getId() );
+        roadmapEntity.setTitle( roadmapModel.getTitle() );
+        roadmapEntity.setDescription( roadmapModel.getDescription() );
+        roadmapEntity.setImagePath( roadmapModel.getImagePath() );
+        roadmapEntity.setStatus( roadmapModel.getStatus() );
+
+        return roadmapEntity;
+    }
+
+    protected Set<RoadmapEntity> roadmapModelSetToRoadmapEntitySet(Set<RoadmapModel> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<RoadmapEntity> set1 = new LinkedHashSet<RoadmapEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( RoadmapModel roadmapModel : set ) {
+            set1.add( roadmapModelToRoadmapEntity( roadmapModel ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepModel stepModel : set ) {
+            set1.add( stepModelToStepEntity( stepModel ) );
+        }
+
+        return set1;
+    }
+
     protected LessonEntity lessonModelToLessonEntity(LessonModel lessonModel) {
         if ( lessonModel == null ) {
             return null;
@@ -118,11 +236,12 @@ public class TaskMapperImpl implements TaskMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setDescription( lessonModel.getDescription() );
         lessonEntity.setId( lessonModel.getId() );
-        lessonEntity.setImagePath( lessonModel.getImagePath() );
-        lessonEntity.setLanguage( lessonModel.getLanguage() );
         lessonEntity.setTitle( lessonModel.getTitle() );
+        lessonEntity.setDescription( lessonModel.getDescription() );
+        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setImagePath( lessonModel.getImagePath() );
+        lessonEntity.setSteps( stepModelSetToStepEntitySet( lessonModel.getSteps() ) );
 
         return lessonEntity;
     }
@@ -138,5 +257,36 @@ public class TaskMapperImpl implements TaskMapper {
         }
 
         return set1;
+    }
+
+    protected Set<TaskEntity> taskModelSetToTaskEntitySet(Set<TaskModel> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<TaskEntity> set1 = new LinkedHashSet<TaskEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( TaskModel taskModel : set ) {
+            set1.add( modelToEntity( taskModel ) );
+        }
+
+        return set1;
+    }
+
+    protected StepEntity stepModelToStepEntity(StepModel stepModel) {
+        if ( stepModel == null ) {
+            return null;
+        }
+
+        StepEntity stepEntity = new StepEntity();
+
+        stepEntity.setId( stepModel.getId() );
+        stepEntity.setRoadmaps( roadmapModelSetToRoadmapEntitySet( stepModel.getRoadmaps() ) );
+        stepEntity.setLessons( lessonModelSetToLessonEntitySet( stepModel.getLessons() ) );
+        stepEntity.setTasks( taskModelSetToTaskEntitySet( stepModel.getTasks() ) );
+        stepEntity.setDescription( stepModel.getDescription() );
+        stepEntity.setImagePath( stepModel.getImagePath() );
+        stepEntity.setStatus( stepModel.getStatus() );
+
+        return stepEntity;
     }
 }

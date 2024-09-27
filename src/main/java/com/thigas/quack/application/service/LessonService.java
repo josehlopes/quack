@@ -22,12 +22,9 @@ public class LessonService {
     @Autowired
     private ILessonRepository lessonRepository;
 
-    @Transactional
     public LessonDTO create(LessonDTO lessonDTO) {
         LessonEntity lessonEntity = lessonMapper.dtoToEntity(lessonDTO);
-        System.out.println("Before saving: " + lessonEntity);
         LessonEntity savedLesson = lessonRepository.save(lessonEntity);
-        System.out.println("Saved Lesson: " + savedLesson);
         return lessonMapper.entityToDto(savedLesson);
     }
 
