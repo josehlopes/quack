@@ -26,6 +26,12 @@ public interface StatisticsMapper {
     @Mapping(source = "user.id", target = "user.id")
     StatisticsEntity modelToEntity(StatisticsModel statisticsModel);
 
+    @Mapping(source = "user", target = "user.id")
+    StatisticsModel dtoToModel(StatisticsDTO statisticsDTO);
+
+    @Mapping(source = "user.id", target = "user")
+    StatisticsDTO modelToDto(StatisticsModel statisticsModel);
+
     default UserModel map(Integer user) {
         if (user == null) {
             return null;

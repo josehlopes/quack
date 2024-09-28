@@ -30,6 +30,14 @@ public interface UserTaskMapper {
     @Mapping(source = "task", target = "task.id")
     UserTaskEntity modelToEntity(UserTaskModel userModel);
 
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "task", target = "task.id")
+    UserTaskModel dtoToModel(UserTaskDTO userTaskDTO);
+
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "task.id", target = "task")
+    UserTaskDTO modelToDto(UserTaskModel userTaskModel);
+
     default UserModel userToModel(Integer user) {
         if (user == null) {
             return null;

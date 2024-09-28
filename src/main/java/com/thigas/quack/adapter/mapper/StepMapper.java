@@ -6,6 +6,7 @@ import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.model.Status;
+import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -46,6 +47,22 @@ public interface StepMapper {
     @Mapping(source = "tasks", target = "tasks", ignore = true)
     StepEntity modelToEntity(StepModel stepModel);
 
+    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
+    // "idsToLessons")
+    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "idsToRoadmapsModel")
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
+    @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
+    StepModel dtoToModel(StepDTO stepDTO);
+
+    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
+    // "lessonsToIds")
+    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapsToIdsModel")
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
+    @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
+    StepDTO modelToDto(StepModel stepModel);
+
     @Named("roadmapsToIds")
     default Set<Integer> roadmapsToIds(Set<RoadmapEntity> roadmaps) {
         if (roadmaps == null) {
@@ -61,6 +78,26 @@ public interface StepMapper {
         }
         return roadmaps.stream().map(id -> {
             RoadmapEntity roadmap = new RoadmapEntity();
+            roadmap.setId(id);
+            return roadmap;
+        }).collect(Collectors.toSet());
+    }
+
+    @Named("roadmapsToIdsModel")
+    default Set<Integer> roadmapsToIdsModel(Set<RoadmapModel> roadmaps) {
+        if (roadmaps == null) {
+            return null;
+        }
+        return roadmaps.stream().map(RoadmapModel::getId).collect(Collectors.toSet());
+    }
+
+    @Named("idsToRoadmapsModel")
+    default Set<RoadmapModel> idsToRoadmapsModel(Set<Integer> roadmaps) {
+        if (roadmaps == null) {
+            return null;
+        }
+        return roadmaps.stream().map(id -> {
+            RoadmapModel roadmap = new RoadmapModel();
             roadmap.setId(id);
             return roadmap;
         }).collect(Collectors.toSet());

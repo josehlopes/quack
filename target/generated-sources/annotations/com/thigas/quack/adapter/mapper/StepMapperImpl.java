@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T22:10:00-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    date = "2024-09-28T12:33:30-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class StepMapperImpl implements StepMapper {
@@ -24,8 +24,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepDTO.setRoadmaps( roadmapsToIds( stepEntity.getRoadmaps() ) );
         stepDTO.setStatus( statusToInt( stepEntity.getStatus() ) );
-        stepDTO.setId( stepEntity.getId() );
         stepDTO.setDescription( stepEntity.getDescription() );
+        stepDTO.setId( stepEntity.getId() );
         stepDTO.setImagePath( stepEntity.getImagePath() );
 
         return stepDTO;
@@ -41,8 +41,8 @@ public class StepMapperImpl implements StepMapper {
 
         stepEntity.setRoadmaps( idsToRoadmaps( stepDTO.getRoadmaps() ) );
         stepEntity.setStatus( intToStatus( stepDTO.getStatus() ) );
-        stepEntity.setId( stepDTO.getId() );
         stepEntity.setDescription( stepDTO.getDescription() );
+        stepEntity.setId( stepDTO.getId() );
         stepEntity.setImagePath( stepDTO.getImagePath() );
 
         return stepEntity;
@@ -56,8 +56,8 @@ public class StepMapperImpl implements StepMapper {
 
         StepModel stepModel = new StepModel();
 
-        stepModel.setId( stepEntity.getId() );
         stepModel.setDescription( stepEntity.getDescription() );
+        stepModel.setId( stepEntity.getId() );
         stepModel.setImagePath( stepEntity.getImagePath() );
         stepModel.setStatus( stepEntity.getStatus() );
 
@@ -72,11 +72,45 @@ public class StepMapperImpl implements StepMapper {
 
         StepEntity stepEntity = new StepEntity();
 
-        stepEntity.setId( stepModel.getId() );
         stepEntity.setDescription( stepModel.getDescription() );
+        stepEntity.setId( stepModel.getId() );
         stepEntity.setImagePath( stepModel.getImagePath() );
         stepEntity.setStatus( stepModel.getStatus() );
 
         return stepEntity;
+    }
+
+    @Override
+    public StepModel dtoToModel(StepDTO stepDTO) {
+        if ( stepDTO == null ) {
+            return null;
+        }
+
+        StepModel stepModel = new StepModel();
+
+        stepModel.setRoadmaps( idsToRoadmapsModel( stepDTO.getRoadmaps() ) );
+        stepModel.setStatus( intToStatus( stepDTO.getStatus() ) );
+        stepModel.setDescription( stepDTO.getDescription() );
+        stepModel.setId( stepDTO.getId() );
+        stepModel.setImagePath( stepDTO.getImagePath() );
+
+        return stepModel;
+    }
+
+    @Override
+    public StepDTO modelToDto(StepModel stepModel) {
+        if ( stepModel == null ) {
+            return null;
+        }
+
+        StepDTO stepDTO = new StepDTO();
+
+        stepDTO.setRoadmaps( roadmapsToIdsModel( stepModel.getRoadmaps() ) );
+        stepDTO.setStatus( statusToInt( stepModel.getStatus() ) );
+        stepDTO.setDescription( stepModel.getDescription() );
+        stepDTO.setId( stepModel.getId() );
+        stepDTO.setImagePath( stepModel.getImagePath() );
+
+        return stepDTO;
     }
 }

@@ -12,5 +12,7 @@ public interface IRoadmapRepository {
 
     Iterable<RoadmapEntity> findAll();
 
+    Boolean existsById(int id);
+
     void deleteById(int id);
 }

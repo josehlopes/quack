@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T22:10:00-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    date = "2024-09-28T12:33:09-0300",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
 )
 @Component
 public class LessonMapperImpl implements LessonMapper {
@@ -30,11 +30,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonDTO lessonDTO = new LessonDTO();
 
-        lessonDTO.setId( lesson.getId() );
-        lessonDTO.setTitle( lesson.getTitle() );
         lessonDTO.setDescription( lesson.getDescription() );
-        lessonDTO.setLanguage( lesson.getLanguage() );
+        lessonDTO.setId( lesson.getId() );
         lessonDTO.setImagePath( lesson.getImagePath() );
+        lessonDTO.setLanguage( lesson.getLanguage() );
+        lessonDTO.setTitle( lesson.getTitle() );
 
         return lessonDTO;
     }
@@ -47,11 +47,11 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setId( lessonDTO.getId() );
-        lessonEntity.setTitle( lessonDTO.getTitle() );
         lessonEntity.setDescription( lessonDTO.getDescription() );
-        lessonEntity.setLanguage( lessonDTO.getLanguage() );
+        lessonEntity.setId( lessonDTO.getId() );
         lessonEntity.setImagePath( lessonDTO.getImagePath() );
+        lessonEntity.setLanguage( lessonDTO.getLanguage() );
+        lessonEntity.setTitle( lessonDTO.getTitle() );
 
         return lessonEntity;
     }
@@ -64,12 +64,12 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setId( lessonModel.getId() );
-        lessonEntity.setTitle( lessonModel.getTitle() );
         lessonEntity.setDescription( lessonModel.getDescription() );
-        lessonEntity.setLanguage( lessonModel.getLanguage() );
+        lessonEntity.setId( lessonModel.getId() );
         lessonEntity.setImagePath( lessonModel.getImagePath() );
+        lessonEntity.setLanguage( lessonModel.getLanguage() );
         lessonEntity.setSteps( stepModelSetToStepEntitySet( lessonModel.getSteps() ) );
+        lessonEntity.setTitle( lessonModel.getTitle() );
 
         return lessonEntity;
     }
@@ -82,14 +82,61 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonModel lessonModel = new LessonModel();
 
-        lessonModel.setId( lesson.getId() );
-        lessonModel.setTitle( lesson.getTitle() );
         lessonModel.setDescription( lesson.getDescription() );
-        lessonModel.setLanguage( lesson.getLanguage() );
+        lessonModel.setId( lesson.getId() );
         lessonModel.setImagePath( lesson.getImagePath() );
+        lessonModel.setLanguage( lesson.getLanguage() );
         lessonModel.setSteps( stepEntitySetToStepModelSet( lesson.getSteps() ) );
+        lessonModel.setTitle( lesson.getTitle() );
 
         return lessonModel;
+    }
+
+    @Override
+    public LessonModel dtoToModel(LessonDTO lessonDTO) {
+        if ( lessonDTO == null ) {
+            return null;
+        }
+
+        LessonModel lessonModel = new LessonModel();
+
+        lessonModel.setDescription( lessonDTO.getDescription() );
+        lessonModel.setId( lessonDTO.getId() );
+        lessonModel.setImagePath( lessonDTO.getImagePath() );
+        lessonModel.setLanguage( lessonDTO.getLanguage() );
+        lessonModel.setTitle( lessonDTO.getTitle() );
+
+        return lessonModel;
+    }
+
+    @Override
+    public LessonDTO modelToDto(LessonModel lessonModel) {
+        if ( lessonModel == null ) {
+            return null;
+        }
+
+        LessonDTO lessonDTO = new LessonDTO();
+
+        lessonDTO.setDescription( lessonModel.getDescription() );
+        lessonDTO.setId( lessonModel.getId() );
+        lessonDTO.setImagePath( lessonModel.getImagePath() );
+        lessonDTO.setLanguage( lessonModel.getLanguage() );
+        lessonDTO.setTitle( lessonModel.getTitle() );
+
+        return lessonDTO;
+    }
+
+    protected Set<LessonEntity> lessonModelSetToLessonEntitySet(Set<LessonModel> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<LessonEntity> set1 = new LinkedHashSet<LessonEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( LessonModel lessonModel : set ) {
+            set1.add( modelToEntity( lessonModel ) );
+        }
+
+        return set1;
     }
 
     protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set) {
@@ -112,12 +159,12 @@ public class LessonMapperImpl implements LessonMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( roadmapModel.getId() );
-        roadmapEntity.setTitle( roadmapModel.getTitle() );
         roadmapEntity.setDescription( roadmapModel.getDescription() );
+        roadmapEntity.setId( roadmapModel.getId() );
         roadmapEntity.setImagePath( roadmapModel.getImagePath() );
         roadmapEntity.setStatus( roadmapModel.getStatus() );
         roadmapEntity.setSteps( stepModelSetToStepEntitySet( roadmapModel.getSteps() ) );
+        roadmapEntity.setTitle( roadmapModel.getTitle() );
 
         return roadmapEntity;
     }
@@ -135,19 +182,6 @@ public class LessonMapperImpl implements LessonMapper {
         return set1;
     }
 
-    protected Set<LessonEntity> lessonModelSetToLessonEntitySet(Set<LessonModel> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<LessonEntity> set1 = new LinkedHashSet<LessonEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( LessonModel lessonModel : set ) {
-            set1.add( modelToEntity( lessonModel ) );
-        }
-
-        return set1;
-    }
-
     protected TaskEntity taskModelToTaskEntity(TaskModel taskModel) {
         if ( taskModel == null ) {
             return null;
@@ -155,10 +189,10 @@ public class LessonMapperImpl implements LessonMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( taskModel.getId() );
-        taskEntity.setSteps( stepModelSetToStepEntitySet( taskModel.getSteps() ) );
         taskEntity.setDescription( taskModel.getDescription() );
+        taskEntity.setId( taskModel.getId() );
         taskEntity.setImagePath( taskModel.getImagePath() );
+        taskEntity.setSteps( stepModelSetToStepEntitySet( taskModel.getSteps() ) );
 
         return taskEntity;
     }
@@ -183,15 +217,28 @@ public class LessonMapperImpl implements LessonMapper {
 
         StepEntity stepEntity = new StepEntity();
 
-        stepEntity.setId( stepModel.getId() );
-        stepEntity.setRoadmaps( roadmapModelSetToRoadmapEntitySet( stepModel.getRoadmaps() ) );
-        stepEntity.setLessons( lessonModelSetToLessonEntitySet( stepModel.getLessons() ) );
-        stepEntity.setTasks( taskModelSetToTaskEntitySet( stepModel.getTasks() ) );
         stepEntity.setDescription( stepModel.getDescription() );
+        stepEntity.setId( stepModel.getId() );
         stepEntity.setImagePath( stepModel.getImagePath() );
+        stepEntity.setLessons( lessonModelSetToLessonEntitySet( stepModel.getLessons() ) );
+        stepEntity.setRoadmaps( roadmapModelSetToRoadmapEntitySet( stepModel.getRoadmaps() ) );
         stepEntity.setStatus( stepModel.getStatus() );
+        stepEntity.setTasks( taskModelSetToTaskEntitySet( stepModel.getTasks() ) );
 
         return stepEntity;
+    }
+
+    protected Set<LessonModel> lessonEntitySetToLessonModelSet(Set<LessonEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<LessonModel> set1 = new LinkedHashSet<LessonModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( LessonEntity lessonEntity : set ) {
+            set1.add( entityToModel( lessonEntity ) );
+        }
+
+        return set1;
     }
 
     protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set) {
@@ -214,12 +261,12 @@ public class LessonMapperImpl implements LessonMapper {
 
         RoadmapModel roadmapModel = new RoadmapModel();
 
-        roadmapModel.setId( roadmapEntity.getId() );
-        roadmapModel.setTitle( roadmapEntity.getTitle() );
         roadmapModel.setDescription( roadmapEntity.getDescription() );
+        roadmapModel.setId( roadmapEntity.getId() );
         roadmapModel.setImagePath( roadmapEntity.getImagePath() );
-        roadmapModel.setSteps( stepEntitySetToStepModelSet( roadmapEntity.getSteps() ) );
         roadmapModel.setStatus( roadmapEntity.getStatus() );
+        roadmapModel.setSteps( stepEntitySetToStepModelSet( roadmapEntity.getSteps() ) );
+        roadmapModel.setTitle( roadmapEntity.getTitle() );
 
         return roadmapModel;
     }
@@ -244,10 +291,10 @@ public class LessonMapperImpl implements LessonMapper {
 
         TaskModel taskModel = new TaskModel();
 
-        taskModel.setId( taskEntity.getId() );
-        taskModel.setSteps( stepEntitySetToStepModelSet( taskEntity.getSteps() ) );
         taskModel.setDescription( taskEntity.getDescription() );
+        taskModel.setId( taskEntity.getId() );
         taskModel.setImagePath( taskEntity.getImagePath() );
+        taskModel.setSteps( stepEntitySetToStepModelSet( taskEntity.getSteps() ) );
 
         return taskModel;
     }
@@ -265,19 +312,6 @@ public class LessonMapperImpl implements LessonMapper {
         return set1;
     }
 
-    protected Set<LessonModel> lessonEntitySetToLessonModelSet(Set<LessonEntity> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<LessonModel> set1 = new LinkedHashSet<LessonModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( LessonEntity lessonEntity : set ) {
-            set1.add( entityToModel( lessonEntity ) );
-        }
-
-        return set1;
-    }
-
     protected StepModel stepEntityToStepModel(StepEntity stepEntity) {
         if ( stepEntity == null ) {
             return null;
@@ -285,13 +319,13 @@ public class LessonMapperImpl implements LessonMapper {
 
         StepModel stepModel = new StepModel();
 
-        stepModel.setId( stepEntity.getId() );
-        stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps() ) );
-        stepModel.setTasks( taskEntitySetToTaskModelSet( stepEntity.getTasks() ) );
-        stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons() ) );
         stepModel.setDescription( stepEntity.getDescription() );
+        stepModel.setId( stepEntity.getId() );
         stepModel.setImagePath( stepEntity.getImagePath() );
+        stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons() ) );
+        stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps() ) );
         stepModel.setStatus( stepEntity.getStatus() );
+        stepModel.setTasks( taskEntitySetToTaskModelSet( stepEntity.getTasks() ) );
 
         return stepModel;
     }

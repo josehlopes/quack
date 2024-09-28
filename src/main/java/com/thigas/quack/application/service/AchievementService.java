@@ -4,6 +4,8 @@ import com.thigas.quack.adapter.dto.AchievementDTO;
 import com.thigas.quack.adapter.mapper.AchievementMapper;
 import com.thigas.quack.domain.entity.AchievementEntity;
 import com.thigas.quack.domain.repository.IAchievementRepository;
+import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +22,25 @@ public class AchievementService {
     private IAchievementRepository achievementRepository;
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
-        AchievementEntity achievement = achievementMapper.dtoToEntity(achievementDTO);
-        AchievementEntity toSaveAchievement = achievementRepository.save(achievement);
-        return achievementMapper.entityToDto(toSaveAchievement);
+        AchievementModel achievementModel = achievementMapper.dtoToModel(achievementDTO);
+        AchievementModel toSaveAchievement = achievementRepository.save(achievementModel);
+        return achievementMapper.modelToDto(toSaveAchievement);
     }
 
     public Optional<AchievementDTO> getById(int id) {
-        Optional<AchievementEntity> achievement = achievementRepository.findById(id);
-        return achievement.map(achievementMapper::entityToDto);
+        Optional<AchievementModel> achievementModel = achievementRepository.findById(id);
+        return achievementModel.map(achievementMapper::modelToDto);
     }
 
     public Iterable<AchievementDTO> getAll() {
-        Iterable<AchievementEntity> achievements = achievementRepository.findAll();
-        return StreamSupport.stream(achievements.spliterator(), false).map(achievementMapper::entityToDto)
+        Iterable<AchievementModel> achievements = achievementRepository.findAll();
+        return StreamSupport.stream(achievements.spliterator(), false).map(achievementMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AchievementDTO achievementDTO) {
-        AchievementEntity achievement = achievementMapper.dtoToEntity(achievementDTO);
-        achievementRepository.save(achievement);
+        AchievementModel achievementModel = achievementMapper.dtoToModel(achievementDTO);
+        achievementRepository.save(achievementModel);
     }
 
     public void delete(int id) {

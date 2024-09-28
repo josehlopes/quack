@@ -22,4 +22,10 @@ public interface LessonMapper {
 
     LessonModel entityToModel(LessonEntity lesson);
 
+    @Mapping(source = "steps", target = "steps", ignore = true)
+    LessonModel dtoToModel(LessonDTO lessonDTO);
+
+    @Mapping(source = "steps", target = "steps", ignore = true)
+    LessonDTO modelToDto(LessonModel lessonModel);
+
 }

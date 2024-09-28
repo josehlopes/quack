@@ -30,6 +30,16 @@ public interface UserMapper {
 
     UserEntity modelToEntity(UserModel userModel);
 
+    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
+    UserModel dtoToModel(UserDTO userDTO);
+
+    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
+    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
+    UserDTO modelToDto(UserModel userModel);
+
     default OffsetDateTime offSetToString(String date) {
         if (date == null) {
             return null;

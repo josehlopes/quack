@@ -46,6 +46,10 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
         return roadmapModelRepository.findById(id).map(userMapper::modelToEntity);
     }
 
+    public Boolean existsById(int id) {
+        return roadmapModelRepository.existsById(id);
+    }
+
     @Override
     @Transactional
     public Iterable<RoadmapEntity> findAll() {

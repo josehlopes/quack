@@ -18,4 +18,8 @@ public interface AchievementMapper {
     AchievementModel entityToModel(AchievementEntity achievementEntity);
 
     AchievementEntity modelToEntity(AchievementModel achievementModel);
+
+    AchievementModel dtoToModel(AchievementDTO achievementDTO);
+
+    AchievementDTO modelToDto(AchievementModel achievementModel);
 }

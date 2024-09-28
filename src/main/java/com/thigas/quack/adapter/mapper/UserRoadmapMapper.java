@@ -34,6 +34,16 @@ public interface UserRoadmapMapper {
     @Mapping(source = "roadmap", target = "roadmap.id")
     UserRoadmapEntity modelToEntity(UserRoadmapModel userRoadmapModel);
 
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "roadmap", target = "roadmap.id")
+    @Mapping(target = "status", source = "status", qualifiedByName = "userRoadmapIntToStatus")
+    UserRoadmapModel dtoToModel(UserRoadmapDTO userRoadmapDTO);
+
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "roadmap.id", target = "roadmap")
+    @Mapping(target = "status", source = "status", qualifiedByName = "userRoadmapStatusToInt")
+    UserRoadmapDTO modelToDto(UserRoadmapModel userRoadmapModel);
+
     default UserModel map(Integer user) {
         if (user == null) {
             return null;

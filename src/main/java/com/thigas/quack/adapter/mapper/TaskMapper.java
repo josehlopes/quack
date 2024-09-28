@@ -28,6 +28,12 @@ public interface TaskMapper {
     @Mapping(source = "steps", target = "steps", ignore = true)
     TaskEntity modelToEntity(TaskModel taskModel);
 
+    @Mapping(source = "steps", target = "steps", ignore = true)
+    TaskModel dtoToModel(TaskDTO taskDTO);
+
+    @Mapping(source = "steps", target = "steps", ignore = true)
+    TaskDTO modelToDto(TaskModel taskModel);
+
     // Mapeia um conjunto de StepEntity para um conjunto de Integer (IDs)
     // default Set<Integer> stepsToIds(Set<StepEntity> steps) {
     // if (steps == null) {

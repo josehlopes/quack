@@ -26,6 +26,10 @@ public interface AddressMapper {
     @Mapping(source = "user.id", target = "user.id")
     AddressEntity modelToEntity(AddressModel addressModel);
 
+    AddressModel dtoToModel(AddressDTO addressDTO);
+
+    AddressDTO modelToDto(AddressModel addressModel);
+
     default UserModel map(Integer user) {
         if (user == null) {
             return null;

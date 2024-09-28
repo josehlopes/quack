@@ -1,16 +1,17 @@
 package com.thigas.quack.domain.repository;
 
 import com.thigas.quack.domain.entity.AchievementEntity;
+import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 
 import java.util.Optional;
 
 public interface IAchievementRepository {
 
-    AchievementEntity save(AchievementEntity achievement);
+    AchievementModel save(AchievementModel achievement);
 
-    Optional<AchievementEntity> findById(int id);
+    Optional<AchievementModel> findById(int id);
 
-    Iterable<AchievementEntity> findAll();
+    Iterable<AchievementModel> findAll();
 
     void deleteById(int id);
 }

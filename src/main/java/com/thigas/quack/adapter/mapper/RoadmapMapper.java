@@ -26,6 +26,14 @@ public interface RoadmapMapper {
 
     RoadmapEntity modelToEntity(RoadmapModel roadmapModel);
 
+    @Mapping(target = "status", source = "status", qualifiedByName = "roadmapIntToStatus")
+    @Mapping(target = "steps", source = "steps", ignore = true)
+    RoadmapModel dtoToModel(RoadmapDTO roadmapDTO);
+
+    @Mapping(target = "status", source = "status", qualifiedByName = "roadmapStatusToInt")
+    @Mapping(target = "steps", source = "steps", ignore = true)
+    RoadmapDTO modelToDto(RoadmapModel roadmapModel);
+
     @Named("roadmapStatusToInt")
     default int statusToInt(Status status) {
         return status != null ? status.getValue() : 0;
