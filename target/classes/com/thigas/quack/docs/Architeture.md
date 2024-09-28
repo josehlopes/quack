@@ -8,22 +8,24 @@ src
     ├── java
     │   └── com
     │       └── quack
-    │           ├── application
-    │           │   ├── service
-    │           │   └── usecase
-    │           ├── domain
-    │           │   ├── model
-    │           │   ├── repository
-    │           │   └── service
-    │           ├── infrastructure
-    │           │   ├── persistence
-    │           │   ├── configuration
-    │           │   └── messaging
-    │           ├── presentation
+    │           ├── adapter
     │           │   ├── controller
     │           │   ├── dto
     │           │   └── mapper
-    │           └── config
+    │           ├──application
+    │           │   ├── service
+    │           │   └── usecase
+    │           ├──docs
+    │           │
+    │           ├── domain
+    │           │   ├──entity
+    │           │   ├── example
+    │           │   ├── model
+    │           │   └── repository
+    │           ├── infrastructure
+    │           │   ├── persistence
+    │           │   └── security
+    │
     └── resources
         └── application.properties
 
