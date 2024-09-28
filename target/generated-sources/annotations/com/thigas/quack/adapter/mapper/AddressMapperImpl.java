@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T00:28:42-0300",
+    date = "2024-09-27T22:10:00-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -24,7 +24,7 @@ public class AddressMapperImpl implements AddressMapper {
 
         AddressDTO addressDTO = new AddressDTO();
 
-        addressDTO.setUserId( addressUserId( address ) );
+        addressDTO.setUser( addressUserId( address ) );
         addressDTO.setId( address.getId() );
         addressDTO.setStreet( address.getStreet() );
         addressDTO.setCity( address.getCity() );
@@ -115,7 +115,7 @@ public class AddressMapperImpl implements AddressMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( addressDTO.getUserId() );
+        userEntity.setId( addressDTO.getUser() );
 
         return userEntity;
     }

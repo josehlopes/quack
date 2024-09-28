@@ -15,9 +15,11 @@ public interface RoadmapMapper {
     RoadmapMapper INSTANCE = Mappers.getMapper(RoadmapMapper.class);
 
     @Mapping(target = "status", source = "status", qualifiedByName = "roadmapStatusToInt")
+    @Mapping(target = "steps", source = "steps", ignore = true)
     RoadmapDTO entityToDto(RoadmapEntity roadmap);
 
     @Mapping(target = "status", source = "status", qualifiedByName = "roadmapIntToStatus")
+    @Mapping(target = "steps", source = "steps", ignore = true)
     RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO);
 
     RoadmapModel entityToModel(RoadmapEntity roadmap);

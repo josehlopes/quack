@@ -30,7 +30,7 @@ public class TaskService {
     public TaskDTO create(TaskDTO taskDTO) {
         TaskEntity taskEntity = taskMapper.dtoToEntity(taskDTO);
         Set<StepEntity> stepEntities = new HashSet<>();
-        for (Integer stepId : taskDTO.getStepsIds()) {
+        for (Integer stepId : taskDTO.getSteps()) {
             Optional<StepEntity> lesson = stepRepository.findById(stepId);
             lesson.ifPresent(stepEntities::add);
         }

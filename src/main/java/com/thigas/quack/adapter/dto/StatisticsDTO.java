@@ -7,7 +7,7 @@ public class StatisticsDTO {
 
     private int id;
 
-    private int userId;
+    private int user;
 
     private int streakDays;
 

@@ -12,6 +12,6 @@ public class LessonDTO {
     private String description;
     private String language;
     private String imagePath;
-    private Set<Integer> stepsIds;
+    private Set<Integer> steps;
 
 }

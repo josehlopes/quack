@@ -102,7 +102,7 @@ public class FakerService {
 
 		for (int i = 1; i < count + 1; i++) {
 			AddressDTO addressDTO = new AddressDTO();
-			addressDTO.setUserId(userDTO.getId());
+			addressDTO.setUser(userDTO.getId());
 			addressDTO.setStreet(faker.address().streetName());
 			addressDTO.setCity(faker.address().city());
 			addressDTO.setState(faker.address().state());
@@ -120,7 +120,7 @@ public class FakerService {
 		List<StatisticsDTO> statisticsList = new ArrayList<>();
 		for (int i = 1; i < count + 1; i++) {
 			StatisticsDTO statisticsDTO = new StatisticsDTO();
-			statisticsDTO.setUserId(userId);
+			statisticsDTO.setUser(userId);
 			statisticsDTO.setStreakDays(faker.number().numberBetween(0, 30));
 			statisticsDTO.setBestStreak(faker.number().numberBetween(1, 100));
 			statisticsDTO.setUserLevel(faker.number().numberBetween(1, 10));
@@ -209,8 +209,8 @@ public class FakerService {
 			taskDTO.setDescription(faker.lorem().sentence());
 			taskDTO.setImagePath(faker.avatar().image());
 
-			Set<Integer> stepsIds = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
-			taskDTO.setStepsIds(stepsIds);
+			Set<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
+			taskDTO.setSteps(steps);
 
 			// Persistindo e atualizando o objeto com o retorno
 			taskDTO = taskService.create(taskDTO); // Atualize o taskDTO com o resultado da persistência
@@ -231,9 +231,9 @@ public class FakerService {
 
 		for (int i = 1; i < count + 1; i++) {
 			StepDTO stepDTO = new StepDTO();
-			stepDTO.setRoadmapIds(roadmapId);
-			stepDTO.setLessonIds(lessonId);
-			stepDTO.setTaskIds(taskId);
+			stepDTO.setRoadmaps(roadmapId);
+			stepDTO.setLessons(lessonId);
+			stepDTO.setTasks(taskId);
 			stepDTO.setDescription(faker.lorem().sentence());
 			stepDTO.setImagePath(faker.avatar().image());
 			stepDTO.setStatus(1);
@@ -255,12 +255,12 @@ public class FakerService {
 		List<TaskDTO> tasks = generateFakeTasks(recordCount);
 
 		// Certifique-se de que todos os roadmaps e lessons estão persistidos
-		Set<Integer> roadmapIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toSet());
-		Set<Integer> lessonIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toSet());
-		Set<Integer> taskIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toSet());
+		Set<Integer> roadmapsIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toSet());
+		Set<Integer> lessonsIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toSet());
+		Set<Integer> tasksIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toSet());
 
 		// Gera passos
-		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapIds, taskIds, lessonIds);
+		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapsIds, lessonsIds, tasksIds);
 		for (StepDTO step : steps) {
 			stepService.create(step); // Persistência do StepModel
 		}

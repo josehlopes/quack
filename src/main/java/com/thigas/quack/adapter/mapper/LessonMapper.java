@@ -12,10 +12,10 @@ public interface LessonMapper {
 
     LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
 
-    @Mapping(source = "steps", target = "stepsIds", ignore = true)
+    @Mapping(source = "steps", target = "steps", ignore = true)
     LessonDTO entityToDto(LessonEntity lesson);
 
-    @Mapping(source = "stepsIds", target = "steps", ignore = true)
+    @Mapping(source = "steps", target = "steps", ignore = true)
     LessonEntity dtoToEntity(LessonDTO lessonDTO);
 
     LessonEntity modelToEntity(LessonModel lessonModel);

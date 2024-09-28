@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T00:28:42-0300",
+    date = "2024-09-27T22:10:00-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -24,8 +24,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserTaskDTO userTaskDTO = new UserTaskDTO();
 
-        userTaskDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
-        userTaskDTO.setTaskId( roadmapUserEntityTaskId( roadmapUserEntity ) );
+        userTaskDTO.setUser( roadmapUserEntityUserId( roadmapUserEntity ) );
+        userTaskDTO.setTask( roadmapUserEntityTaskId( roadmapUserEntity ) );
         userTaskDTO.setId( roadmapUserEntity.getId() );
         userTaskDTO.setStatus( roadmapUserEntity.getStatus() );
         userTaskDTO.setImagePath( roadmapUserEntity.getImagePath() );
@@ -58,8 +58,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserTaskModel userTaskModel = new UserTaskModel();
 
-        userTaskModel.setUserId( userIdToModel( userEntityUserId( userEntity ) ) );
-        userTaskModel.setTaskId( taskIdToModel( userEntityTaskId( userEntity ) ) );
+        userTaskModel.setUser( userToModel( userEntityUserId( userEntity ) ) );
+        userTaskModel.setTask( taskToModel( userEntityTaskId( userEntity ) ) );
         userTaskModel.setId( userEntity.getId() );
         userTaskModel.setStatus( userEntity.getStatus() );
         userTaskModel.setImagePath( userEntity.getImagePath() );
@@ -115,7 +115,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userTaskDTO.getUserId() );
+        userEntity.setId( userTaskDTO.getUser() );
 
         return userEntity;
     }
@@ -127,7 +127,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( userTaskDTO.getTaskId() );
+        taskEntity.setId( userTaskDTO.getTask() );
 
         return taskEntity;
     }
@@ -163,7 +163,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userModelToId( userTaskModel.getUserId() ) );
+        userEntity.setId( userModelToId( userTaskModel.getUser() ) );
 
         return userEntity;
     }
@@ -175,7 +175,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( taskModelToId( userTaskModel.getTaskId() ) );
+        taskEntity.setId( taskModelToId( userTaskModel.getTask() ) );
 
         return taskEntity;
     }

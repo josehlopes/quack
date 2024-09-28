@@ -16,9 +16,9 @@ import com.thigas.quack.domain.model.Status;
 public class StepEntity {
 
     private int id;
-    private Set<RoadmapEntity> roadmaps = new HashSet<>();
-    private Set<LessonEntity> lessons = new HashSet<>();
-    private Set<TaskEntity> tasks = new HashSet<>();
+    private Set<RoadmapEntity> roadmaps;
+    private Set<LessonEntity> lessons;
+    private Set<TaskEntity> tasks;
     private String description;
     private String imagePath;
     private Status status;

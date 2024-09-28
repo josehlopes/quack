@@ -8,9 +8,9 @@ import java.util.Set;
 public class StepDTO {
 
     private int id;
-    private Set<Integer> roadmapIds;
-    private Set<Integer> lessonIds;
-    private Set<Integer> taskIds;
+    private Set<Integer> roadmaps;
+    private Set<Integer> lessons;
+    private Set<Integer> tasks;
     private String description;
     private String imagePath;
     private int status;

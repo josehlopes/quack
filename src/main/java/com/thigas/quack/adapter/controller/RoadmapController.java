@@ -52,8 +52,8 @@ public class RoadmapController {
 
     @PostMapping("/start-roadmap")
     public ResponseEntity<Void> startRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
-        int userId = userRoadmapDTO.getUserId();
-        int roadmapId = userRoadmapDTO.getRoadmapId();
+        int userId = userRoadmapDTO.getUser();
+        int roadmapId = userRoadmapDTO.getRoadmap();
         if (roadmapService.startRoadmap(userId, roadmapId)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

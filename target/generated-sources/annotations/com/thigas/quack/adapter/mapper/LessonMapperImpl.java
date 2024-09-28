@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T00:28:41-0300",
+    date = "2024-09-27T22:10:00-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -92,6 +92,19 @@ public class LessonMapperImpl implements LessonMapper {
         return lessonModel;
     }
 
+    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepModel stepModel : set ) {
+            set1.add( stepModelToStepEntity( stepModel ) );
+        }
+
+        return set1;
+    }
+
     protected RoadmapEntity roadmapModelToRoadmapEntity(RoadmapModel roadmapModel) {
         if ( roadmapModel == null ) {
             return null;
@@ -104,6 +117,7 @@ public class LessonMapperImpl implements LessonMapper {
         roadmapEntity.setDescription( roadmapModel.getDescription() );
         roadmapEntity.setImagePath( roadmapModel.getImagePath() );
         roadmapEntity.setStatus( roadmapModel.getStatus() );
+        roadmapEntity.setSteps( stepModelSetToStepEntitySet( roadmapModel.getSteps() ) );
 
         return roadmapEntity;
     }
@@ -129,19 +143,6 @@ public class LessonMapperImpl implements LessonMapper {
         Set<LessonEntity> set1 = new LinkedHashSet<LessonEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( LessonModel lessonModel : set ) {
             set1.add( modelToEntity( lessonModel ) );
-        }
-
-        return set1;
-    }
-
-    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( StepModel stepModel : set ) {
-            set1.add( stepModelToStepEntity( stepModel ) );
         }
 
         return set1;
@@ -193,6 +194,19 @@ public class LessonMapperImpl implements LessonMapper {
         return stepEntity;
     }
 
+    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepEntity stepEntity : set ) {
+            set1.add( stepEntityToStepModel( stepEntity ) );
+        }
+
+        return set1;
+    }
+
     protected RoadmapModel roadmapEntityToRoadmapModel(RoadmapEntity roadmapEntity) {
         if ( roadmapEntity == null ) {
             return null;
@@ -204,6 +218,7 @@ public class LessonMapperImpl implements LessonMapper {
         roadmapModel.setTitle( roadmapEntity.getTitle() );
         roadmapModel.setDescription( roadmapEntity.getDescription() );
         roadmapModel.setImagePath( roadmapEntity.getImagePath() );
+        roadmapModel.setSteps( stepEntitySetToStepModelSet( roadmapEntity.getSteps() ) );
         roadmapModel.setStatus( roadmapEntity.getStatus() );
 
         return roadmapModel;
@@ -217,19 +232,6 @@ public class LessonMapperImpl implements LessonMapper {
         Set<RoadmapModel> set1 = new LinkedHashSet<RoadmapModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( RoadmapEntity roadmapEntity : set ) {
             set1.add( roadmapEntityToRoadmapModel( roadmapEntity ) );
-        }
-
-        return set1;
-    }
-
-    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( StepEntity stepEntity : set ) {
-            set1.add( stepEntityToStepModel( stepEntity ) );
         }
 
         return set1;

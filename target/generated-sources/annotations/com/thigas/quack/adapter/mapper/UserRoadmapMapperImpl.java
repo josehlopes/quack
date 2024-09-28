@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-27T00:28:42-0300",
+    date = "2024-09-27T22:10:00-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -26,8 +26,8 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         UserRoadmapDTO userRoadmapDTO = new UserRoadmapDTO();
 
-        userRoadmapDTO.setUserId( userRoadmapEntityUserId( userRoadmapEntity ) );
-        userRoadmapDTO.setRoadmapId( userRoadmapEntityRoadmapId( userRoadmapEntity ) );
+        userRoadmapDTO.setUser( userRoadmapEntityUserId( userRoadmapEntity ) );
+        userRoadmapDTO.setRoadmap( userRoadmapEntityRoadmapId( userRoadmapEntity ) );
         userRoadmapDTO.setStatus( statusToInt( userRoadmapEntity.getStatus() ) );
         userRoadmapDTO.setId( userRoadmapEntity.getId() );
         userRoadmapDTO.setProgress( userRoadmapEntity.getProgress() );
@@ -72,8 +72,8 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         UserRoadmapModel userRoadmapModel = new UserRoadmapModel();
 
-        userRoadmapModel.setUserId( map( userRoadmapEntityUserId1( userRoadmapEntity ) ) );
-        userRoadmapModel.setRoadmapId( mapRoadmap( userRoadmapEntityRoadmapId1( userRoadmapEntity ) ) );
+        userRoadmapModel.setUser( map( userRoadmapEntityUserId1( userRoadmapEntity ) ) );
+        userRoadmapModel.setRoadmap( mapRoadmap( userRoadmapEntityRoadmapId1( userRoadmapEntity ) ) );
         userRoadmapModel.setId( userRoadmapEntity.getId() );
         userRoadmapModel.setProgress( userRoadmapEntity.getProgress() );
         userRoadmapModel.setStartedAt( userRoadmapEntity.getStartedAt() );
@@ -133,7 +133,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userRoadmapDTO.getUserId() );
+        userEntity.setId( userRoadmapDTO.getUser() );
 
         return userEntity;
     }
@@ -145,7 +145,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( userRoadmapDTO.getRoadmapId() );
+        roadmapEntity.setId( userRoadmapDTO.getRoadmap() );
 
         return roadmapEntity;
     }
@@ -181,7 +181,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( map( userRoadmapModel.getUserId() ) );
+        userEntity.setId( map( userRoadmapModel.getUser() ) );
 
         return userEntity;
     }
@@ -193,7 +193,7 @@ public class UserRoadmapMapperImpl implements UserRoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setId( map( userRoadmapModel.getRoadmapId() ) );
+        roadmapEntity.setId( map( userRoadmapModel.getRoadmap() ) );
 
         return roadmapEntity;
     }

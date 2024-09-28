@@ -103,8 +103,8 @@ public class RoadmapService {
 
         try {
             // Buscando o usuário e roadmap relacionados
-            Optional<List<Object>> userRoadmapOptional = findUserAndRoadmap(userRoadmapDTO.getUserId(),
-                    userRoadmapDTO.getRoadmapId());
+            Optional<List<Object>> userRoadmapOptional = findUserAndRoadmap(userRoadmapDTO.getUser(),
+                    userRoadmapDTO.getRoadmap());
 
             if (userRoadmapOptional.isEmpty()) {
                 return false; // Roadmap do usuário não encontrado

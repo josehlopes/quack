@@ -16,11 +16,11 @@ public class UserTaskModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel userId;
+    private UserModel user;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private TaskModel taskId;
+    private TaskModel task;
 
     @Column(nullable = false)
     private Boolean status;

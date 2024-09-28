@@ -8,7 +8,7 @@ import java.util.Set;
 public class TaskDTO {
 
     private int id;
-    private Set<Integer> stepsIds;
+    private Set<Integer> steps;
     private String description;
     private String imagePath;
 }

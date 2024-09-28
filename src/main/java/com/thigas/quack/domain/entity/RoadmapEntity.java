@@ -1,5 +1,7 @@
 package com.thigas.quack.domain.entity;
 
+import java.util.Set;
+
 import com.thigas.quack.domain.model.Status;
 
 import lombok.AllArgsConstructor;
@@ -16,4 +18,6 @@ public class RoadmapEntity {
     private String description;
     private String imagePath;
     private Status status;
+    private Set<StepEntity> steps;
+
 }

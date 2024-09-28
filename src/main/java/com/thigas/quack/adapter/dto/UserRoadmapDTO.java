@@ -8,8 +8,8 @@ import lombok.Data;
 public class UserRoadmapDTO {
 
     private int id;
-    private int userId;
-    private int roadmapId;
+    private int user;
+    private int roadmap;
     private Double progress;
     private String startedAt;
     private String finishedAt;

@@ -20,11 +20,11 @@ public class UserRoadmapModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserModel userId;
+    private UserModel user;
 
     @ManyToOne
     @JoinColumn(name = "roadmap_id", nullable = false)
-    private RoadmapModel roadmapId;
+    private RoadmapModel roadmap;
 
     @Column(name = "progress", nullable = false)
     private Double progress;

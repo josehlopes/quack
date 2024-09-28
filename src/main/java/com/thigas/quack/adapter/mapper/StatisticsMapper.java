@@ -14,10 +14,10 @@ public interface StatisticsMapper {
 
     StatisticsMapper INSTANCE = Mappers.getMapper(StatisticsMapper.class);
 
-    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.id", target = "user")
     StatisticsDTO entityToDto(StatisticsEntity statistics);
 
-    @Mapping(source = "userId", target = "user.id")
+    @Mapping(source = "user", target = "user.id")
     StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO);
 
     @Mapping(source = "user.id", target = "user")
@@ -26,12 +26,12 @@ public interface StatisticsMapper {
     @Mapping(source = "user.id", target = "user.id")
     StatisticsEntity modelToEntity(StatisticsModel statisticsModel);
 
-    default UserModel map(Integer userId) {
-        if (userId == null) {
+    default UserModel map(Integer user) {
+        if (user == null) {
             return null;
         }
         UserModel userModel = new UserModel();
-        userModel.setId(userId);
+        userModel.setId(user);
         return userModel;
     }
 

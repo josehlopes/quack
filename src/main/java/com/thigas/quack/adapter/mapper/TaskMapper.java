@@ -16,14 +16,16 @@ public interface TaskMapper {
 
     TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
 
-    @Mapping(source = "steps", target = "stepsIds", ignore = true)
+    @Mapping(source = "steps", target = "steps", ignore = true)
     TaskDTO entityToDto(TaskEntity taskEntity);
 
-    @Mapping(source = "stepsIds", target = "steps", ignore = true)
+    @Mapping(source = "steps", target = "steps", ignore = true)
     TaskEntity dtoToEntity(TaskDTO taskDTO);
 
+    @Mapping(source = "steps", target = "steps", ignore = true)
     TaskModel entityToModel(TaskEntity taskEntity);
 
+    @Mapping(source = "steps", target = "steps", ignore = true)
     TaskEntity modelToEntity(TaskModel taskModel);
 
     // Mapeia um conjunto de StepEntity para um conjunto de Integer (IDs)
@@ -35,11 +37,11 @@ public interface TaskMapper {
     // }
 
     // // Mapeia um conjunto de Integer (IDs) para um conjunto de StepEntity
-    // default Set<StepEntity> idsToSteps(Set<Integer> stepsIds) {
-    // if (stepsIds == null) {
+    // default Set<StepEntity> idsToSteps(Set<Integer> steps) {
+    // if (steps == null) {
     // return null;
     // }
-    // return stepsIds.stream().map(id -> {
+    // return steps.stream().map(id -> {
     // StepEntity step = new StepEntity();
     // step.setId(id);
     // return step;

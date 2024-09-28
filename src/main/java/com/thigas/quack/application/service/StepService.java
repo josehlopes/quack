@@ -45,16 +45,10 @@ public class StepService {
     public StepDTO create(StepDTO stepDTO) {
         StepEntity stepEntity = stepMapper.dtoToEntity(stepDTO);
         Set<LessonEntity> lessonEntities = new HashSet<>();
-        Set<RoadmapEntity> roadmapEntities = new HashSet<>(); // Adicione um Set para roadmaps
-        Set<TaskEntity> taskEntities = new HashSet<>(); // Adicione um Set para tasks
+        Set<RoadmapEntity> roadmapEntities = new HashSet<>();
+        Set<TaskEntity> taskEntities = new HashSet<>();
 
-        // Adicionando logging para verificação
-        System.out.println("IDs de lições a serem associados: " + stepDTO.getLessonIds());
-        System.out.println("IDs de roadmaps a serem associados: " + stepDTO.getRoadmapIds());
-        System.out.println("IDs de tarefas a serem associados: " + stepDTO.getTaskIds());
-
-        // Verificação e adição de lições
-        for (Integer lessonId : stepDTO.getLessonIds()) {
+        for (Integer lessonId : stepDTO.getLessons()) {
             Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
             if (lesson.isPresent()) {
                 lessonEntities.add(lesson.get());
@@ -64,7 +58,7 @@ public class StepService {
         }
 
         // Verificação e adição de roadmaps
-        for (Integer roadmapId : stepDTO.getRoadmapIds()) {
+        for (Integer roadmapId : stepDTO.getRoadmaps()) {
             Optional<RoadmapEntity> roadmap = roadmapRepository.findById(roadmapId);
             if (roadmap.isPresent()) {
                 roadmapEntities.add(roadmap.get());
@@ -74,7 +68,7 @@ public class StepService {
         }
 
         // Verificação e adição de tarefas
-        for (Integer taskId : stepDTO.getTaskIds()) {
+        for (Integer taskId : stepDTO.getTasks()) {
             Optional<TaskEntity> task = taskRepository.findById(taskId);
             if (task.isPresent()) {
                 taskEntities.add(task.get());

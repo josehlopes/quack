@@ -20,24 +20,30 @@ public interface StepMapper {
 
     StepMapper INSTANCE = Mappers.getMapper(StepMapper.class);
 
-    @Mapping(source = "roadmaps", target = "roadmapIds", qualifiedByName = "roadmapsToIds")
-    @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
-    @Mapping(source = "tasks", target = "taskIds", ignore = true) // Ignorar mapeamento de tasks
+    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapsToIds")
+    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
+    // "lessonsToIds")
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
     @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
     StepDTO entityToDto(StepEntity stepEntity);
 
-    @Mapping(source = "roadmapIds", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
-    @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
-    @Mapping(source = "taskIds", target = "tasks", ignore = true) // Ignorar mapeamento de tasks
+    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
+    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
+    // "idsToLessons")
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
     @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
     StepEntity dtoToEntity(StepDTO stepDTO);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true) // Ignorar mapeamento recursivo
-    @Mapping(source = "lessons", target = "lessons", ignore = true) // Ignorar mapeamento recursivo
+    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true)
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
     StepModel entityToModel(StepEntity stepEntity);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true) // Ignorar mapeamento recursivo
-    @Mapping(source = "lessons", target = "lessons", ignore = true) // Ignorar mapeamento recursivo
+    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true)
+    @Mapping(source = "lessons", target = "lessons", ignore = true)
+    @Mapping(source = "tasks", target = "tasks", ignore = true)
     StepEntity modelToEntity(StepModel stepModel);
 
     @Named("roadmapsToIds")
@@ -49,36 +55,36 @@ public interface StepMapper {
     }
 
     @Named("idsToRoadmaps")
-    default Set<RoadmapEntity> idsToRoadmaps(Set<Integer> roadmapIds) {
-        if (roadmapIds == null) {
+    default Set<RoadmapEntity> idsToRoadmaps(Set<Integer> roadmaps) {
+        if (roadmaps == null) {
             return null;
         }
-        return roadmapIds.stream().map(id -> {
+        return roadmaps.stream().map(id -> {
             RoadmapEntity roadmap = new RoadmapEntity();
             roadmap.setId(id);
             return roadmap;
         }).collect(Collectors.toSet());
     }
 
-    @Named("lessonsToIds")
-    default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
-        if (lessons == null) {
-            return null;
-        }
-        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
-    }
+    // @Named("lessonsToIds")
+    // default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
+    // if (lessons == null) {
+    // return null;
+    // }
+    // return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
+    // }
 
-    @Named("idsToLessons")
-    default Set<LessonEntity> idsToLessons(Set<Integer> lessonIds) {
-        if (lessonIds == null) {
-            return null;
-        }
-        return lessonIds.stream().map(id -> {
-            LessonEntity lesson = new LessonEntity();
-            lesson.setId(id);
-            return lesson;
-        }).collect(Collectors.toSet());
-    }
+    // @Named("idsToLessons")
+    // default Set<LessonEntity> idsToLessons(Set<Integer> lessons) {
+    // if (lessons == null) {
+    // return null;
+    // }
+    // return lessons.stream().map(id -> {
+    // LessonEntity lesson = new LessonEntity();
+    // lesson.setId(id);
+    // return lesson;
+    // }).collect(Collectors.toSet());
+    // }
 
     // @Named("taskToIds")
     // default Set<Integer> taskToIds(Set<TaskEntity> tasks) {
