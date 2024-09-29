@@ -2,6 +2,7 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
+import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class StatisticsService {
 
-    private final StatisticsMapper statisticsMapper = StatisticsMapper.INSTANCE;
     @Autowired
     private IStatisticsRepository statisticsRepository;
+
+    @Autowired
+    private StatisticsMapper statisticsMapper;
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
         StatisticsEntity statistics = statisticsMapper.dtoToEntity(statisticsDTO);
@@ -30,8 +33,8 @@ public class StatisticsService {
     }
 
     public Iterable<StatisticsDTO> getAll() {
-        Iterable<StatisticsEntity> statisticss = statisticsRepository.findAll();
-        return StreamSupport.stream(statisticss.spliterator(), false).map(statisticsMapper::entityToDto)
+        Iterable<StatisticsEntity> statistics = statisticsRepository.findAll();
+        return StreamSupport.stream(statistics.spliterator(), false).map(statisticsMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 

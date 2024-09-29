@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-28T12:33:15-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-29T20:23:02-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -31,15 +31,15 @@ public class UserMapperImpl implements UserMapper {
         }
         userDTO.setRegisterAt( stringToOffSet( user.getRegisterAt() ) );
         userDTO.setStatus( statusToInt( user.getStatus() ) );
-        userDTO.setCpf( user.getCpf() );
-        userDTO.setEmail( user.getEmail() );
         userDTO.setId( user.getId() );
-        userDTO.setImagePath( user.getImagePath() );
         userDTO.setName( user.getName() );
-        userDTO.setPassword( user.getPassword() );
-        userDTO.setPhone( user.getPhone() );
-        userDTO.setPoints( user.getPoints() );
         userDTO.setUsername( user.getUsername() );
+        userDTO.setPhone( user.getPhone() );
+        userDTO.setEmail( user.getEmail() );
+        userDTO.setPassword( user.getPassword() );
+        userDTO.setCpf( user.getCpf() );
+        userDTO.setPoints( user.getPoints() );
+        userDTO.setImagePath( user.getImagePath() );
 
         return userDTO;
     }
@@ -57,15 +57,15 @@ public class UserMapperImpl implements UserMapper {
         }
         userEntity.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
         userEntity.setStatus( intToStatus( userDTO.getStatus() ) );
-        userEntity.setCpf( userDTO.getCpf() );
-        userEntity.setEmail( userDTO.getEmail() );
         userEntity.setId( userDTO.getId() );
-        userEntity.setImagePath( userDTO.getImagePath() );
         userEntity.setName( userDTO.getName() );
-        userEntity.setPassword( userDTO.getPassword() );
-        userEntity.setPhone( userDTO.getPhone() );
-        userEntity.setPoints( userDTO.getPoints() );
         userEntity.setUsername( userDTO.getUsername() );
+        userEntity.setPhone( userDTO.getPhone() );
+        userEntity.setEmail( userDTO.getEmail() );
+        userEntity.setPassword( userDTO.getPassword() );
+        userEntity.setCpf( userDTO.getCpf() );
+        userEntity.setPoints( userDTO.getPoints() );
+        userEntity.setImagePath( userDTO.getImagePath() );
 
         return userEntity;
     }
@@ -78,18 +78,18 @@ public class UserMapperImpl implements UserMapper {
 
         UserModel userModel = new UserModel();
 
-        userModel.setBornAt( userEntity.getBornAt() );
-        userModel.setCpf( userEntity.getCpf() );
-        userModel.setEmail( userEntity.getEmail() );
         userModel.setId( userEntity.getId() );
-        userModel.setImagePath( userEntity.getImagePath() );
         userModel.setName( userEntity.getName() );
-        userModel.setPassword( userEntity.getPassword() );
+        userModel.setUsername( userEntity.getUsername() );
         userModel.setPhone( userEntity.getPhone() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setBornAt( userEntity.getBornAt() );
         userModel.setPoints( userEntity.getPoints() );
         userModel.setRegisterAt( userEntity.getRegisterAt() );
         userModel.setStatus( userEntity.getStatus() );
-        userModel.setUsername( userEntity.getUsername() );
+        userModel.setImagePath( userEntity.getImagePath() );
 
         return userModel;
     }
@@ -102,18 +102,18 @@ public class UserMapperImpl implements UserMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setBornAt( userModel.getBornAt() );
-        userEntity.setCpf( userModel.getCpf() );
-        userEntity.setEmail( userModel.getEmail() );
         userEntity.setId( userModel.getId() );
-        userEntity.setImagePath( userModel.getImagePath() );
         userEntity.setName( userModel.getName() );
-        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setUsername( userModel.getUsername() );
         userEntity.setPhone( userModel.getPhone() );
+        userEntity.setEmail( userModel.getEmail() );
+        userEntity.setPassword( userModel.getPassword() );
+        userEntity.setCpf( userModel.getCpf() );
+        userEntity.setBornAt( userModel.getBornAt() );
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
+        userEntity.setImagePath( userModel.getImagePath() );
         userEntity.setStatus( userModel.getStatus() );
-        userEntity.setUsername( userModel.getUsername() );
 
         return userEntity;
     }
@@ -131,15 +131,15 @@ public class UserMapperImpl implements UserMapper {
         }
         userModel.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
         userModel.setStatus( intToStatus( userDTO.getStatus() ) );
-        userModel.setCpf( userDTO.getCpf() );
-        userModel.setEmail( userDTO.getEmail() );
         userModel.setId( userDTO.getId() );
-        userModel.setImagePath( userDTO.getImagePath() );
         userModel.setName( userDTO.getName() );
-        userModel.setPassword( userDTO.getPassword() );
-        userModel.setPhone( userDTO.getPhone() );
-        userModel.setPoints( userDTO.getPoints() );
         userModel.setUsername( userDTO.getUsername() );
+        userModel.setPhone( userDTO.getPhone() );
+        userModel.setEmail( userDTO.getEmail() );
+        userModel.setPassword( userDTO.getPassword() );
+        userModel.setCpf( userDTO.getCpf() );
+        userModel.setPoints( userDTO.getPoints() );
+        userModel.setImagePath( userDTO.getImagePath() );
 
         return userModel;
     }
@@ -157,15 +157,15 @@ public class UserMapperImpl implements UserMapper {
         }
         userDTO.setRegisterAt( stringToOffSet( userModel.getRegisterAt() ) );
         userDTO.setStatus( statusToInt( userModel.getStatus() ) );
-        userDTO.setCpf( userModel.getCpf() );
-        userDTO.setEmail( userModel.getEmail() );
         userDTO.setId( userModel.getId() );
-        userDTO.setImagePath( userModel.getImagePath() );
         userDTO.setName( userModel.getName() );
-        userDTO.setPassword( userModel.getPassword() );
-        userDTO.setPhone( userModel.getPhone() );
-        userDTO.setPoints( userModel.getPoints() );
         userDTO.setUsername( userModel.getUsername() );
+        userDTO.setPhone( userModel.getPhone() );
+        userDTO.setEmail( userModel.getEmail() );
+        userDTO.setPassword( userModel.getPassword() );
+        userDTO.setCpf( userModel.getCpf() );
+        userDTO.setPoints( userModel.getPoints() );
+        userDTO.setImagePath( userModel.getImagePath() );
 
         return userDTO;
     }

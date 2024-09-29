@@ -9,12 +9,9 @@ import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserMapper.class, RoadmapMapper.class }, componentModel = "spring")
+@Mapper(uses = {UserMapper.class, RoadmapMapper.class}, componentModel = "spring")
 public interface UserRoadmapMapper {
-
-    UserRoadmapMapper INSTANCE = Mappers.getMapper(UserRoadmapMapper.class);
 
     @Mapping(source = "user.id", target = "user")
     @Mapping(source = "roadmap.id", target = "roadmap")

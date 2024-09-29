@@ -17,7 +17,10 @@ import java.util.stream.Collectors;
 @Repository
 public class AddressRepositoryImplementation implements IAddressRepository {
 
-    private final AddressMapper addressMapper = AddressMapper.INSTANCE;
+
+    @Autowired
+    private AddressMapper addressMapper;
+
     @Autowired
     private IAddressModelRepository addressModelRepository;
 

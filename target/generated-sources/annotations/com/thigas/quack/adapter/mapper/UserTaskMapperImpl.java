@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-28T12:33:27-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-29T20:23:02-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class UserTaskMapperImpl implements UserTaskMapper {
@@ -29,8 +29,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskDTO.setUser( roadmapUserEntityUserId( roadmapUserEntity ) );
         userTaskDTO.setTask( roadmapUserEntityTaskId( roadmapUserEntity ) );
         userTaskDTO.setId( roadmapUserEntity.getId() );
-        userTaskDTO.setImagePath( roadmapUserEntity.getImagePath() );
         userTaskDTO.setStatus( roadmapUserEntity.getStatus() );
+        userTaskDTO.setImagePath( roadmapUserEntity.getImagePath() );
 
         return userTaskDTO;
     }
@@ -46,8 +46,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskEntity.setUser( userTaskDTOToUserEntity( roadmapUserDTO ) );
         userTaskEntity.setTask( userTaskDTOToTaskEntity( roadmapUserDTO ) );
         userTaskEntity.setId( roadmapUserDTO.getId() );
-        userTaskEntity.setImagePath( roadmapUserDTO.getImagePath() );
         userTaskEntity.setStatus( roadmapUserDTO.getStatus() );
+        userTaskEntity.setImagePath( roadmapUserDTO.getImagePath() );
 
         return userTaskEntity;
     }
@@ -63,8 +63,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskModel.setUser( userToModel( userEntityUserId( userEntity ) ) );
         userTaskModel.setTask( taskToModel( userEntityTaskId( userEntity ) ) );
         userTaskModel.setId( userEntity.getId() );
-        userTaskModel.setImagePath( userEntity.getImagePath() );
         userTaskModel.setStatus( userEntity.getStatus() );
+        userTaskModel.setImagePath( userEntity.getImagePath() );
 
         return userTaskModel;
     }
@@ -80,8 +80,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskEntity.setUser( userTaskModelToUserEntity( userModel ) );
         userTaskEntity.setTask( userTaskModelToTaskEntity( userModel ) );
         userTaskEntity.setId( userModel.getId() );
-        userTaskEntity.setImagePath( userModel.getImagePath() );
         userTaskEntity.setStatus( userModel.getStatus() );
+        userTaskEntity.setImagePath( userModel.getImagePath() );
 
         return userTaskEntity;
     }
@@ -97,8 +97,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskModel.setUser( userTaskDTOToUserModel( userTaskDTO ) );
         userTaskModel.setTask( userTaskDTOToTaskModel( userTaskDTO ) );
         userTaskModel.setId( userTaskDTO.getId() );
-        userTaskModel.setImagePath( userTaskDTO.getImagePath() );
         userTaskModel.setStatus( userTaskDTO.getStatus() );
+        userTaskModel.setImagePath( userTaskDTO.getImagePath() );
 
         return userTaskModel;
     }
@@ -114,8 +114,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskDTO.setUser( userTaskModelUserId( userTaskModel ) );
         userTaskDTO.setTask( userTaskModelTaskId( userTaskModel ) );
         userTaskDTO.setId( userTaskModel.getId() );
-        userTaskDTO.setImagePath( userTaskModel.getImagePath() );
         userTaskDTO.setStatus( userTaskModel.getStatus() );
+        userTaskDTO.setImagePath( userTaskModel.getImagePath() );
 
         return userTaskDTO;
     }

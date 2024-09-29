@@ -8,97 +8,103 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-28T12:33:24-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-29T20:23:02-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class TaskMapperImpl implements TaskMapper {
 
     @Override
-    public TaskDTO entityToDto(TaskEntity taskEntity) {
+    public TaskDTO entityToDto(TaskEntity taskEntity, CycleAvoidingMappingContext context) {
         if ( taskEntity == null ) {
             return null;
         }
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setDescription( taskEntity.getDescription() );
+        taskDTO.setSteps( stepEntityToIntegers( taskEntity.getSteps(), context ) );
         taskDTO.setId( taskEntity.getId() );
+        taskDTO.setDescription( taskEntity.getDescription() );
         taskDTO.setImagePath( taskEntity.getImagePath() );
 
         return taskDTO;
     }
 
     @Override
-    public TaskEntity dtoToEntity(TaskDTO taskDTO) {
+    public TaskEntity dtoToEntity(TaskDTO taskDTO, CycleAvoidingMappingContext context) {
         if ( taskDTO == null ) {
             return null;
         }
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setDescription( taskDTO.getDescription() );
+        taskEntity.setSteps( integersToStepEntityId( taskDTO.getSteps(), context ) );
         taskEntity.setId( taskDTO.getId() );
+        taskEntity.setDescription( taskDTO.getDescription() );
         taskEntity.setImagePath( taskDTO.getImagePath() );
 
         return taskEntity;
     }
 
     @Override
-    public TaskModel entityToModel(TaskEntity taskEntity) {
+    public TaskModel entityToModel(TaskEntity taskEntity, CycleAvoidingMappingContext context) {
         if ( taskEntity == null ) {
             return null;
         }
 
         TaskModel taskModel = new TaskModel();
 
-        taskModel.setDescription( taskEntity.getDescription() );
+        taskModel.setSteps( integersToStepModels( stepEntityToIntegers( taskEntity.getSteps(), context ), context ) );
         taskModel.setId( taskEntity.getId() );
+        taskModel.setDescription( taskEntity.getDescription() );
         taskModel.setImagePath( taskEntity.getImagePath() );
 
         return taskModel;
     }
 
     @Override
-    public TaskEntity modelToEntity(TaskModel taskModel) {
+    public TaskEntity modelToEntity(TaskModel taskModel, CycleAvoidingMappingContext context) {
         if ( taskModel == null ) {
             return null;
         }
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setDescription( taskModel.getDescription() );
+        taskEntity.setSteps( integersToStepEntityId( stepModelsToIntegers( taskModel.getSteps() ), context ) );
         taskEntity.setId( taskModel.getId() );
+        taskEntity.setDescription( taskModel.getDescription() );
         taskEntity.setImagePath( taskModel.getImagePath() );
 
         return taskEntity;
     }
 
     @Override
-    public TaskModel dtoToModel(TaskDTO taskDTO) {
+    public TaskModel dtoToModel(TaskDTO taskDTO, CycleAvoidingMappingContext context) {
         if ( taskDTO == null ) {
             return null;
         }
 
         TaskModel taskModel = new TaskModel();
 
-        taskModel.setDescription( taskDTO.getDescription() );
+        taskModel.setSteps( integersToStepModels( taskDTO.getSteps(), context ) );
         taskModel.setId( taskDTO.getId() );
+        taskModel.setDescription( taskDTO.getDescription() );
         taskModel.setImagePath( taskDTO.getImagePath() );
 
         return taskModel;
     }
 
     @Override
-    public TaskDTO modelToDto(TaskModel taskModel) {
+    public TaskDTO modelToDto(TaskModel taskModel, CycleAvoidingMappingContext context) {
         if ( taskModel == null ) {
             return null;
         }
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setDescription( taskModel.getDescription() );
+        taskDTO.setSteps( stepModelsToIntegers( taskModel.getSteps() ) );
         taskDTO.setId( taskModel.getId() );
+        taskDTO.setDescription( taskModel.getDescription() );
         taskDTO.setImagePath( taskModel.getImagePath() );
 
         return taskDTO;

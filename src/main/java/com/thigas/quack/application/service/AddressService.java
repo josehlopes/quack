@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
+import com.thigas.quack.adapter.mapper.AchievementMapper;
 import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
@@ -14,10 +15,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class AddressService {
 
-    // Instância do mapper
-    private final AddressMapper addressMapper = AddressMapper.INSTANCE;
     @Autowired
     private IAddressRepository addressRepository;
+
+    @Autowired
+    private AddressMapper addressMapper;
 
     public AddressDTO create(AddressDTO addressDTO) {
         AddressEntity address = addressMapper.dtoToEntity(addressDTO);

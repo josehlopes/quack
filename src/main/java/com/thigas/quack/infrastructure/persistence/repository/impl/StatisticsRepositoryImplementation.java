@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
@@ -17,7 +18,9 @@ import java.util.stream.Collectors;
 @Repository
 public class StatisticsRepositoryImplementation implements IStatisticsRepository {
 
-    private final StatisticsMapper statisticsMapper = StatisticsMapper.INSTANCE;
+    @Autowired
+    private StatisticsMapper statisticsMapper;
+
     @Autowired
     private IStatisticsModelRepository statisticsModelRepository;
 

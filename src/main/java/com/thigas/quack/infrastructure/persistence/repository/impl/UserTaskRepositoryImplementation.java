@@ -20,7 +20,9 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
 
     @Autowired
     private IUserTaskModelRepository userTaskModelRepository;
-    private final UserTaskMapper userTaskMapper = UserTaskMapper.INSTANCE;
+
+    @Autowired
+    private UserTaskMapper userTaskMapper;
 
     @Override
     @Transactional

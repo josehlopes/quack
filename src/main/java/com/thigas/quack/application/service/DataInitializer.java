@@ -14,6 +14,6 @@ public class DataInitializer implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		fakerService.generateAllFakeData(10);
+		fakerService.generateAllFakeData(2);
 	}
 }

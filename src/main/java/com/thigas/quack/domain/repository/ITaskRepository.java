@@ -9,6 +9,8 @@ public interface ITaskRepository {
 
     Optional<TaskEntity> findById(int id);
 
+    Boolean existsById(int id);
+
     Iterable<TaskEntity> findAll();
 
     void deleteById(int id);

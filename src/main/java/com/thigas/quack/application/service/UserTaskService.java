@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
+import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.adapter.mapper.UserTaskMapper;
 import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
@@ -14,9 +15,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserTaskService {
 
-    private final UserTaskMapper userTaskMapper = UserTaskMapper.INSTANCE;
     @Autowired
     private IUserTaskRepository userTaskRepository;
+
+    @Autowired
+    private UserTaskMapper userTaskMapper;
 
     public UserTaskDTO create(UserTaskDTO userTaskDTO) {
         UserTaskEntity userTask = userTaskMapper.dtoToEntity(userTaskDTO);

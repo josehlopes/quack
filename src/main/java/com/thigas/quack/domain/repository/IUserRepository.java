@@ -11,11 +11,12 @@ public interface IUserRepository {
 
     Optional<UserModel> findById(int id);
 
+    Boolean existsById(int id);
+
     Iterable<UserModel> findAll();
 
     void deleteById(int id);
 
-    Boolean existsById(int id);
 
     Optional<UserModel> findByEmail(String email);
 }

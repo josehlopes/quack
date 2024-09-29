@@ -6,150 +6,200 @@ import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.model.Status;
+import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mappings;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface StepMapper {
 
-    StepMapper INSTANCE = Mappers.getMapper(StepMapper.class);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepDTO entityToDto(StepEntity stepEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapsToIds")
-    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
-    // "lessonsToIds")
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
-    StepDTO entityToDto(StepEntity stepEntity);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepEntity dtoToEntity(StepDTO stepDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "idsToRoadmaps")
-    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
-    // "idsToLessons")
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
-    StepEntity dtoToEntity(StepDTO stepDTO);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepModel entityToModel(StepEntity stepEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true)
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    StepModel entityToModel(StepEntity stepEntity);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepEntity modelToEntity(StepModel stepModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "roadmaps", target = "roadmaps", ignore = true)
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    StepEntity modelToEntity(StepModel stepModel);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepModel dtoToModel(StepDTO stepDTO, @Context CycleAvoidingMappingContext context);
 
-    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
-    // "idsToLessons")
-    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "idsToRoadmapsModel")
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    @Mapping(target = "status", source = "status", qualifiedByName = "stepIntToStatus")
-    StepModel dtoToModel(StepDTO stepDTO);
+    @Mappings({
+            @Mapping(source = "roadmaps", target = "roadmaps"),
+            @Mapping(source = "lessons", target = "lessons"),
+            @Mapping(source = "tasks", target = "tasks")
+    })
+    StepDTO modelToDto(StepModel stepModel, @Context CycleAvoidingMappingContext context);
 
-    // @Mapping(source = "lessons", target = "lessons", qualifiedByName =
-    // "lessonsToIds")
-    @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapsToIdsModel")
-    @Mapping(source = "lessons", target = "lessons", ignore = true)
-    @Mapping(source = "tasks", target = "tasks", ignore = true)
-    @Mapping(target = "status", source = "status", qualifiedByName = "stepStatusToInt")
-    StepDTO modelToDto(StepModel stepModel);
-
-    @Named("roadmapsToIds")
-    default Set<Integer> roadmapsToIds(Set<RoadmapEntity> roadmaps) {
-        if (roadmaps == null) {
-            return null;
-        }
-        return roadmaps.stream().map(RoadmapEntity::getId).collect(Collectors.toSet());
-    }
-
-    @Named("idsToRoadmaps")
-    default Set<RoadmapEntity> idsToRoadmaps(Set<Integer> roadmaps) {
+    default List<RoadmapModel> integersToRoadmapModelId(List<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
         if (roadmaps == null) {
             return null;
         }
         return roadmaps.stream().map(id -> {
-            RoadmapEntity roadmap = new RoadmapEntity();
-            roadmap.setId(id);
+            RoadmapModel roadmap = context.getMappedInstance(id, RoadmapModel.class);
+            if (roadmap == null) {
+                roadmap = new RoadmapModel();
+                roadmap.setId(id);
+                context.storeMappedInstance(id, roadmap);
+            }
             return roadmap;
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
     }
 
-    @Named("roadmapsToIdsModel")
-    default Set<Integer> roadmapsToIdsModel(Set<RoadmapModel> roadmaps) {
+    default List<Integer> roadmapModelIdToIntegers(List<RoadmapModel> roadmaps) {
         if (roadmaps == null) {
             return null;
         }
-        return roadmaps.stream().map(RoadmapModel::getId).collect(Collectors.toSet());
+        return roadmaps.stream().map(RoadmapModel::getId).collect(Collectors.toList());
     }
 
-    @Named("idsToRoadmapsModel")
-    default Set<RoadmapModel> idsToRoadmapsModel(Set<Integer> roadmaps) {
+    default List<RoadmapEntity> integersToRoadmapEntityId(List<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
         if (roadmaps == null) {
             return null;
         }
         return roadmaps.stream().map(id -> {
-            RoadmapModel roadmap = new RoadmapModel();
-            roadmap.setId(id);
+            RoadmapEntity roadmap = context.getMappedInstance(id, RoadmapEntity.class);
+            if (roadmap == null) {
+                roadmap = new RoadmapEntity();
+                roadmap.setId(id);
+                context.storeMappedInstance(id, roadmap);
+            }
             return roadmap;
-        }).collect(Collectors.toSet());
+        }).collect(Collectors.toList());
     }
 
-    // @Named("lessonsToIds")
-    // default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
-    // if (lessons == null) {
-    // return null;
-    // }
-    // return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
-    // }
-
-    // @Named("idsToLessons")
-    // default Set<LessonEntity> idsToLessons(Set<Integer> lessons) {
-    // if (lessons == null) {
-    // return null;
-    // }
-    // return lessons.stream().map(id -> {
-    // LessonEntity lesson = new LessonEntity();
-    // lesson.setId(id);
-    // return lesson;
-    // }).collect(Collectors.toSet());
-    // }
-
-    // @Named("taskToIds")
-    // default Set<Integer> taskToIds(Set<TaskEntity> tasks) {
-    // if (tasks == null) {
-    // return null;
-    // }
-    // return tasks.stream().map(TaskEntity::getId).collect(Collectors.toSet());
-    // }
-
-    // @Named("idsToTasks")
-    // default Set<TaskEntity> idsToTasks(Set<Integer> tasksIds) {
-    // if (tasksIds == null) {
-    // return null;
-    // }
-    // return tasksIds.stream().map(id -> {
-    // TaskEntity task = new TaskEntity();
-    // task.setId(id);
-    // return task;
-    // }).collect(Collectors.toSet());
-    // }
-
-    @Named("stepStatusToInt")
-    default int statusToInt(Status status) {
-        return status != null ? status.getValue() : 0;
+    default List<Integer> roadmapEntityToIntegers(List<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
+        if (roadmaps == null) {
+            return null;
+        }
+        return roadmaps.stream().map(RoadmapEntity::getId).collect(Collectors.toList());
     }
 
-    @Named("stepIntToStatus")
-    default Status intToStatus(int value) {
-        return Status.fromValue(value);
+    default List<LessonModel> integersToLessonModelId(List<Integer> lessons, @Context CycleAvoidingMappingContext context) {
+        if (lessons == null) {
+            return null;
+        }
+        return lessons.stream().map(id -> {
+            LessonModel lesson = context.getMappedInstance(id, LessonModel.class);
+            if (lesson == null) {
+                lesson = new LessonModel();
+                lesson.setId(id);
+                context.storeMappedInstance(id, lesson);
+            }
+            return lesson;
+        }).collect(Collectors.toList());
+    }
+
+    default List<Integer> lessonModelToIntegers(List<LessonModel> lessons, @Context CycleAvoidingMappingContext context) {
+        if (lessons == null) {
+            return null;
+        }
+        return lessons.stream().map(LessonModel::getId).collect(Collectors.toList());
+    }
+
+    default List<LessonEntity> integersToLessonEntityId(List<Integer> lessons, @Context CycleAvoidingMappingContext context) {
+        if (lessons == null) {
+            return null;
+        }
+        return lessons.stream().map(id -> {
+            LessonEntity lesson = context.getMappedInstance(id, LessonEntity.class);
+            if (lesson == null) {
+                lesson = new LessonEntity();
+                lesson.setId(id);
+                context.storeMappedInstance(id, lesson);
+            }
+            return lesson;
+        }).collect(Collectors.toList());
+    }
+
+    default List<Integer> lessonEntityToIntegers(List<LessonEntity> lessons, @Context CycleAvoidingMappingContext context) {
+        if (lessons == null) {
+            return null;
+        }
+        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toList());
+    }
+
+    default List<TaskModel> integersToTaskModelId(List<Integer> tasks, @Context CycleAvoidingMappingContext context) {
+        if (tasks == null) {
+            return null;
+        }
+        return tasks.stream().map(id -> {
+            TaskModel task = context.getMappedInstance(id, TaskModel.class);
+            if (task == null) {
+                task = new TaskModel();
+                task.setId(id);
+                context.storeMappedInstance(id, task);
+            }
+            return task;
+        }).collect(Collectors.toList());
+    }
+
+    default List<Integer> taskModelToIntegers(List<TaskModel> tasks, @Context CycleAvoidingMappingContext context) {
+        if (tasks == null) {
+            return null;
+        }
+        return tasks.stream().map(TaskModel::getId).collect(Collectors.toList());
+    }
+
+    default List<TaskEntity> integersToTaskEntityId(List<Integer> tasks, @Context CycleAvoidingMappingContext context) {
+        if (tasks == null) {
+            return null;
+        }
+        return tasks.stream().map(id -> {
+            TaskEntity task = context.getMappedInstance(id, TaskEntity.class);
+            if (task == null) {
+                task = new TaskEntity();
+                task.setId(id);
+                context.storeMappedInstance(id, task);
+            }
+            return task;
+        }).collect(Collectors.toList());
+    }
+
+    default List<Integer> taskEntityToIntegers(List<TaskEntity> tasks, @Context CycleAvoidingMappingContext context) {
+        if (tasks == null) {
+            return null;
+        }
+        return tasks.stream().map(TaskEntity::getId).collect(Collectors.toList());
+    }
+
+    default Status integerToStatusValue(int status) {
+        return Status.values()[status];
+    }
+
+    default int statusValueToInteger(Status status) {
+        return status.ordinal();
     }
 }

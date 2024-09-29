@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.adapter.mapper.TaskMapper;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
@@ -14,9 +15,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserRoadmapService {
 
-    private final UserRoadmapMapper roadmapUserMapper = UserRoadmapMapper.INSTANCE;
     @Autowired
     private IUserRoadmapRepository roadmapUserRepository;
+
+    @Autowired
+    private UserRoadmapMapper roadmapUserMapper;
 
     public UserRoadmapDTO create(UserRoadmapDTO roadmapUserDTO) {
         UserRoadmapEntity roadmapUser = roadmapUserMapper.dtoToEntity(roadmapUserDTO);

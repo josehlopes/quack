@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-28T12:33:05-0300",
-    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.40.0.v20240919-1711, environment: Java 17.0.12 (Eclipse Adoptium)"
+    date = "2024-09-29T20:23:02-0300",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class AchievementMapperImpl implements AchievementMapper {
@@ -22,10 +22,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setDescription( achievementDTO.getDescription() );
         achievementEntity.setId( achievementDTO.getId() );
-        achievementEntity.setImagePath( achievementDTO.getImagePath() );
         achievementEntity.setName( achievementDTO.getName() );
+        achievementEntity.setDescription( achievementDTO.getDescription() );
+        achievementEntity.setImagePath( achievementDTO.getImagePath() );
 
         return achievementEntity;
     }
@@ -38,10 +38,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
-        achievementDTO.setDescription( achievementEntity.getDescription() );
         achievementDTO.setId( achievementEntity.getId() );
-        achievementDTO.setImagePath( achievementEntity.getImagePath() );
         achievementDTO.setName( achievementEntity.getName() );
+        achievementDTO.setDescription( achievementEntity.getDescription() );
+        achievementDTO.setImagePath( achievementEntity.getImagePath() );
 
         return achievementDTO;
     }
@@ -54,10 +54,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementModel achievementModel = new AchievementModel();
 
-        achievementModel.setDescription( achievementEntity.getDescription() );
         achievementModel.setId( achievementEntity.getId() );
-        achievementModel.setImagePath( achievementEntity.getImagePath() );
         achievementModel.setName( achievementEntity.getName() );
+        achievementModel.setDescription( achievementEntity.getDescription() );
+        achievementModel.setImagePath( achievementEntity.getImagePath() );
 
         return achievementModel;
     }
@@ -70,10 +70,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
-        achievementEntity.setDescription( achievementModel.getDescription() );
         achievementEntity.setId( achievementModel.getId() );
-        achievementEntity.setImagePath( achievementModel.getImagePath() );
         achievementEntity.setName( achievementModel.getName() );
+        achievementEntity.setDescription( achievementModel.getDescription() );
+        achievementEntity.setImagePath( achievementModel.getImagePath() );
 
         return achievementEntity;
     }
@@ -86,10 +86,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementModel achievementModel = new AchievementModel();
 
-        achievementModel.setDescription( achievementDTO.getDescription() );
         achievementModel.setId( achievementDTO.getId() );
-        achievementModel.setImagePath( achievementDTO.getImagePath() );
         achievementModel.setName( achievementDTO.getName() );
+        achievementModel.setDescription( achievementDTO.getDescription() );
+        achievementModel.setImagePath( achievementDTO.getImagePath() );
 
         return achievementModel;
     }
@@ -102,10 +102,10 @@ public class AchievementMapperImpl implements AchievementMapper {
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
-        achievementDTO.setDescription( achievementModel.getDescription() );
         achievementDTO.setId( achievementModel.getId() );
-        achievementDTO.setImagePath( achievementModel.getImagePath() );
         achievementDTO.setName( achievementModel.getName() );
+        achievementDTO.setDescription( achievementModel.getDescription() );
+        achievementDTO.setImagePath( achievementModel.getImagePath() );
 
         return achievementDTO;
     }

@@ -7,30 +7,31 @@ import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
 
-    AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
-
-    @Mapping(source = "user.id", target = "user")
-    AddressDTO entityToDto(AddressEntity address);
-
     @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "status", target = "status")
     AddressEntity dtoToEntity(AddressDTO addressDTO);
 
-    @Mapping(source = "user.id", target = "user.id")
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "status", target = "status")
+    AddressDTO entityToDto(AddressEntity address);
+
     AddressModel entityToModel(AddressEntity address);
 
-    @Mapping(source = "user.id", target = "user.id")
     AddressEntity modelToEntity(AddressModel addressModel);
 
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "status", target = "status")
     AddressModel dtoToModel(AddressDTO addressDTO);
 
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "status", target = "status")
     AddressDTO modelToDto(AddressModel addressModel);
 
-    default UserModel map(Integer user) {
+    default UserModel integerToUserModel(Integer user) {
         if (user == null) {
             return null;
         }
@@ -39,19 +40,18 @@ public interface AddressMapper {
         return userModel;
     }
 
-    default Integer map(UserModel userModel) {
+    default Integer userModelIdToInteger(UserModel userModel) {
         if (userModel == null) {
             return null;
         }
         return userModel.getId();
     }
 
-    default Status map(int value) {
-        return Status.fromValue(value);
+    default int statusValueToAddressInteger(Status status) {
+        return status != null ? status.getValue() : 0;
     }
 
-    // Mapeia de Status para int
-    default int map(Status status) {
-        return status.getValue();
+    default Status addressIntegerToStatusValue(int value) {
+        return Status.fromValue(value);
     }
 }

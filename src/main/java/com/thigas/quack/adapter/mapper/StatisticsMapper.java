@@ -7,12 +7,9 @@ import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface StatisticsMapper {
-
-    StatisticsMapper INSTANCE = Mappers.getMapper(StatisticsMapper.class);
 
     @Mapping(source = "user.id", target = "user")
     StatisticsDTO entityToDto(StatisticsEntity statistics);

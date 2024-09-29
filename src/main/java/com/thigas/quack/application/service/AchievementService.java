@@ -16,10 +16,13 @@ import java.util.stream.StreamSupport;
 @Service
 public class AchievementService {
 
-    private final AchievementMapper achievementMapper = AchievementMapper.INSTANCE;
 
     @Autowired
     private IAchievementRepository achievementRepository;
+
+    @Autowired
+    private AchievementMapper achievementMapper;
+
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
         AchievementModel achievementModel = achievementMapper.dtoToModel(achievementDTO);

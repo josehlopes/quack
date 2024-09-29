@@ -1,7 +1,11 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.github.javafaker.Bool;
-import com.thigas.quack.adapter.dto.UserDTO;
+import java.util.Optional;
+
+import com.thigas.quack.adapter.mapper.StatisticsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
@@ -9,16 +13,9 @@ import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserModelRepo
 
 import jakarta.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Repository
 public class UserRepositoryImplementation implements IUserRepository {
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
     @Autowired
     private IUserModelRepository userModelRepository;
 
@@ -35,6 +32,8 @@ public class UserRepositoryImplementation implements IUserRepository {
         return userModelRepository.findById(id);
     }
 
+    @Override
+    @Transactional
     public Boolean existsById(int id) {
         return userModelRepository.existsById(id);
     }

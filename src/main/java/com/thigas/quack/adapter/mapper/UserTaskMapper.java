@@ -7,12 +7,9 @@ import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserMapper.class, TaskMapper.class }, componentModel = "spring")
+@Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface UserTaskMapper {
-
-    UserTaskMapper INSTANCE = Mappers.getMapper(UserTaskMapper.class);
 
     @Mapping(source = "user.id", target = "user")
     @Mapping(source = "task.id", target = "task")

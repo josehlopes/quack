@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
@@ -19,7 +20,9 @@ import java.util.stream.Collectors;
 @Repository
 public class LessonRepositoryImplementation implements ILessonRepository {
 
-    private final LessonMapper lessonMapper = LessonMapper.INSTANCE;
+    @Autowired
+    private LessonMapper lessonMapper;
+
     @Autowired
     private ILessonModelRepository lessonModelRepository;
 
@@ -29,6 +32,12 @@ public class LessonRepositoryImplementation implements ILessonRepository {
         LessonModel lessonModel = lessonMapper.entityToModel(lessonEntity);
         LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
         return lessonMapper.modelToEntity(savedLessonModel);
+    }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return lessonModelRepository.existsById(id);
     }
 
     @Override

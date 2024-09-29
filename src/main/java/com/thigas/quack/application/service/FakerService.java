@@ -191,7 +191,7 @@ public class FakerService {
 		return lessons;
 	}
 
-	private Set<Integer> getRandomSubset(Set<Integer> set, int size) {
+	private List<Integer> getRandomSubset(List<Integer> set, int size) {
 		if (set.size() <= size) {
 			return set; // Retorna todo o conjunto se o tamanho for menor ou igual ao solicitado
 		}
@@ -199,7 +199,7 @@ public class FakerService {
 		Random random = new Random();
 		List<Integer> list = new ArrayList<>(set);
 		Collections.shuffle(list, random);
-		return new HashSet<>(list.subList(0, size));
+		return new ArrayList<>(list.subList(0, size));
 	}
 
 	public List<TaskDTO> generateFakeTasks(int count) {
@@ -209,11 +209,10 @@ public class FakerService {
 			taskDTO.setDescription(faker.lorem().sentence());
 			taskDTO.setImagePath(faker.avatar().image());
 
-			Set<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
+			List<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
 			taskDTO.setSteps(steps);
 
-			// Persistindo e atualizando o objeto com o retorno
-			taskDTO = taskService.create(taskDTO); // Atualize o taskDTO com o resultado da persistência
+			taskDTO = taskService.create(taskDTO);
 
 			if (taskDTO.getId() <= 0) {
 				throw new IllegalStateException("Failed to create task with valid ID.");
@@ -224,8 +223,8 @@ public class FakerService {
 		return tasks;
 	}
 
-	public List<StepDTO> generateFakeSteps(int count, Set<Integer> roadmapId, Set<Integer> taskId,
-			Set<Integer> lessonId) {
+	public List<StepDTO> generateFakeSteps(int count, List<Integer> roadmapId, List<Integer> taskId,
+			List<Integer> lessonId) {
 
 		List<StepDTO> steps = new ArrayList<>();
 
@@ -255,12 +254,12 @@ public class FakerService {
 		List<TaskDTO> tasks = generateFakeTasks(recordCount);
 
 		// Certifique-se de que todos os roadmaps e lessons estão persistidos
-		Set<Integer> roadmapsIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toSet());
-		Set<Integer> lessonsIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toSet());
-		Set<Integer> tasksIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toSet());
+		List<Integer> roadmapsIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toList());
+		List<Integer> lessonsIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toList());
+		List<Integer> tasksIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toList());
 
 		// Gera passos
-		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapsIds, lessonsIds, tasksIds);
+		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapsIds, tasksIds,lessonsIds);
 		for (StepDTO step : steps) {
 			stepService.create(step); // Persistência do StepModel
 		}

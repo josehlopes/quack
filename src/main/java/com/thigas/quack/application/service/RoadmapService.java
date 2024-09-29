@@ -1,11 +1,11 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
+import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.adapter.mapper.RoadmapMapper;
-import com.thigas.quack.adapter.mapper.UserMapper;
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
+import com.thigas.quack.adapter.mapper.*;
 import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.model.Status;
@@ -30,11 +30,6 @@ import java.util.stream.StreamSupport;
 @Service
 public class RoadmapService {
 
-    // Instância do mapper
-    private final RoadmapMapper roadmapMapper = RoadmapMapper.INSTANCE;
-    private final UserMapper userMapper = UserMapper.INSTANCE;
-    private final UserRoadmapMapper userRoadmapMapper = UserRoadmapMapper.INSTANCE;
-
     @Autowired
     private IRoadmapRepository roadmapRepository;
     @Autowired
@@ -42,25 +37,38 @@ public class RoadmapService {
     @Autowired
     private IUserRoadmapRepository userRoadmapRepository;
 
+    @Autowired
+    private RoadmapMapper roadmapMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private UserRoadmapMapper userRoadmapMapper;
+
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
-        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO);
+        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO, context);
         RoadmapEntity toSaveRoadmap = roadmapRepository.save(roadmap);
-        return roadmapMapper.entityToDto(toSaveRoadmap);
+        return roadmapMapper.entityToDto(toSaveRoadmap, context);
     }
 
     public Optional<RoadmapDTO> getById(int id) {
-        Optional<RoadmapEntity> roadmap = roadmapRepository.findById(id);
-        return roadmap.map(roadmapMapper::entityToDto);
+        Optional<RoadmapEntity> roadmapOpt = roadmapRepository.findById(id);
+        return roadmapOpt.map(roadmap -> roadmapMapper.entityToDto(roadmap, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<RoadmapDTO> getAll() {
         Iterable<RoadmapEntity> roadmaps = roadmapRepository.findAll();
-        return StreamSupport.stream(roadmaps.spliterator(), false).map(roadmapMapper::entityToDto)
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(roadmaps.spliterator(), false)
+                .map(roadmap -> roadmapMapper.entityToDto(roadmap, context))
                 .collect(Collectors.toList());
     }
-
     public void update(RoadmapDTO roadmapDTO) {
-        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO);
+        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO, context);
         roadmapRepository.save(roadmap);
     }
 

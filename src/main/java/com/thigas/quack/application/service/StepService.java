@@ -2,6 +2,7 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.adapter.mapper.LessonMapper;
+import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.entity.RoadmapEntity;
@@ -15,17 +16,15 @@ import com.thigas.quack.domain.repository.IStepRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class StepService {
 
-    private final StepMapper stepMapper = StepMapper.INSTANCE;
 
     @Autowired
     private IStepRepository stepRepository;
@@ -39,14 +38,21 @@ public class StepService {
     @Autowired
     private IRoadmapRepository roadmapRepository;
 
+    @Autowired
+    private StepMapper stepMapper;
+
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
+
     // TODO: Ver se da para melhorar a lógica de criação do Step
-    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de
-    // uma Lista
+    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
+
     public StepDTO create(StepDTO stepDTO) {
-        StepEntity stepEntity = stepMapper.dtoToEntity(stepDTO);
-        Set<LessonEntity> lessonEntities = new HashSet<>();
-        Set<RoadmapEntity> roadmapEntities = new HashSet<>();
-        Set<TaskEntity> taskEntities = new HashSet<>();
+        StepEntity stepEntity = stepMapper.dtoToEntity(stepDTO, context);
+        List<LessonEntity> lessonEntities = new ArrayList<>();
+        List<RoadmapEntity> roadmapEntities = new ArrayList<>();
+        List<TaskEntity> taskEntities = new ArrayList<>();
 
         for (Integer lessonId : stepDTO.getLessons()) {
             Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
@@ -57,7 +63,6 @@ public class StepService {
             }
         }
 
-        // Verificação e adição de roadmaps
         for (Integer roadmapId : stepDTO.getRoadmaps()) {
             Optional<RoadmapEntity> roadmap = roadmapRepository.findById(roadmapId);
             if (roadmap.isPresent()) {
@@ -77,36 +82,35 @@ public class StepService {
             }
         }
 
-        // Atribuindo as entidades ao StepEntity
+        stepEntity.setLessons(new ArrayList<>());
+        stepEntity.setRoadmaps(new ArrayList<>());
+        stepEntity.setTasks(new ArrayList<>());
+
         stepEntity.setLessons(lessonEntities);
         stepEntity.setRoadmaps(roadmapEntities);
         stepEntity.setTasks(taskEntities);
 
-        // Salva o StepEntity no banco de dados
         StepEntity savedStep = stepRepository.save(stepEntity);
 
-        // Verifique se o ID foi atribuído
-        if (savedStep.getId() <= 0) {
-            throw new IllegalStateException("Failed to create step with valid ID.");
-        }
-
-        // Retorne o StepDTO convertido a partir do StepEntity salvo
-        return stepMapper.entityToDto(savedStep);
+        return stepMapper.entityToDto(savedStep, context);
     }
 
     public Optional<StepDTO> getById(int id) {
-        Optional<StepEntity> step = stepRepository.findById(id);
-        return step.map(stepMapper::entityToDto);
+        Optional<StepEntity> stepOpt = stepRepository.findById(id);
+        return stepOpt.map(step -> stepMapper.entityToDto(step, new CycleAvoidingMappingContext()));
     }
+
 
     public Iterable<StepDTO> getAll() {
         Iterable<StepEntity> steps = stepRepository.findAll();
-        return StreamSupport.stream(steps.spliterator(), false).map(stepMapper::entityToDto)
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(steps.spliterator(), false)
+                .map(step -> stepMapper.entityToDto(step, context))
                 .collect(Collectors.toList());
     }
 
     public void update(StepDTO stepDTO) {
-        StepEntity step = stepMapper.dtoToEntity(stepDTO);
+        StepEntity step = stepMapper.dtoToEntity(stepDTO, context);
         stepRepository.save(step);
     }
 

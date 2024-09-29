@@ -8,9 +8,11 @@ import java.util.Set;
 public interface ILessonRepository {
     LessonEntity save(LessonEntity lesson);
 
-    Set<LessonEntity> saveAll(Set<LessonEntity> lessons);
+//    Set<LessonEntity> saveAll(Set<LessonEntity> lessons);
 
     Optional<LessonEntity> findById(int id);
+
+    Boolean existsById(int id);
 
     Iterable<LessonEntity> findAll();
 

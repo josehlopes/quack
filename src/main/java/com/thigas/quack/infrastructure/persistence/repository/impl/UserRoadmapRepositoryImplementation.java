@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
@@ -17,8 +18,10 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRoadmapRepositoryImplementation implements IUserRoadmapRepository {
 
-    private final UserRoadmapMapper userRoadmapMapper = UserRoadmapMapper.INSTANCE;
+
     @Autowired
+    private UserRoadmapMapper userRoadmapMapper;    @Autowired
+
     private IUserRoadmapModelRepository userRoadmapModelRepository;
 
     @Override

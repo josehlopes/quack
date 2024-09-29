@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.TaskMapper;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.repository.ITaskRepository;
@@ -17,7 +18,9 @@ import java.util.stream.Collectors;
 @Repository
 public class TaskRepositoryImplementation implements ITaskRepository {
 
-    private final TaskMapper taskMapper = TaskMapper.INSTANCE;
+    @Autowired
+    private TaskMapper taskMapper;
+
     @Autowired
     private ITaskModelRepository taskModelRepository;
 
@@ -27,6 +30,12 @@ public class TaskRepositoryImplementation implements ITaskRepository {
         TaskModel taskModel = taskMapper.entityToModel(taskEntity);
         TaskModel savedTaskModel = taskModelRepository.save(taskModel);
         return taskMapper.modelToEntity(savedTaskModel);
+    }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return taskModelRepository.existsById(id);
     }
 
     @Override

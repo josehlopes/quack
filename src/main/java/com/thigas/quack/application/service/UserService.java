@@ -2,6 +2,7 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.mapper.UserMapper;
+import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
@@ -17,9 +18,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserService {
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
 
     public UserDTO create(UserDTO userDTO) {
         UserModel user = userMapper.dtoToModel(userDTO);

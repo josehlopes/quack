@@ -1,56 +1,59 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
+import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
-    TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
+    @Mapping(source = "steps", target = "steps")
+    TaskDTO entityToDto(TaskEntity taskEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskDTO entityToDto(TaskEntity taskEntity);
+    @Mapping(source = "steps", target = "steps")
+    TaskEntity dtoToEntity(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskEntity dtoToEntity(TaskDTO taskDTO);
+    @Mapping(source = "steps", target = "steps")
+    TaskModel entityToModel(TaskEntity taskEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskModel entityToModel(TaskEntity taskEntity);
+    @Mapping(source = "steps", target = "steps")
+    TaskEntity modelToEntity(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskEntity modelToEntity(TaskModel taskModel);
+    @Mapping(source = "steps", target = "steps")
+    TaskModel dtoToModel(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskModel dtoToModel(TaskDTO taskDTO);
+    @Mapping(source = "steps", target = "steps")
+    TaskDTO modelToDto(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps", ignore = true)
-    TaskDTO modelToDto(TaskModel taskModel);
+    default List<Integer> taskEntityToIntegers(List<TaskEntity> tasks, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.entitiesToIntegers(tasks);
+    }
 
-    // Mapeia um conjunto de StepEntity para um conjunto de Integer (IDs)
-    // default Set<Integer> stepsToIds(Set<StepEntity> steps) {
-    // if (steps == null) {
-    // return null;
-    // }
-    // return steps.stream().map(StepEntity::getId).collect(Collectors.toSet());
-    // }
+    default List<TaskEntity> integersToTaskEntityId(List<Integer> tasksIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integersToEntities(tasksIds, TaskEntity.class, context);
+    }
 
-    // // Mapeia um conjunto de Integer (IDs) para um conjunto de StepEntity
-    // default Set<StepEntity> idsToSteps(Set<Integer> steps) {
-    // if (steps == null) {
-    // return null;
-    // }
-    // return steps.stream().map(id -> {
-    // StepEntity step = new StepEntity();
-    // step.setId(id);
-    // return step;
-    // }).collect(Collectors.toSet());
-    // }
+    default List<Integer> stepEntityToIntegers(List<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.entitiesToIntegers(steps);
+    }
+
+    default List<StepEntity> integersToStepEntityId(List<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integersToEntities(stepIds, StepEntity.class, context);
+    }
+
+    default List<StepModel> integersToStepModels(List<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integersToModels(stepIds, StepModel.class, context);
+    }
+
+    default List<Integer> stepModelsToIntegers(List<StepModel> stepModels) {
+        return MapperUtils.modelsToIntegers(stepModels);
+    }
 }
