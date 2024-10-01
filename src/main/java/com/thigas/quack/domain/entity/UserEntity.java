@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 
 import com.thigas.quack.adapter.model.BaseEntity;
 
+import com.thigas.quack.domain.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

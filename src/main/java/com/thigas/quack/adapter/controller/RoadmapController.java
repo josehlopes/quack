@@ -62,15 +62,15 @@ public class RoadmapController {
 
     }
 
-    // @PutMapping("/end-roadmap")
-    // public ResponseEntity<Void> endRoadmap(@RequestBody UserRoadmapDTO
-    // userRoadmapDTO) {
+     @PutMapping("/end-roadmap")
+     public ResponseEntity<Void> endRoadmap(@RequestBody UserRoadmapDTO
+    userRoadmapDTO) {
 
-    // if (roadmapService.endRoadmap(userRoadmapDTO)) {
-    // return new ResponseEntity<>(HttpStatus.OK);
-    // } else {
-    // return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    // }
-    // }
+     if (roadmapService.endRoadmap(userRoadmapDTO)) {
+     return new ResponseEntity<>(HttpStatus.OK);
+     } else {
+     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+     }
+    }
 
 }
