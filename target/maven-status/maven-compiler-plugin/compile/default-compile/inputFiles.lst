@@ -26,7 +26,9 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserRoadmapDTO.jav
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserTaskDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AchievementMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AddressMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\CycleAvoidingMappingContext.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\LessonMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\MapperUtils.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\RoadmapMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StatisticsMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StepMapper.java
@@ -34,8 +36,12 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\TaskMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserRoadmapMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserTaskMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\model\BaseEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\model\BaseModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\AchievementService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\AddressService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\DataInitializer.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\FakerService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\LessonService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\RoadmapService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\StatisticsService.java
@@ -56,6 +62,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserRoadmapEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserTaskEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\example\UserCode.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\model\Status.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAchievementRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IAddressRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ILessonRepository.java
@@ -71,10 +78,8 @@ I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\ent
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\LessonModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\RoadmapModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StatisticsModel.java
-I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\TaskModel.java
-I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserAchievementsModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserTaskModel.java

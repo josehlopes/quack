@@ -47,4 +47,11 @@ public class StepController {
         stepService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PutMapping("/updateStatus/{id}/{status}")
+    public ResponseEntity<Void> updateStatus(@PathVariable Integer id, @PathVariable int status) {
+        stepService.updateStatus(id, status);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

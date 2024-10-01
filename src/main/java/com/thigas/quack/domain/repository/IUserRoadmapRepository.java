@@ -1,16 +1,17 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 
 import java.util.Optional;
 
 public interface IUserRoadmapRepository {
 
-    UserRoadmapEntity save(UserRoadmapEntity roadmapUser);
+    UserRoadmapModel save(UserRoadmapModel roadmapUser);
 
-    Optional<UserRoadmapEntity> findById(int id);
+    Optional<UserRoadmapModel> findById(int id);
 
-    Iterable<UserRoadmapEntity> findAll();
+    Iterable<UserRoadmapModel> findAll();
 
     void deleteById(int id);
 }

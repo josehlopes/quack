@@ -7,35 +7,40 @@ import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = { UserMapper.class, TaskMapper.class }, componentModel = "spring")
+@Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface UserTaskMapper {
 
-    UserTaskMapper INSTANCE = Mappers.getMapper(UserTaskMapper.class);
-
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "task.id", target = "taskId")
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "task.id", target = "task")
     UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity);
 
-    @Mapping(source = "userId", target = "user.id")
-    @Mapping(source = "taskId", target = "task.id")
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "task", target = "task.id")
     UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO);
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "task.id", target = "taskId")
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "task.id", target = "task")
     UserTaskModel entityToModel(UserTaskEntity userEntity);
 
-    @Mapping(source = "userId", target = "user.id")
-    @Mapping(source = "taskId", target = "task.id")
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "task", target = "task.id")
     UserTaskEntity modelToEntity(UserTaskModel userModel);
 
-    default UserModel userIdToModel(Integer userId) {
-        if (userId == null) {
+    @Mapping(source = "user", target = "user.id")
+    @Mapping(source = "task", target = "task.id")
+    UserTaskModel dtoToModel(UserTaskDTO userTaskDTO);
+
+    @Mapping(source = "user.id", target = "user")
+    @Mapping(source = "task.id", target = "task")
+    UserTaskDTO modelToDto(UserTaskModel userTaskModel);
+
+    default UserModel userToModel(Integer user) {
+        if (user == null) {
             return null;
         }
         UserModel userModel = new UserModel();
-        userModel.setId(userId);
+        userModel.setId(user);
         return userModel;
     }
 
@@ -46,12 +51,12 @@ public interface UserTaskMapper {
         return userModel.getId();
     }
 
-    default TaskModel taskIdToModel(Integer taskId) {
-        if (taskId == null) {
+    default TaskModel taskToModel(Integer task) {
+        if (task == null) {
             return null;
         }
         TaskModel taskModel = new TaskModel();
-        taskModel.setId(taskId);
+        taskModel.setId(task);
         return taskModel;
     }
 

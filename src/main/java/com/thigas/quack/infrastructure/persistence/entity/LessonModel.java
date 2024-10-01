@@ -1,16 +1,22 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "lesson")
-public class LessonModel {
+public class LessonModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +34,33 @@ public class LessonModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @ManyToMany(mappedBy = "lessons")
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<StepModel> steps;
 
-    @ManyToMany(mappedBy = "lessons")
-    private Set<TaskModel> tasks;
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
 
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        LessonModel that = (LessonModel) o;
+        return getId() != 0 && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

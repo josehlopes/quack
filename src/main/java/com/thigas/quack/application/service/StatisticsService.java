@@ -1,9 +1,13 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
+import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
+import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
+import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +18,33 @@ import java.util.stream.StreamSupport;
 @Service
 public class StatisticsService {
 
-    private final StatisticsMapper statisticsMapper = StatisticsMapper.INSTANCE;
     @Autowired
     private IStatisticsRepository statisticsRepository;
 
+    @Autowired
+    private StatisticsMapper statisticsMapper;
+
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
-        StatisticsEntity statistics = statisticsMapper.dtoToEntity(statisticsDTO);
-        StatisticsEntity toSaveStatistics = statisticsRepository.save(statistics);
-        return statisticsMapper.entityToDto(toSaveStatistics);
+        StatisticsModel statisticsModel = statisticsMapper.dtoToModel(statisticsDTO);
+        StatisticsModel savedStatistics = statisticsRepository.save(statisticsModel);
+        return statisticsMapper.modelToDto(savedStatistics);
     }
 
     public Optional<StatisticsDTO> getById(int id) {
-        Optional<StatisticsEntity> statistics = statisticsRepository.findById(id);
-        return statistics.map(statisticsMapper::entityToDto);
+        Optional<StatisticsModel> statistics = statisticsRepository.findById(id);
+        return statistics.map(statisticsMapper::modelToDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
-        Iterable<StatisticsEntity> statisticss = statisticsRepository.findAll();
-        return StreamSupport.stream(statisticss.spliterator(), false).map(statisticsMapper::entityToDto)
+        Iterable<StatisticsModel> statistics = statisticsRepository.findAll();
+        return StreamSupport.stream(statistics.spliterator(), false).map(statisticsMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StatisticsDTO statisticsDTO) {
-        StatisticsEntity statistics = statisticsMapper.dtoToEntity(statisticsDTO);
-        statisticsRepository.save(statistics);
+        StatisticsModel existingUser = statisticsRepository.findById(statisticsDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        statisticsRepository.save(existingUser);
     }
 
     public void delete(int id) {

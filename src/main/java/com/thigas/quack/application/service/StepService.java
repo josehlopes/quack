@@ -1,65 +1,86 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StepDTO;
-import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.StepEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
+import com.thigas.quack.domain.repository.IRoadmapRepository;
+import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class StepService {
 
-    private final StepMapper stepMapper = StepMapper.INSTANCE;
+
     @Autowired
     private IStepRepository stepRepository;
+
     @Autowired
     private ILessonRepository lessonRepository;
 
-    @Transactional
+    @Autowired
+    private ITaskRepository taskRepository;
+
+    @Autowired
+    private IRoadmapRepository roadmapRepository;
+
+    @Autowired
+    private StepMapper stepMapper;
+
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
+
+    // TODO: Ver se da para melhorar a lógica de criação do Step
+    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
+
     public StepDTO create(StepDTO stepDTO) {
-        StepEntity stepEntity = stepMapper.dtoToEntity(stepDTO);
-        Set<LessonEntity> lessonEntities = new HashSet<>();
-
-        for (Integer lessonId : stepDTO.getLessonIds()) {
-            Optional<LessonEntity> lesson = lessonRepository.findById(lessonId);
-            lesson.ifPresent(lessonEntities::add);
-        }
-
-        stepEntity.setLessons(lessonEntities);
-
-        StepEntity savedStep = stepRepository.save(stepEntity);
-
-        return stepMapper.entityToDto(savedStep);
+        StepModel stepModel = stepMapper.dtoToModel(stepDTO, context);
+        StepModel savedStep = stepRepository.save(stepModel);
+        return stepMapper.modelToDto(savedStep, context);
     }
 
     public Optional<StepDTO> getById(int id) {
-        Optional<StepEntity> step = stepRepository.findById(id);
-        return step.map(stepMapper::entityToDto);
+        Optional<StepModel> stepOpt = stepRepository.findById(id);
+        return stepOpt.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
     }
 
+
     public Iterable<StepDTO> getAll() {
-        Iterable<StepEntity> steps = stepRepository.findAll();
-        return StreamSupport.stream(steps.spliterator(), false).map(stepMapper::entityToDto)
+        Iterable<StepModel> steps = stepRepository.findAll();
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(steps.spliterator(), false)
+                .map(step -> stepMapper.modelToDto(step, context))
                 .collect(Collectors.toList());
     }
 
     public void update(StepDTO stepDTO) {
-        StepEntity step = stepMapper.dtoToEntity(stepDTO);
+        StepModel step = stepMapper.dtoToModel(stepDTO, context);
         stepRepository.save(step);
     }
 
     public void delete(int id) {
         stepRepository.deleteById(id);
+    }
+
+    public void updateStatus(Integer id, int statusValue) {
+        Optional<StepModel> optionalStep = stepRepository.findById(id);
+        if (optionalStep.isPresent()) {
+            StepModel step = optionalStep.get();
+            Status status = Status.fromValue(statusValue);
+            step.setStatus(status);
+            stepRepository.save(step);
+        } else {
+            throw new IllegalArgumentException("Step não encontrado com id: " + id);
+        }
     }
 }

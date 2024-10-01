@@ -1,16 +1,19 @@
 package com.thigas.quack.domain.entity;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+
+import com.thigas.quack.adapter.model.BaseEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity {
+public class UserEntity implements BaseEntity {
+
     private int id;
     private String name;
     private String username;
@@ -22,4 +25,16 @@ public class UserEntity {
     private Double points;
     private OffsetDateTime registerAt;
     private String imagePath;
+    private Status status;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
 }

@@ -1,10 +1,14 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
+import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
-import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IStepModelRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,28 +18,43 @@ import java.util.stream.Collectors;
 @Repository
 public class StepRepositoryImplementation implements IStepRepository {
 
-    private final StepMapper stepMapper = StepMapper.INSTANCE;
+    @Autowired
+    private StepMapper stepMapper;
+
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
+
     @Autowired
     private IStepModelRepository stepModelRepository;
 
     @Override
-    public StepEntity save(StepEntity stepEntity) {
-        StepModel stepModel = stepMapper.entityToModel(stepEntity);
-        StepModel savedStepModel = stepModelRepository.save(stepModel);
-        return stepMapper.modelToEntity(savedStepModel);
+    @Transactional
+    public StepModel save(StepModel stepModel) {
+        return stepModelRepository.save(stepModel);
     }
 
     @Override
-    public Optional<StepEntity> findById(int id) {
-        return stepModelRepository.findById(id).map(stepMapper::modelToEntity);
+    @Transactional
+    public Optional<StepModel> findById(int id) {
+        return stepModelRepository.findById(id); // Passando o contexto
     }
 
     @Override
-    public Iterable<StepEntity> findAll() {
-        return stepModelRepository.findAll().stream().map(stepMapper::modelToEntity).collect(Collectors.toList());
+    @Transactional
+    public Boolean existsById(int id) {
+        return stepModelRepository.existsById(id);
+    }
+
+
+    @Override
+    @Transactional
+    public Iterable<StepModel> findAll() {
+        return stepModelRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         stepModelRepository.deleteById(id);
     }

@@ -1,17 +1,21 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.UserEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
 import java.util.Optional;
 
 public interface IUserRepository {
-    UserEntity save(UserEntity user);
 
-    Optional<UserEntity> findById(int id);
+    UserModel save(UserModel user);
 
-    Iterable<UserEntity> findAll();
+    Optional<UserModel> findById(int id);
+
+    Boolean existsById(int id);
+
+    Iterable<UserModel> findAll();
 
     void deleteById(int id);
 
-    Optional<UserEntity> findByEmail(String email);
+    Optional<UserModel> findByEmail(String email);
 }

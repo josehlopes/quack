@@ -1,15 +1,18 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.TaskEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 
 import java.util.Optional;
 
 public interface ITaskRepository {
-    TaskEntity save(TaskEntity task);
+    TaskModel save(TaskModel task);
 
-    Optional<TaskEntity> findById(int id);
+    Optional<TaskModel> findById(int id);
 
-    Iterable<TaskEntity> findAll();
+    Boolean existsById(int id);
+
+    Iterable<TaskModel> findAll();
 
     void deleteById(int id);
 }

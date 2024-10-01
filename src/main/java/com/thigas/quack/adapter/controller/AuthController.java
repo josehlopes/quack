@@ -1,14 +1,7 @@
 package com.thigas.quack.adapter.controller;
 
-import com.thigas.quack.adapter.dto.LoginRequestDTO;
-import com.thigas.quack.adapter.dto.RegisterRequestDTO;
-import com.thigas.quack.adapter.dto.ResponseDTO;
-import com.thigas.quack.application.service.UserService;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.repository.IUserRepository;
-import com.thigas.quack.infrastructure.security.TokenService;
+import java.util.Optional;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import com.thigas.quack.adapter.dto.LoginRequestDTO;
+import com.thigas.quack.adapter.dto.RegisterRequestDTO;
+import com.thigas.quack.adapter.dto.ResponseDTO;
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.application.service.UserService;
+import com.thigas.quack.infrastructure.security.TokenService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO body) {
         System.out.println("Attempting to log in with email: " + body.email());
-        UserEntity user = this.userService.findEntityByEmail(body.email())
+        UserDTO user = this.userService.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
@@ -41,10 +41,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
         System.out.println("Register endpoint hit with email: " + body.email());
-        Optional<UserEntity> user = this.userService.findEntityByEmail(body.email());
+        Optional<UserDTO> user = this.userService.findByEmail(body.email());
 
         if (user.isEmpty()) {
-            UserEntity newUser = new UserEntity();
+            UserDTO newUser = new UserDTO();
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setId(body.id());
@@ -64,4 +64,5 @@ public class AuthController {
         }
         return ResponseEntity.badRequest().build();
     }
+
 }

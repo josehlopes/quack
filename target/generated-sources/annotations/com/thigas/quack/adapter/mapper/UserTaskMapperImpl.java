@@ -4,13 +4,15 @@ import com.thigas.quack.adapter.dto.UserTaskDTO;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.entity.UserTaskEntity;
+import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-23T23:01:13-0300",
+    date = "2024-10-01T00:04:24-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -24,8 +26,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserTaskDTO userTaskDTO = new UserTaskDTO();
 
-        userTaskDTO.setUserId( roadmapUserEntityUserId( roadmapUserEntity ) );
-        userTaskDTO.setTaskId( roadmapUserEntityTaskId( roadmapUserEntity ) );
+        userTaskDTO.setUser( roadmapUserEntityUserId( roadmapUserEntity ) );
+        userTaskDTO.setTask( roadmapUserEntityTaskId( roadmapUserEntity ) );
         userTaskDTO.setId( roadmapUserEntity.getId() );
         userTaskDTO.setStatus( roadmapUserEntity.getStatus() );
         userTaskDTO.setImagePath( roadmapUserEntity.getImagePath() );
@@ -58,8 +60,8 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserTaskModel userTaskModel = new UserTaskModel();
 
-        userTaskModel.setUserId( userIdToModel( userEntityUserId( userEntity ) ) );
-        userTaskModel.setTaskId( taskIdToModel( userEntityTaskId( userEntity ) ) );
+        userTaskModel.setUser( userToModel( userEntityUserId( userEntity ) ) );
+        userTaskModel.setTask( taskToModel( userEntityTaskId( userEntity ) ) );
         userTaskModel.setId( userEntity.getId() );
         userTaskModel.setStatus( userEntity.getStatus() );
         userTaskModel.setImagePath( userEntity.getImagePath() );
@@ -82,6 +84,40 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         userTaskEntity.setImagePath( userModel.getImagePath() );
 
         return userTaskEntity;
+    }
+
+    @Override
+    public UserTaskModel dtoToModel(UserTaskDTO userTaskDTO) {
+        if ( userTaskDTO == null ) {
+            return null;
+        }
+
+        UserTaskModel userTaskModel = new UserTaskModel();
+
+        userTaskModel.setUser( userTaskDTOToUserModel( userTaskDTO ) );
+        userTaskModel.setTask( userTaskDTOToTaskModel( userTaskDTO ) );
+        userTaskModel.setId( userTaskDTO.getId() );
+        userTaskModel.setStatus( userTaskDTO.getStatus() );
+        userTaskModel.setImagePath( userTaskDTO.getImagePath() );
+
+        return userTaskModel;
+    }
+
+    @Override
+    public UserTaskDTO modelToDto(UserTaskModel userTaskModel) {
+        if ( userTaskModel == null ) {
+            return null;
+        }
+
+        UserTaskDTO userTaskDTO = new UserTaskDTO();
+
+        userTaskDTO.setUser( userTaskModelUserId( userTaskModel ) );
+        userTaskDTO.setTask( userTaskModelTaskId( userTaskModel ) );
+        userTaskDTO.setId( userTaskModel.getId() );
+        userTaskDTO.setStatus( userTaskModel.getStatus() );
+        userTaskDTO.setImagePath( userTaskModel.getImagePath() );
+
+        return userTaskDTO;
     }
 
     private int roadmapUserEntityUserId(UserTaskEntity userTaskEntity) {
@@ -115,7 +151,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userTaskDTO.getUserId() );
+        userEntity.setId( userTaskDTO.getUser() );
 
         return userEntity;
     }
@@ -127,7 +163,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( userTaskDTO.getTaskId() );
+        taskEntity.setId( userTaskDTO.getTask() );
 
         return taskEntity;
     }
@@ -163,7 +199,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userModelToId( userTaskModel.getUserId() ) );
+        userEntity.setId( userModelToId( userTaskModel.getUser() ) );
 
         return userEntity;
     }
@@ -175,8 +211,56 @@ public class UserTaskMapperImpl implements UserTaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( taskModelToId( userTaskModel.getTaskId() ) );
+        taskEntity.setId( taskModelToId( userTaskModel.getTask() ) );
 
         return taskEntity;
+    }
+
+    protected UserModel userTaskDTOToUserModel(UserTaskDTO userTaskDTO) {
+        if ( userTaskDTO == null ) {
+            return null;
+        }
+
+        UserModel userModel = new UserModel();
+
+        userModel.setId( userTaskDTO.getUser() );
+
+        return userModel;
+    }
+
+    protected TaskModel userTaskDTOToTaskModel(UserTaskDTO userTaskDTO) {
+        if ( userTaskDTO == null ) {
+            return null;
+        }
+
+        TaskModel taskModel = new TaskModel();
+
+        taskModel.setId( userTaskDTO.getTask() );
+
+        return taskModel;
+    }
+
+    private int userTaskModelUserId(UserTaskModel userTaskModel) {
+        if ( userTaskModel == null ) {
+            return 0;
+        }
+        UserModel user = userTaskModel.getUser();
+        if ( user == null ) {
+            return 0;
+        }
+        int id = user.getId();
+        return id;
+    }
+
+    private int userTaskModelTaskId(UserTaskModel userTaskModel) {
+        if ( userTaskModel == null ) {
+            return 0;
+        }
+        TaskModel task = userTaskModel.getTask();
+        if ( task == null ) {
+            return 0;
+        }
+        int id = task.getId();
+        return id;
     }
 }

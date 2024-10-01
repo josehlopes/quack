@@ -6,8 +6,8 @@ import lombok.Data;
 public class UserTaskDTO {
 
     private int id;
-    private int userId;
-    private int taskId;
+    private int user;
+    private int task;
     private Boolean status;
     private String imagePath;
 

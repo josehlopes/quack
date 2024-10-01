@@ -2,8 +2,9 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.mapper.UserMapper;
-import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.repository.IUserRepository;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,29 +17,31 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserService {
 
-    private final UserMapper userMapper = UserMapper.INSTANCE;
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public UserDTO create(UserDTO userDTO) {
-        UserEntity user = userMapper.dtoToEntity(userDTO);
-        UserEntity toSaveUser = userRepository.save(user);
-        return userMapper.entityToDto(toSaveUser);
+        UserModel user = userMapper.dtoToModel(userDTO);
+        UserModel savedUser = userRepository.save(user);
+        return userMapper.modelToDto(savedUser);
     }
 
     public Optional<UserDTO> getById(int id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        return user.map(userMapper::entityToDto);
+        Optional<UserModel> user = userRepository.findById(id);
+        return user.map(userMapper::modelToDto);
     }
 
     public Iterable<UserDTO> getAll() {
-        Iterable<UserEntity> users = userRepository.findAll();
-        return StreamSupport.stream(users.spliterator(), false).map(userMapper::entityToDto)
+        Iterable<UserModel> users = userRepository.findAll();
+        return StreamSupport.stream(users.spliterator(), false).map(userMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(UserDTO userDTO) {
-        UserEntity existingUser = userRepository.findById(userDTO.getId())
+        UserModel existingUser = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (userDTO.getName() != null) {
             existingUser.setName(userDTO.getName());
@@ -46,6 +49,7 @@ public class UserService {
         if (userDTO.getBornAt() != null) {
             existingUser.setBornAt(LocalDate.parse(userDTO.getBornAt()));
         }
+
         userRepository.save(existingUser);
     }
 
@@ -63,8 +67,8 @@ public class UserService {
     }
 
     public Optional<UserDTO> findByEmail(String email) {
-        Optional<UserEntity> user = userRepository.findByEmail(email);
-        return user.map(userMapper::entityToDto);
+        Optional<UserModel> user = userRepository.findByEmail(email);
+        return user.map(userMapper::modelToDto);
     }
 
 }

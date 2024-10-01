@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-23T23:01:12-0300",
+    date = "2024-10-01T00:04:24-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -76,5 +76,37 @@ public class AchievementMapperImpl implements AchievementMapper {
         achievementEntity.setImagePath( achievementModel.getImagePath() );
 
         return achievementEntity;
+    }
+
+    @Override
+    public AchievementModel dtoToModel(AchievementDTO achievementDTO) {
+        if ( achievementDTO == null ) {
+            return null;
+        }
+
+        AchievementModel achievementModel = new AchievementModel();
+
+        achievementModel.setId( achievementDTO.getId() );
+        achievementModel.setName( achievementDTO.getName() );
+        achievementModel.setDescription( achievementDTO.getDescription() );
+        achievementModel.setImagePath( achievementDTO.getImagePath() );
+
+        return achievementModel;
+    }
+
+    @Override
+    public AchievementDTO modelToDto(AchievementModel achievementModel) {
+        if ( achievementModel == null ) {
+            return null;
+        }
+
+        AchievementDTO achievementDTO = new AchievementDTO();
+
+        achievementDTO.setId( achievementModel.getId() );
+        achievementDTO.setName( achievementModel.getName() );
+        achievementDTO.setDescription( achievementModel.getDescription() );
+        achievementDTO.setImagePath( achievementModel.getImagePath() );
+
+        return achievementDTO;
     }
 }

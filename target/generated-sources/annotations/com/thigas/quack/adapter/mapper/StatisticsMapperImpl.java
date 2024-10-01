@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-09-23T23:01:13-0300",
+    date = "2024-10-01T00:04:24-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -24,7 +24,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
 
         StatisticsDTO statisticsDTO = new StatisticsDTO();
 
-        statisticsDTO.setUserId( statisticsUserId( statistics ) );
+        statisticsDTO.setUser( statisticsUserId( statistics ) );
         statisticsDTO.setId( statistics.getId() );
         statisticsDTO.setStreakDays( statistics.getStreakDays() );
         statisticsDTO.setBestStreak( statistics.getBestStreak() );
@@ -96,6 +96,46 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return statisticsEntity;
     }
 
+    @Override
+    public StatisticsModel dtoToModel(StatisticsDTO statisticsDTO) {
+        if ( statisticsDTO == null ) {
+            return null;
+        }
+
+        StatisticsModel statisticsModel = new StatisticsModel();
+
+        statisticsModel.setUser( statisticsDTOToUserModel( statisticsDTO ) );
+        statisticsModel.setId( statisticsDTO.getId() );
+        statisticsModel.setStreakDays( statisticsDTO.getStreakDays() );
+        statisticsModel.setBestStreak( statisticsDTO.getBestStreak() );
+        statisticsModel.setUserLevel( statisticsDTO.getUserLevel() );
+        statisticsModel.setUserExperience( statisticsDTO.getUserExperience() );
+        statisticsModel.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
+        statisticsModel.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
+
+        return statisticsModel;
+    }
+
+    @Override
+    public StatisticsDTO modelToDto(StatisticsModel statisticsModel) {
+        if ( statisticsModel == null ) {
+            return null;
+        }
+
+        StatisticsDTO statisticsDTO = new StatisticsDTO();
+
+        statisticsDTO.setUser( statisticsModelUserId( statisticsModel ) );
+        statisticsDTO.setId( statisticsModel.getId() );
+        statisticsDTO.setStreakDays( statisticsModel.getStreakDays() );
+        statisticsDTO.setBestStreak( statisticsModel.getBestStreak() );
+        statisticsDTO.setUserLevel( statisticsModel.getUserLevel() );
+        statisticsDTO.setUserExperience( statisticsModel.getUserExperience() );
+        statisticsDTO.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
+        statisticsDTO.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
+
+        return statisticsDTO;
+    }
+
     private int statisticsUserId(StatisticsEntity statisticsEntity) {
         if ( statisticsEntity == null ) {
             return 0;
@@ -115,7 +155,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( statisticsDTO.getUserId() );
+        userEntity.setId( statisticsDTO.getUser() );
 
         return userEntity;
     }
@@ -150,7 +190,32 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         userEntity.setPoints( userModel.getPoints() );
         userEntity.setRegisterAt( userModel.getRegisterAt() );
         userEntity.setImagePath( userModel.getImagePath() );
+        userEntity.setStatus( userModel.getStatus() );
 
         return userEntity;
+    }
+
+    protected UserModel statisticsDTOToUserModel(StatisticsDTO statisticsDTO) {
+        if ( statisticsDTO == null ) {
+            return null;
+        }
+
+        UserModel userModel = new UserModel();
+
+        userModel.setId( statisticsDTO.getUser() );
+
+        return userModel;
+    }
+
+    private int statisticsModelUserId(StatisticsModel statisticsModel) {
+        if ( statisticsModel == null ) {
+            return 0;
+        }
+        UserModel user = statisticsModel.getUser();
+        if ( user == null ) {
+            return 0;
+        }
+        int id = user.getId();
+        return id;
     }
 }
