@@ -1,15 +1,14 @@
 package com.thigas.quack.infrastructure.security;
 
-import java.util.ArrayList;
-
+import com.thigas.quack.domain.repository.IUserRepository;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.thigas.quack.domain.repository.IUserRepository;
-import com.thigas.quack.infrastructure.model.UserModel;
+import java.util.ArrayList;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {

@@ -52,12 +52,12 @@ public class AuthController {
             newUser.setUsername(body.username());
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
-            newUser.setBornAt(body.bornAt());
-            newUser.setRegisterAt(body.registerAt());
+            newUser.setBornAt(String.valueOf(body.bornAt()));
+            newUser.setRegisterAt(String.valueOf(body.registerAt()));
             newUser.setPoints(body.points());
             newUser.setImagePath(body.imagePath());
 
-            this.userService.save(newUser);
+            this.userService.create(newUser);
 
             String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
