@@ -1,8 +1,8 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.TaskMapper;
-import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.ITaskModelRepository;
@@ -24,12 +24,13 @@ public class TaskRepositoryImplementation implements ITaskRepository {
     @Autowired
     private ITaskModelRepository taskModelRepository;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     @Override
     @Transactional
-    public TaskEntity save(TaskEntity taskEntity) {
-        TaskModel taskModel = taskMapper.entityToModel(taskEntity);
-        TaskModel savedTaskModel = taskModelRepository.save(taskModel);
-        return taskMapper.modelToEntity(savedTaskModel);
+    public TaskModel save(TaskModel taskModel) {
+        return taskModelRepository.save(taskModel);
     }
 
     @Override
@@ -40,15 +41,17 @@ public class TaskRepositoryImplementation implements ITaskRepository {
 
     @Override
     @Transactional
-    public Optional<TaskEntity> findById(int id) {
-        return taskModelRepository.findById(id).map(taskMapper::modelToEntity);
+    public Optional<TaskModel> findById(int id) {
+        return taskModelRepository.findById(id);
     }
+
 
     @Override
     @Transactional
-    public Iterable<TaskEntity> findAll() {
-        return taskModelRepository.findAll().stream().map(taskMapper::modelToEntity).collect(Collectors.toList());
+    public Iterable<TaskModel> findAll() {
+        return taskModelRepository.findAll();
     }
+
 
     @Override
     @Transactional

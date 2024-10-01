@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.thigas.quack.adapter.mapper.UserTaskMapper;
-import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserTaskModelRepository;
@@ -26,23 +25,20 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
 
     @Override
     @Transactional
-    public UserTaskEntity save(UserTaskEntity userTaskEntity) {
-        UserTaskModel userTaskMODEL = userTaskMapper.entityToModel(userTaskEntity);
-        UserTaskModel savedUserTaskModel = userTaskModelRepository.save(userTaskMODEL);
-        return userTaskMapper.modelToEntity(savedUserTaskModel);
+    public UserTaskModel save(UserTaskModel userTaskModel) {
+        return userTaskModelRepository.save(userTaskModel);
     }
 
     @Override
     @Transactional
-    public Optional<UserTaskEntity> findById(int id) {
-        return userTaskModelRepository.findById(id).map(userTaskMapper::modelToEntity);
+    public Optional<UserTaskModel> findById(int id) {
+        return userTaskModelRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Iterable<UserTaskEntity> findAll() {
-        return userTaskModelRepository.findAll().stream().map(userTaskMapper::modelToEntity)
-                .collect(Collectors.toList());
+    public Iterable<UserTaskModel> findAll() {
+        return userTaskModelRepository.findAll();
     }
 
     @Override

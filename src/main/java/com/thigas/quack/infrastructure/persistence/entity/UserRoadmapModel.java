@@ -15,7 +15,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "user_roadmap")
-public class UserRoadmapModel extends BaseModel {
+public class UserRoadmapModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +41,16 @@ public class UserRoadmapModel extends BaseModel {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

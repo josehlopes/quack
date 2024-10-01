@@ -14,18 +14,29 @@ import java.util.Set;
 
 import com.thigas.quack.domain.model.Status;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StepEntity extends BaseEntity {
+public class StepEntity implements BaseEntity {
 
     private int id;
-    private List<RoadmapEntity> roadmaps;
-    private List<LessonEntity> lessons;
-    private List<TaskEntity> tasks;
+    private Set<RoadmapEntity> roadmaps;
+    private Set<LessonEntity> lessons;
+    private Set<TaskEntity> tasks;
     private String description;
     private String imagePath;
     private Status status;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
+
 
 }

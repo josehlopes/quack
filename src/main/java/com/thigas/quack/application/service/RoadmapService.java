@@ -4,22 +4,16 @@ import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.adapter.mapper.*;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.TaskEntity;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
+import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-
+import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -50,25 +44,25 @@ public class RoadmapService {
     private CycleAvoidingMappingContext context;
 
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
-        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO, context);
-        RoadmapEntity toSaveRoadmap = roadmapRepository.save(roadmap);
-        return roadmapMapper.entityToDto(toSaveRoadmap, context);
+        RoadmapModel roadmap = roadmapMapper.dtoToModel(roadmapDTO, context);
+        RoadmapModel toSaveRoadmap = roadmapRepository.save(roadmap);
+        return roadmapMapper.modelToDto(toSaveRoadmap, context);
     }
 
     public Optional<RoadmapDTO> getById(int id) {
-        Optional<RoadmapEntity> roadmapOpt = roadmapRepository.findById(id);
-        return roadmapOpt.map(roadmap -> roadmapMapper.entityToDto(roadmap, new CycleAvoidingMappingContext()));
+        Optional<RoadmapModel> roadmapOpt = roadmapRepository.findById(id);
+        return roadmapOpt.map(roadmap -> roadmapMapper.modelToDto(roadmap, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<RoadmapDTO> getAll() {
-        Iterable<RoadmapEntity> roadmaps = roadmapRepository.findAll();
+        Iterable<RoadmapModel> roadmaps = roadmapRepository.findAll();
         CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
         return StreamSupport.stream(roadmaps.spliterator(), false)
-                .map(roadmap -> roadmapMapper.entityToDto(roadmap, context))
+                .map(roadmap -> roadmapMapper.modelToDto(roadmap, context))
                 .collect(Collectors.toList());
     }
     public void update(RoadmapDTO roadmapDTO) {
-        RoadmapEntity roadmap = roadmapMapper.dtoToEntity(roadmapDTO, context);
+        RoadmapModel roadmap = roadmapMapper.dtoToModel(roadmapDTO, context);
         roadmapRepository.save(roadmap);
     }
 
@@ -78,25 +72,23 @@ public class RoadmapService {
 
     public Boolean startRoadmap(int userId, int roadmapId) {
         UserRoadmapDTO userRoadmapDTO = new UserRoadmapDTO();
-        UserRoadmapEntity userRoadmapEntity = new UserRoadmapEntity();
+        UserRoadmapModel userRoadmapModel = new UserRoadmapModel();
         boolean roadmapExists;
         boolean userExists;
 
         try {
-
-            // Verificar se o usuário e o roadmap existem
             userExists = userRepository.existsById(userId);
             roadmapExists = roadmapRepository.existsById(roadmapId);
             if (!userExists || !roadmapExists) {
                 return false;
             }
 
-            userRoadmapEntity.setId(userId);
-            userRoadmapEntity.setId(roadmapId);
-            userRoadmapEntity.setProgress(0.0);
-            userRoadmapEntity.setStartedAt(LocalDate.now());
+            userRoadmapModel.setId(userId);
+            userRoadmapModel.setId(roadmapId);
+            userRoadmapModel.setProgress(0.0);
+            userRoadmapModel.setStartedAt(LocalDate.now());
 
-            userRoadmapRepository.save(userRoadmapEntity);
+            userRoadmapRepository.save(userRoadmapModel);
             return true;
 
         } catch (Exception e) {
@@ -105,54 +97,54 @@ public class RoadmapService {
         }
     }
 
-    // public Boolean endRoadmap(UserRoadmapDTO userRoadmapDTO) {
-    // // Buscar UserRoadmap existente
-    // UserRoadmapEntity existingUserRoadmap =
-    // userRoadmapRepository.findById(userRoadmapDTO.getId())
-    // .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
+     public Boolean endRoadmap(UserRoadmapDTO userRoadmapDTO) {
+     // Buscar UserRoadmap existente
+     UserRoadmapModel existingUserRoadmap =
+     userRoadmapRepository.findById(userRoadmapDTO.getId())
+     .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
 
-    // try {
-    // // Buscando o usuário e roadmap relacionados
-    // Optional<List<Object>> userRoadmapOptional =
-    // findUserAndRoadmap(userRoadmapDTO.getUser(),
-    // userRoadmapDTO.getRoadmap());
+     try {
+     // Buscando o usuário e roadmap relacionados
+     Optional<List<Object>> userRoadmapOptional =
+     findUserAndRoadmap(userRoadmapDTO.getUser(),
+     userRoadmapDTO.getRoadmap());
 
-    // if (userRoadmapOptional.isEmpty()) {
-    // return false; // Roadmap do usuário não encontrado
-    // }
+     if (userRoadmapOptional.isEmpty()) {
+     return false; // Roadmap do usuário não encontrado
+     }
 
-    // // Atualizando data de início se presente no DTO
-    // if (userRoadmapDTO.getStartedAt() != null) {
-    // existingUserRoadmap.setStartedAt(LocalDate.parse(userRoadmapDTO.getStartedAt()));
-    // }
+     // Atualizando data de início se presente no DTO
+     if (userRoadmapDTO.getStartedAt() != null) {
+     existingUserRoadmap.setStartedAt(LocalDate.parse(userRoadmapDTO.getStartedAt()));
+     }
 
-    // // Atualizando progresso para 100%
-    // existingUserRoadmap.setStatus(Status.FINISHED);
-    // existingUserRoadmap.setFinishedAt(LocalDate.now());
-    // existingUserRoadmap.setProgress(100.0);
+     // Atualizando progresso para 100%
+     existingUserRoadmap.setStatus(Status.FINISHED);
+     existingUserRoadmap.setFinishedAt(LocalDate.now());
+     existingUserRoadmap.setProgress(100.0);
 
-    // // Salvando alterações
-    // userRoadmapRepository.save(existingUserRoadmap);
-    // return true;
+     // Salvando alterações
+     userRoadmapRepository.save(existingUserRoadmap);
+     return true;
 
-    // } catch (Exception e) {
-    // // Substituir por um Logger apropriado
-    // System.out.println("Erro ao finalizar o roadmap: " + e.getMessage());
-    // return false;
-    // }
-    // }
+     } catch (Exception e) {
+     // Substituir por um Logger apropriado
+     System.out.println("Erro ao finalizar o roadmap: " + e.getMessage());
+     return false;
+     }
+     }
 
-    // public Optional<List<Object>> findUserAndRoadmap(int userId, int roadmapId) {
-    // Boolean userExists = userRepository.existsById(userId);
-    // Optional<RoadmapEntity> roadmapOptional =
-    // roadmapRepository.findById(roadmapId);
+    public Optional<List<Object>> findUserAndRoadmap(int userId, int roadmapId) {
+        Optional<UserModel> userOptional = userRepository.findById(userId);
+        Optional<RoadmapModel> roadmapOptional = roadmapRepository.findById(roadmapId);
 
-    // if (userOptional.isPresent() && roadmapOptional.isPresent()) {
-    // return Optional.of(Arrays.asList(userOptional.get(), roadmapOptional.get()));
-    // } else {
-    // System.out.println("Usuário ou roadmap não encontrado.");
-    // return Optional.empty();
-    // }
-    // }
+        if (userOptional.isPresent() && roadmapOptional.isPresent()) {
+            // Retorna uma lista contendo o usuário e o roadmap
+            return Optional.of(Arrays.asList(userOptional.get(), roadmapOptional.get()));
+        } else {
+            System.out.println("Usuário ou roadmap não encontrado.");
+            return Optional.empty();
+        }
+    }
 
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "roadmap")
-public class RoadmapModel extends BaseModel {
+public class RoadmapModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,13 +32,26 @@ public class RoadmapModel extends BaseModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @ManyToMany(mappedBy = "roadmaps")
-    @ToString.Exclude
-    private List<StepModel> steps;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+    @JoinTable(name="roadmap_steps", joinColumns=
+            {@JoinColumn(name="roadmap_id")}, inverseJoinColumns=
+            {@JoinColumn(name="step_id")})
+    private Set<StepModel> steps;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
 
     @Override
     public final boolean equals(Object o) {

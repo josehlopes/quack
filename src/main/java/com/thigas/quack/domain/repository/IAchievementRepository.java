@@ -1,6 +1,6 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.AchievementEntity;
+
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 
 import java.util.Optional;

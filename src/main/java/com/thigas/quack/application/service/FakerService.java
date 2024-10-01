@@ -49,8 +49,8 @@ public class FakerService {
 	private EntityManager entityManager;
 
 	// Geração de usuários
-	public List<UserDTO> generateFakeUsers(int count) {
-		List<UserDTO> users = new ArrayList<>();
+	public Set<UserDTO> generateFakeUsers(int count) {
+		Set<UserDTO> users = new HashSet<>();
 		Set<String> existingEmails = new HashSet<>();
 		Set<String> existingUsernames = new HashSet<>();
 
@@ -93,8 +93,8 @@ public class FakerService {
 		return users;
 	}
 
-	public List<AddressDTO> generateFakeAddresses(int count, int userId) {
-		List<AddressDTO> addresses = new ArrayList<>();
+	public Set<AddressDTO> generateFakeAddresses(int count, int userId) {
+		Set<AddressDTO> addresses = new HashSet<>();
 
 		// Recupera o usuário com o ID fornecido
 		UserDTO userDTO = userService.getById(userId)
@@ -116,8 +116,8 @@ public class FakerService {
 		return addresses;
 	}
 
-	public List<StatisticsDTO> generateFakeStatistics(int count, int userId) {
-		List<StatisticsDTO> statisticsList = new ArrayList<>();
+	public Set<StatisticsDTO> generateFakeStatistics(int count, int userId) {
+		Set<StatisticsDTO> statisticsSet = new HashSet<>();
 		for (int i = 1; i < count + 1; i++) {
 			StatisticsDTO statisticsDTO = new StatisticsDTO();
 			statisticsDTO.setUser(userId);
@@ -129,13 +129,13 @@ public class FakerService {
 			statisticsDTO.setLessonsCompleted(faker.number().numberBetween(0, 100));
 
 			statisticsService.create(statisticsDTO);
-			statisticsList.add(statisticsDTO);
+			statisticsSet.add(statisticsDTO);
 		}
-		return statisticsList;
+		return statisticsSet;
 	}
 
-	public List<AchievementDTO> generateFakeAchievements(int count) {
-		List<AchievementDTO> achievements = new ArrayList<>();
+	public Set<AchievementDTO> generateFakeAchievements(int count) {
+		Set<AchievementDTO> achievements = new HashSet<>();
 		for (int i = 1; i <= count + 1; i++) {
 			AchievementDTO achievementDTO = new AchievementDTO();
 			achievementDTO.setName(faker.hacker().verb() + " Achievement");
@@ -149,8 +149,8 @@ public class FakerService {
 		return achievements;
 	}
 
-	public List<RoadmapDTO> generateFakeRoadmaps(int count) {
-		List<RoadmapDTO> roadmaps = new ArrayList<>();
+	public Set<RoadmapDTO> generateFakeRoadmaps(int count) {
+		Set<RoadmapDTO> roadmaps = new HashSet<>();
 		for (int i = 1; i <= count; i++) {
 			RoadmapDTO roadmapDTO = new RoadmapDTO();
 			roadmapDTO.setTitle(faker.book().title());
@@ -170,8 +170,8 @@ public class FakerService {
 		return roadmaps;
 	}
 
-	public List<LessonDTO> generateFakeLessons(int count) {
-		List<LessonDTO> lessons = new ArrayList<>();
+	public Set<LessonDTO> generateFakeLessons(int count) {
+		Set<LessonDTO> lessons = new HashSet<>();
 		for (int i = 1; i <= count; i++) {
 
 			LessonDTO lessonDTO = new LessonDTO();
@@ -191,25 +191,24 @@ public class FakerService {
 		return lessons;
 	}
 
-	private List<Integer> getRandomSubset(List<Integer> set, int size) {
+	private Set<Integer> getRandomSubset(Set<Integer> set, int size) {
 		if (set.size() <= size) {
-			return set; // Retorna todo o conjunto se o tamanho for menor ou igual ao solicitado
+			return new HashSet<>(set); // Retorna todo o conjunto se o tamanho for menor ou igual ao solicitado
 		}
 
-		Random random = new Random();
-		List<Integer> list = new ArrayList<>(set);
-		Collections.shuffle(list, random);
-		return new ArrayList<>(list.subList(0, size));
+		List<Integer> list = new ArrayList<>(set); // Converte o Set em uma List
+		Collections.shuffle(list); // Embaralha a lista
+		return new HashSet<>(list.subList(0, size)); // Retorna um novo Set com o subconjunto
 	}
 
-	public List<TaskDTO> generateFakeTasks(int count) {
-		List<TaskDTO> tasks = new ArrayList<>();
+	public Set<TaskDTO> generateFakeTasks(int count) {
+		Set<TaskDTO> tasks = new HashSet<>();
 		for (int i = 1; i <= count; i++) {
 			TaskDTO taskDTO = new TaskDTO();
 			taskDTO.setDescription(faker.lorem().sentence());
 			taskDTO.setImagePath(faker.avatar().image());
 
-			List<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
+			Set<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
 			taskDTO.setSteps(steps);
 
 			taskDTO = taskService.create(taskDTO);
@@ -223,45 +222,40 @@ public class FakerService {
 		return tasks;
 	}
 
-	public List<StepDTO> generateFakeSteps(int count, List<Integer> roadmapId, List<Integer> taskId,
-			List<Integer> lessonId) {
-
-		List<StepDTO> steps = new ArrayList<>();
-
-		for (int i = 1; i < count + 1; i++) {
-			StepDTO stepDTO = new StepDTO();
-			stepDTO.setRoadmaps(roadmapId);
-			stepDTO.setLessons(lessonId);
-			stepDTO.setTasks(taskId);
-			stepDTO.setDescription(faker.lorem().sentence());
-			stepDTO.setImagePath(faker.avatar().image());
-			stepDTO.setStatus(1);
-			steps.add(stepDTO);
-		}
-		return steps;
-	}
+    // Método para gerar passos falsos
+    public Set<StepDTO> generateFakeSteps(int count, Set<Integer> roadmapIds, Set<Integer> taskIds, Set<Integer> lessonIds) {
+        Set<StepDTO> steps = new HashSet<>();
+        for (int i = 1; i <= count; i++) {
+            StepDTO stepDTO = new StepDTO();
+            stepDTO.setDescription("Fake description " + i);
+            stepDTO.setImagePath("/fake/images/image" + i + ".jpg");
+            stepDTO.setStatus(1);
+            steps.add(stepDTO);
+        }
+        return steps;
+    }
 
 	public void generateAllFakeData(int recordCount) {
 		// Gera usuários
-		List<UserDTO> users = generateFakeUsers(recordCount);
+		Set<UserDTO> users = generateFakeUsers(recordCount);
 
 		// Gera roadmaps
-		List<RoadmapDTO> roadmaps = generateFakeRoadmaps(recordCount);
+		Set<RoadmapDTO> roadmaps = generateFakeRoadmaps(recordCount);
 
 		// Gera lições
-		List<LessonDTO> lessons = generateFakeLessons(recordCount);
+		Set<LessonDTO> lessons = generateFakeLessons(recordCount);
 
-		List<TaskDTO> tasks = generateFakeTasks(recordCount);
+		Set<TaskDTO> tasks = generateFakeTasks(recordCount);
 
 		// Certifique-se de que todos os roadmaps e lessons estão persistidos
-		List<Integer> roadmapsIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toList());
-		List<Integer> lessonsIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toList());
-		List<Integer> tasksIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toList());
+		Set<Integer> roadmapsIds = roadmaps.stream().map(RoadmapDTO::getId).collect(Collectors.toSet());
+		Set<Integer> lessonsIds = lessons.stream().map(LessonDTO::getId).collect(Collectors.toSet());
+		Set<Integer> tasksIds = tasks.stream().map(TaskDTO::getId).collect(Collectors.toSet());
 
 		// Gera passos
-		List<StepDTO> steps = generateFakeSteps(recordCount, roadmapsIds, tasksIds,lessonsIds);
+		Set<StepDTO> steps = generateFakeSteps(recordCount, roadmapsIds, tasksIds,lessonsIds);
 		for (StepDTO step : steps) {
-			stepService.create(step); // Persistência do StepModel
+			stepService.create(step);
 		}
 
 		// Continue com a geração de dados para endereços e estatísticas

@@ -3,7 +3,6 @@ package com.thigas.quack.infrastructure.persistence.repository.impl;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.StepMapper;
-import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IStepModelRepository;
@@ -31,17 +30,14 @@ public class StepRepositoryImplementation implements IStepRepository {
 
     @Override
     @Transactional
-    public StepEntity save(StepEntity stepEntity) {
-        StepModel stepModel = stepMapper.entityToModel(stepEntity, context);
-        StepModel savedStepModel = stepModelRepository.save(stepModel);
-        return stepMapper.modelToEntity(savedStepModel, context );
+    public StepModel save(StepModel stepModel) {
+        return stepModelRepository.save(stepModel);
     }
 
     @Override
     @Transactional
-    public Optional<StepEntity> findById(int id) {
-        return stepModelRepository.findById(id)
-                .map(stepModel -> stepMapper.modelToEntity(stepModel, context)); // Passando o contexto
+    public Optional<StepModel> findById(int id) {
+        return stepModelRepository.findById(id); // Passando o contexto
     }
 
     @Override
@@ -53,10 +49,8 @@ public class StepRepositoryImplementation implements IStepRepository {
 
     @Override
     @Transactional
-    public Iterable<StepEntity> findAll() {
-        return stepModelRepository.findAll().stream()
-                .map(stepModel -> stepMapper.modelToEntity(stepModel, context)) // Passando o contexto
-                .collect(Collectors.toList());
+    public Iterable<StepModel> findAll() {
+        return stepModelRepository.findAll();
     }
 
     @Override

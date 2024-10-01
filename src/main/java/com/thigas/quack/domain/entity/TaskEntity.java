@@ -9,16 +9,26 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskEntity extends BaseEntity {
+public class TaskEntity implements BaseEntity {
 
     private int id;
     private String description;
     private String imagePath;
-    private List<StepEntity> steps;
+    private Set<StepEntity> steps;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
 
 
 }

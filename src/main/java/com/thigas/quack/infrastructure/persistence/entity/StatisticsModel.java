@@ -13,7 +13,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "statistic")
-public class StatisticsModel  extends BaseModel {
+public class StatisticsModel  implements BaseModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -39,6 +40,16 @@ public class StatisticsModel  extends BaseModel {
 
     @Column(name = "lessons_completed")
     private int lessonsCompleted;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

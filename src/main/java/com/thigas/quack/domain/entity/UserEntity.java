@@ -11,11 +11,10 @@ import java.time.OffsetDateTime;
 
 import com.thigas.quack.domain.model.Status;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity extends BaseEntity {
+public class UserEntity implements BaseEntity {
 
     private int id;
     private String name;
@@ -29,5 +28,17 @@ public class UserEntity extends BaseEntity {
     private OffsetDateTime registerAt;
     private String imagePath;
     private Status status;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
+
 
 }

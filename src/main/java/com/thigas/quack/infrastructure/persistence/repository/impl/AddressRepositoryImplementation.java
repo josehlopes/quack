@@ -1,7 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAddressModelRepository;
@@ -26,22 +25,20 @@ public class AddressRepositoryImplementation implements IAddressRepository {
 
     @Override
     @Transactional
-    public AddressEntity save(AddressEntity addressEntity) {
-        AddressModel addressModel = addressMapper.entityToModel(addressEntity);
-        AddressModel savedAddressModel = addressModelRepository.save(addressModel);
-        return addressMapper.modelToEntity(savedAddressModel);
+    public AddressModel save(AddressModel addressModel) {
+        return addressModelRepository.save(addressModel);
     }
 
     @Override
     @Transactional
-    public Optional<AddressEntity> findById(int id) {
-        return addressModelRepository.findById(id).map(addressMapper::modelToEntity);
+    public Optional<AddressModel> findById(int id) {
+        return addressModelRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Iterable<AddressEntity> findAll() {
-        return addressModelRepository.findAll().stream().map(addressMapper::modelToEntity).collect(Collectors.toList());
+    public Iterable<AddressModel> findAll() {
+        return addressModelRepository.findAll();
     }
 
     @Override

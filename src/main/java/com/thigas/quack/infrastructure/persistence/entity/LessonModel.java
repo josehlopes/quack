@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +16,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "lesson")
-public class LessonModel extends BaseModel {
+public class LessonModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +36,17 @@ public class LessonModel extends BaseModel {
 
     @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<StepModel> steps;
+    private Set<StepModel> steps;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

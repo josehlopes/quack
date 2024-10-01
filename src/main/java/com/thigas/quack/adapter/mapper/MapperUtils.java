@@ -4,23 +4,23 @@ import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.adapter.model.BaseModel;
 import org.mapstruct.Context;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MapperUtils {
 
     // Método genérico para converter uma lista de entidades em uma lista de IDs
-    public static <T extends BaseEntity> List<Integer> entitiesToIntegers(List<T> entities) {
+    public static <T extends BaseEntity> Set<Integer> entitiesToIntegers(Set<T> entities) {
         if (entities == null) {
             return null;
         }
         return entities.stream()
                 .map(BaseEntity::getId)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     // Método genérico para converter uma lista de IDs em uma lista de entidades
-    public static <T extends BaseEntity> List<T> integersToEntities(List<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
+    public static <T extends BaseEntity> Set<T> integersToEntities(Set<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
         if (ids == null) {
             return null;
         }
@@ -36,21 +36,21 @@ public class MapperUtils {
             } catch (Exception e) {
                 throw new RuntimeException("Error instantiating entity", e);
             }
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toSet());
     }
 
     // Método genérico para converter uma lista de models em uma lista de IDs
-    public static <T extends BaseModel> List<Integer> modelsToIntegers(List<T> models) {
+    public static <T extends BaseModel> Set<Integer> modelsToIntegers(Set<T> models) {
         if (models == null) {
             return null;
         }
         return models.stream()
                 .map(BaseModel::getId) // Assegure que BaseModel tenha getId()
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     // Método genérico para converter uma lista de IDs em uma lista de models
-    public static <T extends BaseModel> List<T> integersToModels(List<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
+    public static <T extends BaseModel> Set<T> integersToModels(Set<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
         if (ids == null) {
             return null;
         }
@@ -58,7 +58,7 @@ public class MapperUtils {
             try {
                 T model = context.getMappedInstance(id, clazz);
                 if (model == null) {
-                    model = clazz.getDeclaredConstructor().newInstance(); // Presumindo um construtor padrão
+                    model = clazz.getDeclaredConstructor().newInstance();
                     model.setId(id);
                     context.storeMappedInstance(id, model);
                 }
@@ -66,6 +66,6 @@ public class MapperUtils {
             } catch (Exception e) {
                 throw new RuntimeException("Error instantiating model", e);
             }
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toSet());
     }
 }

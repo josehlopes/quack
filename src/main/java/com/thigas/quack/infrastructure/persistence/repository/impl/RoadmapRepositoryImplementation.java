@@ -1,7 +1,7 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.RoadmapMapper;
-import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IRoadmapModelRepository;
@@ -29,28 +29,31 @@ public class RoadmapRepositoryImplementation implements IRoadmapRepository {
     @Autowired
     private IUserRoadmapModelRepository userRoadmapModelRepository;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     @Override
     @Transactional
-    public RoadmapEntity save(RoadmapEntity roadmapEntity) {
-        RoadmapModel roadmapModel = roadmapMapper.entityToModel(roadmapEntity);
-        RoadmapModel savedRoadmapModel = roadmapModelRepository.save(roadmapModel);
-        return roadmapMapper.modelToEntity(savedRoadmapModel);
+    public RoadmapModel save(RoadmapModel roadmapModel) {
+        return roadmapModelRepository.save(roadmapModel);
     }
 
     @Override
     @Transactional
-    public Optional<RoadmapEntity> findById(int id) {
-        return roadmapModelRepository.findById(id).map(roadmapMapper::modelToEntity);
+    public Optional<RoadmapModel> findById(int id) {
+        return roadmapModelRepository.findById(id);
     }
 
+    @Override
+    @Transactional
     public Boolean existsById(int id) {
         return roadmapModelRepository.existsById(id);
     }
 
     @Override
     @Transactional
-    public Iterable<RoadmapEntity> findAll() {
-        return roadmapModelRepository.findAll().stream().map(roadmapMapper::modelToEntity).collect(Collectors.toList());
+    public Iterable<RoadmapModel> findAll() {
+        return roadmapModelRepository.findAll();
     }
 
     @Override

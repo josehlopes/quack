@@ -13,7 +13,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "user_task")
-public class UserTaskModel extends BaseModel {
+public class UserTaskModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +33,16 @@ public class UserTaskModel extends BaseModel {
 
     @Column(nullable = false)
     private String imagePath;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

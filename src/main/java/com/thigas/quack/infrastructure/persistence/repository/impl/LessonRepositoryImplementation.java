@@ -1,8 +1,8 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import com.thigas.quack.adapter.mapper.AddressMapper;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.LessonMapper;
-import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.ILessonModelRepository;
@@ -12,9 +12,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -26,12 +27,13 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     @Autowired
     private ILessonModelRepository lessonModelRepository;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     @Override
     @Transactional
-    public LessonEntity save(LessonEntity lessonEntity) {
-        LessonModel lessonModel = lessonMapper.entityToModel(lessonEntity);
-        LessonModel savedLessonModel = lessonModelRepository.save(lessonModel);
-        return lessonMapper.modelToEntity(savedLessonModel);
+    public LessonModel save(LessonModel lessonModel) {
+        return lessonModelRepository.save(lessonModel);
     }
 
     @Override
@@ -42,24 +44,24 @@ public class LessonRepositoryImplementation implements ILessonRepository {
 
     @Override
     @Transactional
-    public Set<LessonEntity> saveAll(Set<LessonEntity> lessons) {
-        List<LessonModel> lessonModels = lessons.stream().map(lessonMapper::entityToModel).collect(Collectors.toList());
-        List<LessonModel> savedLessonModels = lessonModelRepository.saveAll(lessonModels);
-        return savedLessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toSet());
+    public Set<LessonModel> saveAll(Set<LessonModel> lessons) {
+        List<LessonModel> savedLessonModels = lessonModelRepository.saveAll(lessons);
+
+        return new HashSet<>(savedLessonModels);
     }
 
     @Override
     @Transactional
-    public Optional<LessonEntity> findById(int id) {
-        Optional<LessonModel> lessonModelOptional = lessonModelRepository.findById(id);
-        return lessonModelOptional.map(lessonMapper::modelToEntity);
+    public Optional<LessonModel> findById(int id) {
+        return lessonModelRepository.findById(id); // Usando lambda para passar contexto
     }
 
     @Override
     @Transactional
-    public List<LessonEntity> findAll() {
+    public Set<LessonModel> findAll() {
         List<LessonModel> lessonModels = lessonModelRepository.findAll();
-        return lessonModels.stream().map(lessonMapper::modelToEntity).collect(Collectors.toList());
+
+        return new HashSet<>(lessonModels);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
-import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IStatisticsModelRepository;
@@ -26,23 +25,20 @@ public class StatisticsRepositoryImplementation implements IStatisticsRepository
 
     @Override
     @Transactional
-    public StatisticsEntity save(StatisticsEntity statisticsEntity) {
-        StatisticsModel statisticsModel = statisticsMapper.entityToModel(statisticsEntity);
-        StatisticsModel savedStatisticsModel = statisticsModelRepository.save(statisticsModel);
-        return statisticsMapper.modelToEntity(savedStatisticsModel);
+    public StatisticsModel save(StatisticsModel statisticsModel) {
+        return statisticsModelRepository.save(statisticsModel);
     }
 
     @Override
     @Transactional
-    public Optional<StatisticsEntity> findById(int id) {
-        return statisticsModelRepository.findById(id).map(statisticsMapper::modelToEntity);
+    public Optional<StatisticsModel> findById(int id) {
+        return statisticsModelRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Iterable<StatisticsEntity> findAll() {
-        return statisticsModelRepository.findAll().stream().map(statisticsMapper::modelToEntity)
-                .collect(Collectors.toList());
+    public Iterable<StatisticsModel> findAll() {
+        return statisticsModelRepository.findAll();
     }
 
     @Override

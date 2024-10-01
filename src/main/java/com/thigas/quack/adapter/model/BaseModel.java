@@ -1,10 +1,9 @@
 package com.thigas.quack.adapter.model;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public abstract class BaseModel {
-    private int id;
+
+
+public interface BaseModel {
+    int getId();
+    void setId(int id);
 }

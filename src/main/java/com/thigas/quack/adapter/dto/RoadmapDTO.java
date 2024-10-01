@@ -12,6 +12,6 @@ public class RoadmapDTO {
     private String description;
     private String imagePath;
     private int status;
-    private List<Integer> steps;
+    private Set<Integer> steps;
 
 }

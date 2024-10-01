@@ -1,6 +1,5 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.AchievementMapper;
 import com.thigas.quack.domain.repository.IAchievementRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAchievementModelRepository;
@@ -21,8 +20,7 @@ public class AchievementRepositoryImplementation implements IAchievementReposito
     @Override
     @Transactional
     public AchievementModel save(AchievementModel achievementModel) {
-        AchievementModel savedAchievementModel = achievementModelRepository.save(achievementModel);
-        return savedAchievementModel;
+        return achievementModelRepository.save(achievementModel);
     }
 
     @Override

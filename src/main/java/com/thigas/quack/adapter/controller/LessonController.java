@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.controller;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.application.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,9 @@ public class LessonController {
     @Autowired
     private LessonService lessonService;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     @PostMapping // Método para criar uma única lição
     public ResponseEntity<LessonDTO> create(@RequestBody LessonDTO lessonDTO) {
         LessonDTO createdLesson = lessonService.create(lessonDTO);
@@ -24,7 +28,7 @@ public class LessonController {
 
     @PostMapping("/create-several")
     public ResponseEntity<Set<LessonDTO>> createAll(@RequestBody Set<LessonDTO> lessonDTOs) {
-        Set<LessonDTO> createdLessons = lessonService.createAll(lessonDTOs);
+        Set<LessonDTO> createdLessons = lessonService.createAll(lessonDTOs, context);
         return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 

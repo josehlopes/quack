@@ -2,7 +2,6 @@ package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserRoadmapModelRepository;
@@ -26,23 +25,20 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
 
     @Override
     @Transactional
-    public UserRoadmapEntity save(UserRoadmapEntity userRoadmapEntity) {
-        UserRoadmapModel userRoadmapMODEL = userRoadmapMapper.entityToModel(userRoadmapEntity);
-        UserRoadmapModel savedUserRoadmapModel = userRoadmapModelRepository.save(userRoadmapMODEL);
-        return userRoadmapMapper.modelToEntity(savedUserRoadmapModel);
+    public UserRoadmapModel save(UserRoadmapModel userRoadmapModel) {
+        return userRoadmapModelRepository.save(userRoadmapModel);
     }
 
     @Override
     @Transactional
-    public Optional<UserRoadmapEntity> findById(int id) {
-        return userRoadmapModelRepository.findById(id).map(userRoadmapMapper::modelToEntity);
+    public Optional<UserRoadmapModel> findById(int id) {
+        return userRoadmapModelRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Iterable<UserRoadmapEntity> findAll() {
-        return userRoadmapModelRepository.findAll().stream().map(userRoadmapMapper::modelToEntity)
-                .collect(Collectors.toList());
+    public Iterable<UserRoadmapModel> findAll() {
+        return userRoadmapModelRepository.findAll();
     }
 
     @Override

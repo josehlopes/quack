@@ -1,11 +1,11 @@
 package com.thigas.quack.adapter.model;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public abstract class BaseEntity {
-    private int id;
 
+
+public interface BaseEntity extends BaseModel {
+    int getId();
+    void setId(int id);
 }
+
+

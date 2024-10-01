@@ -3,10 +3,10 @@ package com.thigas.quack.application.service;
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.TaskMapper;
-import com.thigas.quack.domain.entity.StepEntity;
-import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,32 +30,32 @@ public class TaskService {
 
 
     public TaskDTO create(TaskDTO taskDTO) {
-        TaskEntity taskEntity = taskMapper.dtoToEntity(taskDTO, context);
-        List<StepEntity> stepEntities = new ArrayList<>();
+        TaskModel taskModel = taskMapper.dtoToModel(taskDTO, context);
+        Set<StepModel> stepEntities = new HashSet<>();
         for (Integer stepId : taskDTO.getSteps()) {
-            Optional<StepEntity> task = stepRepository.findById(stepId);
+            Optional<StepModel> task = stepRepository.findById(stepId);
             task.ifPresent(stepEntities::add);
         }
-        taskEntity.setSteps(stepEntities);
-        TaskEntity savedTask = taskRepository.save(taskEntity);
-        return taskMapper.entityToDto(savedTask, context);
+        taskModel.setSteps(stepEntities);
+        TaskModel savedTask = taskRepository.save(taskModel);
+        return taskMapper.modelToDto(savedTask, context);
     }
 
     public Optional<TaskDTO> getById(int id) {
-        Optional<TaskEntity> taskOpt = taskRepository.findById(id);
-        return taskOpt.map(task -> taskMapper.entityToDto(task, new CycleAvoidingMappingContext()));
+        Optional<TaskModel> taskOpt = taskRepository.findById(id);
+        return taskOpt.map(task -> taskMapper.modelToDto(task, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<TaskDTO> getAll() {
-        Iterable<TaskEntity> tasks = taskRepository.findAll();
+        Iterable<TaskModel> tasks = taskRepository.findAll();
         CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
         return StreamSupport.stream(tasks.spliterator(), false)
-                .map(task -> taskMapper.entityToDto(task, context))
-                .collect(Collectors.toList());
+                .map(task -> taskMapper.modelToDto(task, context))
+                .collect(Collectors.toSet());
     }
 
     public void update(TaskDTO taskDTO) {
-        TaskEntity task = taskMapper.dtoToEntity(taskDTO, context);
+        TaskModel task = taskMapper.dtoToModel(taskDTO, context);
         taskRepository.save(task);
     }
 

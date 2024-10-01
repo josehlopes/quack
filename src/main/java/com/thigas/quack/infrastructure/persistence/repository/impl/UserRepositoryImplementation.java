@@ -21,9 +21,8 @@ public class UserRepositoryImplementation implements IUserRepository {
 
     @Override
     @Transactional
-    public UserModel save(UserModel userModel) {
-        UserModel savedUserModel = userModelRepository.save(userModel);
-        return savedUserModel;
+    public UserModel save(UserModel userEntity) {
+        return userModelRepository.save(userEntity);
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface RoadmapMapper {
@@ -40,27 +40,27 @@ public interface RoadmapMapper {
             @Mapping(source = "steps", target = "steps")})
     RoadmapDTO modelToDto(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
 
-    default List<Integer> roadmapEntityToIntegers(List<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
+    default Set<Integer> roadmapEntityToIntegers(Set<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.entitiesToIntegers(roadmaps);
     }
 
-    default List<RoadmapEntity> integersToRoadmapEntityId(List<Integer> roadmapsIds, @Context CycleAvoidingMappingContext context) {
+    default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmapsIds, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.integersToEntities(roadmapsIds, RoadmapEntity.class, context);
     }
 
-    default List<Integer> stepEntityToIntegers(List<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
+    default Set<Integer> stepEntityToIntegers(Set<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.entitiesToIntegers(steps);
     }
 
-    default List<StepEntity> integersToStepEntityId(List<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+    default Set<StepEntity> integersToStepEntityId(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.integersToEntities(stepIds, StepEntity.class, context);
     }
 
-    default List<StepModel> integersToStepModels(List<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+    default Set<StepModel> integersToStepModels(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.integersToModels(stepIds, StepModel.class, context);
     }
 
-    default List<Integer> stepModelsToIntegers(List<StepModel> stepModels) {
+    default Set<Integer> stepModelsToIntegers(Set<StepModel> stepModels) {
         return MapperUtils.modelsToIntegers(stepModels);
     }
 

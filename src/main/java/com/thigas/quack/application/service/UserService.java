@@ -2,7 +2,6 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.mapper.UserMapper;
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
@@ -26,8 +25,8 @@ public class UserService {
 
     public UserDTO create(UserDTO userDTO) {
         UserModel user = userMapper.dtoToModel(userDTO);
-        UserModel toSaveUser = userRepository.save(user);
-        return userMapper.modelToDto(toSaveUser);
+        UserModel savedUser = userRepository.save(user);
+        return userMapper.modelToDto(savedUser);
     }
 
     public Optional<UserDTO> getById(int id) {
@@ -50,6 +49,7 @@ public class UserService {
         if (userDTO.getBornAt() != null) {
             existingUser.setBornAt(LocalDate.parse(userDTO.getBornAt()));
         }
+
         userRepository.save(existingUser);
     }
 

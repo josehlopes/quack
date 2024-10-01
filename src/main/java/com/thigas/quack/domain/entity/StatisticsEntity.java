@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatisticsEntity  extends BaseEntity {
+public class StatisticsEntity implements BaseEntity {
 
     private int id;
 
@@ -27,5 +26,17 @@ public class StatisticsEntity  extends BaseEntity {
     private int challengesCompleted;
 
     private int lessonsCompleted;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
+
+
 
 }

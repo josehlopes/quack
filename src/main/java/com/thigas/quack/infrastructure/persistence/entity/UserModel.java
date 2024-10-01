@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "app_user")
-public class UserModel extends BaseModel {
+public class UserModel implements  BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +55,16 @@ public class UserModel extends BaseModel {
 
     @Column(name = "image_path")
     private String imagePath;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

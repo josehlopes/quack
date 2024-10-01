@@ -1,6 +1,5 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
-import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +13,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "achievement")
-public class AchievementModel extends BaseModel {
+
+public class AchievementModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,16 @@ public class AchievementModel extends BaseModel {
 
     @Column(name = "image_path", nullable = false)
     private String imagePath;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 
     @Override
     public final boolean equals(Object o) {

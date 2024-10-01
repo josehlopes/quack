@@ -7,11 +7,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddressEntity extends BaseEntity {
+public class AddressEntity implements BaseEntity {
 
     private int id;
     private UserEntity user;
@@ -22,4 +21,14 @@ public class AddressEntity extends BaseEntity {
     private String zipCode;
     private String number;
     private Status status;
+
+    @Override
+    public int getId() {
+        return this.id; // Retorna o ID
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id; // Define o ID
+    }
 }

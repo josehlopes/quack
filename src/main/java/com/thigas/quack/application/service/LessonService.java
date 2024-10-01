@@ -1,23 +1,15 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
-import com.thigas.quack.adapter.dto.RoadmapDTO;
-import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.adapter.mapper.AchievementMapper;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.LessonMapper;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.repository.ILessonRepository;
-
-import jakarta.transaction.Transactional;
-
+import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,34 +26,48 @@ public class LessonService {
     private CycleAvoidingMappingContext context;
 
     public LessonDTO create(LessonDTO lessonDTO) {
-        LessonEntity lessonEntity = lessonMapper.dtoToEntity(lessonDTO, context);
-        LessonEntity savedLesson = lessonRepository.save(lessonEntity);
-        return lessonMapper.entityToDto(savedLesson, context);
+        LessonModel lessonModel = lessonMapper.dtoToModel(lessonDTO, context);
+        LessonModel savedLesson = lessonRepository.save(lessonModel);
+        return lessonMapper.modelToDto(savedLesson, context);
     }
 
-//    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs) {
-//        Set<LessonEntity> lessonEntities = lessonDTOs.stream().map(lessonMapper::dtoToEntity)
-//                .collect(Collectors.toSet());
-//
-//        Set<LessonEntity> savedLessons = lessonRepository.saveAll(lessonEntities);
-//        return savedLessons.stream().map(lessonMapper::entityToDto).collect(Collectors.toSet());
-//    }
+    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs, CycleAvoidingMappingContext context) {
+        if (lessonDTOs == null || lessonDTOs.isEmpty()) {
+            throw new IllegalArgumentException("LessonDTOs list cannot be null or empty");
+        }
+
+        Set<LessonModel> lessonEntities = lessonDTOs.stream()
+                .map(dto -> lessonMapper.dtoToModel(dto, context))
+                .collect(Collectors.toSet());
+
+        Set<LessonModel> savedLessons;
+        try {
+            savedLessons = lessonRepository.saveAll(lessonEntities);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save lessons", e);
+        }
+
+        return savedLessons.stream()
+                .map(entity -> lessonMapper.modelToDto(entity, context))
+                .collect(Collectors.toSet());
+    }
+
 
     public Optional<LessonDTO> getById(int id) {
-        Optional<LessonEntity> lessonOpt = lessonRepository.findById(id);
-        return lessonOpt.map(lesson -> lessonMapper.entityToDto(lesson, new CycleAvoidingMappingContext()));
+        Optional<LessonModel> lessonOpt = lessonRepository.findById(id);
+        return lessonOpt.map(lesson -> lessonMapper.modelToDto(lesson, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<LessonDTO> getAll() {
-        Iterable<LessonEntity> lessons = lessonRepository.findAll();
+        Iterable<LessonModel> lessons = lessonRepository.findAll();
         CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
         return StreamSupport.stream(lessons.spliterator(), false)
-                .map(lesson -> lessonMapper.entityToDto(lesson, context))
-                .collect(Collectors.toList());
+                .map(lesson -> lessonMapper.modelToDto(lesson, context))
+                .collect(Collectors.toSet());
     }
 
     public void update(LessonDTO lessonDTO) {
-        LessonEntity lesson = lessonMapper.dtoToEntity(lessonDTO, context);
+        LessonModel lesson = lessonMapper.dtoToModel(lessonDTO, context);
         lessonRepository.save(lesson);
     }
 

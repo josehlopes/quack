@@ -1,10 +1,13 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.adapter.mapper.AchievementMapper;
+import com.thigas.quack.adapter.dto.AddressDTO;
+import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
+import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,25 +25,26 @@ public class AddressService {
     private AddressMapper addressMapper;
 
     public AddressDTO create(AddressDTO addressDTO) {
-        AddressEntity address = addressMapper.dtoToEntity(addressDTO);
-        AddressEntity toSaveAddress = addressRepository.save(address);
-        return addressMapper.entityToDto(toSaveAddress);
+        AddressModel addressModel = addressMapper.dtoToModel(addressDTO);
+        AddressModel savedAddress = addressRepository.save(addressModel);
+        return addressMapper.modelToDto(savedAddress);
     }
 
     public Optional<AddressDTO> getById(int id) {
-        Optional<AddressEntity> address = addressRepository.findById(id);
-        return address.map(addressMapper::entityToDto);
+        Optional<AddressModel> address = addressRepository.findById(id);
+        return address.map(addressMapper::modelToDto);
     }
 
     public Iterable<AddressDTO> getAll() {
-        Iterable<AddressEntity> addresses = addressRepository.findAll();
-        return StreamSupport.stream(addresses.spliterator(), false).map(addressMapper::entityToDto)
+        Iterable<AddressModel> addresss = addressRepository.findAll();
+        return StreamSupport.stream(addresss.spliterator(), false).map(addressMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AddressDTO addressDTO) {
-        AddressEntity address = addressMapper.dtoToEntity(addressDTO);
-        addressRepository.save(address);
+        AddressModel existingUser = addressRepository.findById(addressDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        addressRepository.save(existingUser);
     }
 
     public void delete(int id) {

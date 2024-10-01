@@ -1,15 +1,16 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.UserTaskEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 
 import java.util.Optional;
 
 public interface IUserTaskRepository {
-    UserTaskEntity save(UserTaskEntity userTask);
+    UserTaskModel save(UserTaskModel userTask);
 
-    Optional<UserTaskEntity> findById(int id);
+    Optional<UserTaskModel> findById(int id);
 
-    Iterable<UserTaskEntity> findAll();
+    Iterable<UserTaskModel> findAll();
 
     void deleteById(int id);
 }
