@@ -6,6 +6,7 @@ import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import java.util.Optional;
 
 public interface IAddressRepository {
+
     AddressModel save(AddressModel address);
 
     Optional<AddressModel> findById(int id);
@@ -13,4 +14,5 @@ public interface IAddressRepository {
     Iterable<AddressModel> findAll();
 
     void deleteById(int id);
+
 }

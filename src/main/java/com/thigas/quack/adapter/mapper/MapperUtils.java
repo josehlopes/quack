@@ -64,4 +64,53 @@ public class MapperUtils {
             }
         }).collect(Collectors.toSet());
     }
+
+    public static <T extends BaseEntity> T integerToEntity(Integer id, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
+        if (id == null) {
+            return null;
+        }
+        try {
+            T entity = context.getMappedInstance(id, clazz);
+            if (entity == null) {
+                entity = clazz.getDeclaredConstructor().newInstance();
+                entity.setId(id);
+                context.storeMappedInstance(id, entity);
+            }
+            return entity;
+        } catch (Exception e) {
+            throw new RuntimeException("Error instantiating entity", e);
+        }
+    }
+
+    public static <T extends BaseEntity> Integer entityToInteger(T entity) {
+        if (entity == null) {
+            return null;
+        }
+        return entity.getId();
+    }
+
+    public static <T extends BaseModel> T integerToModel(Integer id, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
+        if (id == null) {
+            return null;
+        }
+        try {
+            T model = context.getMappedInstance(id, clazz);
+            if (model == null) {
+                model = clazz.getDeclaredConstructor().newInstance();
+                model.setId(id);
+                context.storeMappedInstance(id, model);
+            }
+            return model;
+        } catch (Exception e) {
+            throw new RuntimeException("Error instantiating model", e);
+        }
+    }
+
+    public static <T extends BaseModel> Integer modelToInteger(T model) {
+        if (model == null) {
+            return null;
+        }
+        return model.getId();
+    }
 }
+

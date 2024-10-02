@@ -13,9 +13,9 @@ public class StatisticsDTO {
     private int bestStreak;
     private int userLevel;
     private Double userExperience;
-    private int challengesCompleted;
+    private int challengesCompletedCount;
     private int roadmapsCompletedCount;
     private Set<Integer> roadmapsCompleted;
     private Set<Integer> stepsCompleted;
-    
+
 }

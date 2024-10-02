@@ -7,32 +7,33 @@ import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface UserTaskMapper {
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
     UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
     UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO);
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
     UserTaskModel entityToModel(UserTaskEntity userEntity);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
     UserTaskEntity modelToEntity(UserTaskModel userModel);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
     UserTaskModel dtoToModel(UserTaskDTO userTaskDTO);
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
     UserTaskDTO modelToDto(UserTaskModel userTaskModel);
 
     default UserModel userToModel(Integer user) {

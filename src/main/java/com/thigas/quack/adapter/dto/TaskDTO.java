@@ -2,7 +2,6 @@ package com.thigas.quack.adapter.dto;
 
 import lombok.Data;
 
-import java.util.List;
 import java.util.Set;
 
 @Data

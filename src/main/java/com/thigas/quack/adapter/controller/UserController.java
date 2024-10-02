@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<String> getUser(){
+    public ResponseEntity<String> getUser() {
         return ResponseEntity.ok("Sucesso!");
     }
 }

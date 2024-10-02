@@ -16,11 +16,15 @@ public interface UserMapper {
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
+    @Mapping(source = "userAchievements", target = "userAchievements")
+
     UserDTO entityToDto(UserEntity user);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
+    @Mapping(source = "userAchievements", target = "userAchievements")
+
     UserEntity dtoToEntity(UserDTO userDTO);
 
     UserModel entityToModel(UserEntity userEntity);
@@ -30,11 +34,15 @@ public interface UserMapper {
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
+    @Mapping(source = "userAchievements", target = "userAchievements")
+
     UserModel dtoToModel(UserDTO userDTO);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
+    @Mapping(source = "userAchievements", target = "userAchievements")
+
     UserDTO modelToDto(UserModel userModel);
 
     default OffsetDateTime offSetToString(String date) {

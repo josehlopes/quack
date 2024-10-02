@@ -1,10 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import jakarta.persistence.EntityNotFoundException;

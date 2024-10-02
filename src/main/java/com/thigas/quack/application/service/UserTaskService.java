@@ -1,10 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.adapter.mapper.UserTaskMapper;
-import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import jakarta.persistence.EntityNotFoundException;

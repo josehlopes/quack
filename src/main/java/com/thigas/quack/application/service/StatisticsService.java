@@ -1,10 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
-import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import jakarta.persistence.EntityNotFoundException;

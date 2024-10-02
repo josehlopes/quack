@@ -4,13 +4,16 @@ import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-01T10:43:33-0300",
+    date = "2024-10-02T00:43:18-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -185,6 +188,10 @@ public class AddressMapperImpl implements AddressMapper {
         userModel.setRegisterAt( userEntity.getRegisterAt() );
         userModel.setStatus( userEntity.getStatus() );
         userModel.setImagePath( userEntity.getImagePath() );
+        Set<UserAchievementModel> set = userEntity.getUserAchievements();
+        if ( set != null ) {
+            userModel.setUserAchievements( new LinkedHashSet<UserAchievementModel>( set ) );
+        }
 
         return userModel;
     }
@@ -208,6 +215,10 @@ public class AddressMapperImpl implements AddressMapper {
         userEntity.setRegisterAt( userModel.getRegisterAt() );
         userEntity.setImagePath( userModel.getImagePath() );
         userEntity.setStatus( userModel.getStatus() );
+        Set<UserAchievementModel> set = userModel.getUserAchievements();
+        if ( set != null ) {
+            userEntity.setUserAchievements( new LinkedHashSet<UserAchievementModel>( set ) );
+        }
 
         return userEntity;
     }

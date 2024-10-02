@@ -4,7 +4,6 @@ import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

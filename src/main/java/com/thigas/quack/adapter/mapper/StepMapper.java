@@ -16,7 +16,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface StepMapper {
@@ -72,7 +71,7 @@ public interface StepMapper {
     }
 
     default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
-        return  MapperUtils.integersToEntities(roadmaps, RoadmapEntity.class, context);
+        return MapperUtils.integersToEntities(roadmaps, RoadmapEntity.class, context);
     }
 
     default Set<Integer> roadmapEntityToIntegers(Set<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
@@ -80,7 +79,7 @@ public interface StepMapper {
     }
 
     default Set<LessonModel> integersToLessonModelId(Set<Integer> lessons, @Context CycleAvoidingMappingContext context) {
-       return MapperUtils.integersToModels(lessons, LessonModel.class, context);
+        return MapperUtils.integersToModels(lessons, LessonModel.class, context);
     }
 
     default Set<Integer> lessonModelToIntegers(Set<LessonModel> lessons, @Context CycleAvoidingMappingContext context) {

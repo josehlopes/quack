@@ -21,6 +21,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\RoadmapDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StatisticsDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\StepDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\TaskDTO.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserAchievementDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserRoadmapDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserTaskDTO.java
@@ -33,6 +34,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\RoadmapMapper.j
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StatisticsMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\StepMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\TaskMapper.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserAchievementMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserRoadmapMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\UserTaskMapper.java
@@ -47,6 +49,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\application\service\RoadmapSer
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\StatisticsService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\StepService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\TaskService.java
+I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserAchievementService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserRoadmapService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserService.java
 I:\Documents\quack\src\main\java\com\thigas\quack\application\service\UserTaskService.java
@@ -58,6 +61,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\RoadmapEntity.ja
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StatisticsEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\StepEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\TaskEntity.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserAchievementEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserRoadmapEntity.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\entity\UserTaskEntity.java
@@ -70,6 +74,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IRoadmapRepo
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStatisticsRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IStepRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\ITaskRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserAchievementRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserRoadmapRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\domain\repository\IUserTaskRepository.java
@@ -80,6 +85,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\ent
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StatisticsModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\StepModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\TaskModel.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserAchievementModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\entity\UserTaskModel.java
@@ -90,6 +96,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\rep
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StatisticsRepositoryImplementation.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\StepRepositoryImplementation.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\TaskRepositoryImplementation.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserAchievementRepositoryImplementation.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRepositoryImplementation.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserRoadmapRepositoryImplementation.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\impl\UserTaskRepositoryImplementation.java
@@ -100,6 +107,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\rep
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStatisticsModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IStepModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\ITaskModelRepository.java
+I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserAchievementModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserRoadmapModelRepository.java
 I:\Documents\quack\src\main\java\com\thigas\quack\infrastructure\persistence\repository\jpa\IUserTaskModelRepository.java

@@ -1,10 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.adapter.mapper.TaskMapper;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import jakarta.persistence.EntityNotFoundException;

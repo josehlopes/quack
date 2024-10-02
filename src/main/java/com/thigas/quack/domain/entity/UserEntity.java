@@ -1,14 +1,15 @@
 package com.thigas.quack.domain.entity;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-
 import com.thigas.quack.adapter.model.BaseEntity;
-
 import com.thigas.quack.domain.model.Status;
+import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +28,8 @@ public class UserEntity implements BaseEntity {
     private OffsetDateTime registerAt;
     private String imagePath;
     private Status status;
+    private Set<UserAchievementModel> userAchievements;
+
 
     @Override
     public int getId() {

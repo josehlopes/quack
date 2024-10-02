@@ -2,7 +2,10 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -14,7 +17,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "statistic")
-public class StatisticsModel  implements BaseModel {
+public class StatisticsModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +52,7 @@ public class StatisticsModel  implements BaseModel {
             joinColumns = @JoinColumn(name = "statistics_id"),
             inverseJoinColumns = @JoinColumn(name = "roadmap_id")
     )
+    @ToString.Exclude
     private Set<RoadmapModel> roadmapsCompleted;
 
     @ManyToMany
@@ -57,6 +61,7 @@ public class StatisticsModel  implements BaseModel {
             joinColumns = @JoinColumn(name = "statistics_id"),
             inverseJoinColumns = @JoinColumn(name = "step_id")
     )
+    @ToString.Exclude
     private Set<StepModel> stepsCompleted;
 
     @Override

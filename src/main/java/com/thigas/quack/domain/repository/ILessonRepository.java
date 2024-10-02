@@ -1,12 +1,12 @@
 package com.thigas.quack.domain.repository;
 
-
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 
 import java.util.Optional;
 import java.util.Set;
 
 public interface ILessonRepository {
+
     LessonModel save(LessonModel lesson);
 
     Set<LessonModel> saveAll(Set<LessonModel> lessons);
@@ -18,4 +18,5 @@ public interface ILessonRepository {
     Iterable<LessonModel> findAll();
 
     void deleteById(int id);
+
 }
