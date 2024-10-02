@@ -37,7 +37,7 @@ public class StepRepositoryImplementation implements IStepRepository {
     @Override
     @Transactional
     public Optional<StepModel> findById(int id) {
-        return stepModelRepository.findById(id); // Passando o contexto
+        return stepModelRepository.findById(id);
     }
 
     @Override

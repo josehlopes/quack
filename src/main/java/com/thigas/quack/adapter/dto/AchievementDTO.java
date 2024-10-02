@@ -9,4 +9,5 @@ public class AchievementDTO {
     private String name;
     private String description;
     private String imagePath;
+
 }

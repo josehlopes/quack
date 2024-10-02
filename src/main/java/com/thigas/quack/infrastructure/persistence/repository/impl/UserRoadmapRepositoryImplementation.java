@@ -19,8 +19,9 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
 
 
     @Autowired
-    private UserRoadmapMapper userRoadmapMapper;    @Autowired
+    private UserRoadmapMapper userRoadmapMapper;
 
+    @Autowired
     private IUserRoadmapModelRepository userRoadmapModelRepository;
 
     @Override

@@ -17,4 +17,5 @@ public class UserDTO {
     private String registerAt;
     private String imagePath;
     private int status;
+
 }

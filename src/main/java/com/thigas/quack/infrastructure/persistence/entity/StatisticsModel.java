@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,19 +37,36 @@ public class StatisticsModel  implements BaseModel {
     private Double userExperience;
 
     @Column(name = "challenges_completed")
-    private int challengesCompleted;
+    private int challengesCompletedCount;
 
-    @Column(name = "lessons_completed")
-    private int lessonsCompleted;
+
+    @Column(name = "roadmaps_completed_count")
+    private int roadmapsCompletedCount;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_completed_roadmaps",
+            joinColumns = @JoinColumn(name = "statistics_id"),
+            inverseJoinColumns = @JoinColumn(name = "roadmap_id")
+    )
+    private Set<RoadmapModel> roadmapsCompleted;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_completed_steps",
+            joinColumns = @JoinColumn(name = "statistics_id"),
+            inverseJoinColumns = @JoinColumn(name = "step_id")
+    )
+    private Set<StepModel> stepsCompleted;
 
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
 
     @Override

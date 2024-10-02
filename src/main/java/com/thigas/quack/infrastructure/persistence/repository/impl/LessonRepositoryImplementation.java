@@ -53,7 +53,7 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     @Override
     @Transactional
     public Optional<LessonModel> findById(int id) {
-        return lessonModelRepository.findById(id); // Usando lambda para passar contexto
+        return lessonModelRepository.findById(id);
     }
 
     @Override

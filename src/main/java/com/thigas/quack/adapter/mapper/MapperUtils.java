@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class MapperUtils {
 
-    // Método genérico para converter uma lista de entidades em uma lista de IDs
     public static <T extends BaseEntity> Set<Integer> entitiesToIntegers(Set<T> entities) {
         if (entities == null) {
             return null;
@@ -19,7 +18,6 @@ public class MapperUtils {
                 .collect(Collectors.toSet());
     }
 
-    // Método genérico para converter uma lista de IDs em uma lista de entidades
     public static <T extends BaseEntity> Set<T> integersToEntities(Set<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
         if (ids == null) {
             return null;
@@ -39,17 +37,15 @@ public class MapperUtils {
         }).collect(Collectors.toSet());
     }
 
-    // Método genérico para converter uma lista de models em uma lista de IDs
     public static <T extends BaseModel> Set<Integer> modelsToIntegers(Set<T> models) {
         if (models == null) {
             return null;
         }
         return models.stream()
-                .map(BaseModel::getId) // Assegure que BaseModel tenha getId()
+                .map(BaseModel::getId)
                 .collect(Collectors.toSet());
     }
 
-    // Método genérico para converter uma lista de IDs em uma lista de models
     public static <T extends BaseModel> Set<T> integersToModels(Set<Integer> ids, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
         if (ids == null) {
             return null;

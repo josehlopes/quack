@@ -14,4 +14,5 @@ public class UserRoadmapDTO {
     private String startedAt;
     private String finishedAt;
     private int status;
+    
 }
