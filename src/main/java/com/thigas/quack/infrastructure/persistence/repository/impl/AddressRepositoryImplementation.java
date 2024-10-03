@@ -1,6 +1,7 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import com.thigas.quack.adapter.mapper.AddressMapper;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAddressModelRepository;
@@ -19,6 +20,9 @@ public class AddressRepositoryImplementation implements IAddressRepository {
 
     @Autowired
     private IAddressModelRepository addressModelRepository;
+
+    @Autowired
+    private CycleAvoidingMappingContext context;
 
     @Override
     @Transactional

@@ -24,6 +24,7 @@ public class TaskModel implements BaseModel {
     private int id;
 
     @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<StepModel> steps;
 
     @Column(nullable = false)

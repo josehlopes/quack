@@ -28,7 +28,7 @@ public class UserEntity implements BaseEntity {
     private OffsetDateTime registerAt;
     private String imagePath;
     private Status status;
-    private Set<UserAchievementModel> userAchievements;
+    private Set<UserAchievementEntity> userAchievements;
 
 
     @Override

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-02T00:43:19-0300",
+    date = "2024-10-03T01:18:05-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -22,7 +22,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapDTO roadmapDTO = new RoadmapDTO();
 
-        roadmapDTO.setStatus( statusValueToInteger( roadmapEntity.getStatus() ) );
+        roadmapDTO.setStatus( roadmapStatusToInteger( roadmapEntity.getStatus() ) );
         roadmapDTO.setSteps( stepEntityToIntegers( roadmapEntity.getSteps(), context ) );
         roadmapDTO.setId( roadmapEntity.getId() );
         roadmapDTO.setTitle( roadmapEntity.getTitle() );
@@ -40,7 +40,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
-        roadmapEntity.setStatus( integerToStatusValue( roadmapDTO.getStatus() ) );
+        roadmapEntity.setStatus( roadmapIntegerToStatus( roadmapDTO.getStatus() ) );
         roadmapEntity.setSteps( integersToStepEntityId( roadmapDTO.getSteps(), context ) );
         roadmapEntity.setId( roadmapDTO.getId() );
         roadmapEntity.setTitle( roadmapDTO.getTitle() );
@@ -94,7 +94,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapModel roadmapModel = new RoadmapModel();
 
-        roadmapModel.setStatus( integerToStatusValue( roadmapDTO.getStatus() ) );
+        roadmapModel.setStatus( roadmapIntegerToStatus( roadmapDTO.getStatus() ) );
         roadmapModel.setSteps( integersToStepModels( roadmapDTO.getSteps(), context ) );
         roadmapModel.setId( roadmapDTO.getId() );
         roadmapModel.setTitle( roadmapDTO.getTitle() );
@@ -112,7 +112,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
 
         RoadmapDTO roadmapDTO = new RoadmapDTO();
 
-        roadmapDTO.setStatus( statusValueToInteger( roadmapModel.getStatus() ) );
+        roadmapDTO.setStatus( roadmapStatusToInteger( roadmapModel.getStatus() ) );
         roadmapDTO.setSteps( stepModelsToIntegers( roadmapModel.getSteps() ) );
         roadmapDTO.setId( roadmapModel.getId() );
         roadmapDTO.setTitle( roadmapModel.getTitle() );

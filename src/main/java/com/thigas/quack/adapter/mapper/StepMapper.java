@@ -110,11 +110,11 @@ public interface StepMapper {
         return MapperUtils.entitiesToIntegers(tasks);
     }
 
-    default Status integerToStatusValue(int status) {
-        return Status.values()[status];
+    default int stepMapStatusToInt(Status status) {
+        return MapperUtils.statusToInt(status);
     }
 
-    default int statusValueToInteger(Status status) {
-        return status.ordinal();
+    default Status stepMapIntToStatus(int value) {
+        return MapperUtils.intToStatus(value);
     }
 }

@@ -17,7 +17,7 @@ public class AchievementEntity implements BaseEntity {
     private String name;
     private String description;
     private String imagePath;
-    private Set<UserAchievementModel> userAchievements;
+    private Set<UserAchievementEntity> userAchievements;
 
 
     @Override

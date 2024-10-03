@@ -49,8 +49,8 @@ public class StepService {
     }
 
     public Optional<StepDTO> getById(int id) {
-        Optional<StepModel> stepOpt = stepRepository.findById(id);
-        return stepOpt.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
+        Optional<StepModel> stepOptional = stepRepository.findById(id);
+        return stepOptional.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
     }
 
 

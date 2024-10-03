@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
@@ -21,21 +22,24 @@ public class UserRoadmapService {
     @Autowired
     private UserRoadmapMapper userRoadmapMapper;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel userRoadmapModel = userRoadmapMapper.dtoToModel(userRoadmapDTO);
+        UserRoadmapModel userRoadmapModel = userRoadmapMapper.dtoToModel(userRoadmapDTO, new CycleAvoidingMappingContext());
         UserRoadmapModel savedUserRoadmap = userRoadmapRepository.save(userRoadmapModel);
-        return userRoadmapMapper.modelToDto(savedUserRoadmap);
+        return userRoadmapMapper.modelToDto(savedUserRoadmap, context);
     }
 
     public Optional<UserRoadmapDTO> getById(int id) {
-        Optional<UserRoadmapModel> userRoadmap = userRoadmapRepository.findById(id);
-        return userRoadmap.map(userRoadmapMapper::modelToDto);
+        Optional<UserRoadmapModel> userRoadmapOptional = userRoadmapRepository.findById(id);
+        return userRoadmapOptional.map(userRoadmap -> userRoadmapMapper.modelToDto(userRoadmap, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<UserRoadmapDTO> getAll() {
         Iterable<UserRoadmapModel> userRoadmaps = userRoadmapRepository.findAll();
-        return StreamSupport.stream(userRoadmaps.spliterator(), false).map(userRoadmapMapper::modelToDto)
-                .collect(Collectors.toList());
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(userRoadmaps.spliterator(), false).map(userRoadmap -> userRoadmapMapper.modelToDto(userRoadmap, context)).collect(Collectors.toList());
     }
 
     public void update(UserRoadmapDTO userRoadmapDTO) {

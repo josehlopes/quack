@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
@@ -22,20 +23,24 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
     public UserDTO create(UserDTO userDTO) {
-        UserModel user = userMapper.dtoToModel(userDTO);
+        UserModel user = userMapper.dtoToModel(userDTO, new CycleAvoidingMappingContext());
         UserModel savedUser = userRepository.save(user);
-        return userMapper.modelToDto(savedUser);
+        return userMapper.modelToDto(savedUser, context);
     }
 
     public Optional<UserDTO> getById(int id) {
-        Optional<UserModel> user = userRepository.findById(id);
-        return user.map(userMapper::modelToDto);
+        Optional<UserModel> userOptional = userRepository.findById(id);
+        return userOptional.map(user -> userMapper.modelToDto(user, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<UserDTO> getAll() {
         Iterable<UserModel> users = userRepository.findAll();
-        return StreamSupport.stream(users.spliterator(), false).map(userMapper::modelToDto)
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(users.spliterator(), false).map(user -> userMapper.modelToDto(user, context))
                 .collect(Collectors.toList());
     }
 
@@ -58,8 +63,8 @@ public class UserService {
 
 
     public Optional<UserDTO> findByEmail(String email) {
-        Optional<UserModel> user = userRepository.findByEmail(email);
-        return user.map(userMapper::modelToDto);
+        Optional<UserModel> userOptional = userRepository.findByEmail(email);
+        return userOptional.map(user -> userMapper.modelToDto(user, new CycleAvoidingMappingContext()));
     }
 
 }

@@ -4,31 +4,28 @@ import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-02T00:43:18-0300",
+    date = "2024-10-03T01:18:06-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class AddressMapperImpl implements AddressMapper {
 
     @Override
-    public AddressEntity dtoToEntity(AddressDTO addressDTO) {
+    public AddressEntity dtoToEntity(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
 
         AddressEntity addressEntity = new AddressEntity();
 
-        addressEntity.setUser( addressDTOToUserEntity( addressDTO ) );
-        addressEntity.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
+        addressEntity.setUser( addressDTOToUserEntity( addressDTO, context ) );
+        addressEntity.setStatus( addressMapIntToStatus( addressDTO.getStatus() ) );
         addressEntity.setId( addressDTO.getId() );
         addressEntity.setStreet( addressDTO.getStreet() );
         addressEntity.setCity( addressDTO.getCity() );
@@ -41,7 +38,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressDTO entityToDto(AddressEntity address) {
+    public AddressDTO entityToDto(AddressEntity address, CycleAvoidingMappingContext context) {
         if ( address == null ) {
             return null;
         }
@@ -49,7 +46,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressDTO addressDTO = new AddressDTO();
 
         addressDTO.setUser( addressUserId( address ) );
-        addressDTO.setStatus( statusValueToAddressInteger( address.getStatus() ) );
+        addressDTO.setStatus( addressMapStatusToInt( address.getStatus() ) );
         addressDTO.setId( address.getId() );
         addressDTO.setStreet( address.getStreet() );
         addressDTO.setCity( address.getCity() );
@@ -62,7 +59,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressModel entityToModel(AddressEntity address) {
+    public AddressModel entityToModel(AddressEntity address, CycleAvoidingMappingContext context) {
         if ( address == null ) {
             return null;
         }
@@ -70,7 +67,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressModel addressModel = new AddressModel();
 
         addressModel.setId( address.getId() );
-        addressModel.setUser( userEntityToUserModel( address.getUser() ) );
+        addressModel.setUser( userRoadmapIntegerToModel( userRoadmapEntityToInteger( address.getUser() ), context ) );
         addressModel.setStreet( address.getStreet() );
         addressModel.setCity( address.getCity() );
         addressModel.setState( address.getState() );
@@ -83,7 +80,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressEntity modelToEntity(AddressModel addressModel) {
+    public AddressEntity modelToEntity(AddressModel addressModel, CycleAvoidingMappingContext context) {
         if ( addressModel == null ) {
             return null;
         }
@@ -91,7 +88,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressEntity addressEntity = new AddressEntity();
 
         addressEntity.setId( addressModel.getId() );
-        addressEntity.setUser( userModelToUserEntity( addressModel.getUser() ) );
+        addressEntity.setUser( userRoadmapIntegerToEntity( userRoadmapModelToInteger( addressModel.getUser() ), context ) );
         addressEntity.setStreet( addressModel.getStreet() );
         addressEntity.setCity( addressModel.getCity() );
         addressEntity.setState( addressModel.getState() );
@@ -104,15 +101,15 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressModel dtoToModel(AddressDTO addressDTO) {
+    public AddressModel dtoToModel(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
 
         AddressModel addressModel = new AddressModel();
 
-        addressModel.setUser( addressDTOToUserModel( addressDTO ) );
-        addressModel.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
+        addressModel.setUser( addressDTOToUserModel( addressDTO, context ) );
+        addressModel.setStatus( addressMapIntToStatus( addressDTO.getStatus() ) );
         addressModel.setId( addressDTO.getId() );
         addressModel.setStreet( addressDTO.getStreet() );
         addressModel.setCity( addressDTO.getCity() );
@@ -125,7 +122,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressDTO modelToDto(AddressModel addressModel) {
+    public AddressDTO modelToDto(AddressModel addressModel, CycleAvoidingMappingContext context) {
         if ( addressModel == null ) {
             return null;
         }
@@ -133,7 +130,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressDTO addressDTO = new AddressDTO();
 
         addressDTO.setUser( addressModelUserId( addressModel ) );
-        addressDTO.setStatus( statusValueToAddressInteger( addressModel.getStatus() ) );
+        addressDTO.setStatus( addressMapStatusToInt( addressModel.getStatus() ) );
         addressDTO.setId( addressModel.getId() );
         addressDTO.setStreet( addressModel.getStreet() );
         addressDTO.setCity( addressModel.getCity() );
@@ -145,7 +142,7 @@ public class AddressMapperImpl implements AddressMapper {
         return addressDTO;
     }
 
-    protected UserEntity addressDTOToUserEntity(AddressDTO addressDTO) {
+    protected UserEntity addressDTOToUserEntity(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
@@ -169,61 +166,7 @@ public class AddressMapperImpl implements AddressMapper {
         return id;
     }
 
-    protected UserModel userEntityToUserModel(UserEntity userEntity) {
-        if ( userEntity == null ) {
-            return null;
-        }
-
-        UserModel userModel = new UserModel();
-
-        userModel.setId( userEntity.getId() );
-        userModel.setName( userEntity.getName() );
-        userModel.setUsername( userEntity.getUsername() );
-        userModel.setPhone( userEntity.getPhone() );
-        userModel.setEmail( userEntity.getEmail() );
-        userModel.setPassword( userEntity.getPassword() );
-        userModel.setCpf( userEntity.getCpf() );
-        userModel.setBornAt( userEntity.getBornAt() );
-        userModel.setPoints( userEntity.getPoints() );
-        userModel.setRegisterAt( userEntity.getRegisterAt() );
-        userModel.setStatus( userEntity.getStatus() );
-        userModel.setImagePath( userEntity.getImagePath() );
-        Set<UserAchievementModel> set = userEntity.getUserAchievements();
-        if ( set != null ) {
-            userModel.setUserAchievements( new LinkedHashSet<UserAchievementModel>( set ) );
-        }
-
-        return userModel;
-    }
-
-    protected UserEntity userModelToUserEntity(UserModel userModel) {
-        if ( userModel == null ) {
-            return null;
-        }
-
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.setId( userModel.getId() );
-        userEntity.setName( userModel.getName() );
-        userEntity.setUsername( userModel.getUsername() );
-        userEntity.setPhone( userModel.getPhone() );
-        userEntity.setEmail( userModel.getEmail() );
-        userEntity.setPassword( userModel.getPassword() );
-        userEntity.setCpf( userModel.getCpf() );
-        userEntity.setBornAt( userModel.getBornAt() );
-        userEntity.setPoints( userModel.getPoints() );
-        userEntity.setRegisterAt( userModel.getRegisterAt() );
-        userEntity.setImagePath( userModel.getImagePath() );
-        userEntity.setStatus( userModel.getStatus() );
-        Set<UserAchievementModel> set = userModel.getUserAchievements();
-        if ( set != null ) {
-            userEntity.setUserAchievements( new LinkedHashSet<UserAchievementModel>( set ) );
-        }
-
-        return userEntity;
-    }
-
-    protected UserModel addressDTOToUserModel(AddressDTO addressDTO) {
+    protected UserModel addressDTOToUserModel(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }

@@ -59,7 +59,8 @@ public class UserModel implements BaseModel {
     @Column(name = "image_path")
     private String imagePath;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
     private Set<UserAchievementModel> userAchievements;
 
     @Override

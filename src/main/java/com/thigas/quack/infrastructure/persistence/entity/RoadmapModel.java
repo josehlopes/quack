@@ -37,6 +37,7 @@ public class RoadmapModel implements BaseModel {
     @JoinTable(name = "roadmap_steps", joinColumns =
             {@JoinColumn(name = "roadmap_id")}, inverseJoinColumns =
             {@JoinColumn(name = "step_id")})
+    @ToString.Exclude
     private Set<StepModel> steps;
 
     @Enumerated(EnumType.ORDINAL)

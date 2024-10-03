@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-02T00:43:18-0300",
+    date = "2024-10-03T01:18:06-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -28,7 +28,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
-    public UserAchievementDTO entityToDto(UserAchievementEntity userAchievementEntity) {
+    public UserAchievementDTO entityToDto(UserAchievementEntity userAchievementEntity, CycleAvoidingMappingContext context) {
         if ( userAchievementEntity == null ) {
             return null;
         }
@@ -46,15 +46,15 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
     }
 
     @Override
-    public UserAchievementEntity dtoToEntity(UserAchievementDTO userAchievementDTO) {
+    public UserAchievementEntity dtoToEntity(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }
 
         UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
 
-        userAchievementEntity.setUser( userAchievementDTOToUserEntity( userAchievementDTO ) );
-        userAchievementEntity.setAchievement( userAchievementDTOToAchievementEntity( userAchievementDTO ) );
+        userAchievementEntity.setUser( userAchievementDTOToUserEntity( userAchievementDTO, context ) );
+        userAchievementEntity.setAchievement( userAchievementDTOToAchievementEntity( userAchievementDTO, context ) );
         if ( userAchievementDTO.getEarnedAt() != null ) {
             userAchievementEntity.setEarnedAt( LocalDate.parse( userAchievementDTO.getEarnedAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
@@ -64,47 +64,47 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
     }
 
     @Override
-    public UserAchievementModel entityToModel(UserAchievementEntity userEntity) {
+    public UserAchievementModel entityToModel(UserAchievementEntity userEntity, CycleAvoidingMappingContext context) {
         if ( userEntity == null ) {
             return null;
         }
 
         UserAchievementModel userAchievementModel = new UserAchievementModel();
 
+        userAchievementModel.setAchievement( achievementMapper.entityToModel( userEntity.getAchievement(), context ) );
+        userAchievementModel.setUser( userMapper.entityToModel( userEntity.getUser(), context ) );
         userAchievementModel.setId( userEntity.getId() );
-        userAchievementModel.setUser( userMapper.entityToModel( userEntity.getUser() ) );
-        userAchievementModel.setAchievement( achievementMapper.entityToModel( userEntity.getAchievement() ) );
         userAchievementModel.setEarnedAt( userEntity.getEarnedAt() );
 
         return userAchievementModel;
     }
 
     @Override
-    public UserAchievementEntity modelToEntity(UserAchievementModel userModel) {
+    public UserAchievementEntity modelToEntity(UserAchievementModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }
 
         UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
 
+        userAchievementEntity.setAchievement( achievementMapper.modelToEntity( userModel.getAchievement(), context ) );
+        userAchievementEntity.setUser( userMapper.modelToEntity( userModel.getUser(), context ) );
         userAchievementEntity.setId( userModel.getId() );
-        userAchievementEntity.setUser( userMapper.modelToEntity( userModel.getUser() ) );
-        userAchievementEntity.setAchievement( achievementMapper.modelToEntity( userModel.getAchievement() ) );
         userAchievementEntity.setEarnedAt( userModel.getEarnedAt() );
 
         return userAchievementEntity;
     }
 
     @Override
-    public UserAchievementModel dtoToModel(UserAchievementDTO userAchievementDTO) {
+    public UserAchievementModel dtoToModel(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }
 
         UserAchievementModel userAchievementModel = new UserAchievementModel();
 
-        userAchievementModel.setUser( userAchievementDTOToUserModel( userAchievementDTO ) );
-        userAchievementModel.setAchievement( userAchievementDTOToAchievementModel( userAchievementDTO ) );
+        userAchievementModel.setUser( userAchievementDTOToUserModel( userAchievementDTO, context ) );
+        userAchievementModel.setAchievement( userAchievementDTOToAchievementModel( userAchievementDTO, context ) );
         if ( userAchievementDTO.getEarnedAt() != null ) {
             userAchievementModel.setEarnedAt( LocalDate.parse( userAchievementDTO.getEarnedAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
@@ -114,7 +114,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
     }
 
     @Override
-    public UserAchievementDTO modelToDto(UserAchievementModel userAchievementModel) {
+    public UserAchievementDTO modelToDto(UserAchievementModel userAchievementModel, CycleAvoidingMappingContext context) {
         if ( userAchievementModel == null ) {
             return null;
         }
@@ -155,7 +155,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         return id;
     }
 
-    protected UserEntity userAchievementDTOToUserEntity(UserAchievementDTO userAchievementDTO) {
+    protected UserEntity userAchievementDTOToUserEntity(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }
@@ -167,7 +167,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         return userEntity;
     }
 
-    protected AchievementEntity userAchievementDTOToAchievementEntity(UserAchievementDTO userAchievementDTO) {
+    protected AchievementEntity userAchievementDTOToAchievementEntity(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }
@@ -179,7 +179,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         return achievementEntity;
     }
 
-    protected UserModel userAchievementDTOToUserModel(UserAchievementDTO userAchievementDTO) {
+    protected UserModel userAchievementDTOToUserModel(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }
@@ -191,7 +191,7 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         return userModel;
     }
 
-    protected AchievementModel userAchievementDTOToAchievementModel(UserAchievementDTO userAchievementDTO) {
+    protected AchievementModel userAchievementDTOToAchievementModel(UserAchievementDTO userAchievementDTO, CycleAvoidingMappingContext context) {
         if ( userAchievementDTO == null ) {
             return null;
         }

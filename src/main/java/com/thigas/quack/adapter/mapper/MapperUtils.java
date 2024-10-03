@@ -2,6 +2,7 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.adapter.model.BaseModel;
+import com.thigas.quack.domain.model.Status;
 import org.mapstruct.Context;
 
 import java.util.Set;
@@ -111,6 +112,14 @@ public class MapperUtils {
             return null;
         }
         return model.getId();
+    }
+
+    public static int statusToInt(Status status) {
+        return status != null ? status.getValue() : 0;
+    }
+
+    public static Status intToStatus(int value) {
+        return Status.fromValue(value);
     }
 }
 

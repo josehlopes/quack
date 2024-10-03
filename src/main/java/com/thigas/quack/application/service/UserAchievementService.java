@@ -1,6 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserAchievementDTO;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.UserAchievementMapper;
 import com.thigas.quack.domain.repository.IUserAchievementRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
@@ -21,25 +22,28 @@ public class UserAchievementService {
     @Autowired
     private UserAchievementMapper userAchievementMapper;
 
-    public UserAchievementDTO create(UserAchievementDTO userTaskDTO) {
-        UserAchievementModel userAchievementModel = userAchievementMapper.dtoToModel(userTaskDTO);
+    @Autowired
+    private CycleAvoidingMappingContext context;
+
+    public UserAchievementDTO create(UserAchievementDTO userAchievementDTO) {
+        UserAchievementModel userAchievementModel = userAchievementMapper.dtoToModel(userAchievementDTO, new CycleAvoidingMappingContext());
         UserAchievementModel savedUserAchievement = userAchievementRepository.save(userAchievementModel);
-        return userAchievementMapper.modelToDto(savedUserAchievement);
+        return userAchievementMapper.modelToDto(savedUserAchievement, context);
     }
 
     public Optional<UserAchievementDTO> getById(int id) {
-        Optional<UserAchievementModel> userTask = userAchievementRepository.findById(id);
-        return userTask.map(userAchievementMapper::modelToDto);
+        Optional<UserAchievementModel> userAchievementOptional = userAchievementRepository.findById(id);
+        return userAchievementOptional.map(usersAchievements -> userAchievementMapper.modelToDto(usersAchievements, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<UserAchievementDTO> getAll() {
-        Iterable<UserAchievementModel> userTasks = userAchievementRepository.findAll();
-        return StreamSupport.stream(userTasks.spliterator(), false).map(userAchievementMapper::modelToDto)
-                .collect(Collectors.toList());
+        Iterable<UserAchievementModel> userAchievements = userAchievementRepository.findAll();
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(userAchievements.spliterator(), false).map(usersAchievements -> userAchievementMapper.modelToDto(usersAchievements, context)).collect(Collectors.toList());
     }
 
-    public void update(UserAchievementDTO userTaskDTO) {
-        UserAchievementModel existingUser = userAchievementRepository.findById(userTaskDTO.getId())
+    public void update(UserAchievementDTO userAchievementDTO) {
+        UserAchievementModel existingUser = userAchievementRepository.findById(userAchievementDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userAchievementRepository.save(existingUser);
     }

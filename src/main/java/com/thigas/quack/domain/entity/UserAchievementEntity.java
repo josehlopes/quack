@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +19,6 @@ public class UserAchievementEntity implements BaseEntity {
     private UserEntity user;
     private AchievementEntity achievement;
     private LocalDate earnedAt;
-
     @Override
     public int getId() {
         return this.id;

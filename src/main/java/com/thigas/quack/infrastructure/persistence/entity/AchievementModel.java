@@ -17,7 +17,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "achievement")
-
 public class AchievementModel implements BaseModel {
 
     @Id
@@ -34,6 +33,7 @@ public class AchievementModel implements BaseModel {
     private String imagePath;
 
     @OneToMany(mappedBy = "achievement", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
     private Set<UserAchievementModel> userAchievements;
 
     @Override

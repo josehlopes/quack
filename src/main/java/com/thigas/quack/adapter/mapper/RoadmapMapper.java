@@ -64,12 +64,12 @@ public interface RoadmapMapper {
         return MapperUtils.modelsToIntegers(stepModels);
     }
 
-    default Status integerToStatusValue(int status) {
-        return Status.values()[status];
+    default int roadmapStatusToInteger(Status status) {
+        return MapperUtils.statusToInt(status);
     }
 
-    default int statusValueToInteger(Status status) {
-        return status.ordinal();
+    default Status roadmapIntegerToStatus(int value) {
+        return MapperUtils.intToStatus(value);
     }
 }
 
