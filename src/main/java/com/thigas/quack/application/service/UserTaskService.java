@@ -1,10 +1,8 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.mapper.UserMapper;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.UserTaskMapper;
-import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,20 +22,24 @@ public class UserTaskService {
     @Autowired
     private UserTaskMapper userTaskMapper;
 
+    @Autowired
+    CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+
     public UserTaskDTO create(UserTaskDTO userTaskDTO) {
-        UserTaskModel userTaskModel = userTaskMapper.dtoToModel(userTaskDTO);
+        UserTaskModel userTaskModel = userTaskMapper.dtoToModel(userTaskDTO, new CycleAvoidingMappingContext());
         UserTaskModel savedUserTask = userTaskRepository.save(userTaskModel);
-        return userTaskMapper.modelToDto(savedUserTask);
+        return userTaskMapper.modelToDto(savedUserTask, context);
     }
 
     public Optional<UserTaskDTO> getById(int id) {
-        Optional<UserTaskModel> userTask = userTaskRepository.findById(id);
-        return userTask.map(userTaskMapper::modelToDto);
+        Optional<UserTaskModel> userTaskOptional = userTaskRepository.findById(id);
+        return userTaskOptional.map(userTask -> userTaskMapper.modelToDto(userTask, new CycleAvoidingMappingContext()));
     }
 
     public Iterable<UserTaskDTO> getAll() {
         Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
-        return StreamSupport.stream(userTasks.spliterator(), false).map(userTaskMapper::modelToDto)
+        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
+        return StreamSupport.stream(userTasks.spliterator(), false).map(userTask -> userTaskMapper.modelToDto(userTask, context))
                 .collect(Collectors.toList());
     }
 

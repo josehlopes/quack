@@ -14,4 +14,5 @@ public interface IStatisticsRepository {
     Iterable<StatisticsModel> findAll();
 
     void deleteById(int id);
+
 }

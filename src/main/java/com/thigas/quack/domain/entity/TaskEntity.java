@@ -5,10 +5,8 @@ import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.infrastructure.persistence.entity.TaskText;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -23,14 +21,11 @@ public class TaskEntity implements BaseEntity {
 
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
-
-
-
 }

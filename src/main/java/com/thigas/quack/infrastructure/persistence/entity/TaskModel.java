@@ -1,11 +1,13 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.thigas.quack.adapter.model.BaseModel;
-import com.thigas.quack.infrastructure.converter.TaskTextConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -25,6 +27,7 @@ public class TaskModel implements BaseModel {
     private int id;
 
     @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<StepModel> steps;
 
     @Column(columnDefinition = "jsonb")
@@ -37,12 +40,12 @@ public class TaskModel implements BaseModel {
 
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
 
     @Override

@@ -3,12 +3,15 @@ package com.thigas.quack.infrastructure.persistence.entity;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.Accessors;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +19,7 @@ import java.time.OffsetDateTime;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "app_user")
-public class UserModel implements  BaseModel {
+public class UserModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,14 +59,18 @@ public class UserModel implements  BaseModel {
     @Column(name = "image_path")
     private String imagePath;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Set<UserAchievementModel> userAchievements;
+
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
 
     @Override

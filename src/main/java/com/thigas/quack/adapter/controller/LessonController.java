@@ -20,7 +20,7 @@ public class LessonController {
     @Autowired
     private CycleAvoidingMappingContext context;
 
-    @PostMapping // Método para criar uma única lição
+    @PostMapping
     public ResponseEntity<LessonDTO> create(@RequestBody LessonDTO lessonDTO) {
         LessonDTO createdLesson = lessonService.create(lessonDTO);
         return new ResponseEntity<>(createdLesson, HttpStatus.CREATED);

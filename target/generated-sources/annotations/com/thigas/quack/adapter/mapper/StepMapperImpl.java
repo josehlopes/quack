@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T15:02:29-0300",
+    date = "2024-10-03T01:18:05-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -28,7 +28,7 @@ public class StepMapperImpl implements StepMapper {
         stepDTO.setId( stepEntity.getId() );
         stepDTO.setDescription( stepEntity.getDescription() );
         stepDTO.setImagePath( stepEntity.getImagePath() );
-        stepDTO.setStatus( statusValueToInteger( stepEntity.getStatus() ) );
+        stepDTO.setStatus( stepMapStatusToInt( stepEntity.getStatus() ) );
 
         return stepDTO;
     }
@@ -47,7 +47,7 @@ public class StepMapperImpl implements StepMapper {
         stepEntity.setId( stepDTO.getId() );
         stepEntity.setDescription( stepDTO.getDescription() );
         stepEntity.setImagePath( stepDTO.getImagePath() );
-        stepEntity.setStatus( integerToStatusValue( stepDTO.getStatus() ) );
+        stepEntity.setStatus( stepMapIntToStatus( stepDTO.getStatus() ) );
 
         return stepEntity;
     }
@@ -104,7 +104,7 @@ public class StepMapperImpl implements StepMapper {
         stepModel.setId( stepDTO.getId() );
         stepModel.setDescription( stepDTO.getDescription() );
         stepModel.setImagePath( stepDTO.getImagePath() );
-        stepModel.setStatus( integerToStatusValue( stepDTO.getStatus() ) );
+        stepModel.setStatus( stepMapIntToStatus( stepDTO.getStatus() ) );
 
         return stepModel;
     }
@@ -123,7 +123,7 @@ public class StepMapperImpl implements StepMapper {
         stepDTO.setId( stepModel.getId() );
         stepDTO.setDescription( stepModel.getDescription() );
         stepDTO.setImagePath( stepModel.getImagePath() );
-        stepDTO.setStatus( statusValueToInteger( stepModel.getStatus() ) );
+        stepDTO.setStatus( stepMapStatusToInt( stepModel.getStatus() ) );
 
         return stepDTO;
     }

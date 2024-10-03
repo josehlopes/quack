@@ -2,9 +2,11 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.domain.entity.AddressEntity;
+import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,45 +15,45 @@ public interface AddressMapper {
 
     @Mapping(source = "user", target = "user.id")
     @Mapping(source = "status", target = "status")
-    AddressEntity dtoToEntity(AddressDTO addressDTO);
+    AddressEntity dtoToEntity(AddressDTO addressDTO, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user.id", target = "user")
     @Mapping(source = "status", target = "status")
-    AddressDTO entityToDto(AddressEntity address);
+    AddressDTO entityToDto(AddressEntity address, @Context CycleAvoidingMappingContext context);
 
-    AddressModel entityToModel(AddressEntity address);
+    AddressModel entityToModel(AddressEntity address, @Context CycleAvoidingMappingContext context);
 
-    AddressEntity modelToEntity(AddressModel addressModel);
+    AddressEntity modelToEntity(AddressModel addressModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user", target = "user.id")
     @Mapping(source = "status", target = "status")
-    AddressModel dtoToModel(AddressDTO addressDTO);
+    AddressModel dtoToModel(AddressDTO addressDTO, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user.id", target = "user")
     @Mapping(source = "status", target = "status")
-    AddressDTO modelToDto(AddressModel addressModel);
+    AddressDTO modelToDto(AddressModel addressModel, @Context CycleAvoidingMappingContext context);
 
-    default UserModel integerToUserModel(Integer user) {
-        if (user == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(user);
-        return userModel;
+    default UserModel userRoadmapIntegerToModel(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integerToModel(user, UserModel.class, context);
     }
 
-    default Integer userModelIdToInteger(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
+    default Integer userRoadmapModelToInteger(UserModel userModel) {
+        return MapperUtils.modelToInteger(userModel);
     }
 
-    default int statusValueToAddressInteger(Status status) {
-        return status != null ? status.getValue() : 0;
+    default UserEntity userRoadmapIntegerToEntity(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integerToEntity(user, UserEntity.class, context);
     }
 
-    default Status addressIntegerToStatusValue(int value) {
-        return Status.fromValue(value);
+    default Integer userRoadmapEntityToInteger(UserEntity userEntity) {
+        return MapperUtils.modelToInteger(userEntity);
+    }
+
+    default int addressMapStatusToInt(Status status) {
+        return MapperUtils.statusToInt(status);
+    }
+
+    default Status addressMapIntToStatus(int value) {
+        return MapperUtils.intToStatus(value);
     }
 }

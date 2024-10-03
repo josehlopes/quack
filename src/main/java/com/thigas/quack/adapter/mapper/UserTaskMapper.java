@@ -5,65 +5,51 @@ import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(uses = {UserMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface UserTaskMapper {
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
-    UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity);
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
+    UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
-    UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO);
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
+    UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
-    UserTaskModel entityToModel(UserTaskEntity userEntity);
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
+    UserTaskModel entityToModel(UserTaskEntity userEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
-    UserTaskEntity modelToEntity(UserTaskModel userModel);
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
+    UserTaskEntity modelToEntity(UserTaskModel userModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "task", target = "task.id")
-    UserTaskModel dtoToModel(UserTaskDTO userTaskDTO);
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
+    UserTaskModel dtoToModel(UserTaskDTO userTaskDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "task.id", target = "task")
-    UserTaskDTO modelToDto(UserTaskModel userTaskModel);
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
+    UserTaskDTO modelToDto(UserTaskModel userTaskModel, @Context CycleAvoidingMappingContext context);
 
-    default UserModel userToModel(Integer user) {
-        if (user == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(user);
-        return userModel;
+    default UserModel userModelIdToInteger(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integerToModel(user, UserModel.class, context);
     }
 
-    default Integer userModelToId(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
+    default Integer integerToUserModelId(UserModel userModel) {
+        return MapperUtils.modelToInteger(userModel);
     }
 
-    default TaskModel taskToModel(Integer task) {
-        if (task == null) {
-            return null;
-        }
-        TaskModel taskModel = new TaskModel();
-        taskModel.setId(task);
-        return taskModel;
+    default TaskModel taskModelIdToInteger(Integer task, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.integerToModel(task, TaskModel.class, context);
     }
 
-    default Integer taskModelToId(TaskModel taskModel) {
-        if (taskModel == null) {
-            return null;
-        }
-        return taskModel.getId();
+    default Integer integerToTaskModelId(TaskModel taskModel) {
+        return MapperUtils.modelToInteger(taskModel);
     }
 }

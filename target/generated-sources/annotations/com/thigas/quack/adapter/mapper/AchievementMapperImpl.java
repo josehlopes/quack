@@ -8,20 +8,21 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T15:02:29-0300",
+    date = "2024-10-03T01:18:06-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class AchievementMapperImpl implements AchievementMapper {
 
     @Override
-    public AchievementEntity dtoToEntity(AchievementDTO achievementDTO) {
+    public AchievementEntity dtoToEntity(AchievementDTO achievementDTO, CycleAvoidingMappingContext context) {
         if ( achievementDTO == null ) {
             return null;
         }
 
         AchievementEntity achievementEntity = new AchievementEntity();
 
+        achievementEntity.setUserAchievements( integersToUserAchievementEntityId( achievementDTO.getUserAchievements(), context ) );
         achievementEntity.setId( achievementDTO.getId() );
         achievementEntity.setName( achievementDTO.getName() );
         achievementEntity.setDescription( achievementDTO.getDescription() );
@@ -31,13 +32,14 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementDTO entityToDto(AchievementEntity achievementEntity) {
+    public AchievementDTO entityToDto(AchievementEntity achievementEntity, CycleAvoidingMappingContext context) {
         if ( achievementEntity == null ) {
             return null;
         }
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
+        achievementDTO.setUserAchievements( userAchievementEntityToIntegers( achievementEntity.getUserAchievements() ) );
         achievementDTO.setId( achievementEntity.getId() );
         achievementDTO.setName( achievementEntity.getName() );
         achievementDTO.setDescription( achievementEntity.getDescription() );
@@ -47,7 +49,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementModel entityToModel(AchievementEntity achievementEntity) {
+    public AchievementModel entityToModel(AchievementEntity achievementEntity, CycleAvoidingMappingContext context) {
         if ( achievementEntity == null ) {
             return null;
         }
@@ -58,12 +60,13 @@ public class AchievementMapperImpl implements AchievementMapper {
         achievementModel.setName( achievementEntity.getName() );
         achievementModel.setDescription( achievementEntity.getDescription() );
         achievementModel.setImagePath( achievementEntity.getImagePath() );
+        achievementModel.setUserAchievements( integersToUserAchievementModelId( userAchievementEntityToIntegers( achievementEntity.getUserAchievements() ), context ) );
 
         return achievementModel;
     }
 
     @Override
-    public AchievementEntity modelToEntity(AchievementModel achievementModel) {
+    public AchievementEntity modelToEntity(AchievementModel achievementModel, CycleAvoidingMappingContext context) {
         if ( achievementModel == null ) {
             return null;
         }
@@ -74,18 +77,20 @@ public class AchievementMapperImpl implements AchievementMapper {
         achievementEntity.setName( achievementModel.getName() );
         achievementEntity.setDescription( achievementModel.getDescription() );
         achievementEntity.setImagePath( achievementModel.getImagePath() );
+        achievementEntity.setUserAchievements( integersToUserAchievementEntityId( userAchievementModelIdToIntegers( achievementModel.getUserAchievements() ), context ) );
 
         return achievementEntity;
     }
 
     @Override
-    public AchievementModel dtoToModel(AchievementDTO achievementDTO) {
+    public AchievementModel dtoToModel(AchievementDTO achievementDTO, CycleAvoidingMappingContext context) {
         if ( achievementDTO == null ) {
             return null;
         }
 
         AchievementModel achievementModel = new AchievementModel();
 
+        achievementModel.setUserAchievements( integersToUserAchievementModelId( achievementDTO.getUserAchievements(), context ) );
         achievementModel.setId( achievementDTO.getId() );
         achievementModel.setName( achievementDTO.getName() );
         achievementModel.setDescription( achievementDTO.getDescription() );
@@ -95,13 +100,14 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementDTO modelToDto(AchievementModel achievementModel) {
+    public AchievementDTO modelToDto(AchievementModel achievementModel, CycleAvoidingMappingContext context) {
         if ( achievementModel == null ) {
             return null;
         }
 
         AchievementDTO achievementDTO = new AchievementDTO();
 
+        achievementDTO.setUserAchievements( userAchievementModelIdToIntegers( achievementModel.getUserAchievements() ) );
         achievementDTO.setId( achievementModel.getId() );
         achievementDTO.setName( achievementModel.getName() );
         achievementDTO.setDescription( achievementModel.getDescription() );

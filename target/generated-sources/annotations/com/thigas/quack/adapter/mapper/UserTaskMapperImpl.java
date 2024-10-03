@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T15:02:29-0300",
+    date = "2024-10-03T01:18:06-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
 public class UserTaskMapperImpl implements UserTaskMapper {
 
     @Override
-    public UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity) {
+    public UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, CycleAvoidingMappingContext context) {
         if ( roadmapUserEntity == null ) {
             return null;
         }
@@ -36,15 +36,15 @@ public class UserTaskMapperImpl implements UserTaskMapper {
     }
 
     @Override
-    public UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO) {
+    public UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, CycleAvoidingMappingContext context) {
         if ( roadmapUserDTO == null ) {
             return null;
         }
 
         UserTaskEntity userTaskEntity = new UserTaskEntity();
 
-        userTaskEntity.setUser( userTaskDTOToUserEntity( roadmapUserDTO ) );
-        userTaskEntity.setTask( userTaskDTOToTaskEntity( roadmapUserDTO ) );
+        userTaskEntity.setUser( userTaskDTOToUserEntity( roadmapUserDTO, context ) );
+        userTaskEntity.setTask( userTaskDTOToTaskEntity( roadmapUserDTO, context ) );
         userTaskEntity.setId( roadmapUserDTO.getId() );
         userTaskEntity.setStatus( roadmapUserDTO.getStatus() );
         userTaskEntity.setImagePath( roadmapUserDTO.getImagePath() );
@@ -53,15 +53,15 @@ public class UserTaskMapperImpl implements UserTaskMapper {
     }
 
     @Override
-    public UserTaskModel entityToModel(UserTaskEntity userEntity) {
+    public UserTaskModel entityToModel(UserTaskEntity userEntity, CycleAvoidingMappingContext context) {
         if ( userEntity == null ) {
             return null;
         }
 
         UserTaskModel userTaskModel = new UserTaskModel();
 
-        userTaskModel.setUser( userToModel( userEntityUserId( userEntity ) ) );
-        userTaskModel.setTask( taskToModel( userEntityTaskId( userEntity ) ) );
+        userTaskModel.setUser( userModelIdToInteger( userEntityUserId( userEntity ), context ) );
+        userTaskModel.setTask( taskModelIdToInteger( userEntityTaskId( userEntity ), context ) );
         userTaskModel.setId( userEntity.getId() );
         userTaskModel.setStatus( userEntity.getStatus() );
         userTaskModel.setImagePath( userEntity.getImagePath() );
@@ -70,15 +70,15 @@ public class UserTaskMapperImpl implements UserTaskMapper {
     }
 
     @Override
-    public UserTaskEntity modelToEntity(UserTaskModel userModel) {
+    public UserTaskEntity modelToEntity(UserTaskModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }
 
         UserTaskEntity userTaskEntity = new UserTaskEntity();
 
-        userTaskEntity.setUser( userTaskModelToUserEntity( userModel ) );
-        userTaskEntity.setTask( userTaskModelToTaskEntity( userModel ) );
+        userTaskEntity.setUser( userTaskModelToUserEntity( userModel, context ) );
+        userTaskEntity.setTask( userTaskModelToTaskEntity( userModel, context ) );
         userTaskEntity.setId( userModel.getId() );
         userTaskEntity.setStatus( userModel.getStatus() );
         userTaskEntity.setImagePath( userModel.getImagePath() );
@@ -87,15 +87,15 @@ public class UserTaskMapperImpl implements UserTaskMapper {
     }
 
     @Override
-    public UserTaskModel dtoToModel(UserTaskDTO userTaskDTO) {
+    public UserTaskModel dtoToModel(UserTaskDTO userTaskDTO, CycleAvoidingMappingContext context) {
         if ( userTaskDTO == null ) {
             return null;
         }
 
         UserTaskModel userTaskModel = new UserTaskModel();
 
-        userTaskModel.setUser( userTaskDTOToUserModel( userTaskDTO ) );
-        userTaskModel.setTask( userTaskDTOToTaskModel( userTaskDTO ) );
+        userTaskModel.setUser( userTaskDTOToUserModel( userTaskDTO, context ) );
+        userTaskModel.setTask( userTaskDTOToTaskModel( userTaskDTO, context ) );
         userTaskModel.setId( userTaskDTO.getId() );
         userTaskModel.setStatus( userTaskDTO.getStatus() );
         userTaskModel.setImagePath( userTaskDTO.getImagePath() );
@@ -104,7 +104,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
     }
 
     @Override
-    public UserTaskDTO modelToDto(UserTaskModel userTaskModel) {
+    public UserTaskDTO modelToDto(UserTaskModel userTaskModel, CycleAvoidingMappingContext context) {
         if ( userTaskModel == null ) {
             return null;
         }
@@ -144,7 +144,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         return id;
     }
 
-    protected UserEntity userTaskDTOToUserEntity(UserTaskDTO userTaskDTO) {
+    protected UserEntity userTaskDTOToUserEntity(UserTaskDTO userTaskDTO, CycleAvoidingMappingContext context) {
         if ( userTaskDTO == null ) {
             return null;
         }
@@ -156,7 +156,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         return userEntity;
     }
 
-    protected TaskEntity userTaskDTOToTaskEntity(UserTaskDTO userTaskDTO) {
+    protected TaskEntity userTaskDTOToTaskEntity(UserTaskDTO userTaskDTO, CycleAvoidingMappingContext context) {
         if ( userTaskDTO == null ) {
             return null;
         }
@@ -192,31 +192,31 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         return id;
     }
 
-    protected UserEntity userTaskModelToUserEntity(UserTaskModel userTaskModel) {
+    protected UserEntity userTaskModelToUserEntity(UserTaskModel userTaskModel, CycleAvoidingMappingContext context) {
         if ( userTaskModel == null ) {
             return null;
         }
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setId( userModelToId( userTaskModel.getUser() ) );
+        userEntity.setId( integerToUserModelId( userTaskModel.getUser() ) );
 
         return userEntity;
     }
 
-    protected TaskEntity userTaskModelToTaskEntity(UserTaskModel userTaskModel) {
+    protected TaskEntity userTaskModelToTaskEntity(UserTaskModel userTaskModel, CycleAvoidingMappingContext context) {
         if ( userTaskModel == null ) {
             return null;
         }
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setId( taskModelToId( userTaskModel.getTask() ) );
+        taskEntity.setId( integerToTaskModelId( userTaskModel.getTask() ) );
 
         return taskEntity;
     }
 
-    protected UserModel userTaskDTOToUserModel(UserTaskDTO userTaskDTO) {
+    protected UserModel userTaskDTOToUserModel(UserTaskDTO userTaskDTO, CycleAvoidingMappingContext context) {
         if ( userTaskDTO == null ) {
             return null;
         }
@@ -228,7 +228,7 @@ public class UserTaskMapperImpl implements UserTaskMapper {
         return userModel;
     }
 
-    protected TaskModel userTaskDTOToTaskModel(UserTaskDTO userTaskDTO) {
+    protected TaskModel userTaskDTOToTaskModel(UserTaskDTO userTaskDTO, CycleAvoidingMappingContext context) {
         if ( userTaskDTO == null ) {
             return null;
         }

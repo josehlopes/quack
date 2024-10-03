@@ -3,7 +3,10 @@ package com.thigas.quack.infrastructure.persistence.entity;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -50,12 +53,12 @@ public class AddressModel implements BaseModel {
 
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
 
     @Override
