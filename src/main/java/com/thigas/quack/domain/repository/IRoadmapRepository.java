@@ -15,5 +15,4 @@ public interface IRoadmapRepository {
     Boolean existsById(int id);
 
     void deleteById(int id);
-
 }

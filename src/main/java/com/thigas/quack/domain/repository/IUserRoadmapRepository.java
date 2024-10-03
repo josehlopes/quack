@@ -14,5 +14,4 @@ public interface IUserRoadmapRepository {
     Iterable<UserRoadmapModel> findAll();
 
     void deleteById(int id);
-
 }

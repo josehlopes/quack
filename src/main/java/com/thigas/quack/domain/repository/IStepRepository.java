@@ -6,7 +6,6 @@ import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import java.util.Optional;
 
 public interface IStepRepository {
-
     StepModel save(StepModel step);
 
     Boolean existsById(int id);
@@ -16,5 +15,4 @@ public interface IStepRepository {
     Iterable<StepModel> findAll();
 
     void deleteById(int id);
-
 }

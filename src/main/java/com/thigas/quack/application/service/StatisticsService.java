@@ -1,8 +1,10 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
+import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.adapter.mapper.StatisticsMapper;
+import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
+import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,25 +24,21 @@ public class StatisticsService {
     @Autowired
     private StatisticsMapper statisticsMapper;
 
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
-        StatisticsModel statisticsModel = statisticsMapper.dtoToModel(statisticsDTO, new CycleAvoidingMappingContext());
+        StatisticsModel statisticsModel = statisticsMapper.dtoToModel(statisticsDTO);
         StatisticsModel savedStatistics = statisticsRepository.save(statisticsModel);
-        return statisticsMapper.modelToDto(savedStatistics, context);
+        return statisticsMapper.modelToDto(savedStatistics);
     }
 
     public Optional<StatisticsDTO> getById(int id) {
-        Optional<StatisticsModel> statisticsOptional = statisticsRepository.findById(id);
-        return statisticsOptional.map(statistics -> statisticsMapper.modelToDto(statistics, context));
+        Optional<StatisticsModel> statistics = statisticsRepository.findById(id);
+        return statistics.map(statisticsMapper::modelToDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
         Iterable<StatisticsModel> statistics = statisticsRepository.findAll();
-        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
-        return StreamSupport.stream(statistics.spliterator(), false).map(statistic -> statisticsMapper.modelToDto(statistic, context)).collect(Collectors.toList());
-
+        return StreamSupport.stream(statistics.spliterator(), false).map(statisticsMapper::modelToDto)
+                .collect(Collectors.toList());
     }
 
     public void update(StatisticsDTO statisticsDTO) {

@@ -1,18 +1,22 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
+import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.ILessonModelRepository;
+
 import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class LessonRepositoryImplementation implements ILessonRepository {
@@ -49,7 +53,7 @@ public class LessonRepositoryImplementation implements ILessonRepository {
     @Override
     @Transactional
     public Optional<LessonModel> findById(int id) {
-        return lessonModelRepository.findById(id);
+        return lessonModelRepository.findById(id); // Usando lambda para passar contexto
     }
 
     @Override

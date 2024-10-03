@@ -1,5 +1,7 @@
 package com.thigas.quack.adapter.dto;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -12,5 +14,4 @@ public class UserRoadmapDTO {
     private String startedAt;
     private String finishedAt;
     private int status;
-
 }

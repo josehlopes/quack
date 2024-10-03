@@ -2,14 +2,10 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +13,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "statistic")
-public class StatisticsModel implements BaseModel {
+public class StatisticsModel  implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,38 +36,19 @@ public class StatisticsModel implements BaseModel {
     private Double userExperience;
 
     @Column(name = "challenges_completed")
-    private int challengesCompletedCount;
+    private int challengesCompleted;
 
-
-    @Column(name = "roadmaps_completed_count")
-    private int roadmapsCompletedCount;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_completed_roadmaps",
-            joinColumns = @JoinColumn(name = "statistics_id"),
-            inverseJoinColumns = @JoinColumn(name = "roadmap_id")
-    )
-    @ToString.Exclude
-    private Set<RoadmapModel> roadmapsCompleted;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_completed_steps",
-            joinColumns = @JoinColumn(name = "statistics_id"),
-            inverseJoinColumns = @JoinColumn(name = "step_id")
-    )
-    @ToString.Exclude
-    private Set<StepModel> stepsCompleted;
+    @Column(name = "lessons_completed")
+    private int lessonsCompleted;
 
     @Override
     public int getId() {
-        return this.id;
+        return this.id; // Retorna o ID
     }
 
     @Override
     public void setId(int id) {
-        this.id = id;
+        this.id = id; // Define o ID
     }
 
     @Override

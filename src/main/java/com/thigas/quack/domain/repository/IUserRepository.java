@@ -18,5 +18,4 @@ public interface IUserRepository {
     void deleteById(int id);
 
     Optional<UserModel> findByEmail(String email);
-
 }

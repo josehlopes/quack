@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T01:18:05-0300",
+    date = "2024-10-03T15:02:29-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -19,7 +19,7 @@ public class UserMapperImpl implements UserMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
-    public UserDTO entityToDto(UserEntity user, CycleAvoidingMappingContext context) {
+    public UserDTO entityToDto(UserEntity user) {
         if ( user == null ) {
             return null;
         }
@@ -30,8 +30,7 @@ public class UserMapperImpl implements UserMapper {
             userDTO.setBornAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getBornAt() ) );
         }
         userDTO.setRegisterAt( stringToOffSet( user.getRegisterAt() ) );
-        userDTO.setStatus( userStatusToInteger( user.getStatus() ) );
-        userDTO.setUserAchievements( userAchievementEntitiesToIntegers( user.getUserAchievements() ) );
+        userDTO.setStatus( statusToInt( user.getStatus() ) );
         userDTO.setId( user.getId() );
         userDTO.setName( user.getName() );
         userDTO.setUsername( user.getUsername() );
@@ -46,7 +45,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserEntity dtoToEntity(UserDTO userDTO, CycleAvoidingMappingContext context) {
+    public UserEntity dtoToEntity(UserDTO userDTO) {
         if ( userDTO == null ) {
             return null;
         }
@@ -57,8 +56,7 @@ public class UserMapperImpl implements UserMapper {
             userEntity.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
         userEntity.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
-        userEntity.setStatus( userIntegerToStatus( userDTO.getStatus() ) );
-        userEntity.setUserAchievements( integersToUserAchievementEntities( userDTO.getUserAchievements(), context ) );
+        userEntity.setStatus( intToStatus( userDTO.getStatus() ) );
         userEntity.setId( userDTO.getId() );
         userEntity.setName( userDTO.getName() );
         userEntity.setUsername( userDTO.getUsername() );
@@ -73,7 +71,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserModel entityToModel(UserEntity userEntity, CycleAvoidingMappingContext context) {
+    public UserModel entityToModel(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
         }
@@ -92,13 +90,12 @@ public class UserMapperImpl implements UserMapper {
         userModel.setRegisterAt( userEntity.getRegisterAt() );
         userModel.setStatus( userEntity.getStatus() );
         userModel.setImagePath( userEntity.getImagePath() );
-        userModel.setUserAchievements( integersToUserAchievementModels( userAchievementEntitiesToIntegers( userEntity.getUserAchievements() ), context ) );
 
         return userModel;
     }
 
     @Override
-    public UserEntity modelToEntity(UserModel userModel, CycleAvoidingMappingContext context) {
+    public UserEntity modelToEntity(UserModel userModel) {
         if ( userModel == null ) {
             return null;
         }
@@ -117,13 +114,12 @@ public class UserMapperImpl implements UserMapper {
         userEntity.setRegisterAt( userModel.getRegisterAt() );
         userEntity.setImagePath( userModel.getImagePath() );
         userEntity.setStatus( userModel.getStatus() );
-        userEntity.setUserAchievements( integersToUserAchievementEntities( userAchievementModelsToIntegers( userModel.getUserAchievements() ), context ) );
 
         return userEntity;
     }
 
     @Override
-    public UserModel dtoToModel(UserDTO userDTO, CycleAvoidingMappingContext context) {
+    public UserModel dtoToModel(UserDTO userDTO) {
         if ( userDTO == null ) {
             return null;
         }
@@ -134,8 +130,7 @@ public class UserMapperImpl implements UserMapper {
             userModel.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
         userModel.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
-        userModel.setStatus( userIntegerToStatus( userDTO.getStatus() ) );
-        userModel.setUserAchievements( integersToUserAchievementModels( userDTO.getUserAchievements(), context ) );
+        userModel.setStatus( intToStatus( userDTO.getStatus() ) );
         userModel.setId( userDTO.getId() );
         userModel.setName( userDTO.getName() );
         userModel.setUsername( userDTO.getUsername() );
@@ -150,7 +145,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserDTO modelToDto(UserModel userModel, CycleAvoidingMappingContext context) {
+    public UserDTO modelToDto(UserModel userModel) {
         if ( userModel == null ) {
             return null;
         }
@@ -161,8 +156,7 @@ public class UserMapperImpl implements UserMapper {
             userDTO.setBornAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( userModel.getBornAt() ) );
         }
         userDTO.setRegisterAt( stringToOffSet( userModel.getRegisterAt() ) );
-        userDTO.setStatus( userStatusToInteger( userModel.getStatus() ) );
-        userDTO.setUserAchievements( userAchievementModelsToIntegers( userModel.getUserAchievements() ) );
+        userDTO.setStatus( statusToInt( userModel.getStatus() ) );
         userDTO.setId( userModel.getId() );
         userDTO.setName( userModel.getName() );
         userDTO.setUsername( userModel.getUsername() );

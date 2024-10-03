@@ -81,7 +81,7 @@ public class CodeExecutor {
     private static String executeCompiledCode(File sourceFile) {
         StringBuilder result = new StringBuilder();
         try (URLClassLoader classLoader = URLClassLoader
-                .newInstance(new URL[]{sourceFile.getParentFile().toURI().toURL()})) {
+                .newInstance(new URL[] { sourceFile.getParentFile().toURI().toURL() })) {
             Class<?> userClass = classLoader.loadClass(CLASS_NAME);
             Object instance = userClass.getDeclaredConstructor().newInstance();
 
@@ -107,8 +107,8 @@ public class CodeExecutor {
 
     private static String runTestCases(Method method, Object instance) throws Exception {
         StringBuilder result = new StringBuilder();
-        int[][] testCases = {{0, 100}, {1, 10}, {0, 0}, {1, 1}, {10, 5}, {-10, -1}};
-        int[] expectedResults = {2500, 25, 0, 1, 0, -25};
+        int[][] testCases = { { 0, 100 }, { 1, 10 }, { 0, 0 }, { 1, 1 }, { 10, 5 }, { -10, -1 } };
+        int[] expectedResults = { 2500, 25, 0, 1, 0, -25 };
 
         for (int i = 0; i < testCases.length; i++) {
             int[] testCase = testCases[i];

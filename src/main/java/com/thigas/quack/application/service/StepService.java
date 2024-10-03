@@ -1,18 +1,19 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StepDTO;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.StepMapper;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
-import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
+import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -49,8 +50,8 @@ public class StepService {
     }
 
     public Optional<StepDTO> getById(int id) {
-        Optional<StepModel> stepOptional = stepRepository.findById(id);
-        return stepOptional.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
+        Optional<StepModel> stepOpt = stepRepository.findById(id);
+        return stepOpt.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
     }
 
 

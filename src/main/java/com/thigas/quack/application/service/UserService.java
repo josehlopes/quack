@@ -1,10 +1,10 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,24 +23,20 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
     public UserDTO create(UserDTO userDTO) {
-        UserModel user = userMapper.dtoToModel(userDTO, new CycleAvoidingMappingContext());
+        UserModel user = userMapper.dtoToModel(userDTO);
         UserModel savedUser = userRepository.save(user);
-        return userMapper.modelToDto(savedUser, context);
+        return userMapper.modelToDto(savedUser);
     }
 
     public Optional<UserDTO> getById(int id) {
-        Optional<UserModel> userOptional = userRepository.findById(id);
-        return userOptional.map(user -> userMapper.modelToDto(user, new CycleAvoidingMappingContext()));
+        Optional<UserModel> user = userRepository.findById(id);
+        return user.map(userMapper::modelToDto);
     }
 
     public Iterable<UserDTO> getAll() {
         Iterable<UserModel> users = userRepository.findAll();
-        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
-        return StreamSupport.stream(users.spliterator(), false).map(user -> userMapper.modelToDto(user, context))
+        return StreamSupport.stream(users.spliterator(), false).map(userMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
@@ -63,8 +59,8 @@ public class UserService {
 
 
     public Optional<UserDTO> findByEmail(String email) {
-        Optional<UserModel> userOptional = userRepository.findByEmail(email);
-        return userOptional.map(user -> userMapper.modelToDto(user, new CycleAvoidingMappingContext()));
+        Optional<UserModel> user = userRepository.findByEmail(email);
+        return user.map(userMapper::modelToDto);
     }
 
 }

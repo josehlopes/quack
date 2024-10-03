@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private final FakerService fakerService;
+	private final FakerService fakerService;
 
-    public DataInitializer(FakerService fakerService) {
-        this.fakerService = fakerService;
-    }
+	public DataInitializer(FakerService fakerService) {
+		this.fakerService = fakerService;
+	}
 
-    @Override
-    public void run(String... args) throws Exception {
-        fakerService.generateAllFakeData(2);
-    }
+	@Override
+	public void run(String... args) throws Exception {
+		fakerService.generateAllFakeData(2);
+	}
 }

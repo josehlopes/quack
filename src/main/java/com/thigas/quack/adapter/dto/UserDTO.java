@@ -1,9 +1,6 @@
 package com.thigas.quack.adapter.dto;
 
-import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import lombok.Data;
-
-import java.util.Set;
 
 @Data
 public class UserDTO {
@@ -20,6 +17,4 @@ public class UserDTO {
     private String registerAt;
     private String imagePath;
     private int status;
-    private Set<Integer> userAchievements;
-
 }
