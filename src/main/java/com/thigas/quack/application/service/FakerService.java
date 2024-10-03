@@ -2,7 +2,6 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.*;
 
-import com.thigas.quack.infrastructure.persistence.entity.TaskText;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
@@ -204,23 +203,13 @@ public class FakerService {
 
 	public Set<TaskDTO> generateFakeTasks(int count) {
 		Set<TaskDTO> tasks = new HashSet<>();
-
 		for (int i = 1; i <= count; i++) {
 			TaskDTO taskDTO = new TaskDTO();
-
-			TaskText taskText = new TaskText();
-			taskText.setTitle(faker.lorem().sentence());
-			taskText.setDescription(faker.lorem().paragraph());
-			taskText.setText(faker.lorem().paragraph(2));
-
-			taskDTO.setTasktext(taskText);
-
+			taskDTO.setDescription(faker.lorem().sentence());
 			taskDTO.setImagePath(faker.avatar().image());
-
 
 			Set<Integer> steps = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toSet());
 			taskDTO.setSteps(steps);
-
 
 			taskDTO = taskService.create(taskDTO);
 
@@ -230,7 +219,6 @@ public class FakerService {
 
 			tasks.add(taskDTO);
 		}
-
 		return tasks;
 	}
 

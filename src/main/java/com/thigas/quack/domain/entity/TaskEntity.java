@@ -1,8 +1,6 @@
 package com.thigas.quack.domain.entity;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.thigas.quack.adapter.model.BaseEntity;
-import com.thigas.quack.infrastructure.persistence.entity.TaskText;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +15,7 @@ import java.util.Set;
 public class TaskEntity implements BaseEntity {
 
     private int id;
-    private TaskText tasktext;
+    private String description;
     private String imagePath;
     private Set<StepEntity> steps;
 
