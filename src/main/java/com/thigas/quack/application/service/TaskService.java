@@ -1,5 +1,7 @@
 package com.thigas.quack.application.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.adapter.mapper.TaskMapper;
@@ -28,18 +30,30 @@ public class TaskService {
     @Autowired
     private CycleAvoidingMappingContext context;
 
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public TaskDTO create(TaskDTO taskDTO) {
+        // Mapeia o DTO para o modelo de entidade
         TaskModel taskModel = taskMapper.dtoToModel(taskDTO, context);
+
+        // Associa os steps à task
         Set<StepModel> stepEntities = new HashSet<>();
         for (Integer stepId : taskDTO.getSteps()) {
-            Optional<StepModel> task = stepRepository.findById(stepId);
-            task.ifPresent(stepEntities::add);
+            Optional<StepModel> stepOpt = stepRepository.findById(stepId);
+            stepOpt.ifPresent(stepEntities::add);
         }
         taskModel.setSteps(stepEntities);
+
+        // Salva a task no repositório
         TaskModel savedTask = taskRepository.save(taskModel);
+
+        // Retorna o DTO da task salva
         return taskMapper.modelToDto(savedTask, context);
     }
+
+
+
 
     public Optional<TaskDTO> getById(int id) {
         Optional<TaskModel> taskOpt = taskRepository.findById(id);
@@ -55,8 +69,19 @@ public class TaskService {
     }
 
     public void update(TaskDTO taskDTO) {
-        TaskModel task = taskMapper.dtoToModel(taskDTO, context);
-        taskRepository.save(task);
+        // Mapeia o DTO para o modelo de entidade
+        TaskModel taskModel = taskMapper.dtoToModel(taskDTO, context);
+
+        // Atualiza os steps associados à task
+        Set<StepModel> stepEntities = new HashSet<>();
+        for (Integer stepId : taskDTO.getSteps()) {
+            Optional<StepModel> stepOpt = stepRepository.findById(stepId);
+            stepOpt.ifPresent(stepEntities::add);
+        }
+        taskModel.setSteps(stepEntities);
+
+        // Salva a task atualizada no repositório
+        taskRepository.save(taskModel);
     }
 
     public void delete(int id) {

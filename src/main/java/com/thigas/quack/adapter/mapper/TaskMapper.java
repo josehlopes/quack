@@ -10,10 +10,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
+
 
     @Mapping(source = "steps", target = "steps")
     TaskDTO entityToDto(TaskEntity taskEntity, @Context CycleAvoidingMappingContext context);
@@ -28,10 +28,10 @@ public interface TaskMapper {
     TaskEntity modelToEntity(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "steps", target = "steps")
-    TaskModel dtoToModel(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
+    TaskDTO modelToDto(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "steps", target = "steps")
-    TaskDTO modelToDto(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
+    TaskModel dtoToModel(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
 
     default Set<Integer> taskEntityToIntegers(Set<TaskEntity> tasks, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.entitiesToIntegers(tasks);
