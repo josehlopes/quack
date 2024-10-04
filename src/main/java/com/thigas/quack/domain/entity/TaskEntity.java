@@ -1,6 +1,7 @@
 package com.thigas.quack.domain.entity;
 
 import com.thigas.quack.adapter.model.BaseEntity;
+import com.thigas.quack.infrastructure.persistence.entity.TaskText;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ public class TaskEntity implements BaseEntity {
 
     private int id;
     private String description;
-    private String imagePath;
+    private TaskText tasktext;
     private Set<StepEntity> steps;
 
     @Override

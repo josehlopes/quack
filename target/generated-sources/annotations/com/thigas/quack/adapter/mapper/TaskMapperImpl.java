@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-01T10:43:33-0300",
+    date = "2024-10-03T22:47:21-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -24,8 +24,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskDTO.setSteps( stepEntityToIntegers( taskEntity.getSteps(), context ) );
         taskDTO.setId( taskEntity.getId() );
-        taskDTO.setDescription( taskEntity.getDescription() );
-        taskDTO.setImagePath( taskEntity.getImagePath() );
+        taskDTO.setTasktext( taskEntity.getTasktext() );
 
         return taskDTO;
     }
@@ -40,8 +39,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskEntity.setSteps( integersToStepEntityId( taskDTO.getSteps(), context ) );
         taskEntity.setId( taskDTO.getId() );
-        taskEntity.setDescription( taskDTO.getDescription() );
-        taskEntity.setImagePath( taskDTO.getImagePath() );
+        taskEntity.setTasktext( taskDTO.getTasktext() );
 
         return taskEntity;
     }
@@ -56,8 +54,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskModel.setSteps( integersToStepModels( stepEntityToIntegers( taskEntity.getSteps(), context ), context ) );
         taskModel.setId( taskEntity.getId() );
-        taskModel.setDescription( taskEntity.getDescription() );
-        taskModel.setImagePath( taskEntity.getImagePath() );
+        taskModel.setTasktext( taskEntity.getTasktext() );
 
         return taskModel;
     }
@@ -72,8 +69,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskEntity.setSteps( integersToStepEntityId( stepModelsToIntegers( taskModel.getSteps() ), context ) );
         taskEntity.setId( taskModel.getId() );
-        taskEntity.setDescription( taskModel.getDescription() );
-        taskEntity.setImagePath( taskModel.getImagePath() );
+        taskEntity.setTasktext( taskModel.getTasktext() );
 
         return taskEntity;
     }
@@ -88,7 +84,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskModel.setSteps( integersToStepModels( taskDTO.getSteps(), context ) );
         taskModel.setId( taskDTO.getId() );
-        taskModel.setDescription( taskDTO.getDescription() );
+        taskModel.setTasktext( taskDTO.getTasktext() );
         taskModel.setImagePath( taskDTO.getImagePath() );
 
         return taskModel;
@@ -104,7 +100,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         taskDTO.setSteps( stepModelsToIntegers( taskModel.getSteps() ) );
         taskDTO.setId( taskModel.getId() );
-        taskDTO.setDescription( taskModel.getDescription() );
+        taskDTO.setTasktext( taskModel.getTasktext() );
         taskDTO.setImagePath( taskModel.getImagePath() );
 
         return taskDTO;

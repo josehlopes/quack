@@ -1,5 +1,6 @@
 package com.thigas.quack.adapter.dto;
 
+import com.thigas.quack.infrastructure.persistence.entity.TaskText;
 import lombok.Data;
 
 import java.util.List;
@@ -10,6 +11,6 @@ public class TaskDTO {
 
     private int id;
     private Set<Integer> steps;
-    private String description;
+    private TaskText tasktext;
     private String imagePath;
 }

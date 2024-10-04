@@ -1,8 +1,10 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
+import com.thigas.quack.infrastructure.converter.TaskTextConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @RequiredArgsConstructor
 @Entity
 @Table(name = "task")
@@ -25,8 +27,10 @@ public class TaskModel implements BaseModel {
     @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     private Set<StepModel> steps;
 
-    @Column(nullable = false)
-    private String description;
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = TaskTextConverter.class)
+    @ColumnTransformer(write = "?::jsonb")
+    private TaskText tasktext;
 
     @Column(nullable = false)
     private String imagePath;
