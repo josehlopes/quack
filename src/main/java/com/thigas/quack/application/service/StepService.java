@@ -7,6 +7,8 @@ import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
+import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,11 @@ public class StepService {
 
     public StepDTO create(StepDTO stepDTO) {
         StepModel stepModel = stepMapper.dtoToModel(stepDTO, context);
+
+        // Verificar e associar as lições
+        Set<LessonModel> lessons = verifyLessons(stepDTO);
+        addLesson(stepModel, lessons);
+
         StepModel savedStep = stepRepository.save(stepModel);
         return stepMapper.modelToDto(savedStep, context);
     }
@@ -83,4 +90,34 @@ public class StepService {
             throw new IllegalArgumentException("Step não encontrado com id: " + id);
         }
     }
+
+    public Set<LessonModel> verifyLessons(StepDTO stepDto) {
+        Set<LessonModel> lessonSet = new HashSet<>();
+
+        if (stepDto.getLessons() == null || stepDto.getLessons().isEmpty()) {
+            return lessonSet;
+        } else {
+            for (Integer lessonId : stepDto.getLessons()) {
+                LessonModel lesson = lessonRepository.findById(lessonId)
+                        .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonId));
+                lessonSet.add(lesson);
+            }
+        }
+        return lessonSet;
+    }
+
+    public void addLesson(StepModel step, Set<LessonModel> lessons) {
+        step.getLessons().addAll(lessons);
+        for (LessonModel lesson : lessons) {
+            lesson.getSteps().add(step);
+        }
+    }
+
+
+    public void removeLesson(StepModel step, LessonModel lesson) {
+        step.getLessons().remove(lesson); // Remove a lição do passo
+        lesson.getSteps().remove(step); // Remove o passo da lição
+    }
+
+
 }

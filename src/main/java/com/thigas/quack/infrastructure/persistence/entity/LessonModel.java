@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -36,7 +33,7 @@ public class LessonModel implements BaseModel {
 
     @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<StepModel> steps;
+    private Set<StepModel> steps = new HashSet<>();
 
     @Override
     public int getId() {

@@ -22,17 +22,17 @@ public class StepModel implements BaseModel {
 
     @ManyToMany(mappedBy="steps")
     @ToString.Exclude
-    private Set<RoadmapModel> roadmaps;
+    private Set<RoadmapModel> roadmaps = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "step_tasks", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     @ToString.Exclude
-    private Set<TaskModel> tasks;
+    private Set<TaskModel> tasks = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     @ToString.Exclude
-    private Set<LessonModel> lessons;
+    private Set<LessonModel> lessons = new HashSet<>();
 
     @Column(nullable = false)
     private String description;
