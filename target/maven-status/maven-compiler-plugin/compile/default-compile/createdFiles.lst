@@ -4,6 +4,7 @@ com\thigas\quack\application\service\UserTaskService.class
 com\thigas\quack\adapter\mapper\AddressMapper.class
 com\thigas\quack\adapter\mapper\TaskMapperImpl.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\ITaskModelRepository.class
+com\thigas\quack\infrastructure\security\SecurityFilter.class
 com\thigas\quack\adapter\mapper\StepMapperImpl.class
 com\thigas\quack\infrastructure\persistence\repository\impl\StatisticsRepositoryImplementation.class
 com\thigas\quack\QuackApplication.class
@@ -21,6 +22,7 @@ com\thigas\quack\adapter\dto\AddressDTO.class
 com\thigas\quack\application\service\TaskService.class
 com\thigas\quack\infrastructure\persistence\entity\StepModel.class
 com\thigas\quack\adapter\dto\StatisticsDTO.class
+com\thigas\quack\domain\repository\IUserAchievementRepository.class
 com\thigas\quack\adapter\controller\RoadmapController.class
 com\thigas\quack\adapter\dto\AchievementDTO.class
 com\thigas\quack\adapter\mapper\AddressMapperImpl.class
@@ -42,8 +44,10 @@ com\thigas\quack\infrastructure\persistence\repository\impl\AddressRepositoryImp
 com\thigas\quack\infrastructure\persistence\entity\UserRoadmapModel.class
 com\thigas\quack\application\service\LessonService.class
 com\thigas\quack\adapter\model\BaseEntity.class
+com\thigas\quack\adapter\controller\AuthController.class
 com\thigas\quack\adapter\controller\TaskController.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\IUserModelRepository.class
+com\thigas\quack\infrastructure\security\SecurityConfig.class
 com\thigas\quack\adapter\controller\CodeExecutor.class
 com\thigas\quack\adapter\mapper\UserTaskMapperImpl.class
 com\thigas\quack\domain\entity\RoadmapEntity.class
@@ -57,6 +61,7 @@ com\thigas\quack\domain\repository\IAchievementRepository.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\IAchievementModelRepository.class
 com\thigas\quack\adapter\mapper\UserMapper.class
 com\thigas\quack\domain\entity\AchievementEntity.class
+com\thigas\quack\infrastructure\security\CustomUserDetailsService.class
 com\thigas\quack\adapter\controller\StepController.class
 com\thigas\quack\adapter\mapper\UserTaskMapper.class
 com\thigas\quack\application\usecase\RunUserCodeUseCase.class
@@ -69,11 +74,13 @@ com\thigas\quack\application\service\UserService.class
 com\thigas\quack\adapter\controller\UserController.class
 com\thigas\quack\adapter\dto\LoginRequestDTO.class
 com\thigas\quack\adapter\controller\StatisticsController.class
+com\thigas\quack\infrastructure\persistence\entity\StepLessonModel.class
 com\thigas\quack\adapter\mapper\CycleAvoidingMappingContext.class
 com\thigas\quack\domain\model\Status.class
 com\thigas\quack\domain\repository\IRoadmapRepository.class
 com\thigas\quack\domain\repository\IUserRepository.class
 com\thigas\quack\adapter\mapper\UserRoadmapMapperImpl.class
+com\thigas\quack\infrastructure\security\TokenService.class
 com\thigas\quack\application\service\FakerService.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\ILessonModelRepository.class
 com\thigas\quack\adapter\mapper\StatisticsMapper.class
@@ -105,6 +112,7 @@ com\thigas\quack\adapter\model\BaseModel.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\IRoadmapModelRepository.class
 com\thigas\quack\domain\entity\StatisticsEntity.class
 com\thigas\quack\adapter\mapper\RoadmapMapper.class
+com\thigas\quack\infrastructure\persistence\entity\UserAchievementModel.class
 com\thigas\quack\infrastructure\persistence\entity\UserModel.class
 com\thigas\quack\application\service\DataInitializer.class
 com\thigas\quack\adapter\mapper\AchievementMapper.class
@@ -112,4 +120,5 @@ com\thigas\quack\infrastructure\persistence\repository\impl\RoadmapRepositoryImp
 com\thigas\quack\adapter\controller\CodeController.class
 com\thigas\quack\adapter\mapper\LessonMapperImpl.class
 com\thigas\quack\adapter\mapper\UserRoadmapMapper.class
+com\thigas\quack\infrastructure\persistence\repository\jpa\IUserAchievementModelRepository.class
 com\thigas\quack\domain\repository\IStatisticsRepository.class

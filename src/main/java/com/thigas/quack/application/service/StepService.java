@@ -47,11 +47,6 @@ public class StepService {
 
     public StepDTO create(StepDTO stepDTO) {
         StepModel stepModel = stepMapper.dtoToModel(stepDTO, context);
-
-        // Verificar e associar as lições
-        Set<LessonModel> lessons = verifyLessons(stepDTO);
-        addLesson(stepModel, lessons);
-
         StepModel savedStep = stepRepository.save(stepModel);
         return stepMapper.modelToDto(savedStep, context);
     }

@@ -68,4 +68,6 @@ public class MapperUtils {
             }
         }).collect(Collectors.toSet());
     }
+
+    public static <T extends BaseEntity>
 }

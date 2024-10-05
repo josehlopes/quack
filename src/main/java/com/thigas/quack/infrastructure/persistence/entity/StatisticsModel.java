@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,20 +37,29 @@ public class StatisticsModel  implements BaseModel {
     @Column(name = "experience")
     private Double userExperience;
 
-    @Column(name = "challenges_completed")
-    private int challengesCompleted;
+    @Column(name = "challenges_completed_count")
+    private int challengesCompletedCount;
 
-    @Column(name = "lessons_completed")
-    private int lessonsCompleted;
+    @Column(name = "roadmaps_completed_count")
+    private int roadmapsCompletedCount;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+//    @JoinTable(name="", joinColumns=
+//            {@JoinColumn(name="roadmap_id")}, inverseJoinColumns=
+//            {@JoinColumn(name="user_id")})
+//    private Set<RoadmapModel> roadmaps = new HashSet<>();
+//
+//    private Set<AchievementModel> achievement;
+
 
     @Override
     public int getId() {
-        return this.id; // Retorna o ID
+        return this.id;
     }
 
     @Override
     public void setId(int id) {
-        this.id = id; // Define o ID
+        this.id = id;
     }
 
     @Override

@@ -125,8 +125,8 @@ public class FakerService {
 			statisticsDTO.setBestStreak(faker.number().numberBetween(1, 100));
 			statisticsDTO.setUserLevel(faker.number().numberBetween(1, 10));
 			statisticsDTO.setUserExperience(faker.number().randomDouble(2, 0, 1000));
-			statisticsDTO.setChallengesCompleted(faker.number().numberBetween(0, 50));
-			statisticsDTO.setLessonsCompleted(faker.number().numberBetween(0, 100));
+			statisticsDTO.setChallengesCompletedCount(faker.number().numberBetween(0, 50));
+			statisticsDTO.setRoadmapsCompletedCount(faker.number().numberBetween(0, 100));
 
 			statisticsService.create(statisticsDTO);
 			statisticsSet.add(statisticsDTO);

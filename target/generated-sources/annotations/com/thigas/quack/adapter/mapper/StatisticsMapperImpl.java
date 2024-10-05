@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-03T22:41:53-0300",
+    date = "2024-10-05T18:22:48-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
 )
 @Component
@@ -30,8 +30,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsDTO.setBestStreak( statistics.getBestStreak() );
         statisticsDTO.setUserLevel( statistics.getUserLevel() );
         statisticsDTO.setUserExperience( statistics.getUserExperience() );
-        statisticsDTO.setChallengesCompleted( statistics.getChallengesCompleted() );
-        statisticsDTO.setLessonsCompleted( statistics.getLessonsCompleted() );
+        statisticsDTO.setChallengesCompletedCount( statistics.getChallengesCompletedCount() );
+        statisticsDTO.setRoadmapsCompletedCount( statistics.getRoadmapsCompletedCount() );
 
         return statisticsDTO;
     }
@@ -50,8 +50,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsEntity.setBestStreak( statisticsDTO.getBestStreak() );
         statisticsEntity.setUserLevel( statisticsDTO.getUserLevel() );
         statisticsEntity.setUserExperience( statisticsDTO.getUserExperience() );
-        statisticsEntity.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
-        statisticsEntity.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
+        statisticsEntity.setChallengesCompletedCount( statisticsDTO.getChallengesCompletedCount() );
+        statisticsEntity.setRoadmapsCompletedCount( statisticsDTO.getRoadmapsCompletedCount() );
 
         return statisticsEntity;
     }
@@ -70,8 +70,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsModel.setBestStreak( statistics.getBestStreak() );
         statisticsModel.setUserLevel( statistics.getUserLevel() );
         statisticsModel.setUserExperience( statistics.getUserExperience() );
-        statisticsModel.setChallengesCompleted( statistics.getChallengesCompleted() );
-        statisticsModel.setLessonsCompleted( statistics.getLessonsCompleted() );
+        statisticsModel.setChallengesCompletedCount( statistics.getChallengesCompletedCount() );
+        statisticsModel.setRoadmapsCompletedCount( statistics.getRoadmapsCompletedCount() );
 
         return statisticsModel;
     }
@@ -90,8 +90,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsEntity.setBestStreak( statisticsModel.getBestStreak() );
         statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
         statisticsEntity.setUserExperience( statisticsModel.getUserExperience() );
-        statisticsEntity.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
-        statisticsEntity.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
+        statisticsEntity.setChallengesCompletedCount( statisticsModel.getChallengesCompletedCount() );
+        statisticsEntity.setRoadmapsCompletedCount( statisticsModel.getRoadmapsCompletedCount() );
 
         return statisticsEntity;
     }
@@ -110,8 +110,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsModel.setBestStreak( statisticsDTO.getBestStreak() );
         statisticsModel.setUserLevel( statisticsDTO.getUserLevel() );
         statisticsModel.setUserExperience( statisticsDTO.getUserExperience() );
-        statisticsModel.setChallengesCompleted( statisticsDTO.getChallengesCompleted() );
-        statisticsModel.setLessonsCompleted( statisticsDTO.getLessonsCompleted() );
+        statisticsModel.setChallengesCompletedCount( statisticsDTO.getChallengesCompletedCount() );
+        statisticsModel.setRoadmapsCompletedCount( statisticsDTO.getRoadmapsCompletedCount() );
 
         return statisticsModel;
     }
@@ -130,8 +130,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         statisticsDTO.setBestStreak( statisticsModel.getBestStreak() );
         statisticsDTO.setUserLevel( statisticsModel.getUserLevel() );
         statisticsDTO.setUserExperience( statisticsModel.getUserExperience() );
-        statisticsDTO.setChallengesCompleted( statisticsModel.getChallengesCompleted() );
-        statisticsDTO.setLessonsCompleted( statisticsModel.getLessonsCompleted() );
+        statisticsDTO.setChallengesCompletedCount( statisticsModel.getChallengesCompletedCount() );
+        statisticsDTO.setRoadmapsCompletedCount( statisticsModel.getRoadmapsCompletedCount() );
 
         return statisticsDTO;
     }

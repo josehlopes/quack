@@ -9,7 +9,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "step_lesson")
 public class StepLessonModel {
@@ -29,47 +37,5 @@ public class StepLessonModel {
     @Column(name = "image_path", nullable = true)
     private String imagePath;
 
-    // Getters e Setters
-
-    /**
-     * @return int return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * @return StepModel return the step
-     */
-    public StepModel getStep() {
-        return step;
-    }
-
-    /**
-     * @param step the step to set
-     */
-    public void setStep(StepModel step) {
-        this.step = step;
-    }
-
-    /**
-     * @return LessonModel return the lesson
-     */
-    public LessonModel getLesson() {
-        return lesson;
-    }
-
-    /**
-     * @param lesson the lesson to set
-     */
-    public void setLesson(LessonModel lesson) {
-        this.lesson = lesson;
-    }
 }
+
