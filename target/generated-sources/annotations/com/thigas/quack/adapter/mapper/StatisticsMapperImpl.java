@@ -62,8 +62,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
 
         StatisticsModel statisticsModel = new StatisticsModel();
 
-        statisticsModel.setUser( map( statisticsUserId1( statistics ) ) );
         statisticsModel.setId( statistics.getId() );
+        statisticsModel.setUser( userEntityToUserModel( statistics.getUser() ) );
         statisticsModel.setStreakDays( statistics.getStreakDays() );
         statisticsModel.setBestStreak( statistics.getBestStreak() );
         statisticsModel.setUserLevel( statistics.getUserLevel() );
@@ -82,8 +82,8 @@ public class StatisticsMapperImpl implements StatisticsMapper {
 
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
-        statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser() ) );
         statisticsEntity.setId( statisticsModel.getId() );
+        statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser() ) );
         statisticsEntity.setStreakDays( statisticsModel.getStreakDays() );
         statisticsEntity.setBestStreak( statisticsModel.getBestStreak() );
         statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
@@ -158,16 +158,27 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return userEntity;
     }
 
-    private Integer statisticsUserId1(StatisticsEntity statisticsEntity) {
-        if ( statisticsEntity == null ) {
+    protected UserModel userEntityToUserModel(UserEntity userEntity) {
+        if ( userEntity == null ) {
             return null;
         }
-        UserEntity user = statisticsEntity.getUser();
-        if ( user == null ) {
-            return null;
-        }
-        int id = user.getId();
-        return id;
+
+        UserModel userModel = new UserModel();
+
+        userModel.setId( userEntity.getId() );
+        userModel.setName( userEntity.getName() );
+        userModel.setUsername( userEntity.getUsername() );
+        userModel.setPhone( userEntity.getPhone() );
+        userModel.setEmail( userEntity.getEmail() );
+        userModel.setPassword( userEntity.getPassword() );
+        userModel.setCpf( userEntity.getCpf() );
+        userModel.setBornAt( userEntity.getBornAt() );
+        userModel.setPoints( userEntity.getPoints() );
+        userModel.setRegisterAt( userEntity.getRegisterAt() );
+        userModel.setStatus( userEntity.getStatus() );
+        userModel.setImagePath( userEntity.getImagePath() );
+
+        return userModel;
     }
 
     protected UserEntity userModelToUserEntity(UserModel userModel) {

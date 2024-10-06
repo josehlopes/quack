@@ -13,7 +13,7 @@ import org.mapstruct.*;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(uses = {MapperUtils.class, StepMapper.class}, componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD)
+@Mapper(uses = {StepMapper.class}, componentModel = "spring")
 public interface LessonMapper  {
 
     @Mapping(source = "steps", target = "steps", qualifiedByName = "stepEntityToIntegers")

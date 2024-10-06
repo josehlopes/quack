@@ -28,10 +28,12 @@ public class StepLessonModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "step_id", nullable = false)
+    @ToString.Exclude
     private StepModel step;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id", nullable = false)
+    @ToString.Exclude
     private LessonModel lesson;
 
     @Column(name = "image_path", nullable = true)

@@ -10,7 +10,7 @@ import org.mapstruct.*;
 
 import java.util.Set;
 
-@Mapper(uses = {MapperUtils.class, StepMapper.class}, componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD)
+@Mapper(uses = {StepMapper.class}, componentModel = "spring")
 public interface RoadmapMapper {
 
     @Mappings({@Mapping(source = "status", target = "status"),

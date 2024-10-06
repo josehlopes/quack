@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Data
@@ -15,8 +16,9 @@ public class UserAchievementEntity implements BaseEntity {
 
     private int id;
     private UserEntity user;
-    private Set<AchievementEntity> achievements;
+    private AchievementEntity achievement;
     private String imagePath;
+    private OffsetDateTime obtainedDate;
 
 
     @Override

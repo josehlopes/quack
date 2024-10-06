@@ -8,7 +8,7 @@ import org.mapstruct.*;
 
 import java.util.Set;
 
-@Mapper(uses = {MapperUtils.class, RoadmapMapper.class, LessonMapper.class, TaskMapper.class}, componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD)
+@Mapper(uses = {RoadmapMapper.class, LessonMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface StepMapper {
 
 
@@ -26,18 +26,9 @@ public interface StepMapper {
     })
     StepEntity dtoToEntity(StepDTO stepDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
-    })
+
     StepModel entityToModel(StepEntity stepEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
-    })
     StepEntity modelToEntity(StepModel stepModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({

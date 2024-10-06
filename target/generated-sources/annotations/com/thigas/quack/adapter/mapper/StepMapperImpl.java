@@ -74,10 +74,10 @@ public class StepMapperImpl implements StepMapper {
 
         StepModel stepModel = new StepModel();
 
-        stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps(), context ) );
-        stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons(), context ) );
-        stepModel.setTasks( taskEntitySetToTaskModelSet( stepEntity.getTasks(), context ) );
         stepModel.setId( stepEntity.getId() );
+        stepModel.setRoadmaps( roadmapEntitySetToRoadmapModelSet( stepEntity.getRoadmaps(), context ) );
+        stepModel.setTasks( taskEntitySetToTaskModelSet( stepEntity.getTasks(), context ) );
+        stepModel.setLessons( lessonEntitySetToLessonModelSet( stepEntity.getLessons(), context ) );
         stepModel.setDescription( stepEntity.getDescription() );
         stepModel.setImagePath( stepEntity.getImagePath() );
         stepModel.setStatus( stepEntity.getStatus() );
@@ -93,10 +93,10 @@ public class StepMapperImpl implements StepMapper {
 
         StepEntity stepEntity = new StepEntity();
 
+        stepEntity.setId( stepModel.getId() );
         stepEntity.setRoadmaps( roadmapModelSetToRoadmapEntitySet( stepModel.getRoadmaps(), context ) );
         stepEntity.setLessons( lessonModelSetToLessonEntitySet( stepModel.getLessons(), context ) );
         stepEntity.setTasks( taskModelSetToTaskEntitySet( stepModel.getTasks(), context ) );
-        stepEntity.setId( stepModel.getId() );
         stepEntity.setDescription( stepModel.getDescription() );
         stepEntity.setImagePath( stepModel.getImagePath() );
         stepEntity.setStatus( stepModel.getStatus() );
@@ -155,19 +155,6 @@ public class StepMapperImpl implements StepMapper {
         return set1;
     }
 
-    protected Set<LessonModel> lessonEntitySetToLessonModelSet(Set<LessonEntity> set, CycleAvoidingMappingContext context) {
-        if ( set == null ) {
-            return null;
-        }
-
-        Set<LessonModel> set1 = new LinkedHashSet<LessonModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
-        for ( LessonEntity lessonEntity : set ) {
-            set1.add( lessonMapper.entityToModel( lessonEntity, context ) );
-        }
-
-        return set1;
-    }
-
     protected Set<TaskModel> taskEntitySetToTaskModelSet(Set<TaskEntity> set, CycleAvoidingMappingContext context) {
         if ( set == null ) {
             return null;
@@ -176,6 +163,19 @@ public class StepMapperImpl implements StepMapper {
         Set<TaskModel> set1 = new LinkedHashSet<TaskModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( TaskEntity taskEntity : set ) {
             set1.add( taskMapper.entityToModel( taskEntity, context ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<LessonModel> lessonEntitySetToLessonModelSet(Set<LessonEntity> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<LessonModel> set1 = new LinkedHashSet<LessonModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( LessonEntity lessonEntity : set ) {
+            set1.add( lessonMapper.entityToModel( lessonEntity, context ) );
         }
 
         return set1;

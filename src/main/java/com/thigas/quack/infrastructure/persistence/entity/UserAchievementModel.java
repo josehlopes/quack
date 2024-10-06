@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -24,13 +25,13 @@ public class UserAchievementModel implements BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "achievement_id", nullable = false)
-    private AchievementModel achievement;  // Mudei para AchievementModel
+    private AchievementModel achievement;
 
     @Column(name = "image_path")
     private String imagePath;
 
-    @Column(name = "obtained_date")  // Data em que a conquista foi obtida
-    private LocalDate obtainedDate;
+    @Column(name = "obtained_date")
+    private OffsetDateTime obtainedDate;
 
     @Override
     public int getId() {

@@ -27,12 +27,12 @@ public interface UserRoadmapMapper {
     @Mapping(target = "status", source = "status", qualifiedByName = "userRoadmapMapperIntToStatus")
     UserRoadmapEntity dtoToEntity(UserRoadmapDTO userRoadmapDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user")
-    @Mapping(source = "roadmap.id", target = "roadmap")
+    @Mapping(source = "user.id", target = "user.id")
+    @Mapping(source = "roadmap.id", target = "roadmap.id")
     UserRoadmapModel entityToModel(UserRoadmapEntity userRoadmapEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user", target = "user.id")
-    @Mapping(source = "roadmap", target = "roadmap.id")
+    @Mapping(source = "user.id", target = "user.id")
+    @Mapping(source = "roadmap.id", target = "roadmap.id")
     UserRoadmapEntity modelToEntity(UserRoadmapModel userRoadmapModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user", target = "user.id")

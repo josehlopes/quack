@@ -9,6 +9,7 @@ public class UserAchievementDTO {
 
     private int id;
     private int user;
-    private Set<Integer> achievements;
     private String imagePath;
+    private int achievement;
+    private String obtainedDate;
 }

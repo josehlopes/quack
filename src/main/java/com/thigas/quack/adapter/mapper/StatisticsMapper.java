@@ -17,10 +17,8 @@ public interface StatisticsMapper {
     @Mapping(source = "user", target = "user.id")
     StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO);
 
-    @Mapping(source = "user.id", target = "user")
     StatisticsModel entityToModel(StatisticsEntity statistics);
 
-    @Mapping(source = "user.id", target = "user.id")
     StatisticsEntity modelToEntity(StatisticsModel statisticsModel);
 
     @Mapping(source = "user", target = "user.id")
@@ -28,22 +26,6 @@ public interface StatisticsMapper {
 
     @Mapping(source = "user.id", target = "user")
     StatisticsDTO modelToDto(StatisticsModel statisticsModel);
-
-    default UserModel map(Integer user) {
-        if (user == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(user);
-        return userModel;
-    }
-
-    default Integer map(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
-    }
 
     default Status map(int value) {
         return Status.fromValue(value);

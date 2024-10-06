@@ -110,8 +110,8 @@ public class StepService {
 
 
     public void removeLesson(StepModel step, LessonModel lesson) {
-        step.getLessons().remove(lesson); // Remove a lição do passo
-        lesson.getSteps().remove(step); // Remove o passo da lição
+        step.getLessons().remove(lesson);
+        lesson.getSteps().remove(step);
     }
 
 

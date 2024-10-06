@@ -41,10 +41,7 @@ public class StatisticsModel implements BaseModel {
 
     @Column(name = "roadmaps_completed_count")
     private int roadmapsCompletedCount;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<UserAchievementModel> userAchievements = new HashSet<>();
-
+    
     @Override
     public int getId() {
         return this.id;

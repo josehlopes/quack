@@ -5,6 +5,7 @@ import com.thigas.quack.domain.entity.AchievementEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
