@@ -28,7 +28,7 @@ public class LessonController {
 
     @PostMapping("/create-several")
     public ResponseEntity<Set<LessonDTO>> createAll(@RequestBody Set<LessonDTO> lessonDTOs) {
-        Set<LessonDTO> createdLessons = lessonService.createAll(lessonDTOs, context);
+        Set<LessonDTO> createdLessons = lessonService.createAll(lessonDTOs);
         return new ResponseEntity<>(createdLessons, HttpStatus.CREATED);
     }
 

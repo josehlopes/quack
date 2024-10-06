@@ -1,27 +1,27 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StepDTO;
-import com.thigas.quack.adapter.mapper.StepMapper;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
 public class StepService {
 
+    // TODO: Melhorar a lógica de criação do Step
+    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
 
     @Autowired
     private IStepRepository stepRepository;
@@ -36,38 +36,29 @@ public class StepService {
     private IRoadmapRepository roadmapRepository;
 
     @Autowired
-    private StepMapper stepMapper;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
-
-    // TODO: Ver se da para melhorar a lógica de criação do Step
-    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
+    private ObjectMapperService objectMapperService;
 
     public StepDTO create(StepDTO stepDTO) {
-        StepModel stepModel = stepMapper.dtoToModel(stepDTO, context);
+        StepModel stepModel = objectMapperService.toModel(stepDTO);
         StepModel savedStep = stepRepository.save(stepModel);
-        return stepMapper.modelToDto(savedStep, context);
+        return objectMapperService.toDto(savedStep);
     }
 
     public Optional<StepDTO> getById(int id) {
-        Optional<StepModel> stepOpt = stepRepository.findById(id);
-        return stepOpt.map(step -> stepMapper.modelToDto(step, new CycleAvoidingMappingContext()));
+        return stepRepository.findById(id)
+                .map(objectMapperService::toDto);
     }
-
 
     public Iterable<StepDTO> getAll() {
         Iterable<StepModel> steps = stepRepository.findAll();
-        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
         return StreamSupport.stream(steps.spliterator(), false)
-                .map(step -> stepMapper.modelToDto(step, context))
+                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StepDTO stepDTO) {
-        StepModel step = stepMapper.dtoToModel(stepDTO, context);
-        stepRepository.save(step);
+        StepModel stepModel = objectMapperService.toModel(stepDTO);
+        stepRepository.save(stepModel);
     }
 
     public void delete(int id) {
@@ -91,12 +82,12 @@ public class StepService {
 
         if (stepDto.getLessons() == null || stepDto.getLessons().isEmpty()) {
             return lessonSet;
-        } else {
-            for (Integer lessonId : stepDto.getLessons()) {
-                LessonModel lesson = lessonRepository.findById(lessonId)
-                        .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonId));
-                lessonSet.add(lesson);
-            }
+        }
+
+        for (Integer lessonId : stepDto.getLessons()) {
+            LessonModel lesson = lessonRepository.findById(lessonId)
+                    .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonId));
+            lessonSet.add(lesson);
         }
         return lessonSet;
     }
@@ -108,11 +99,8 @@ public class StepService {
         }
     }
 
-
     public void removeLesson(StepModel step, LessonModel lesson) {
         step.getLessons().remove(lesson);
         lesson.getSteps().remove(step);
     }
-
-
 }

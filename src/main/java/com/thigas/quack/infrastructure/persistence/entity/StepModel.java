@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
@@ -20,8 +21,8 @@ public class StepModel implements BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(mappedBy="steps")
-    @ToString.Exclude
+    @ManyToMany(mappedBy="steps", fetch = FetchType.LAZY)
+    @JsonBackReference
     private Set<RoadmapModel> roadmaps = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })

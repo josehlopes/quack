@@ -47,4 +47,10 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
     public void deleteById(int id) {
         userRoadmapModelRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return userRoadmapModelRepository.existsById(id);
+    }
 }

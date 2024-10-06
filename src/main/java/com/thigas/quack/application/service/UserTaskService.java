@@ -1,10 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.mapper.UserMapper;
 import com.thigas.quack.adapter.mapper.UserTaskMapper;
-import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,24 +27,36 @@ public class UserTaskService {
         return userTaskMapper.modelToDto(savedUserTask);
     }
 
+
     public Optional<UserTaskDTO> getById(int id) {
-        Optional<UserTaskModel> userTask = userTaskRepository.findById(id);
-        return userTask.map(userTaskMapper::modelToDto);
+        return userTaskRepository.findById(id)
+                .map(userTaskMapper::modelToDto);
     }
+
 
     public Iterable<UserTaskDTO> getAll() {
         Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
-        return StreamSupport.stream(userTasks.spliterator(), false).map(userTaskMapper::modelToDto)
+        return StreamSupport.stream(userTasks.spliterator(), false)
+                .map(userTaskMapper::modelToDto)
                 .collect(Collectors.toList());
     }
 
+
     public void update(UserTaskDTO userTaskDTO) {
-        UserTaskModel existingUser = userTaskRepository.findById(userTaskDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        userTaskRepository.save(existingUser);
+        UserTaskModel existingUserTask = userTaskRepository.findById(userTaskDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User task not found"));
+
+        if (userTaskDTO.getId() != 0) {
+            existingUserTask.setId(userTaskDTO.getId());
+        }
+
+        userTaskRepository.save(existingUserTask);
     }
 
     public void delete(int id) {
+        if (!userTaskRepository.existsById(id)) {
+            throw new EntityNotFoundException("User task not found");
+        }
         userTaskRepository.deleteById(id);
     }
 }

@@ -11,6 +11,6 @@ public interface IUserTaskRepository {
     Optional<UserTaskModel> findById(int id);
 
     Iterable<UserTaskModel> findAll();
-
+    Boolean existsById(int id);
     void deleteById(int id);
 }

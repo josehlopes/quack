@@ -32,6 +32,7 @@ com\thigas\quack\application\service\RoadmapService.class
 com\thigas\quack\infrastructure\persistence\repository\jpa\IStepModelRepository.class
 com\thigas\quack\infrastructure\persistence\entity\RoadmapModel.class
 com\thigas\quack\application\service\UserRoadmapService.class
+com\thigas\quack\application\service\ObjectMapperService.class
 com\thigas\quack\infrastructure\persistence\repository\impl\StepRepositoryImplementation.class
 com\thigas\quack\adapter\controller\AchievementController.class
 com\thigas\quack\domain\entity\LessonEntity.class

@@ -1,11 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
-import com.thigas.quack.adapter.mapper.TaskMapper;
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,34 +19,40 @@ public class UserRoadmapService {
     private IUserRoadmapRepository userRoadmapRepository;
 
     @Autowired
-    private UserRoadmapMapper userRoadmapMapper;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
+    private ObjectMapperService objectMapperService;
 
     public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel userRoadmapModel = userRoadmapMapper.dtoToModel(userRoadmapDTO, context);
+        UserRoadmapModel userRoadmapModel = objectMapperService.toModel(userRoadmapDTO);
         UserRoadmapModel savedUserRoadmap = userRoadmapRepository.save(userRoadmapModel);
-        return userRoadmapMapper.modelToDto(savedUserRoadmap, context);
+        return objectMapperService.toDto(savedUserRoadmap);
     }
+
 
     public Optional<UserRoadmapDTO> getById(int id) {
-        Optional<UserRoadmapModel> userRoadmapOpt = userRoadmapRepository.findById(id);
-        return userRoadmapOpt.map(userRoadmap -> userRoadmapMapper.modelToDto(userRoadmap, new CycleAvoidingMappingContext()));
+        return userRoadmapRepository.findById(id)
+                .map(objectMapperService::toDto);
     }
 
+
     public Iterable<UserRoadmapDTO> getAll() {
-        Iterable<UserRoadmapModel> userRoadmapsOpt = userRoadmapRepository.findAll();
-        return StreamSupport.stream(userRoadmapsOpt.spliterator(), false).map(userRoadmap -> userRoadmapMapper.modelToDto(userRoadmap, new CycleAvoidingMappingContext())).collect(Collectors.toList());
+        Iterable<UserRoadmapModel> userRoadmaps = userRoadmapRepository.findAll();
+        return StreamSupport.stream(userRoadmaps.spliterator(), false)
+                .map(objectMapperService::toDto)
+                .collect(Collectors.toList());
     }
 
     public void update(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel existingUser = userRoadmapRepository.findById(userRoadmapDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        userRoadmapRepository.save(existingUser);
+        UserRoadmapModel existingUserRoadmap = userRoadmapRepository.findById(userRoadmapDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("UserRoadmap not found"));
+        //TODO: Definir campo a ser atualizado
+        existingUserRoadmap.setId(userRoadmapDTO.getId());
+        userRoadmapRepository.save(existingUserRoadmap);
     }
 
     public void delete(int id) {
+        if (!userRoadmapRepository.existsById(id)) {
+            throw new IllegalArgumentException("UserRoadmap não encontrado com id: " + id);
+        }
         userRoadmapRepository.deleteById(id);
     }
 }

@@ -5,12 +5,13 @@ import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Set;
 
 @Mapper(uses = {RoadmapMapper.class, LessonMapper.class, TaskMapper.class}, componentModel = "spring")
 public interface StepMapper {
-
 
     @Mappings({
             @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapEntityToIntegers"),

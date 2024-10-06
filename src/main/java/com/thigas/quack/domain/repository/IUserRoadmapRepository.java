@@ -12,6 +12,7 @@ public interface IUserRoadmapRepository {
     Optional<UserRoadmapModel> findById(int id);
 
     Iterable<UserRoadmapModel> findAll();
+    Boolean existsById(int id);
 
     void deleteById(int id);
 }

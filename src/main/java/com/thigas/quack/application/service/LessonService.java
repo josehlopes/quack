@@ -2,7 +2,6 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
-import com.thigas.quack.adapter.mapper.LessonMapper;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +19,21 @@ public class LessonService {
     private ILessonRepository lessonRepository;
 
     @Autowired
-    private LessonMapper lessonMapper;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
+    private ObjectMapperService objectMapperService;
 
     public LessonDTO create(LessonDTO lessonDTO) {
-        LessonModel lessonModel = lessonMapper.dtoToModel(lessonDTO, context);
+        LessonModel lessonModel = objectMapperService.toModel(lessonDTO);
         LessonModel savedLesson = lessonRepository.save(lessonModel);
-        return lessonMapper.modelToDto(savedLesson, context);
+        return objectMapperService.toDto(savedLesson);
     }
 
-    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs, CycleAvoidingMappingContext context) {
+    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs) {
         if (lessonDTOs == null || lessonDTOs.isEmpty()) {
             throw new IllegalArgumentException("LessonDTOs list cannot be null or empty");
         }
 
         Set<LessonModel> lessonEntities = lessonDTOs.stream()
-                .map(dto -> lessonMapper.dtoToModel(dto, context))
+                .map(objectMapperService::toModel)
                 .collect(Collectors.toSet());
 
         Set<LessonModel> savedLessons;
@@ -48,26 +44,24 @@ public class LessonService {
         }
 
         return savedLessons.stream()
-                .map(entity -> lessonMapper.modelToDto(entity, context))
+                .map(objectMapperService::toDto) // Usando ObjectMapperService
                 .collect(Collectors.toSet());
     }
 
-
     public Optional<LessonDTO> getById(int id) {
         Optional<LessonModel> lessonOpt = lessonRepository.findById(id);
-        return lessonOpt.map(lesson -> lessonMapper.modelToDto(lesson, new CycleAvoidingMappingContext()));
+        return lessonOpt.map(objectMapperService::toDto);
     }
 
     public Iterable<LessonDTO> getAll() {
         Iterable<LessonModel> lessons = lessonRepository.findAll();
-        CycleAvoidingMappingContext context = new CycleAvoidingMappingContext();
         return StreamSupport.stream(lessons.spliterator(), false)
-                .map(lesson -> lessonMapper.modelToDto(lesson, context))
-                .collect(Collectors.toSet());
+                .map(objectMapperService::toDto)
+                .collect(Collectors.toList());
     }
 
     public void update(LessonDTO lessonDTO) {
-        LessonModel lesson = lessonMapper.dtoToModel(lessonDTO, context);
+        LessonModel lesson = objectMapperService.toModel(lessonDTO);
         lessonRepository.save(lesson);
     }
 

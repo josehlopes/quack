@@ -1,5 +1,6 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
@@ -36,7 +37,7 @@ public class RoadmapModel implements BaseModel {
     @JoinTable(name="roadmap_steps", joinColumns=
             {@JoinColumn(name="roadmap_id")}, inverseJoinColumns=
             {@JoinColumn(name="step_id")})
-    @ToString.Exclude
+    @JsonManagedReference
     private Set<StepModel> steps;
 
     @Enumerated(EnumType.ORDINAL)

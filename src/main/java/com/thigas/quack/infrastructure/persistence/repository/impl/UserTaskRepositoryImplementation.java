@@ -46,4 +46,10 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
     public void deleteById(int id) {
         userTaskModelRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return userTaskModelRepository.existsById(id);
+    }
 }
