@@ -2,10 +2,9 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -25,10 +24,13 @@ public class UserAchievementModel implements BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "achievement_id", nullable = false)
-    private AchievementModel achievement;
+    private AchievementModel achievement;  // Mudei para AchievementModel
 
     @Column(name = "image_path")
     private String imagePath;
+
+    @Column(name = "obtained_date")  // Data em que a conquista foi obtida
+    private LocalDate obtainedDate;
 
     @Override
     public int getId() {
@@ -39,7 +41,4 @@ public class UserAchievementModel implements BaseModel {
     public void setId(int id) {
         this.id = id;
     }
-
-
-
 }

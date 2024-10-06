@@ -37,6 +37,42 @@ public interface UserMapper {
     @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
     UserDTO modelToDto(UserModel userModel);
 
+    @Named("integerToUserModel")
+    default UserModel integerToUserModel(Integer user) {
+        if (user == null) {
+            return null;
+        }
+        UserModel userModel = new UserModel();
+        userModel.setId(user);
+        return userModel;
+    }
+
+    @Named("userModelToInteger")
+    default Integer userModelToInteger(UserModel userModel) {
+        if (userModel == null) {
+            return null;
+        }
+        return userModel.getId();
+    }
+
+    @Named("integerToUserEntity")
+    default UserEntity integerToUserEntity(Integer user) {
+        if (user == null) {
+            return null;
+        }
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(user);
+        return userEntity;
+    }
+
+    @Named("userEntityToInteger")
+    default Integer userEntityToInteger(UserEntity userEntity) {
+        if (userEntity == null) {
+            return null;
+        }
+        return userEntity.getId();
+    }
+
     default OffsetDateTime offSetToString(String date) {
         if (date == null) {
             return null;
@@ -52,13 +88,13 @@ public interface UserMapper {
     }
 
     @Named("userStatusToInt")
-    default int statusToInt(Status status) {
-        return status != null ? status.getValue() : 0;
+    default int userRoadmapMapStatusToInteger(Status status) {
+        return MapperUtils.statusToInt(status);
     }
 
     @Named("userIntToStatus")
-    default Status intToStatus(int value) {
-        return Status.fromValue(value);
+    default Status userRoadmapMapIntegerToStatus(int value) {
+        return MapperUtils.intToStatus(value);
     }
 
 }

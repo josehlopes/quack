@@ -3,7 +3,6 @@ package com.thigas.quack.infrastructure.persistence.entity;
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,7 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "statistic")
-public class StatisticsModel  implements BaseModel {
+public class StatisticsModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,7 @@ public class StatisticsModel  implements BaseModel {
     @Column(name = "streak_days")
     private int streakDays;
 
-    @Column(name = "best_streak ")
+    @Column(name = "best_streak")
     private int bestStreak;
 
     @Column(name = "level")
@@ -43,14 +42,8 @@ public class StatisticsModel  implements BaseModel {
     @Column(name = "roadmaps_completed_count")
     private int roadmapsCompletedCount;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-//    @JoinTable(name="", joinColumns=
-//            {@JoinColumn(name="roadmap_id")}, inverseJoinColumns=
-//            {@JoinColumn(name="user_id")})
-//    private Set<RoadmapModel> roadmaps = new HashSet<>();
-//
-//    private Set<AchievementModel> achievement;
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserAchievementModel> userAchievements = new HashSet<>();
 
     @Override
     public int getId() {
@@ -66,15 +59,12 @@ public class StatisticsModel  implements BaseModel {
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
         StatisticsModel that = (StatisticsModel) o;
         return getId() != 0 && Objects.equals(getId(), that.getId());
     }
 
     @Override
     public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+        return getClass().hashCode();
     }
 }

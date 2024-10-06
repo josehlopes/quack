@@ -6,22 +6,19 @@ import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring")
+@Mapper(uses = {MapperUtils.class, StepMapper.class}, componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD)
 public interface RoadmapMapper {
 
     @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+            @Mapping(source = "steps", target = "steps" , qualifiedByName = "stepEntityToIntegers")})
     RoadmapDTO entityToDto(RoadmapEntity roadmapEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")})
     RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "status", target = "status"),
@@ -33,36 +30,68 @@ public interface RoadmapMapper {
     RoadmapEntity modelToEntity(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")})
     RoadmapModel dtoToModel(RoadmapDTO roadmapDTO, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "stepModelsToIntegers")})
     RoadmapDTO modelToDto(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
 
+    @Named("integersToRoadmapEntityId")
+    default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToEntities(roadmaps, RoadmapEntity.class, context);}
+
+    @Named("roadmapEntityToIntegers")
     default Set<Integer> roadmapEntityToIntegers(Set<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.entitiesToIntegers(roadmaps);
+            return MapperUtils.mapEntitiesToIntegers(roadmaps);
     }
 
-    default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmapsIds, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToEntities(roadmapsIds, RoadmapEntity.class, context);
+    @Named("integersToRoadmapModelId")
+    default Set<RoadmapModel> integersToRoadmapModelId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToModels(roadmaps, RoadmapModel.class, context);}
+
+    @Named("roadmapModelToIntegers")
+    default Set<Integer> roadmapModelToIntegers(Set<RoadmapModel> roadmaps, @Context CycleAvoidingMappingContext context) {
+            return MapperUtils.mapModelsToIntegers(roadmaps);
     }
 
-    default Set<Integer> stepEntityToIntegers(Set<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.entitiesToIntegers(steps);
+
+    @Named("integerToRoadmapModel")
+    default RoadmapModel integerToRoadmapModel(Integer roadmap) {
+        if (roadmap == null) {
+            return null;
+        }
+        RoadmapModel roadmapModel = new RoadmapModel();
+        roadmapModel.setId(roadmap);
+        return roadmapModel;
     }
 
-    default Set<StepEntity> integersToStepEntityId(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToEntities(stepIds, StepEntity.class, context);
+    @Named("roadmapModelToInteger")
+    default Integer roadmapModelToInteger(RoadmapModel roadmapModel) {
+        if (roadmapModel == null) {
+            return null;
+        }
+        return roadmapModel.getId();
     }
 
-    default Set<StepModel> integersToStepModels(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToModels(stepIds, StepModel.class, context);
+    @Named("integerToRoadmapEntity")
+    default RoadmapEntity integerToRoadmapEntity(Integer roadmap) {
+        if (roadmap == null) {
+            return null;
+        }
+        RoadmapEntity roadmapEntity = new RoadmapEntity();
+        roadmapEntity.setId(roadmap);
+        return roadmapEntity;
     }
 
-    default Set<Integer> stepModelsToIntegers(Set<StepModel> stepModels) {
-        return MapperUtils.modelsToIntegers(stepModels);
+    @Named("roadmapEntityToInteger")
+    default Integer roadmapEntityToInteger(RoadmapEntity roadmapEntity) {
+        if (roadmapEntity == null) {
+            return null;
+        }
+        return roadmapEntity.getId();
     }
+
 
     default Status integerToStatusValue(int status) {
         return Status.values()[status];

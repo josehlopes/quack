@@ -1,37 +1,28 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StepDTO;
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.StepEntity;
-import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.domain.model.Status;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
-import org.mapstruct.Context;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(uses = {MapperUtils.class, RoadmapMapper.class, LessonMapper.class, TaskMapper.class}, componentModel = "spring", injectionStrategy = InjectionStrategy.FIELD)
 public interface StepMapper {
 
+
     @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
+            @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapEntityToIntegers"),
+            @Mapping(source = "lessons", target = "lessons", qualifiedByName = "lessonEntityToIntegers"),
+            @Mapping(source = "tasks", target = "tasks", qualifiedByName = "taskEntityToIntegers")
     })
     StepDTO entityToDto(StepEntity stepEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
+            @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "integersToRoadmapEntityId"),
+            @Mapping(source = "lessons", target = "lessons", qualifiedByName = "integersToLessonEntityId"),
+            @Mapping(source = "tasks", target = "tasks", qualifiedByName = "integersToTaskEntityId")
     })
     StepEntity dtoToEntity(StepDTO stepDTO, @Context CycleAvoidingMappingContext context);
 
@@ -50,71 +41,46 @@ public interface StepMapper {
     StepEntity modelToEntity(StepModel stepModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
+            @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "integersToRoadmapModelId"),
+            @Mapping(source = "lessons", target = "lessons", qualifiedByName = "integersToLessonModelId"),
+            @Mapping(source = "tasks", target = "tasks", qualifiedByName = "integersToTaskModelId")
     })
     StepModel dtoToModel(StepDTO stepDTO, @Context CycleAvoidingMappingContext context);
 
     @Mappings({
-            @Mapping(source = "roadmaps", target = "roadmaps"),
-            @Mapping(source = "lessons", target = "lessons"),
-            @Mapping(source = "tasks", target = "tasks")
+            @Mapping(source = "roadmaps", target = "roadmaps", qualifiedByName = "roadmapModelToIntegers"),
+            @Mapping(source = "lessons", target = "lessons", qualifiedByName = "lessonModelToIntegers"),
+            @Mapping(source = "tasks", target = "tasks", qualifiedByName = "taskModelToIntegers")
     })
     StepDTO modelToDto(StepModel stepModel, @Context CycleAvoidingMappingContext context);
 
-    default Set<RoadmapModel> integersToRoadmapModelId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToModels(roadmaps, RoadmapModel.class, context);
+
+    @Named("stepEntityToIntegers")
+    default Set<Integer> stepEntityToIntegers(Set<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapEntitiesToIntegers(steps);
     }
 
-    default Set<Integer> roadmapModelIdToIntegers(Set<RoadmapModel> roadmaps) {
-        return MapperUtils.modelsToIntegers(roadmaps);
+    @Named("integersToStepEntityId")
+    default Set<StepEntity> integersToStepEntityId(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToEntities(stepIds, StepEntity.class, context);
     }
 
-    default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
-        return  MapperUtils.integersToEntities(roadmaps, RoadmapEntity.class, context);
+    @Named("integersToStepModels")
+    default Set<StepModel> integersToStepModels(Set<Integer> stepIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToModels(stepIds, StepModel.class, context);
     }
 
-    default Set<Integer> roadmapEntityToIntegers(Set<RoadmapEntity> roadmaps, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.entitiesToIntegers(roadmaps);
+    @Named("stepModelsToIntegers")
+    default Set<Integer> stepModelsToIntegers(Set<StepModel> stepModels) {
+        return MapperUtils.mapModelsToIntegers(stepModels);
     }
 
-    default Set<LessonModel> integersToLessonModelId(Set<Integer> lessons, @Context CycleAvoidingMappingContext context) {
-       return MapperUtils.integersToModels(lessons, LessonModel.class, context);
-    }
-
-    default Set<Integer> lessonModelToIntegers(Set<LessonModel> lessons, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.modelsToIntegers(lessons);
-    }
-
-    default Set<LessonEntity> integersToLessonEntityId(Set<Integer> lessons, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToEntities(lessons, LessonEntity.class, context);
-    }
-
-    default Set<Integer> lessonEntityToIntegers(Set<LessonEntity> lessons, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.entitiesToIntegers(lessons);
-    }
-
-    default Set<TaskModel> integersToTaskModelId(Set<Integer> tasks, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToModels(tasks, TaskModel.class, context);
-    }
-
-    default Set<Integer> taskModelToIntegers(Set<TaskModel> tasks, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.modelsToIntegers(tasks);
-    }
-
-    default Set<TaskEntity> integersToTaskEntityId(Set<Integer> tasks, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.integersToEntities(tasks, TaskEntity.class, context);
-    }
-
-    default Set<Integer> taskEntityToIntegers(Set<TaskEntity> tasks, @Context CycleAvoidingMappingContext context) {
-        return MapperUtils.entitiesToIntegers(tasks);
-    }
-
+    @Named("integerToStatusValue")
     default Status integerToStatusValue(int status) {
         return Status.values()[status];
     }
 
+    @Named("statusValueToInteger")
     default int statusValueToInteger(Status status) {
         return status.ordinal();
     }

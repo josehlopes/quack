@@ -2,17 +2,23 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
-    value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-05T18:22:48-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    value = "org.mapstruct.ap.MappingProcessor"
 )
 @Component
 public class RoadmapMapperImpl implements RoadmapMapper {
+
+    @Autowired
+    private StepMapper stepMapper;
 
     @Override
     public RoadmapDTO entityToDto(RoadmapEntity roadmapEntity, CycleAvoidingMappingContext context) {
@@ -23,7 +29,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapDTO roadmapDTO = new RoadmapDTO();
 
         roadmapDTO.setStatus( statusValueToInteger( roadmapEntity.getStatus() ) );
-        roadmapDTO.setSteps( stepEntityToIntegers( roadmapEntity.getSteps(), context ) );
+        roadmapDTO.setSteps( stepMapper.stepEntityToIntegers( roadmapEntity.getSteps(), context ) );
         roadmapDTO.setId( roadmapEntity.getId() );
         roadmapDTO.setTitle( roadmapEntity.getTitle() );
         roadmapDTO.setDescription( roadmapEntity.getDescription() );
@@ -41,7 +47,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
         roadmapEntity.setStatus( integerToStatusValue( roadmapDTO.getStatus() ) );
-        roadmapEntity.setSteps( integersToStepEntityId( roadmapDTO.getSteps(), context ) );
+        roadmapEntity.setSteps( stepMapper.integersToStepEntityId( roadmapDTO.getSteps(), context ) );
         roadmapEntity.setId( roadmapDTO.getId() );
         roadmapEntity.setTitle( roadmapDTO.getTitle() );
         roadmapEntity.setDescription( roadmapDTO.getDescription() );
@@ -59,7 +65,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapModel roadmapModel = new RoadmapModel();
 
         roadmapModel.setStatus( roadmapEntity.getStatus() );
-        roadmapModel.setSteps( integersToStepModels( stepEntityToIntegers( roadmapEntity.getSteps(), context ), context ) );
+        roadmapModel.setSteps( stepEntitySetToStepModelSet( roadmapEntity.getSteps(), context ) );
         roadmapModel.setId( roadmapEntity.getId() );
         roadmapModel.setTitle( roadmapEntity.getTitle() );
         roadmapModel.setDescription( roadmapEntity.getDescription() );
@@ -77,7 +83,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapEntity roadmapEntity = new RoadmapEntity();
 
         roadmapEntity.setStatus( roadmapModel.getStatus() );
-        roadmapEntity.setSteps( integersToStepEntityId( stepModelsToIntegers( roadmapModel.getSteps() ), context ) );
+        roadmapEntity.setSteps( stepModelSetToStepEntitySet( roadmapModel.getSteps(), context ) );
         roadmapEntity.setId( roadmapModel.getId() );
         roadmapEntity.setTitle( roadmapModel.getTitle() );
         roadmapEntity.setDescription( roadmapModel.getDescription() );
@@ -95,7 +101,7 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapModel roadmapModel = new RoadmapModel();
 
         roadmapModel.setStatus( integerToStatusValue( roadmapDTO.getStatus() ) );
-        roadmapModel.setSteps( integersToStepModels( roadmapDTO.getSteps(), context ) );
+        roadmapModel.setSteps( stepMapper.integersToStepModels( roadmapDTO.getSteps(), context ) );
         roadmapModel.setId( roadmapDTO.getId() );
         roadmapModel.setTitle( roadmapDTO.getTitle() );
         roadmapModel.setDescription( roadmapDTO.getDescription() );
@@ -113,12 +119,38 @@ public class RoadmapMapperImpl implements RoadmapMapper {
         RoadmapDTO roadmapDTO = new RoadmapDTO();
 
         roadmapDTO.setStatus( statusValueToInteger( roadmapModel.getStatus() ) );
-        roadmapDTO.setSteps( stepModelsToIntegers( roadmapModel.getSteps() ) );
+        roadmapDTO.setSteps( stepMapper.stepModelsToIntegers( roadmapModel.getSteps() ) );
         roadmapDTO.setId( roadmapModel.getId() );
         roadmapDTO.setTitle( roadmapModel.getTitle() );
         roadmapDTO.setDescription( roadmapModel.getDescription() );
         roadmapDTO.setImagePath( roadmapModel.getImagePath() );
 
         return roadmapDTO;
+    }
+
+    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepEntity stepEntity : set ) {
+            set1.add( stepMapper.entityToModel( stepEntity, context ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepModel stepModel : set ) {
+            set1.add( stepMapper.modelToEntity( stepModel, context ) );
+        }
+
+        return set1;
     }
 }

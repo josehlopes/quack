@@ -1,18 +1,24 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
+import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.domain.entity.TaskEntity;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
-    value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-05T18:22:48-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    value = "org.mapstruct.ap.MappingProcessor"
 )
 @Component
 public class TaskMapperImpl implements TaskMapper {
+
+    @Autowired
+    private StepMapper stepMapper;
 
     @Override
     public TaskDTO entityToDto(TaskEntity taskEntity, CycleAvoidingMappingContext context) {
@@ -22,7 +28,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setSteps( stepEntityToIntegers( taskEntity.getSteps(), context ) );
+        taskDTO.setSteps( stepMapper.stepEntityToIntegers( taskEntity.getSteps(), context ) );
         taskDTO.setId( taskEntity.getId() );
         taskDTO.setDescription( taskEntity.getDescription() );
         taskDTO.setImagePath( taskEntity.getImagePath() );
@@ -38,7 +44,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setSteps( integersToStepEntityId( taskDTO.getSteps(), context ) );
+        taskEntity.setSteps( stepMapper.integersToStepEntityId( taskDTO.getSteps(), context ) );
         taskEntity.setId( taskDTO.getId() );
         taskEntity.setDescription( taskDTO.getDescription() );
         taskEntity.setImagePath( taskDTO.getImagePath() );
@@ -54,7 +60,7 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskModel taskModel = new TaskModel();
 
-        taskModel.setSteps( integersToStepModels( stepEntityToIntegers( taskEntity.getSteps(), context ), context ) );
+        taskModel.setSteps( stepEntitySetToStepModelSet( taskEntity.getSteps(), context ) );
         taskModel.setId( taskEntity.getId() );
         taskModel.setDescription( taskEntity.getDescription() );
         taskModel.setImagePath( taskEntity.getImagePath() );
@@ -70,28 +76,12 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskEntity taskEntity = new TaskEntity();
 
-        taskEntity.setSteps( integersToStepEntityId( stepModelsToIntegers( taskModel.getSteps() ), context ) );
+        taskEntity.setSteps( stepModelSetToStepEntitySet( taskModel.getSteps(), context ) );
         taskEntity.setId( taskModel.getId() );
         taskEntity.setDescription( taskModel.getDescription() );
         taskEntity.setImagePath( taskModel.getImagePath() );
 
         return taskEntity;
-    }
-
-    @Override
-    public TaskModel dtoToModel(TaskDTO taskDTO, CycleAvoidingMappingContext context) {
-        if ( taskDTO == null ) {
-            return null;
-        }
-
-        TaskModel taskModel = new TaskModel();
-
-        taskModel.setSteps( integersToStepModels( taskDTO.getSteps(), context ) );
-        taskModel.setId( taskDTO.getId() );
-        taskModel.setDescription( taskDTO.getDescription() );
-        taskModel.setImagePath( taskDTO.getImagePath() );
-
-        return taskModel;
     }
 
     @Override
@@ -102,11 +92,53 @@ public class TaskMapperImpl implements TaskMapper {
 
         TaskDTO taskDTO = new TaskDTO();
 
-        taskDTO.setSteps( stepModelsToIntegers( taskModel.getSteps() ) );
+        taskDTO.setSteps( stepMapper.stepModelsToIntegers( taskModel.getSteps() ) );
         taskDTO.setId( taskModel.getId() );
         taskDTO.setDescription( taskModel.getDescription() );
         taskDTO.setImagePath( taskModel.getImagePath() );
 
         return taskDTO;
+    }
+
+    @Override
+    public TaskModel dtoToModel(TaskDTO taskDTO, CycleAvoidingMappingContext context) {
+        if ( taskDTO == null ) {
+            return null;
+        }
+
+        TaskModel taskModel = new TaskModel();
+
+        taskModel.setSteps( stepMapper.integersToStepModels( taskDTO.getSteps(), context ) );
+        taskModel.setId( taskDTO.getId() );
+        taskModel.setDescription( taskDTO.getDescription() );
+        taskModel.setImagePath( taskDTO.getImagePath() );
+
+        return taskModel;
+    }
+
+    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepEntity stepEntity : set ) {
+            set1.add( stepMapper.entityToModel( stepEntity, context ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepModel stepModel : set ) {
+            set1.add( stepMapper.modelToEntity( stepModel, context ) );
+        }
+
+        return set1;
     }
 }

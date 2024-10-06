@@ -2,32 +2,38 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
-    value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-10-05T18:22:48-0300",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.4 (Oracle Corporation)"
+    value = "org.mapstruct.ap.MappingProcessor"
 )
 @Component
 public class LessonMapperImpl implements LessonMapper {
 
+    @Autowired
+    private StepMapper stepMapper;
+
     @Override
-    public LessonDTO entityToDto(LessonEntity lesson, CycleAvoidingMappingContext context) {
-        if ( lesson == null ) {
+    public LessonDTO entityToDto(LessonEntity lessonEntity, CycleAvoidingMappingContext context) {
+        if ( lessonEntity == null ) {
             return null;
         }
 
         LessonDTO lessonDTO = new LessonDTO();
 
-        lessonDTO.setSteps( stepEntityToIntegers( lesson.getSteps(), context ) );
-        lessonDTO.setId( lesson.getId() );
-        lessonDTO.setTitle( lesson.getTitle() );
-        lessonDTO.setDescription( lesson.getDescription() );
-        lessonDTO.setLanguage( lesson.getLanguage() );
-        lessonDTO.setImagePath( lesson.getImagePath() );
+        lessonDTO.setSteps( stepMapper.stepEntityToIntegers( lessonEntity.getSteps(), context ) );
+        lessonDTO.setId( lessonEntity.getId() );
+        lessonDTO.setTitle( lessonEntity.getTitle() );
+        lessonDTO.setDescription( lessonEntity.getDescription() );
+        lessonDTO.setLanguage( lessonEntity.getLanguage() );
+        lessonDTO.setImagePath( lessonEntity.getImagePath() );
 
         return lessonDTO;
     }
@@ -40,7 +46,7 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
-        lessonEntity.setSteps( integersToStepEntityId( lessonDTO.getSteps(), context ) );
+        lessonEntity.setSteps( stepMapper.integersToStepEntityId( lessonDTO.getSteps(), context ) );
         lessonEntity.setId( lessonDTO.getId() );
         lessonEntity.setTitle( lessonDTO.getTitle() );
         lessonEntity.setDescription( lessonDTO.getDescription() );
@@ -51,6 +57,24 @@ public class LessonMapperImpl implements LessonMapper {
     }
 
     @Override
+    public LessonModel entityToModel(LessonEntity lessonEntity, CycleAvoidingMappingContext context) {
+        if ( lessonEntity == null ) {
+            return null;
+        }
+
+        LessonModel lessonModel = new LessonModel();
+
+        lessonModel.setSteps( stepEntitySetToStepModelSet( lessonEntity.getSteps(), context ) );
+        lessonModel.setId( lessonEntity.getId() );
+        lessonModel.setTitle( lessonEntity.getTitle() );
+        lessonModel.setDescription( lessonEntity.getDescription() );
+        lessonModel.setLanguage( lessonEntity.getLanguage() );
+        lessonModel.setImagePath( lessonEntity.getImagePath() );
+
+        return lessonModel;
+    }
+
+    @Override
     public LessonEntity modelToEntity(LessonModel lessonModel, CycleAvoidingMappingContext context) {
         if ( lessonModel == null ) {
             return null;
@@ -58,50 +82,14 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonEntity lessonEntity = new LessonEntity();
 
+        lessonEntity.setSteps( stepModelSetToStepEntitySet( lessonModel.getSteps(), context ) );
         lessonEntity.setId( lessonModel.getId() );
         lessonEntity.setTitle( lessonModel.getTitle() );
         lessonEntity.setDescription( lessonModel.getDescription() );
         lessonEntity.setLanguage( lessonModel.getLanguage() );
         lessonEntity.setImagePath( lessonModel.getImagePath() );
-        lessonEntity.setSteps( integersToStepEntityId( stepModelsToIntegers( lessonModel.getSteps() ), context ) );
 
         return lessonEntity;
-    }
-
-    @Override
-    public LessonModel entityToModel(LessonEntity lesson, CycleAvoidingMappingContext context) {
-        if ( lesson == null ) {
-            return null;
-        }
-
-        LessonModel lessonModel = new LessonModel();
-
-        lessonModel.setId( lesson.getId() );
-        lessonModel.setTitle( lesson.getTitle() );
-        lessonModel.setDescription( lesson.getDescription() );
-        lessonModel.setLanguage( lesson.getLanguage() );
-        lessonModel.setImagePath( lesson.getImagePath() );
-        lessonModel.setSteps( integersToStepModels( stepEntityToIntegers( lesson.getSteps(), context ), context ) );
-
-        return lessonModel;
-    }
-
-    @Override
-    public LessonModel dtoToModel(LessonDTO lessonDTO, CycleAvoidingMappingContext context) {
-        if ( lessonDTO == null ) {
-            return null;
-        }
-
-        LessonModel lessonModel = new LessonModel();
-
-        lessonModel.setSteps( integersToStepModels( lessonDTO.getSteps(), context ) );
-        lessonModel.setId( lessonDTO.getId() );
-        lessonModel.setTitle( lessonDTO.getTitle() );
-        lessonModel.setDescription( lessonDTO.getDescription() );
-        lessonModel.setLanguage( lessonDTO.getLanguage() );
-        lessonModel.setImagePath( lessonDTO.getImagePath() );
-
-        return lessonModel;
     }
 
     @Override
@@ -112,7 +100,7 @@ public class LessonMapperImpl implements LessonMapper {
 
         LessonDTO lessonDTO = new LessonDTO();
 
-        lessonDTO.setSteps( stepModelsToIntegers( lessonModel.getSteps() ) );
+        lessonDTO.setSteps( stepMapper.stepModelsToIntegers( lessonModel.getSteps() ) );
         lessonDTO.setId( lessonModel.getId() );
         lessonDTO.setTitle( lessonModel.getTitle() );
         lessonDTO.setDescription( lessonModel.getDescription() );
@@ -120,5 +108,49 @@ public class LessonMapperImpl implements LessonMapper {
         lessonDTO.setImagePath( lessonModel.getImagePath() );
 
         return lessonDTO;
+    }
+
+    @Override
+    public LessonModel dtoToModel(LessonDTO lessonDTO, CycleAvoidingMappingContext context) {
+        if ( lessonDTO == null ) {
+            return null;
+        }
+
+        LessonModel lessonModel = new LessonModel();
+
+        lessonModel.setSteps( stepMapper.integersToStepModels( lessonDTO.getSteps(), context ) );
+        lessonModel.setId( lessonDTO.getId() );
+        lessonModel.setTitle( lessonDTO.getTitle() );
+        lessonModel.setDescription( lessonDTO.getDescription() );
+        lessonModel.setLanguage( lessonDTO.getLanguage() );
+        lessonModel.setImagePath( lessonDTO.getImagePath() );
+
+        return lessonModel;
+    }
+
+    protected Set<StepModel> stepEntitySetToStepModelSet(Set<StepEntity> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepModel> set1 = new LinkedHashSet<StepModel>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepEntity stepEntity : set ) {
+            set1.add( stepMapper.entityToModel( stepEntity, context ) );
+        }
+
+        return set1;
+    }
+
+    protected Set<StepEntity> stepModelSetToStepEntitySet(Set<StepModel> set, CycleAvoidingMappingContext context) {
+        if ( set == null ) {
+            return null;
+        }
+
+        Set<StepEntity> set1 = new LinkedHashSet<StepEntity>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        for ( StepModel stepModel : set ) {
+            set1.add( stepMapper.modelToEntity( stepModel, context ) );
+        }
+
+        return set1;
     }
 }

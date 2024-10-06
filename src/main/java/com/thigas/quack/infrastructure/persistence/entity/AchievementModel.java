@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -13,7 +15,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "achievement")
-
 public class AchievementModel implements BaseModel {
 
     @Id
@@ -28,6 +29,9 @@ public class AchievementModel implements BaseModel {
 
     @Column(name = "image_path", nullable = false)
     private String imagePath;
+
+    @OneToMany(mappedBy = "achievement", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserAchievementModel> userAchievements = new HashSet<>();
 
     @Override
     public int getId() {
