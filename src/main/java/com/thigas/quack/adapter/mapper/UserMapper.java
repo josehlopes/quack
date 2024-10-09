@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -16,26 +17,26 @@ public interface UserMapper {
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
-    UserDTO entityToDto(UserEntity user);
+    UserDTO entityToDto(UserEntity user, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
-    UserEntity dtoToEntity(UserDTO userDTO);
+    UserEntity dtoToEntity(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
-    UserModel entityToModel(UserEntity userEntity);
+    UserModel entityToModel(UserEntity userEntity, @Context CycleAvoidingMappingContext context);
 
-    UserEntity modelToEntity(UserModel userModel);
+    UserEntity modelToEntity(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
-    UserModel dtoToModel(UserDTO userDTO);
+    UserModel dtoToModel(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
     @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
     @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
-    UserDTO modelToDto(UserModel userModel);
+    UserDTO modelToDto(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
     @Named("integerToUserModel")
     default UserModel integerToUserModel(Integer user) {

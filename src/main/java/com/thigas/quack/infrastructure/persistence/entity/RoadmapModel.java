@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,10 +34,10 @@ public class RoadmapModel implements BaseModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
-    @JoinTable(name="roadmap_steps", joinColumns=
-            {@JoinColumn(name="roadmap_id")}, inverseJoinColumns=
-            {@JoinColumn(name="step_id")})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "roadmap_steps", joinColumns =
+            {@JoinColumn(name = "step_id")}, inverseJoinColumns =
+            {@JoinColumn(name = "roadmap_id")})
     @JsonManagedReference
     private Set<StepModel> steps;
 

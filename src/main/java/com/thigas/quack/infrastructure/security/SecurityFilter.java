@@ -37,7 +37,6 @@ public class SecurityFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Se houver um token, valida-o
         if (token != null) {
             var login = tokenService.validateToken(token);
 

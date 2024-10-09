@@ -2,6 +2,8 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.IUserRepository;
@@ -62,81 +64,7 @@ public class RoadmapService {
         roadmapRepository.deleteById(id);
     }
 
-    public Boolean startRoadmap(int userId, int roadmapId) {
-        UserRoadmapModel userRoadmapModel = new UserRoadmapModel();
-        boolean roadmapExists;
-        boolean userExists;
-
-        try {
-            userExists = userRepository.existsById(userId);
-            roadmapExists = roadmapRepository.existsById(roadmapId);
-            if (!userExists || !roadmapExists) {
-                return false;
-            }
-
-            UserModel user = userRepository.findById(userId).orElse(null);
-            RoadmapModel roadmap = roadmapRepository.findById(roadmapId).orElse(null);
-
-            if (user == null || roadmap == null) {
-                return false;
-            }
-
-            userRoadmapModel.setUser(user);
-            userRoadmapModel.setRoadmap(roadmap);
-            userRoadmapModel.setProgress(0.0);
-            userRoadmapModel.setStartedAt(LocalDate.now());
-
-            userRoadmapModel = userRoadmapRepository.save(userRoadmapModel);
-            return userRoadmapModel != null;
-
-        } catch (Exception e) {
-            System.out.println("Erro ao iniciar o roadmap: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public Boolean endRoadmap(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel existingUserRoadmap =
-                userRoadmapRepository.findById(userRoadmapDTO.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
-
-        try {
-            Optional<List<Object>> userRoadmapOptional =
-                    findUserAndRoadmap(userRoadmapDTO.getUser(), userRoadmapDTO.getRoadmap());
-
-            if (userRoadmapOptional.isEmpty()) {
-                return false;
-            }
-
-            existingUserRoadmap.setUser((UserModel) userRoadmapOptional.get().get(0));
-            existingUserRoadmap.setRoadmap((RoadmapModel) userRoadmapOptional.get().get(1));
-
-            if (userRoadmapDTO.getStartedAt() != null) {
-                existingUserRoadmap.setStartedAt(LocalDate.parse(userRoadmapDTO.getStartedAt()));
-            }
-
-            existingUserRoadmap.setStatus(Status.FINISHED);
-            existingUserRoadmap.setFinishedAt(LocalDate.now());
-            existingUserRoadmap.setProgress(100.0);
-
-            userRoadmapRepository.save(existingUserRoadmap);
-            return true;
-
-        } catch (Exception e) {
-            System.out.println("Erro ao finalizar o roadmap: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public Optional<List<Object>> findUserAndRoadmap(int userId, int roadmapId) {
-        Optional<UserModel> userOptional = userRepository.findById(userId);
-        Optional<RoadmapModel> roadmapOptional = roadmapRepository.findById(roadmapId);
-
-        if (userOptional.isPresent() && roadmapOptional.isPresent()) {
-            return Optional.of(Arrays.asList(userOptional.get(), roadmapOptional.get()));
-        } else {
-            System.out.println("Usuário ou roadmap não encontrado.");
-            return Optional.empty();
-        }
+    public Boolean existsById (int roadmapId) {
+        return userRepository.existsById(roadmapId);
     }
 }

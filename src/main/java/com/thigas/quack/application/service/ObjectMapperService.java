@@ -2,10 +2,13 @@ package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.*;
 import com.thigas.quack.adapter.mapper.*;
+import com.thigas.quack.domain.entity.RoadmapEntity;
+import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,43 +39,34 @@ public class ObjectMapperService {
     private UserMapper userMapper;
 
     @Autowired
-    private UserAchievementMapper userAchievementMapper;
-
-    @Autowired
-    private UserRoadmapMapper userRoadmapMapper;
-
-    @Autowired
-    private UserTaskMapper userTaskMapper;
-
-    @Autowired
     private CycleAvoidingMappingContext context;
 
     public AchievementModel toModel(AchievementDTO achievementDTO) {
         if (achievementDTO == null) {
             throw new IllegalArgumentException("AchievementDTO cannot be null");
         }
-        return achievementMapper.dtoToModel(achievementDTO);
+        return achievementMapper.dtoToModel(achievementDTO, context);
     }
 
     public AchievementDTO toDto(AchievementModel achievementModel) {
         if (achievementModel == null) {
             throw new IllegalArgumentException("AchievementModel cannot be null");
         }
-        return achievementMapper.modelToDto(achievementModel);
+        return achievementMapper.modelToDto(achievementModel, context);
     }
 
     public AddressModel toModel(AddressDTO addressDTO) {
         if (addressDTO == null) {
             throw new IllegalArgumentException("AddressDTO cannot be null");
         }
-        return addressMapper.dtoToModel(addressDTO);
+        return addressMapper.dtoToModel(addressDTO, context);
     }
 
     public AddressDTO toDto(AddressModel addressModel) {
         if (addressModel == null) {
             throw new IllegalArgumentException("AddressModel cannot be null");
         }
-        return addressMapper.modelToDto(addressModel);
+        return addressMapper.modelToDto(addressModel, context);
     }
 
     public LessonModel toModel(LessonDTO lessonDTO) {
@@ -102,20 +96,27 @@ public class ObjectMapperService {
         }
         return roadmapMapper.modelToDto(roadmapModel, context);
     }
+    
+    public RoadmapEntity toEntity(RoadmapModel roadmapModel) {
+        if (roadmapModel == null) {
+            throw new IllegalArgumentException("RoadmapModel cannot be null");
+        }
+        return roadmapMapper.modelToEntity(roadmapModel, context);
+    }
 
 
     public StatisticsModel toModel(StatisticsDTO statisticsDTO) {
         if (statisticsDTO == null) {
             throw new IllegalArgumentException("StatisticsDTO cannot be null");
         }
-        return statisticsMapper.dtoToModel(statisticsDTO);
+        return statisticsMapper.dtoToModel(statisticsDTO, context);
     }
 
     public StatisticsDTO toDto(StatisticsModel statisticsModel) {
         if (statisticsModel == null) {
             throw new IllegalArgumentException("StatisticsModel cannot be null");
         }
-        return statisticsMapper.modelToDto(statisticsModel);
+        return statisticsMapper.modelToDto(statisticsModel, context);
     }
 
     public StepModel toModel(StepDTO stepDTO) {
@@ -150,55 +151,21 @@ public class ObjectMapperService {
         if (userDTO == null) {
             throw new IllegalArgumentException("UserDTO cannot be null");
         }
-        return userMapper.dtoToModel(userDTO);
+        return userMapper.dtoToModel(userDTO, context);
     }
 
     public UserDTO toDto(UserModel userModel) {
         if (userModel == null) {
             throw new IllegalArgumentException("UserModel cannot be null");
         }
-        return userMapper.modelToDto(userModel);
+        return userMapper.modelToDto(userModel, context);
     }
 
-    public UserAchievementModel toModel(UserAchievementDTO userAchievementDTO) {
-        if (userAchievementDTO == null) {
-            throw new IllegalArgumentException("UserAchievementDTO cannot be null");
+    public UserEntity toEntity(UserModel userModel) {
+        if (userModel == null) {
+            throw new IllegalArgumentException("UserModel cannot be null");
         }
-        return userAchievementMapper.dtoToModel(userAchievementDTO, context);
+        return userMapper.modelToEntity(userModel, context);
     }
 
-    public UserAchievementDTO toDto(UserAchievementModel userAchievementModel) {
-        if (userAchievementModel == null) {
-            throw new IllegalArgumentException("UserAchievementModel cannot be null");
-        }
-        return userAchievementMapper.modelToDto(userAchievementModel, context);
-    }
-
-    public UserRoadmapModel toModel(UserRoadmapDTO userRoadmapDTO) {
-        if (userRoadmapDTO == null) {
-            throw new IllegalArgumentException("UserRoadmapDTO cannot be null");
-        }
-        return userRoadmapMapper.dtoToModel(userRoadmapDTO, context);
-    }
-
-    public UserRoadmapDTO toDto(UserRoadmapModel userRoadmapModel) {
-        if (userRoadmapModel == null) {
-            throw new IllegalArgumentException("UserRoadmapModel cannot be null");
-        }
-        return userRoadmapMapper.modelToDto(userRoadmapModel, context);
-    }
-
-    public UserTaskModel toModel(UserTaskDTO userTaskDTO) {
-        if (userTaskDTO == null) {
-            throw new IllegalArgumentException("UserTaskDTO cannot be null");
-        }
-        return userTaskMapper.dtoToModel(userTaskDTO);
-    }
-
-    public UserTaskDTO toDto(UserTaskModel userTaskModel) {
-        if (userTaskModel == null) {
-            throw new IllegalArgumentException("UserTaskModel cannot be null");
-        }
-        return userTaskMapper.modelToDto(userTaskModel);
-    }
 }

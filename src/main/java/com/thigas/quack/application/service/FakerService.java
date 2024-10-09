@@ -48,7 +48,6 @@ public class FakerService {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	// Geração de usuários
 	public Set<UserDTO> generateFakeUsers(int count) {
 		Set<UserDTO> users = new HashSet<>();
 		Set<String> existingEmails = new HashSet<>();
@@ -85,7 +84,6 @@ public class FakerService {
 			users.add(userDTO);
 		}
 
-		// Verificação de IDs
 		if (users.isEmpty() || users.stream().anyMatch(user -> user.getId() < 1)) {
 			throw new RuntimeException("Invalid users generated.");
 		}
@@ -96,7 +94,6 @@ public class FakerService {
 	public Set<AddressDTO> generateFakeAddresses(int count, int userId) {
 		Set<AddressDTO> addresses = new HashSet<>();
 
-		// Recupera o usuário com o ID fornecido
 		UserDTO userDTO = userService.getById(userId)
 				.orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
@@ -142,7 +139,6 @@ public class FakerService {
 			achievementDTO.setDescription(faker.lorem().sentence(5));
 			achievementDTO.setImagePath(faker.avatar().image());
 
-			// Não tentar adicionar uma cidade
 			achievementService.create(achievementDTO);
 			achievements.add(achievementDTO);
 		}
@@ -156,10 +152,9 @@ public class FakerService {
 			roadmapDTO.setTitle(faker.book().title());
 			roadmapDTO.setDescription(faker.lorem().characters(200));
 			roadmapDTO.setImagePath(faker.avatar().image());
-			roadmapDTO.setStatus(1); // 1 para ATIVO
+			roadmapDTO.setStatus(1);
 
-			// Persistindo e atualizando o objeto com o retorno
-			roadmapDTO = roadmapService.create(roadmapDTO); // Atualize o roadmapDTO com o resultado da persistência
+			roadmapDTO = roadmapService.create(roadmapDTO);
 
 			if (roadmapDTO.getId() <= 0) {
 				throw new IllegalStateException("Failed to create roadmap with valid ID.");

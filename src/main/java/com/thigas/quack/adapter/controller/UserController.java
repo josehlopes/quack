@@ -1,6 +1,8 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +51,30 @@ public class UserController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<String> getUser(){
+    public ResponseEntity<String> getUser() {
         return ResponseEntity.ok("Sucesso!");
     }
+
+    @PostMapping("/start-roadmap")
+    public ResponseEntity<Void> startRoadmap(@RequestBody UserDTO userDTO, RoadmapDTO roadmapDTO) {
+        int userId = userDTO.getId();
+        int roadmapId = roadmapDTO.getId();
+        if (userService.startRoadmap(userId, roadmapId)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PutMapping("/end-roadmap")
+    public ResponseEntity<Void> endRoadmap(@RequestBody UserDTO userDTO) {
+        if (userService.endRoadmap(userDTO)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
+

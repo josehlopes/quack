@@ -1,7 +1,6 @@
 package com.thigas.quack.adapter.controller;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.application.service.UserTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
