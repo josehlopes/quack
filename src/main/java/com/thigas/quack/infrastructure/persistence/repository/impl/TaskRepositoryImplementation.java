@@ -19,14 +19,8 @@ import java.util.stream.Collectors;
 public class TaskRepositoryImplementation implements ITaskRepository {
 
     @Autowired
-    private TaskMapper taskMapper;
-
-    @Autowired
     private ITaskModelRepository taskModelRepository;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
+    
     @Override
     @Transactional
     public TaskModel save(TaskModel taskModel) {

@@ -3,6 +3,7 @@ package com.thigas.quack.adapter.controller;
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.application.service.UserRoadmapService;
 import com.thigas.quack.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRoadmapService userRoadmapService;
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
@@ -59,7 +63,7 @@ public class UserController {
     public ResponseEntity<Void> startRoadmap(@RequestBody UserDTO userDTO, RoadmapDTO roadmapDTO) {
         int userId = userDTO.getId();
         int roadmapId = roadmapDTO.getId();
-        if (userService.startRoadmap(userId, roadmapId)) {
+        if (userRoadmapService.startRoadmap(userId, roadmapId)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -68,8 +72,8 @@ public class UserController {
     }
 
     @PutMapping("/end-roadmap")
-    public ResponseEntity<Void> endRoadmap(@RequestBody UserDTO userDTO) {
-        if (userService.endRoadmap(userDTO)) {
+    public ResponseEntity<Void> endRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+        if (userRoadmapService.endRoadmap(userRoadmapDTO)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

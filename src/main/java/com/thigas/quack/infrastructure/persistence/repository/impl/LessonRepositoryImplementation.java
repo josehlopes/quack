@@ -22,14 +22,7 @@ import java.util.stream.Collectors;
 public class LessonRepositoryImplementation implements ILessonRepository {
 
     @Autowired
-    private LessonMapper lessonMapper;
-
-    @Autowired
     private ILessonModelRepository lessonModelRepository;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
     @Override
     @Transactional
     public LessonModel save(LessonModel lessonModel) {

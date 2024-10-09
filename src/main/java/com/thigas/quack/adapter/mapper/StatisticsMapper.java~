@@ -4,6 +4,7 @@ import com.thigas.quack.adapter.dto.StatisticsDTO;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
+import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,7 +20,7 @@ public interface StatisticsMapper {
 
     StatisticsModel entityToModel(StatisticsEntity statistics, @Context CycleAvoidingMappingContext context);
 
-    StatisticsEntity modelToEntity(StatisticsModel statisticsModel, @Context CycleAvoidingMappingContext context);
+    StatisticsEntity modelToEntity(StatisticsModel statisticsModel,@Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user", target = "user.id")
     StatisticsModel dtoToModel(StatisticsDTO statisticsDTO, @Context CycleAvoidingMappingContext context);

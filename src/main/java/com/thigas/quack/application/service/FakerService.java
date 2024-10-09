@@ -22,28 +22,28 @@ public class FakerService {
 	private final Faker faker = new Faker();
 
 	@Autowired
-	private UserService userService;
+	private UserService userService = new UserService();
 
 	@Autowired
-	private RoadmapService roadmapService;
+	private RoadmapService roadmapService = new RoadmapService();
 
 	@Autowired
-	private AddressService addressService;
+	private AddressService addressService = new AddressService();
 
 	@Autowired
-	private StatisticsService statisticsService;
+	private StatisticsService statisticsService = new StatisticsService();
 
 	@Autowired
-	private AchievementService achievementService;
+	private AchievementService achievementService = new AchievementService();
 
 	@Autowired
-	private StepService stepService;
+	private StepService stepService = new StepService();
 
 	@Autowired
-	private LessonService lessonService;
+	private LessonService lessonService = new LessonService();
 
 	@Autowired
-	private TaskService taskService;
+	private TaskService taskService = new TaskService();
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -188,12 +188,12 @@ public class FakerService {
 
 	private Set<Integer> getRandomSubset(Set<Integer> set, int size) {
 		if (set.size() <= size) {
-			return new HashSet<>(set); // Retorna todo o conjunto se o tamanho for menor ou igual ao solicitado
+			return new HashSet<>(set);
 		}
 
-		List<Integer> list = new ArrayList<>(set); // Converte o Set em uma List
-		Collections.shuffle(list); // Embaralha a lista
-		return new HashSet<>(list.subList(0, size)); // Retorna um novo Set com o subconjunto
+		List<Integer> list = new ArrayList<>(set);
+		Collections.shuffle(list);
+		return new HashSet<>(list.subList(0, size));
 	}
 
 	public Set<TaskDTO> generateFakeTasks(int count) {

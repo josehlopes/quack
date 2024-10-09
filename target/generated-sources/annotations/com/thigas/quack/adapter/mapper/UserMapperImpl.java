@@ -17,7 +17,7 @@ public class UserMapperImpl implements UserMapper {
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
-    public UserDTO entityToDto(UserEntity user) {
+    public UserDTO entityToDto(UserEntity user, CycleAvoidingMappingContext context) {
         if ( user == null ) {
             return null;
         }
@@ -43,7 +43,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserEntity dtoToEntity(UserDTO userDTO) {
+    public UserEntity dtoToEntity(UserDTO userDTO, CycleAvoidingMappingContext context) {
         if ( userDTO == null ) {
             return null;
         }
@@ -69,7 +69,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserModel entityToModel(UserEntity userEntity) {
+    public UserModel entityToModel(UserEntity userEntity, CycleAvoidingMappingContext context) {
         if ( userEntity == null ) {
             return null;
         }
@@ -93,7 +93,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserEntity modelToEntity(UserModel userModel) {
+    public UserEntity modelToEntity(UserModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }
@@ -117,7 +117,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserModel dtoToModel(UserDTO userDTO) {
+    public UserModel dtoToModel(UserDTO userDTO, CycleAvoidingMappingContext context) {
         if ( userDTO == null ) {
             return null;
         }
@@ -143,7 +143,7 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserDTO modelToDto(UserModel userModel) {
+    public UserDTO modelToDto(UserModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }

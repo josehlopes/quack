@@ -16,7 +16,10 @@ import java.util.stream.Collectors;
 
 @Repository
 public class StatisticsRepositoryImplementation implements IStatisticsRepository {
-    
+
+    @Autowired
+    private StatisticsMapper statisticsMapper;
+
     @Autowired
     private IStatisticsModelRepository statisticsModelRepository;
 

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class AchievementMapperImpl implements AchievementMapper {
 
     @Override
-    public AchievementEntity dtoToEntity(AchievementDTO achievementDTO) {
+    public AchievementEntity dtoToEntity(AchievementDTO achievementDTO, CycleAvoidingMappingContext context) {
         if ( achievementDTO == null ) {
             return null;
         }
@@ -29,7 +29,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementDTO entityToDto(AchievementEntity achievementEntity) {
+    public AchievementDTO entityToDto(AchievementEntity achievementEntity, CycleAvoidingMappingContext context) {
         if ( achievementEntity == null ) {
             return null;
         }
@@ -45,7 +45,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementModel entityToModel(AchievementEntity achievementEntity) {
+    public AchievementModel entityToModel(AchievementEntity achievementEntity, CycleAvoidingMappingContext context) {
         if ( achievementEntity == null ) {
             return null;
         }
@@ -61,7 +61,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementEntity modelToEntity(AchievementModel achievementModel) {
+    public AchievementEntity modelToEntity(AchievementModel achievementModel, CycleAvoidingMappingContext context) {
         if ( achievementModel == null ) {
             return null;
         }
@@ -77,7 +77,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementModel dtoToModel(AchievementDTO achievementDTO) {
+    public AchievementModel dtoToModel(AchievementDTO achievementDTO, CycleAvoidingMappingContext context) {
         if ( achievementDTO == null ) {
             return null;
         }
@@ -93,7 +93,7 @@ public class AchievementMapperImpl implements AchievementMapper {
     }
 
     @Override
-    public AchievementDTO modelToDto(AchievementModel achievementModel) {
+    public AchievementDTO modelToDto(AchievementModel achievementModel, CycleAvoidingMappingContext context) {
         if ( achievementModel == null ) {
             return null;
         }

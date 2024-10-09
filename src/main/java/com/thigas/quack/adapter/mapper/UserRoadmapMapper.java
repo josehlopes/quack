@@ -11,7 +11,6 @@ import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
 import org.mapstruct.Named;
 
 @Mapper(uses = {UserMapper.class, RoadmapMapper.class}, componentModel = "spring")

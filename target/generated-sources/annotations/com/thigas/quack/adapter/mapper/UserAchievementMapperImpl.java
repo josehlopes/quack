@@ -65,8 +65,8 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         UserAchievementModel userAchievementModel = new UserAchievementModel();
 
         userAchievementModel.setId( userAchievementEntity.getId() );
-        userAchievementModel.setUser( userMapper.entityToModel( userAchievementEntity.getUser() ) );
-        userAchievementModel.setAchievement( achievementMapper.entityToModel( userAchievementEntity.getAchievement() ) );
+        userAchievementModel.setUser( userMapper.entityToModel( userAchievementEntity.getUser(), context ) );
+        userAchievementModel.setAchievement( achievementMapper.entityToModel( userAchievementEntity.getAchievement(), context ) );
         userAchievementModel.setImagePath( userAchievementEntity.getImagePath() );
         userAchievementModel.setObtainedDate( userAchievementEntity.getObtainedDate() );
 
@@ -82,8 +82,8 @@ public class UserAchievementMapperImpl implements UserAchievementMapper {
         UserAchievementEntity userAchievementEntity = new UserAchievementEntity();
 
         userAchievementEntity.setId( userAchievementModel.getId() );
-        userAchievementEntity.setUser( userMapper.modelToEntity( userAchievementModel.getUser() ) );
-        userAchievementEntity.setAchievement( achievementMapper.modelToEntity( userAchievementModel.getAchievement() ) );
+        userAchievementEntity.setUser( userMapper.modelToEntity( userAchievementModel.getUser(), context ) );
+        userAchievementEntity.setAchievement( achievementMapper.modelToEntity( userAchievementModel.getAchievement(), context ) );
         userAchievementEntity.setImagePath( userAchievementModel.getImagePath() );
         userAchievementEntity.setObtainedDate( userAchievementModel.getObtainedDate() );
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class StatisticsMapperImpl implements StatisticsMapper {
 
     @Override
-    public StatisticsDTO entityToDto(StatisticsEntity statistics) {
+    public StatisticsDTO entityToDto(StatisticsEntity statistics, CycleAvoidingMappingContext context) {
         if ( statistics == null ) {
             return null;
         }
@@ -35,14 +35,14 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     @Override
-    public StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO) {
+    public StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO, CycleAvoidingMappingContext context) {
         if ( statisticsDTO == null ) {
             return null;
         }
 
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
-        statisticsEntity.setUser( statisticsDTOToUserEntity( statisticsDTO ) );
+        statisticsEntity.setUser( statisticsDTOToUserEntity( statisticsDTO, context ) );
         statisticsEntity.setId( statisticsDTO.getId() );
         statisticsEntity.setStreakDays( statisticsDTO.getStreakDays() );
         statisticsEntity.setBestStreak( statisticsDTO.getBestStreak() );
@@ -55,7 +55,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     @Override
-    public StatisticsModel entityToModel(StatisticsEntity statistics) {
+    public StatisticsModel entityToModel(StatisticsEntity statistics, CycleAvoidingMappingContext context) {
         if ( statistics == null ) {
             return null;
         }
@@ -63,7 +63,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsModel statisticsModel = new StatisticsModel();
 
         statisticsModel.setId( statistics.getId() );
-        statisticsModel.setUser( userEntityToUserModel( statistics.getUser() ) );
+        statisticsModel.setUser( userEntityToUserModel( statistics.getUser(), context ) );
         statisticsModel.setStreakDays( statistics.getStreakDays() );
         statisticsModel.setBestStreak( statistics.getBestStreak() );
         statisticsModel.setUserLevel( statistics.getUserLevel() );
@@ -75,7 +75,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     @Override
-    public StatisticsEntity modelToEntity(StatisticsModel statisticsModel) {
+    public StatisticsEntity modelToEntity(StatisticsModel statisticsModel, CycleAvoidingMappingContext context) {
         if ( statisticsModel == null ) {
             return null;
         }
@@ -83,7 +83,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         StatisticsEntity statisticsEntity = new StatisticsEntity();
 
         statisticsEntity.setId( statisticsModel.getId() );
-        statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser() ) );
+        statisticsEntity.setUser( userModelToUserEntity( statisticsModel.getUser(), context ) );
         statisticsEntity.setStreakDays( statisticsModel.getStreakDays() );
         statisticsEntity.setBestStreak( statisticsModel.getBestStreak() );
         statisticsEntity.setUserLevel( statisticsModel.getUserLevel() );
@@ -95,14 +95,14 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     @Override
-    public StatisticsModel dtoToModel(StatisticsDTO statisticsDTO) {
+    public StatisticsModel dtoToModel(StatisticsDTO statisticsDTO, CycleAvoidingMappingContext context) {
         if ( statisticsDTO == null ) {
             return null;
         }
 
         StatisticsModel statisticsModel = new StatisticsModel();
 
-        statisticsModel.setUser( statisticsDTOToUserModel( statisticsDTO ) );
+        statisticsModel.setUser( statisticsDTOToUserModel( statisticsDTO, context ) );
         statisticsModel.setId( statisticsDTO.getId() );
         statisticsModel.setStreakDays( statisticsDTO.getStreakDays() );
         statisticsModel.setBestStreak( statisticsDTO.getBestStreak() );
@@ -115,7 +115,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
     }
 
     @Override
-    public StatisticsDTO modelToDto(StatisticsModel statisticsModel) {
+    public StatisticsDTO modelToDto(StatisticsModel statisticsModel, CycleAvoidingMappingContext context) {
         if ( statisticsModel == null ) {
             return null;
         }
@@ -146,7 +146,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return id;
     }
 
-    protected UserEntity statisticsDTOToUserEntity(StatisticsDTO statisticsDTO) {
+    protected UserEntity statisticsDTOToUserEntity(StatisticsDTO statisticsDTO, CycleAvoidingMappingContext context) {
         if ( statisticsDTO == null ) {
             return null;
         }
@@ -158,7 +158,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return userEntity;
     }
 
-    protected UserModel userEntityToUserModel(UserEntity userEntity) {
+    protected UserModel userEntityToUserModel(UserEntity userEntity, CycleAvoidingMappingContext context) {
         if ( userEntity == null ) {
             return null;
         }
@@ -181,7 +181,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return userModel;
     }
 
-    protected UserEntity userModelToUserEntity(UserModel userModel) {
+    protected UserEntity userModelToUserEntity(UserModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }
@@ -204,7 +204,7 @@ public class StatisticsMapperImpl implements StatisticsMapper {
         return userEntity;
     }
 
-    protected UserModel statisticsDTOToUserModel(StatisticsDTO statisticsDTO) {
+    protected UserModel statisticsDTOToUserModel(StatisticsDTO statisticsDTO, CycleAvoidingMappingContext context) {
         if ( statisticsDTO == null ) {
             return null;
         }

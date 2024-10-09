@@ -18,7 +18,7 @@ public class AddressService {
     private IAddressRepository addressRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public AddressDTO create(AddressDTO addressDTO) {
         AddressModel addressModel = objectMapperService.toModel(addressDTO);

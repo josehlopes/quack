@@ -19,7 +19,7 @@ public class LessonService {
     private ILessonRepository lessonRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public LessonDTO create(LessonDTO lessonDTO) {
         LessonModel lessonModel = objectMapperService.toModel(lessonDTO);

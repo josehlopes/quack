@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
 public class AddressMapperImpl implements AddressMapper {
 
     @Override
-    public AddressEntity dtoToEntity(AddressDTO addressDTO) {
+    public AddressEntity dtoToEntity(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
 
         AddressEntity addressEntity = new AddressEntity();
 
-        addressEntity.setUser( addressDTOToUserEntity( addressDTO ) );
+        addressEntity.setUser( addressDTOToUserEntity( addressDTO, context ) );
         addressEntity.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
         addressEntity.setId( addressDTO.getId() );
         addressEntity.setStreet( addressDTO.getStreet() );
@@ -36,7 +36,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressDTO entityToDto(AddressEntity address) {
+    public AddressDTO entityToDto(AddressEntity address, CycleAvoidingMappingContext context) {
         if ( address == null ) {
             return null;
         }
@@ -57,7 +57,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressModel entityToModel(AddressEntity address) {
+    public AddressModel entityToModel(AddressEntity address, CycleAvoidingMappingContext context) {
         if ( address == null ) {
             return null;
         }
@@ -65,7 +65,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressModel addressModel = new AddressModel();
 
         addressModel.setId( address.getId() );
-        addressModel.setUser( userEntityToUserModel( address.getUser() ) );
+        addressModel.setUser( userEntityToUserModel( address.getUser(), context ) );
         addressModel.setStreet( address.getStreet() );
         addressModel.setCity( address.getCity() );
         addressModel.setState( address.getState() );
@@ -78,7 +78,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressEntity modelToEntity(AddressModel addressModel) {
+    public AddressEntity modelToEntity(AddressModel addressModel, CycleAvoidingMappingContext context) {
         if ( addressModel == null ) {
             return null;
         }
@@ -86,7 +86,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressEntity addressEntity = new AddressEntity();
 
         addressEntity.setId( addressModel.getId() );
-        addressEntity.setUser( userModelToUserEntity( addressModel.getUser() ) );
+        addressEntity.setUser( userModelToUserEntity( addressModel.getUser(), context ) );
         addressEntity.setStreet( addressModel.getStreet() );
         addressEntity.setCity( addressModel.getCity() );
         addressEntity.setState( addressModel.getState() );
@@ -99,14 +99,14 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressModel dtoToModel(AddressDTO addressDTO) {
+    public AddressModel dtoToModel(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
 
         AddressModel addressModel = new AddressModel();
 
-        addressModel.setUser( addressDTOToUserModel( addressDTO ) );
+        addressModel.setUser( addressDTOToUserModel( addressDTO, context ) );
         addressModel.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
         addressModel.setId( addressDTO.getId() );
         addressModel.setStreet( addressDTO.getStreet() );
@@ -120,7 +120,7 @@ public class AddressMapperImpl implements AddressMapper {
     }
 
     @Override
-    public AddressDTO modelToDto(AddressModel addressModel) {
+    public AddressDTO modelToDto(AddressModel addressModel, CycleAvoidingMappingContext context) {
         if ( addressModel == null ) {
             return null;
         }
@@ -140,7 +140,7 @@ public class AddressMapperImpl implements AddressMapper {
         return addressDTO;
     }
 
-    protected UserEntity addressDTOToUserEntity(AddressDTO addressDTO) {
+    protected UserEntity addressDTOToUserEntity(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }
@@ -164,7 +164,7 @@ public class AddressMapperImpl implements AddressMapper {
         return id;
     }
 
-    protected UserModel userEntityToUserModel(UserEntity userEntity) {
+    protected UserModel userEntityToUserModel(UserEntity userEntity, CycleAvoidingMappingContext context) {
         if ( userEntity == null ) {
             return null;
         }
@@ -187,7 +187,7 @@ public class AddressMapperImpl implements AddressMapper {
         return userModel;
     }
 
-    protected UserEntity userModelToUserEntity(UserModel userModel) {
+    protected UserEntity userModelToUserEntity(UserModel userModel, CycleAvoidingMappingContext context) {
         if ( userModel == null ) {
             return null;
         }
@@ -210,7 +210,7 @@ public class AddressMapperImpl implements AddressMapper {
         return userEntity;
     }
 
-    protected UserModel addressDTOToUserModel(AddressDTO addressDTO) {
+    protected UserModel addressDTOToUserModel(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
         if ( addressDTO == null ) {
             return null;
         }

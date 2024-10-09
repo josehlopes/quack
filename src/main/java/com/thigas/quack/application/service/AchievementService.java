@@ -17,11 +17,8 @@ public class AchievementService {
     @Autowired
     private IAchievementRepository achievementRepository;
 
-    private final ObjectMapperService objectMapperService;
-
-    public AchievementService(ObjectMapperService objectMapperService) {
-        this.objectMapperService = objectMapperService;
-    }
+    @Autowired
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public AchievementDTO create(AchievementDTO achievementDTO) {
         AchievementModel achievementModel = objectMapperService.toModel(achievementDTO);

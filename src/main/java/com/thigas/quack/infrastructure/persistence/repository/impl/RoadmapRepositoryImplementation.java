@@ -18,19 +18,7 @@ import java.util.stream.Collectors;
 public class RoadmapRepositoryImplementation implements IRoadmapRepository {
 
     @Autowired
-    private RoadmapMapper roadmapMapper;
-
-    @Autowired
     private IRoadmapModelRepository roadmapModelRepository;
-
-    @Autowired
-    private IUserModelRepository userModelRepository;
-
-    @Autowired
-    private IUserRoadmapModelRepository userRoadmapModelRepository;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
 
     @Override
     @Transactional

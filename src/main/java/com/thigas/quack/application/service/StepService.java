@@ -30,13 +30,7 @@ public class StepService {
     private ILessonRepository lessonRepository;
 
     @Autowired
-    private ITaskRepository taskRepository;
-
-    @Autowired
-    private IRoadmapRepository roadmapRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public StepDTO create(StepDTO stepDTO) {
         StepModel stepModel = objectMapperService.toModel(stepDTO);

@@ -1,17 +1,8 @@
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AchievementController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AddressController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\AuthController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\CodeExecutor.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\LessonController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\RoadmapController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StatisticsController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\StepController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\TaskController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserAchievementController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserRoadmapController.java
-I:\Documents\quack\src\main\java\com\thigas\quack\adapter\controller\UserTaskController.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AchievementDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\AddressDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\LessonDTO.java
@@ -29,6 +20,7 @@ I:\Documents\quack\src\main\java\com\thigas\quack\adapter\dto\UserTaskDTO.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AchievementMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\AddressMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\CycleAvoidingMappingContext.java
+I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\DefaultMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\LessonMapper.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\MapperUtils.java
 I:\Documents\quack\src\main\java\com\thigas\quack\adapter\mapper\RoadmapMapper.java

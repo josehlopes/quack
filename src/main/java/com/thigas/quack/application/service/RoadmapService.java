@@ -1,23 +1,13 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.model.Status;
+
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -32,10 +22,7 @@ public class RoadmapService {
     private IUserRepository userRepository;
 
     @Autowired
-    private IUserRoadmapRepository userRoadmapRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public RoadmapDTO create(RoadmapDTO roadmapDTO) {
         RoadmapModel roadmap = objectMapperService.toModel(roadmapDTO);

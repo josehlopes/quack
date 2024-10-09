@@ -2,6 +2,7 @@ package com.thigas.quack.infrastructure.persistence.repository.impl;
 
 import java.util.Optional;
 
+import com.thigas.quack.adapter.mapper.UserTaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +17,6 @@ public class UserTaskRepositoryImplementation implements IUserTaskRepository {
 
     @Autowired
     private IUserTaskModelRepository userTaskModelRepository;
-
-    @Autowired
-    private UserTaskMapper userTaskMapper;
-
     @Override
     @Transactional
     public UserTaskModel save(UserTaskModel userTaskModel) {

@@ -25,7 +25,7 @@ public class TaskService {
     private IStepRepository stepRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public TaskDTO create(TaskDTO taskDTO) {
         TaskModel taskModel = objectMapperService.toModel(taskDTO);

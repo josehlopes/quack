@@ -18,7 +18,7 @@ public class StatisticsService {
     private IStatisticsRepository statisticsRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
         StatisticsModel statisticsModel = objectMapperService.toModel(statisticsDTO);

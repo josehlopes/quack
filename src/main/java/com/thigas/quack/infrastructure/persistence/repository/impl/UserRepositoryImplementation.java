@@ -18,7 +18,6 @@ public class UserRepositoryImplementation implements IUserRepository {
 
     @Autowired
     private IUserModelRepository userModelRepository;
-
     @Override
     @Transactional
     public UserModel save(UserModel userEntity) {

@@ -19,13 +19,6 @@ import java.util.stream.Collectors;
 public class StepRepositoryImplementation implements IStepRepository {
 
     @Autowired
-    private StepMapper stepMapper;
-
-    @Autowired
-    private CycleAvoidingMappingContext context;
-
-
-    @Autowired
     private IStepModelRepository stepModelRepository;
 
     @Override

@@ -2,11 +2,10 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.adapter.model.BaseModel;
-
 import com.thigas.quack.domain.model.Status;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
-
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,7 +48,7 @@ public class MapperUtils {
     }
 
     @Named("integerToEntity")
-    public static  <T extends BaseEntity> T mapIntegerToEntity(Integer id, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
+    public static <T extends BaseEntity> T mapIntegerToEntity(Integer id, Class<T> clazz, @Context CycleAvoidingMappingContext context) {
         if (id == null) {
             return null;
         }
@@ -67,7 +66,7 @@ public class MapperUtils {
     }
 
     @Named("entityToInteger")
-    public static  <T extends BaseEntity> Integer mapEntityToInteger(T entity) {
+    public static <T extends BaseEntity> Integer mapEntityToInteger(T entity) {
         return (entity == null) ? null : entity.getId();
     }
 
@@ -90,7 +89,7 @@ public class MapperUtils {
     }
 
     @Named("modelToInteger")
-    public static  <T extends BaseModel> Integer modelToInteger(T model) {
+    public static <T extends BaseModel> Integer modelToInteger(T model) {
         return (model == null) ? null : model.getId();
     }
 
