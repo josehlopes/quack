@@ -6,6 +6,7 @@ import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapperImpl implements UserMapper {
 
+    @Autowired
+    private DefaultMapper defaultMapper;
     private final DateTimeFormatter dateTimeFormatter_yyyy_MM_dd_0159776256 = DateTimeFormatter.ofPattern( "yyyy-MM-dd" );
 
     @Override
@@ -27,8 +30,8 @@ public class UserMapperImpl implements UserMapper {
         if ( user.getBornAt() != null ) {
             userDTO.setBornAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( user.getBornAt() ) );
         }
-        userDTO.setRegisterAt( stringToOffSet( user.getRegisterAt() ) );
-        userDTO.setStatus( userRoadmapMapStatusToInteger( user.getStatus() ) );
+        userDTO.setRegisterAt( defaultMapper.stringToOffSet( user.getRegisterAt() ) );
+        userDTO.setStatus( defaultMapper.statusValueToInteger( user.getStatus() ) );
         userDTO.setId( user.getId() );
         userDTO.setName( user.getName() );
         userDTO.setUsername( user.getUsername() );
@@ -53,8 +56,8 @@ public class UserMapperImpl implements UserMapper {
         if ( userDTO.getBornAt() != null ) {
             userEntity.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
-        userEntity.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
-        userEntity.setStatus( userRoadmapMapIntegerToStatus( userDTO.getStatus() ) );
+        userEntity.setRegisterAt( defaultMapper.offSetToString( userDTO.getRegisterAt() ) );
+        userEntity.setStatus( defaultMapper.integerToStatusValue( userDTO.getStatus() ) );
         userEntity.setId( userDTO.getId() );
         userEntity.setName( userDTO.getName() );
         userEntity.setUsername( userDTO.getUsername() );
@@ -127,8 +130,8 @@ public class UserMapperImpl implements UserMapper {
         if ( userDTO.getBornAt() != null ) {
             userModel.setBornAt( LocalDate.parse( userDTO.getBornAt(), dateTimeFormatter_yyyy_MM_dd_0159776256 ) );
         }
-        userModel.setRegisterAt( offSetToString( userDTO.getRegisterAt() ) );
-        userModel.setStatus( userRoadmapMapIntegerToStatus( userDTO.getStatus() ) );
+        userModel.setRegisterAt( defaultMapper.offSetToString( userDTO.getRegisterAt() ) );
+        userModel.setStatus( defaultMapper.integerToStatusValue( userDTO.getStatus() ) );
         userModel.setId( userDTO.getId() );
         userModel.setName( userDTO.getName() );
         userModel.setUsername( userDTO.getUsername() );
@@ -153,8 +156,8 @@ public class UserMapperImpl implements UserMapper {
         if ( userModel.getBornAt() != null ) {
             userDTO.setBornAt( dateTimeFormatter_yyyy_MM_dd_0159776256.format( userModel.getBornAt() ) );
         }
-        userDTO.setRegisterAt( stringToOffSet( userModel.getRegisterAt() ) );
-        userDTO.setStatus( userRoadmapMapStatusToInteger( userModel.getStatus() ) );
+        userDTO.setRegisterAt( defaultMapper.stringToOffSet( userModel.getRegisterAt() ) );
+        userDTO.setStatus( defaultMapper.statusValueToInteger( userModel.getStatus() ) );
         userDTO.setId( userModel.getId() );
         userDTO.setName( userModel.getName() );
         userDTO.setUsername( userModel.getUsername() );

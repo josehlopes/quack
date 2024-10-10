@@ -6,9 +6,6 @@ import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-
-import java.util.Set;
 
 @Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface LessonMapper {

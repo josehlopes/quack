@@ -6,6 +6,7 @@ import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import javax.annotation.processing.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
 )
 @Component
 public class AddressMapperImpl implements AddressMapper {
+
+    @Autowired
+    private DefaultMapper defaultMapper;
 
     @Override
     public AddressEntity dtoToEntity(AddressDTO addressDTO, CycleAvoidingMappingContext context) {
@@ -23,7 +27,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressEntity addressEntity = new AddressEntity();
 
         addressEntity.setUser( addressDTOToUserEntity( addressDTO, context ) );
-        addressEntity.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
+        addressEntity.setStatus( defaultMapper.integerToStatusValue( addressDTO.getStatus() ) );
         addressEntity.setId( addressDTO.getId() );
         addressEntity.setStreet( addressDTO.getStreet() );
         addressEntity.setCity( addressDTO.getCity() );
@@ -44,7 +48,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressDTO addressDTO = new AddressDTO();
 
         addressDTO.setUser( addressUserId( address ) );
-        addressDTO.setStatus( statusValueToAddressInteger( address.getStatus() ) );
+        addressDTO.setStatus( defaultMapper.statusValueToInteger( address.getStatus() ) );
         addressDTO.setId( address.getId() );
         addressDTO.setStreet( address.getStreet() );
         addressDTO.setCity( address.getCity() );
@@ -107,7 +111,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressModel addressModel = new AddressModel();
 
         addressModel.setUser( addressDTOToUserModel( addressDTO, context ) );
-        addressModel.setStatus( addressIntegerToStatusValue( addressDTO.getStatus() ) );
+        addressModel.setStatus( defaultMapper.integerToStatusValue( addressDTO.getStatus() ) );
         addressModel.setId( addressDTO.getId() );
         addressModel.setStreet( addressDTO.getStreet() );
         addressModel.setCity( addressDTO.getCity() );
@@ -128,7 +132,7 @@ public class AddressMapperImpl implements AddressMapper {
         AddressDTO addressDTO = new AddressDTO();
 
         addressDTO.setUser( addressModelUserId( addressModel ) );
-        addressDTO.setStatus( statusValueToAddressInteger( addressModel.getStatus() ) );
+        addressDTO.setStatus( defaultMapper.statusValueToInteger( addressModel.getStatus() ) );
         addressDTO.setId( addressModel.getId() );
         addressDTO.setStreet( addressModel.getStreet() );
         addressDTO.setCity( addressModel.getCity() );

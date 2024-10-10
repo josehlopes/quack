@@ -2,11 +2,11 @@ package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-import org.mapstruct.*;
-
-import java.util.Set;
+import org.mapstruct.Context;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface RoadmapMapper {

@@ -1,22 +1,60 @@
 package com.thigas.quack.adapter.mapper;
 
-import com.thigas.quack.domain.entity.LessonEntity;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.StepEntity;
-import com.thigas.quack.domain.entity.TaskEntity;
+import com.thigas.quack.domain.entity.*;
 import com.thigas.quack.domain.model.Status;
-import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
-import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
-import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import com.thigas.quack.infrastructure.persistence.entity.*;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
+import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface DefaultMapper {
+
+
+    //USER MAPPERS
+    @Named("integerToUserModel")
+    default UserModel userRoadmapIntegerToModel(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(user, UserModel.class, context);
+    }
+
+    @Named("userModelToInteger")
+    default Integer userRoadmapModelToInteger(UserModel userModel) {
+        return MapperUtils.modelToInteger(userModel);
+    }
+
+    @Named("userEntityToInteger")
+    default Integer userEntityToInteger(UserEntity userEntity) {
+        return MapperUtils.mapEntityToInteger(userEntity);
+    }
+
+    @Named("userIntegerToEntity")
+    default UserEntity userIntegerToEntity(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToEntity(user, UserEntity.class, context);
+    }
+
+    @Named("stringToOffsetDateTime")
+    default OffsetDateTime offSetToString(String date) {
+        if (date == null) {
+            return null;
+        }
+        return OffsetDateTime.parse(date);
+    }
+
+    @Named("offsetDateTimeToString")
+    default String stringToOffSet(OffsetDateTime date) {
+        if (date == null) {
+            return null;
+        }
+        return date.toString();
+    }
+
+
+    //ROADMAP MAPPERS
     @Named("integersToRoadmapEntityId")
     default Set<RoadmapEntity> integersToRoadmapEntityId(Set<Integer> roadmaps, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.mapIntegersToEntities(roadmaps, RoadmapEntity.class, context);
@@ -37,6 +75,27 @@ public interface DefaultMapper {
         return MapperUtils.mapModelsToIntegers(roadmaps);
     }
 
+    @Named("integerToRoadmapModel")
+    default RoadmapModel integerToRoadmapModel(Integer roadmapModel, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(roadmapModel, RoadmapModel.class, context);
+    }
+
+    @Named("roadmapModelToInteger")
+    default Integer roadmapModelToInteger(RoadmapModel roadmapModel) {
+        return MapperUtils.modelToInteger(roadmapModel);
+    }
+
+    @Named("integerToRoadmapEntity")
+    default RoadmapEntity integerToRoadmapEntity(Integer roadmapEntity, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToEntity(roadmapEntity, RoadmapEntity.class, context);
+    }
+
+    @Named("roadmapEntityToInteger")
+    default Integer roadmapEntityToInteger(RoadmapEntity roadmapEntity) {
+        return MapperUtils.mapEntityToInteger(roadmapEntity);
+    }
+
+    //STEP MAPPERS
     @Named("stepEntityToIntegers")
     default Set<Integer> stepEntityToIntegers(Set<StepEntity> steps, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.mapEntitiesToIntegers(steps);
@@ -57,6 +116,8 @@ public interface DefaultMapper {
         return MapperUtils.mapModelsToIntegers(stepModels);
     }
 
+
+    //STATUS MAPPER
     @Named("integerToStatusValue")
     default Status integerToStatusValue(int status) {
         return Status.values()[status];
@@ -67,43 +128,7 @@ public interface DefaultMapper {
         return status.ordinal();
     }
 
-
-    @Named("integerToRoadmapModel")
-    default RoadmapModel integerToRoadmapModel(Integer roadmap) {
-        if (roadmap == null) {
-            return null;
-        }
-        RoadmapModel roadmapModel = new RoadmapModel();
-        roadmapModel.setId(roadmap);
-        return roadmapModel;
-    }
-
-    @Named("roadmapModelToInteger")
-    default Integer roadmapModelToInteger(RoadmapModel roadmapModel) {
-        if (roadmapModel == null) {
-            return null;
-        }
-        return roadmapModel.getId();
-    }
-
-    @Named("integerToRoadmapEntity")
-    default RoadmapEntity integerToRoadmapEntity(Integer roadmap) {
-        if (roadmap == null) {
-            return null;
-        }
-        RoadmapEntity roadmapEntity = new RoadmapEntity();
-        roadmapEntity.setId(roadmap);
-        return roadmapEntity;
-    }
-
-    @Named("roadmapEntityToInteger")
-    default Integer roadmapEntityToInteger(RoadmapEntity roadmapEntity) {
-        if (roadmapEntity == null) {
-            return null;
-        }
-        return roadmapEntity.getId();
-    }
-
+    //LESSON MAPPERS
     @Named("integersToLessonModelId")
     default Set<LessonModel> integersToLessonModelId(Set<Integer> lessons, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.mapIntegersToModels(lessons, LessonModel.class, context);
@@ -124,6 +149,7 @@ public interface DefaultMapper {
         return MapperUtils.mapEntitiesToIntegers(lessons);
     }
 
+    //TASK MAPPERS
     @Named("taskEntityToIntegers")
     default Set<Integer> taskEntityToIntegers(Set<TaskEntity> tasks, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.mapEntitiesToIntegers(tasks);
@@ -144,4 +170,68 @@ public interface DefaultMapper {
         return MapperUtils.mapIntegersToModels(tasksIds, TaskModel.class, context);
     }
 
+    @Named("taskModelToInteger")
+    default TaskModel taskModelToInteger(Integer task, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(task, TaskModel.class, context);
+    }
+
+    @Named("integerToTaskModel")
+    default Integer integerToTaskModel(TaskModel taskModel) {
+        return MapperUtils.modelToInteger(taskModel);
+
+    }
+
+    @Named("taskEntityToInteger")
+    default Integer taskEntityToInteger(TaskEntity taskEntity) {
+        return MapperUtils.mapEntityToInteger(taskEntity);
+    }
+
+    @Named("integerToTaskEntity")
+    default TaskEntity integerToTaskEntity(Integer task, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToEntity(task, TaskEntity.class, context);
+    }
+
+    //ACHIEVEMENT MAPPERS
+    @Named("integerToAchievementModel")
+    default AchievementModel integerToAchievementModel(Integer achievement, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(achievement, AchievementModel.class, context);
+    }
+
+    @Named("achievementModelToInteger")
+    default Integer achievementModelToInteger(AchievementModel achievementModel) {
+        return MapperUtils.modelToInteger(achievementModel);
+    }
+
+    @Named("integerToAchievementEntity")
+    default AchievementEntity integerToAchievementEntity(Integer achievement, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(achievement, AchievementEntity.class, context);
+
+    }
+
+    @Named("achievementEntityToInteger")
+    default Integer achievementEntityToInteger(AchievementEntity achievementEntity) {
+        return MapperUtils.mapEntityToInteger(achievementEntity);
+    }
+
+    @Named("achievementEntityToIntegers")
+    default Set<Integer> userAchievementEntityToIntegers(Set<UserAchievementEntity> userAchievements, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapEntitiesToIntegers(userAchievements);
+    }
+
+
+    //USER ACHIEVEMENTS MAPPERS
+    @Named("integersToUserAchievementEntityId")
+    default Set<UserAchievementEntity> integersToUserAchievementEntityId(Set<Integer> userAchievementIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToEntities(userAchievementIds, UserAchievementEntity.class, context);
+    }
+
+    @Named("integersToUserAchievementModels")
+    default Set<UserAchievementModel> integersToUserAchievementModels(Set<Integer> userAchievementIds, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegersToModels(userAchievementIds, UserAchievementModel.class, context);
+    }
+
+    @Named("userAchievementModelsToIntegers")
+    default Set<Integer> userAchievementModelsToIntegers(Set<UserAchievementModel> userAchievementModels) {
+        return MapperUtils.mapModelsToIntegers(userAchievementModels);
+    }
 }

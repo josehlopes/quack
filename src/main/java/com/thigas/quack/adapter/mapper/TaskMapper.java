@@ -6,11 +6,8 @@ import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
-import java.util.Set;
-
-@Mapper(componentModel = "spring" , uses = {DefaultMapper.class})
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface TaskMapper {
 
     @Mapping(source = "steps", target = "steps", qualifiedByName = "stepEntityToIntegers")
@@ -31,9 +28,6 @@ public interface TaskMapper {
 
     @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")
     TaskModel dtoToModel(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
-
-
-
 
 
 }
