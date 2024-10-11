@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import org.mapstruct.Context;

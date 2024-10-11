@@ -1,4 +1,4 @@
-package com.thigas.quack.adapter.mapper;
+package com.thigas.quack.adapter.mapper.utils;
 
 import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.adapter.model.BaseModel;

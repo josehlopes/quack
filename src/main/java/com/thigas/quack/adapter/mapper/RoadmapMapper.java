@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import org.mapstruct.Context;
@@ -19,12 +20,12 @@ public interface RoadmapMapper {
             @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")})
     RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+//    @Mappings({@Mapping(source = "status", target = "status"),
+//            @Mapping(source = "steps", target = "steps")})
     RoadmapModel entityToModel(RoadmapEntity roadmapEntity, @Context CycleAvoidingMappingContext context);
-
-    @Mappings({@Mapping(source = "status", target = "status"),
-            @Mapping(source = "steps", target = "steps")})
+//
+//    @Mappings({@Mapping(source = "status", target = "status"),
+//            @Mapping(source = "steps", target = "steps")})
     RoadmapEntity modelToEntity(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue"),

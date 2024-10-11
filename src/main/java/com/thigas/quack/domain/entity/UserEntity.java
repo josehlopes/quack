@@ -1,14 +1,13 @@
 package com.thigas.quack.domain.entity;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-
 import com.thigas.quack.adapter.model.BaseEntity;
-
 import com.thigas.quack.domain.model.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Data
 @NoArgsConstructor

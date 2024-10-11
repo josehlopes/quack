@@ -1,6 +1,5 @@
 package com.thigas.quack.application.service;
 
-import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -66,6 +64,7 @@ public class UserRoadmapService {
     public void delete(int id) {
         userRoadmapRepository.deleteById(id);
     }
+
     public Boolean startRoadmap(int userId, int roadmapId) {
         if (!userService.existsById(userId) || !roadmapService.existsById(roadmapId)) {
             return false;
@@ -89,6 +88,7 @@ public class UserRoadmapService {
 
         return true;
     }
+
     public Boolean endRoadmap(UserRoadmapDTO userRoadmapDTO) {
         UserRoadmapModel existingUserRoadmap = userRoadmapRepository.findById(userRoadmapDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
@@ -111,9 +111,10 @@ public class UserRoadmapService {
         userRoadmapRepository.save(updatedModel);
         return true;
     }
+
     public Boolean findUserAndRoadmap(int userId, int roadmapId) {
         Boolean userOptional = userService.existsById(userId);
-        Boolean roadmapOptional  = roadmapService.existsById(roadmapId);
+        Boolean roadmapOptional = roadmapService.existsById(roadmapId);
 
         if (userOptional && roadmapOptional) {
             return true;

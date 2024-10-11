@@ -1,7 +1,7 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.mapper.UserTaskMapper;
+import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,25 +19,25 @@ public class UserTaskService {
     private IUserTaskRepository userTaskRepository;
 
     @Autowired
-    private UserTaskMapper userTaskMapper;
+    private ObjectMapperService objectMapperService;
 
     public UserTaskDTO create(UserTaskDTO userTaskDTO) {
-        UserTaskModel userTaskModel = userTaskMapper.dtoToModel(userTaskDTO);
-        UserTaskModel savedUserTask = userTaskRepository.save(userTaskModel);
-        return userTaskMapper.modelToDto(savedUserTask);
+        UserTaskEntity userTaskEntity = objectMapperService.toEntity(userTaskDTO);
+        UserTaskModel savedUserTask = userTaskRepository.save(objectMapperService.toModel(userTaskEntity));
+        return objectMapperService.toDto(savedUserTask);
     }
 
 
     public Optional<UserTaskDTO> getById(int id) {
         return userTaskRepository.findById(id)
-                .map(userTaskMapper::modelToDto);
+                .map(objectMapperService::toDto);
     }
 
 
     public Iterable<UserTaskDTO> getAll() {
         Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
         return StreamSupport.stream(userTasks.spliterator(), false)
-                .map(userTaskMapper::modelToDto)
+                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 

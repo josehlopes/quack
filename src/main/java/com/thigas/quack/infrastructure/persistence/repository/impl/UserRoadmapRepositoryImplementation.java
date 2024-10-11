@@ -1,12 +1,9 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserRoadmapModelRepository;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +21,7 @@ public class UserRoadmapRepositoryImplementation implements IUserRoadmapReposito
     public UserRoadmapModel save(UserRoadmapModel userRoadmapModel) {
         return userRoadmapModelRepository.save(userRoadmapModel);
     }
+
     @Override
     @Transactional
     public Optional<UserRoadmapModel> findById(int id) {

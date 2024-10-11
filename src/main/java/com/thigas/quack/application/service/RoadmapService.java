@@ -1,13 +1,12 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
-
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.domain.repository.IUserRepository;
-import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -51,7 +50,7 @@ public class RoadmapService {
         roadmapRepository.deleteById(id);
     }
 
-    public Boolean existsById (int roadmapId) {
+    public Boolean existsById(int roadmapId) {
         return userRepository.existsById(roadmapId);
     }
 }

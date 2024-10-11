@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import org.mapstruct.Context;

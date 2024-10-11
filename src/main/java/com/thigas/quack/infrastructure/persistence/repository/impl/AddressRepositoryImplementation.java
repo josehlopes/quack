@@ -1,21 +1,17 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.AddressMapper;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAddressModelRepository;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class AddressRepositoryImplementation implements IAddressRepository {
-    
+
     @Autowired
     private IAddressModelRepository addressModelRepository;
 

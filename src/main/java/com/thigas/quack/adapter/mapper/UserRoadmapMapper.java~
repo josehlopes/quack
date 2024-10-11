@@ -1,7 +1,6 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import org.mapstruct.Context;

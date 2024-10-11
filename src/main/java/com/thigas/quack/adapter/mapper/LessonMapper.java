@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import org.mapstruct.Context;
@@ -16,10 +17,10 @@ public interface LessonMapper {
     @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")
     LessonEntity dtoToEntity(LessonDTO lessonDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps")
+//    @Mapping(source = "steps", target = "steps")
     LessonModel entityToModel(LessonEntity lessonEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "steps", target = "steps")
+//    @Mapping(source = "steps", target = "steps")
     LessonEntity modelToEntity(LessonModel lessonModel, @Context CycleAvoidingMappingContext context);
 
 

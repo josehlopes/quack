@@ -1,7 +1,7 @@
 //package com.thigas.quack.application.service;
 //
 //import com.thigas.quack.domain.entity.UserAchievementEntity;
-//import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
+//import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 //import com.thigas.quack.domain.repository.IUserAchievementRepository;
 //import jakarta.persistence.EntityNotFoundException;
 //import org.springframework.beans.factory.annotation.Autowired;

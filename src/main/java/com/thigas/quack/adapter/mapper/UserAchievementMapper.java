@@ -2,6 +2,7 @@ package com.thigas.quack.adapter.mapper;
 
 
 import com.thigas.quack.adapter.dto.UserAchievementDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserAchievementEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import org.mapstruct.Context;
@@ -15,7 +16,7 @@ public interface UserAchievementMapper {
 
     @Mappings({@Mapping(source = "user.id", target = "user"),
             @Mapping(source = "achievement.id", target = "achievement"),
-    @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString")})
+            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString")})
     UserAchievementDTO entityToDto(UserAchievementEntity userAchievementEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),

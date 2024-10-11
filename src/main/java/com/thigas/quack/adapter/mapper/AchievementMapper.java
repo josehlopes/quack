@@ -1,13 +1,14 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AchievementDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.AchievementEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import org.mapstruct.Context;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = DefaultMapper.class, injectionStrategy = InjectionStrategy.FIELD)
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface AchievementMapper {
 
     AchievementEntity dtoToEntity(AchievementDTO achievementDTO, @Context CycleAvoidingMappingContext context);

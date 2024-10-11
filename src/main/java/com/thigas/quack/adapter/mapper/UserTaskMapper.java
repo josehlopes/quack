@@ -1,35 +1,39 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface UserTaskMapper {
 
-    @Mappings({@Mapping(target = "user", qualifiedByName = "userEntityToInteger"),
-            @Mapping(target = "task", qualifiedByName = "taskEntityToInteger")})
-    UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, @Context CycleAvoidingMappingContext context);
-
-    @Mappings({@Mapping(target = "user.id", qualifiedByName = "userIntegerToEntity"),
-            @Mapping(target = "task.id", qualifiedByName = "integerToTaskEntity")})
-    UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, @Context CycleAvoidingMappingContext context);
-
     @Mappings({@Mapping(source = "user.id", target = "user"),
             @Mapping(source = "task.id", target = "task")})
-    UserTaskModel entityToModel(UserTaskEntity userEntity, @Context CycleAvoidingMappingContext context);
+    UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
             @Mapping(source = "task", target = "task.id")})
+    UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, @Context CycleAvoidingMappingContext context);
+
+    //    @Mappings({@Mapping(source = "user.id", target = "user.id"),
+//            @Mapping(source = "task.id", target = "task.id")})
+    UserTaskModel entityToModel(UserTaskEntity userEntity, @Context CycleAvoidingMappingContext context);
+
+    //    @Mappings({@Mapping(source = "user.id", target = "user.id"),
+//            @Mapping(source = "task.id", target = "task.id")})
     UserTaskEntity modelToEntity(UserTaskModel userModel, @Context CycleAvoidingMappingContext context);
 
-    @Mappings({@Mapping(target = "user.id", qualifiedByName = "integerToUserModel"),
-            @Mapping(target = "task.id", qualifiedByName = "integerToTaskModel")})
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "task", target = "task.id")})
     UserTaskModel dtoToModel(UserTaskDTO userTaskDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mappings({@Mapping(target = "user", qualifiedByName = "userModelToInteger"),
-            @Mapping(target = "task", qualifiedByName = "taskModelToInteger")})
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "task.id", target = "task")})
     UserTaskDTO modelToDto(UserTaskModel userTaskModel, @Context CycleAvoidingMappingContext context);
 
 }

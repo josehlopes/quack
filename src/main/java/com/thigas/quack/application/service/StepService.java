@@ -3,14 +3,12 @@ package com.thigas.quack.application.service;
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
-import com.thigas.quack.domain.repository.IRoadmapRepository;
-import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

@@ -1,7 +1,6 @@
 package com.thigas.quack.domain.repository;
 
 
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 
 import java.util.List;
@@ -14,6 +13,7 @@ public interface IUserRoadmapRepository {
     Optional<UserRoadmapModel> findById(int id);
 
     List<UserRoadmapModel> findAll();
+
     Boolean existsById(int id);
 
     void deleteById(int id);

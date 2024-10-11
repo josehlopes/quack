@@ -1,14 +1,13 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

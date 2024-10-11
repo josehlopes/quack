@@ -1,7 +1,6 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.adapter.mapper.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;

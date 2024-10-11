@@ -1,20 +1,19 @@
 package com.thigas.quack.adapter.mapper;
 
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
+import com.thigas.quack.adapter.mapper.utils.MapperUtils;
 import com.thigas.quack.domain.entity.*;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.*;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.Named;
-import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface DefaultMapper {
-
 
     //USER MAPPERS
     @Named("integerToUserModel")
@@ -35,6 +34,11 @@ public interface DefaultMapper {
     @Named("userIntegerToEntity")
     default UserEntity userIntegerToEntity(Integer user, @Context CycleAvoidingMappingContext context) {
         return MapperUtils.mapIntegerToEntity(user, UserEntity.class, context);
+    }
+
+    @Named("integerToUserEntity")
+    default UserEntity integerToUserEntity(Integer user, @Context CycleAvoidingMappingContext context) {
+        return MapperUtils.mapIntegerToModel(user, UserEntity.class, context);
     }
 
     @Named("stringToOffsetDateTime")

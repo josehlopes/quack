@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;

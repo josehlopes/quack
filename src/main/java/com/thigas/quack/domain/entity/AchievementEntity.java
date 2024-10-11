@@ -1,14 +1,9 @@
 package com.thigas.quack.domain.entity;
 
 import com.thigas.quack.adapter.model.BaseEntity;
-import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor

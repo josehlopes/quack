@@ -2,9 +2,11 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Getter

@@ -1,8 +1,8 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AchievementDTO;
-import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import com.thigas.quack.domain.repository.IAchievementRepository;
+import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

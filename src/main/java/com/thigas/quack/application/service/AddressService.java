@@ -1,8 +1,8 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import com.thigas.quack.domain.repository.IAddressRepository;
+import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

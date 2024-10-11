@@ -3,7 +3,6 @@ package com.thigas.quack.domain.entity;
 import com.thigas.quack.adapter.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -26,7 +25,6 @@ public class UserTaskEntity implements BaseEntity {
     public void setId(int id) {
         this.id = id;
     }
-
 
 
 }

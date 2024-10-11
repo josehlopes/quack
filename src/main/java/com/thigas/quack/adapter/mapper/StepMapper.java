@@ -1,6 +1,7 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StepDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.StepEntity;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.mapstruct.Context;
