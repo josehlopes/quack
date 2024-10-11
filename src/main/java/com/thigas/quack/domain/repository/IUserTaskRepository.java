@@ -12,5 +12,7 @@ public interface IUserTaskRepository {
 
     Iterable<UserTaskModel> findAll();
 
+    Boolean existsById(int id);
+
     void deleteById(int id);
 }

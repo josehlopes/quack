@@ -3,9 +3,7 @@ package com.thigas.quack.infrastructure.persistence.repository.impl;
 import com.thigas.quack.domain.repository.IAchievementRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IAchievementModelRepository;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

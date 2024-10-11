@@ -1,64 +1,40 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.Mappings;
 
-import java.time.OffsetDateTime;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface UserMapper {
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
-    UserDTO entityToDto(UserEntity user);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    UserDTO entityToDto(UserEntity user, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
-    UserEntity dtoToEntity(UserDTO userDTO);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    UserEntity dtoToEntity(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
-    UserModel entityToModel(UserEntity userEntity);
+    UserModel entityToModel(UserEntity userEntity, @Context CycleAvoidingMappingContext context);
 
-    UserEntity modelToEntity(UserModel userModel);
+    UserEntity modelToEntity(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "status", target = "status", qualifiedByName = "userIntToStatus")
-    UserModel dtoToModel(UserDTO userDTO);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    UserModel dtoToModel(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    @Mapping(source = "status", target = "status", qualifiedByName = "userStatusToInt")
-    UserDTO modelToDto(UserModel userModel);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    UserDTO modelToDto(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
-    default OffsetDateTime offSetToString(String date) {
-        if (date == null) {
-            return null;
-        }
-        return OffsetDateTime.parse(date);
-    }
-
-    default String stringToOffSet(OffsetDateTime date) {
-        if (date == null) {
-            return null;
-        }
-        return date.toString();
-    }
-
-    @Named("userStatusToInt")
-    default int statusToInt(Status status) {
-        return status != null ? status.getValue() : 0;
-    }
-
-    @Named("userIntToStatus")
-    default Status intToStatus(int value) {
-        return Status.fromValue(value);
-    }
 
 }

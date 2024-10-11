@@ -1,10 +1,6 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
-import com.thigas.quack.adapter.dto.StatisticsDTO;
-import com.thigas.quack.adapter.mapper.StatisticsMapper;
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.repository.IStatisticsRepository;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,29 +18,31 @@ public class StatisticsService {
     private IStatisticsRepository statisticsRepository;
 
     @Autowired
-    private StatisticsMapper statisticsMapper;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public StatisticsDTO create(StatisticsDTO statisticsDTO) {
-        StatisticsModel statisticsModel = statisticsMapper.dtoToModel(statisticsDTO);
+        StatisticsModel statisticsModel = objectMapperService.toModel(statisticsDTO);
         StatisticsModel savedStatistics = statisticsRepository.save(statisticsModel);
-        return statisticsMapper.modelToDto(savedStatistics);
+        return objectMapperService.toDto(savedStatistics);
     }
 
     public Optional<StatisticsDTO> getById(int id) {
         Optional<StatisticsModel> statistics = statisticsRepository.findById(id);
-        return statistics.map(statisticsMapper::modelToDto);
+        return statistics.map(objectMapperService::toDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
         Iterable<StatisticsModel> statistics = statisticsRepository.findAll();
-        return StreamSupport.stream(statistics.spliterator(), false).map(statisticsMapper::modelToDto)
+        return StreamSupport.stream(statistics.spliterator(), false)
+                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
     public void update(StatisticsDTO statisticsDTO) {
-        StatisticsModel existingUser = statisticsRepository.findById(statisticsDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        statisticsRepository.save(existingUser);
+        StatisticsModel existingStatistics = statisticsRepository.findById(statisticsDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Statistics not found"));
+        StatisticsModel statisticsModel = objectMapperService.toModel(statisticsDTO);
+        statisticsRepository.save(statisticsModel);
     }
 
     public void delete(int id) {

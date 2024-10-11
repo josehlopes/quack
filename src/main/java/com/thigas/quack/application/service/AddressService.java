@@ -1,10 +1,6 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.adapter.dto.AddressDTO;
-import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.adapter.mapper.AddressMapper;
-import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,29 +18,31 @@ public class AddressService {
     private IAddressRepository addressRepository;
 
     @Autowired
-    private AddressMapper addressMapper;
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public AddressDTO create(AddressDTO addressDTO) {
-        AddressModel addressModel = addressMapper.dtoToModel(addressDTO);
+        AddressModel addressModel = objectMapperService.toModel(addressDTO);
         AddressModel savedAddress = addressRepository.save(addressModel);
-        return addressMapper.modelToDto(savedAddress);
+        return objectMapperService.toDto(savedAddress);
     }
 
     public Optional<AddressDTO> getById(int id) {
         Optional<AddressModel> address = addressRepository.findById(id);
-        return address.map(addressMapper::modelToDto);
+        return address.map(objectMapperService::toDto);
     }
 
     public Iterable<AddressDTO> getAll() {
-        Iterable<AddressModel> addresss = addressRepository.findAll();
-        return StreamSupport.stream(addresss.spliterator(), false).map(addressMapper::modelToDto)
+        Iterable<AddressModel> addresses = addressRepository.findAll();
+        return StreamSupport.stream(addresses.spliterator(), false)
+                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
     public void update(AddressDTO addressDTO) {
-        AddressModel existingUser = addressRepository.findById(addressDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        addressRepository.save(existingUser);
+        AddressModel existingAddress = addressRepository.findById(addressDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Address not found"));
+        AddressModel updatedAddress = objectMapperService.toModel(addressDTO);
+        addressRepository.save(updatedAddress);
     }
 
     public void delete(int id) {

@@ -1,8 +1,11 @@
 package com.thigas.quack.infrastructure.security;
 
-import java.io.IOException;
-import java.util.Collections;
-
+import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.application.service.UserService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,13 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.thigas.quack.adapter.dto.UserDTO;
-import com.thigas.quack.application.service.UserService;
-
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -32,13 +30,11 @@ public class SecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         var token = this.recoverToken(request);
 
-        // Verifica se a requisição é para o registro ou login
         if (request.getRequestURI().equals("/auth/register") || request.getRequestURI().equals("/auth/login")) {
-            filterChain.doFilter(request, response); // Permite a passagem sem validar o token
+            filterChain.doFilter(request, response);
             return;
         }
 
-        // Para outras rotas, valida o token
         if (token != null) {
             var login = tokenService.validateToken(token);
 
@@ -48,6 +44,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
         filterChain.doFilter(request, response);
     }
 

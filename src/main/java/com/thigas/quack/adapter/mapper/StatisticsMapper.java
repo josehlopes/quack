@@ -1,49 +1,32 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.StatisticsEntity;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface StatisticsMapper {
 
     @Mapping(source = "user.id", target = "user")
-    StatisticsDTO entityToDto(StatisticsEntity statistics);
+    StatisticsDTO entityToDto(StatisticsEntity statistics, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user", target = "user.id")
-    StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO);
+    StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user")
-    StatisticsModel entityToModel(StatisticsEntity statistics);
+    StatisticsModel entityToModel(StatisticsEntity statistics, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user.id")
-    StatisticsEntity modelToEntity(StatisticsModel statisticsModel);
+    StatisticsEntity modelToEntity(StatisticsModel statisticsModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user", target = "user.id")
-    StatisticsModel dtoToModel(StatisticsDTO statisticsDTO);
+    StatisticsModel dtoToModel(StatisticsDTO statisticsDTO, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user.id", target = "user")
-    StatisticsDTO modelToDto(StatisticsModel statisticsModel);
-
-    default UserModel map(Integer user) {
-        if (user == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(user);
-        return userModel;
-    }
-
-    default Integer map(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
-    }
+    StatisticsDTO modelToDto(StatisticsModel statisticsModel, @Context CycleAvoidingMappingContext context);
 
     default Status map(int value) {
         return Status.fromValue(value);

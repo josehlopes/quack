@@ -1,9 +1,6 @@
 package com.thigas.quack.application.service;
 
 import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.dto.UserTaskDTO;
-import com.thigas.quack.adapter.mapper.UserMapper;
-import com.thigas.quack.adapter.mapper.UserTaskMapper;
 import com.thigas.quack.domain.entity.UserTaskEntity;
 import com.thigas.quack.domain.repository.IUserTaskRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserTaskModel;
@@ -22,32 +19,44 @@ public class UserTaskService {
     private IUserTaskRepository userTaskRepository;
 
     @Autowired
-    private UserTaskMapper userTaskMapper;
+    private ObjectMapperService objectMapperService;
 
     public UserTaskDTO create(UserTaskDTO userTaskDTO) {
-        UserTaskModel userTaskModel = userTaskMapper.dtoToModel(userTaskDTO);
-        UserTaskModel savedUserTask = userTaskRepository.save(userTaskModel);
-        return userTaskMapper.modelToDto(savedUserTask);
+        UserTaskEntity userTaskEntity = objectMapperService.toEntity(userTaskDTO);
+        UserTaskModel savedUserTask = userTaskRepository.save(objectMapperService.toModel(userTaskEntity));
+        return objectMapperService.toDto(savedUserTask);
     }
 
+
     public Optional<UserTaskDTO> getById(int id) {
-        Optional<UserTaskModel> userTask = userTaskRepository.findById(id);
-        return userTask.map(userTaskMapper::modelToDto);
+        return userTaskRepository.findById(id)
+                .map(objectMapperService::toDto);
     }
+
 
     public Iterable<UserTaskDTO> getAll() {
         Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
-        return StreamSupport.stream(userTasks.spliterator(), false).map(userTaskMapper::modelToDto)
+        return StreamSupport.stream(userTasks.spliterator(), false)
+                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
+
     public void update(UserTaskDTO userTaskDTO) {
-        UserTaskModel existingUser = userTaskRepository.findById(userTaskDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        userTaskRepository.save(existingUser);
+        UserTaskModel existingUserTask = userTaskRepository.findById(userTaskDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User task not found"));
+
+        if (userTaskDTO.getId() != 0) {
+            existingUserTask.setId(userTaskDTO.getId());
+        }
+
+        userTaskRepository.save(existingUserTask);
     }
 
     public void delete(int id) {
+        if (!userTaskRepository.existsById(id)) {
+            throw new EntityNotFoundException("User task not found");
+        }
         userTaskRepository.deleteById(id);
     }
 }

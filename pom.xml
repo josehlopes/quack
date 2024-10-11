@@ -178,9 +178,13 @@
                             <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
+                    <showWarnings>true</showWarnings>
+
                     <compilerArgs>
+                        <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
                         <arg>-Amapstruct.verbose=true</arg>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                        <arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
