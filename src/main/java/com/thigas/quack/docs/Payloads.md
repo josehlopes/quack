@@ -317,8 +317,7 @@ public class RoadmapDTO {
   "title": "Roadmap de Programação",
   "description": "Este roadmap ensina programação do básico ao avançado",
   "imagePath": "/images/roadmap/roadmap1.jpg",
-  "status": 1,
-  "steps": [1, 2]
+  "status": 1
 }
 ```
 
@@ -414,6 +413,7 @@ Descrição dos Campos
 ``` java
 public class AchievementDTO {
     private int id;
+    private String name;
     private String title;
     private String description;
     private String imagePath;
@@ -422,6 +422,7 @@ public class AchievementDTO {
 
 ```json
 {
+  "name": "Python", 
   "title": "Conquista de Python",
   "description": "Conquista ao finalizar um curso de Python",
   "imagePath": "/images/achievement/achievement1.jpg"
