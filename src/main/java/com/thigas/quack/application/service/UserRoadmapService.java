@@ -1,5 +1,6 @@
 package com.thigas.quack.application.service;
 
+import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.entity.UserEntity;
@@ -30,6 +31,7 @@ public class UserRoadmapService {
 
     @Autowired
     private UserService userService;
+
 
     public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
         UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(userRoadmapDTO);
@@ -82,6 +84,7 @@ public class UserRoadmapService {
         userRoadmapEntity.setRoadmap(roadmap);
         userRoadmapEntity.setProgress(0.0);
         userRoadmapEntity.setStartedAt(LocalDate.now());
+        userRoadmapEntity.setStatus(Status.ACTIVE);
 
         UserRoadmapModel userRoadmapModel = objectMapperService.toModel(userRoadmapEntity);
         userRoadmapRepository.save(userRoadmapModel);
@@ -89,18 +92,15 @@ public class UserRoadmapService {
         return true;
     }
 
-    public Boolean endRoadmap(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel existingUserRoadmap = userRoadmapRepository.findById(userRoadmapDTO.getId())
+    public Boolean endRoadmap(int id) {
+        UserRoadmapDTO existingUserRoadmap = getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
 
-        if (!findUserAndRoadmap(userRoadmapDTO.getUser(), userRoadmapDTO.getRoadmap())) {
-            return false;
-        }
 
-        UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(userRoadmapDTO);
+        UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(existingUserRoadmap);
 
-        if (userRoadmapDTO.getStartedAt() != null) {
-            userRoadmapEntity.setStartedAt(LocalDate.parse(userRoadmapDTO.getStartedAt()));
+        if (existingUserRoadmap.getStartedAt() != null) {
+            userRoadmapEntity.setStartedAt(LocalDate.parse(existingUserRoadmap.getStartedAt()));
         }
 
         userRoadmapEntity.setStatus(Status.FINISHED);
@@ -112,16 +112,16 @@ public class UserRoadmapService {
         return true;
     }
 
-    public Boolean findUserAndRoadmap(int userId, int roadmapId) {
-        Boolean userOptional = userService.existsById(userId);
-        Boolean roadmapOptional = roadmapService.existsById(roadmapId);
-
-        if (userOptional && roadmapOptional) {
-            return true;
-        } else {
-            System.out.println("Usuário ou roadmap não encontrado.");
-            return false;
-        }
-    }
+//    public Boolean findUserAndRoadmap(int userId, int roadmapId) {
+//        Boolean userOptional = userService.existsById(userId);
+//        Boolean roadmapOptional = roadmapService.existsById(roadmapId);
+//
+//        if (userOptional && roadmapOptional) {
+//            return true;
+//        } else {
+//            System.out.println("Usuário ou roadmap não encontrado.");
+//            return false;
+//        }
+//    }
 
 }

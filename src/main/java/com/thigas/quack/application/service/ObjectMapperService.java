@@ -116,6 +116,13 @@ public class ObjectMapperService {
         return userRoadmapMapper.modelToDto(savedUserRoadmap, context);
     }
 
+    public UserRoadmapEntity toEntity(UserRoadmapModel userRoadmapModel) {
+        if (userRoadmapModel == null) {
+            throw new IllegalArgumentException("UserRoadmapEntity cannot be null");
+        }
+        return userRoadmapMapper.modelToEntity(userRoadmapModel, context);
+    }
+
     //USER TASK METHODS
     public UserTaskDTO toDto(UserTaskEntity userTaskEntity) {
         if (userTaskEntity == null) {

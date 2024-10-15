@@ -43,6 +43,7 @@ public class StatisticsModel implements BaseModel {
     @Column(name = "roadmaps_completed_count")
     private int roadmapsCompletedCount;
 
+
     @Override
     public int getId() {
         return this.id;

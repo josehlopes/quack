@@ -60,25 +60,36 @@ public class UserController {
     }
 
     @PostMapping("/start-roadmap")
-    public ResponseEntity<Void> startRoadmap(@RequestBody UserDTO userDTO, RoadmapDTO roadmapDTO) {
-        int userId = userDTO.getId();
-        int roadmapId = roadmapDTO.getId();
-        if (userRoadmapService.startRoadmap(userId, roadmapId)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
-    @PutMapping("/end-roadmap")
-    public ResponseEntity<Void> endRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
-        if (userRoadmapService.endRoadmap(userRoadmapDTO)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Void> startRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+        try {
+            if (userRoadmapService.startRoadmap(userRoadmapDTO.getUser(), userRoadmapDTO.getRoadmap())) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PutMapping("/end-roadmap/{id}")
+    public ResponseEntity<Void> endRoadmap(@PathVariable Integer id) {
+        try {
+            if (id == 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if (userRoadmapService.endRoadmap(id)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }
 
