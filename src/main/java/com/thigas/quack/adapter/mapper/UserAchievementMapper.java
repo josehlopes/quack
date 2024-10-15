@@ -16,12 +16,14 @@ public interface UserAchievementMapper {
 
     @Mappings({@Mapping(source = "user.id", target = "user"),
             @Mapping(source = "achievement.id", target = "achievement"),
-            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString")})
+            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString")
+    ,@Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
     UserAchievementDTO entityToDto(UserAchievementEntity userAchievementEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
             @Mapping(source = "achievement", target = "achievement.id"),
-            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime")})
+            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
     UserAchievementEntity dtoToEntity(UserAchievementDTO userAchievementDTO, @Context CycleAvoidingMappingContext context);
 
     UserAchievementModel entityToModel(UserAchievementEntity userAchievementEntity, @Context CycleAvoidingMappingContext context);
@@ -30,12 +32,14 @@ public interface UserAchievementMapper {
 
     @Mappings({@Mapping(source = "user.id", target = "user"),
             @Mapping(source = "achievement.id", target = "achievement"),
-            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString")})
+            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
     UserAchievementDTO modelToDto(UserAchievementModel userAchievementModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
             @Mapping(source = "achievement", target = "achievement.id"),
-            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime")})
+            @Mapping(source = "obtainedDate", target = "obtainedDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
     UserAchievementModel dtoToModel(UserAchievementDTO userAchievementDTO, @Context CycleAvoidingMappingContext context);
 
 }

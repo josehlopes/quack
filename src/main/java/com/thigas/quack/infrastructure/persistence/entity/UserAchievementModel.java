@@ -1,6 +1,7 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
+import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,10 @@ public class UserAchievementModel implements BaseModel {
 
     @Column(name = "obtained_date")
     private OffsetDateTime obtainedDate;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
+    private Status status = Status.ACTIVE;
 
     @Override
     public int getId() {

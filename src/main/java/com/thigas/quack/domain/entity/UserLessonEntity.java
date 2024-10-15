@@ -6,21 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAchievementEntity implements BaseEntity {
+public class UserLessonEntity implements BaseEntity {
 
     private int id;
     private UserEntity user;
-    private AchievementEntity achievement;
-    private String imagePath;
-    private OffsetDateTime obtainedDate;
+    private LessonEntity lesson;
     private Status status;
-
-
+    private String imagePath;
 
     @Override
     public int getId() {
@@ -31,5 +26,4 @@ public class UserAchievementEntity implements BaseEntity {
     public void setId(int id) {
         this.id = id;
     }
-
 }

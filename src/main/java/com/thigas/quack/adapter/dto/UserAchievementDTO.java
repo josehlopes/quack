@@ -10,4 +10,6 @@ public class UserAchievementDTO {
     private String imagePath;
     private int achievement;
     private String obtainedDate;
+    private int status;
+
 }

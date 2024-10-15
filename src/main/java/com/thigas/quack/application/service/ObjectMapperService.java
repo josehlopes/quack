@@ -3,10 +3,7 @@ package com.thigas.quack.application.service;
 import com.thigas.quack.adapter.dto.*;
 import com.thigas.quack.adapter.mapper.*;
 import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
-import com.thigas.quack.domain.entity.RoadmapEntity;
-import com.thigas.quack.domain.entity.UserEntity;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
-import com.thigas.quack.domain.entity.UserTaskEntity;
+import com.thigas.quack.domain.entity.*;
 import com.thigas.quack.infrastructure.persistence.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,6 +44,12 @@ public class ObjectMapperService {
     private UserTaskMapper userTaskMapper;
 
     @Autowired
+    private UserStepMapper userStepMapper;
+
+    @Autowired
+    private UserLessonMapper userLessonMapper;
+
+    @Autowired
     private CycleAvoidingMappingContext context;
 
     //USER METHODS
@@ -77,7 +80,6 @@ public class ObjectMapperService {
         }
         return userMapper.dtoToEntity(userDTO, context);
     }
-
 
     //USER ROADMAP METHOD
     public UserRoadmapDTO toDto(UserRoadmapEntity userRoadmapEntity) {
@@ -158,6 +160,93 @@ public class ObjectMapperService {
             throw new IllegalArgumentException("UserTaskModel cannot be null");
         }
         return userTaskMapper.modelToDto(savedUserTask, context);
+    }
+
+    //USER STEP METHOD
+    public UserStepDTO toDto(UserStepEntity userStepEntity) {
+        if (userStepEntity == null) {
+            throw new IllegalArgumentException("UserStepEntity cannot be null");
+        }
+        return userStepMapper.entityToDto(userStepEntity, context);
+    }
+
+    public UserStepEntity toEntity(UserStepDTO userStepDTO) {
+        if (userStepDTO == null) {
+            throw new IllegalArgumentException("UserStepDTO cannot be null");
+        }
+        return userStepMapper.dtoToEntity(userStepDTO, context);
+    }
+
+    public UserStepModel toModel(UserStepDTO userStepDTO) {
+        if (userStepDTO == null) {
+            throw new IllegalArgumentException("UserStepDTO cannot be null");
+        }
+        return userStepMapper.dtoToModel(userStepDTO, context);
+
+    }
+
+    public UserStepModel toModel(UserStepEntity userStepEntity) {
+        if (userStepEntity == null) {
+            throw new IllegalArgumentException("UserStepEntity cannot be null");
+        }
+        return userStepMapper.entityToModel(userStepEntity, context);
+    }
+
+    public UserStepDTO toDto(UserStepModel savedUserStep) {
+        if (savedUserStep == null) {
+            throw new IllegalArgumentException("UserStepModel cannot be null");
+        }
+        return userStepMapper.modelToDto(savedUserStep, context);
+    }
+
+    public UserStepEntity toEntity(UserStepModel userStepModel) {
+        if (userStepModel == null) {
+            throw new IllegalArgumentException("UserStepModel cannot be null");
+        }
+        return userStepMapper.modelToEntity(userStepModel, context);
+    }
+
+    //USER LESSON METHODS
+    public UserLessonDTO toDto(UserLessonEntity userLessonEntity) {
+        if (userLessonEntity == null) {
+            throw new IllegalArgumentException("UserLessonEntity cannot be null");
+        }
+        return userLessonMapper.entityToDto(userLessonEntity, context);
+    }
+
+    public UserLessonEntity toEntity(UserLessonDTO userLessonDTO) {
+        if (userLessonDTO == null) {
+            throw new IllegalArgumentException("UserLessonDTO cannot be null");
+        }
+        return userLessonMapper.dtoToEntity(userLessonDTO, context);
+    }
+
+    public UserLessonModel toModel(UserLessonDTO userLessonDTO) {
+        if (userLessonDTO == null) {
+            throw new IllegalArgumentException("UserLessonDTO cannot be null");
+        }
+        return userLessonMapper.dtoToModel(userLessonDTO, context);
+    }
+
+    public UserLessonModel toModel(UserLessonEntity userLessonEntity) {
+        if (userLessonEntity == null) {
+            throw new IllegalArgumentException("UserLessonEntity cannot be null");
+        }
+        return userLessonMapper.entityToModel(userLessonEntity, context);
+    }
+
+    public UserLessonDTO toDto(UserLessonModel savedUserLesson) {
+        if (savedUserLesson == null) {
+            throw new IllegalArgumentException("UserLessonModel cannot be null");
+        }
+        return userLessonMapper.modelToDto(savedUserLesson, context);
+    }
+
+    public UserLessonEntity toEntity(UserLessonModel userLessonModel) {
+        if (userLessonModel == null) {
+            throw new IllegalArgumentException("UserLessonModel cannot be null");
+        }
+        return userLessonMapper.modelToEntity(userLessonModel, context);
     }
 
     //ACHIEVEMENT METHODS

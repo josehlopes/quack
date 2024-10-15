@@ -16,8 +16,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "user_task")
-public class UserTaskModel implements BaseModel {
+@Table(name = "user_lesson")
+public class UserLessonModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,8 @@ public class UserTaskModel implements BaseModel {
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "task_id", nullable = false)
-    private TaskModel task;
+    @JoinColumn(name = "lesson_id", nullable = false)
+    private LessonModel lesson;
 
     @Column(nullable = false)
     private String imagePath;
@@ -48,8 +48,6 @@ public class UserTaskModel implements BaseModel {
         this.id = id;
     }
 
-
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -57,7 +55,7 @@ public class UserTaskModel implements BaseModel {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        UserTaskModel that = (UserTaskModel) o;
+        UserLessonModel that = (UserLessonModel) o;
         return getId() != 0 && Objects.equals(getId(), that.getId());
     }
 
@@ -65,4 +63,5 @@ public class UserTaskModel implements BaseModel {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
+
 }
