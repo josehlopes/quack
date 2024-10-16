@@ -1,7 +1,8 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
-import com.thigas.quack.infrastructure.converter.TaskTextConverter;
+import com.thigas.quack.domain.entity.TaskText;
+import com.thigas.quack.adapter.mapper.TaskTextConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

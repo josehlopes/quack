@@ -1,4 +1,4 @@
-package com.thigas.quack.infrastructure.persistence.entity;
+package com.thigas.quack.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

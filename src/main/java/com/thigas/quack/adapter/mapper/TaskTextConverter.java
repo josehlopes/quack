@@ -1,7 +1,7 @@
-package com.thigas.quack.infrastructure.converter;
+package com.thigas.quack.adapter.mapper;
 
 import com.google.gson.Gson;
-import com.thigas.quack.infrastructure.persistence.entity.TaskText;
+import com.thigas.quack.domain.entity.TaskText;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
