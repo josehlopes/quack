@@ -2,7 +2,7 @@ package com.thigas.quack.application.service;
 
 import com.github.javafaker.Faker;
 import com.thigas.quack.adapter.dto.*;
-import com.thigas.quack.infrastructure.persistence.entity.TaskText;
+import com.thigas.quack.domain.entity.TaskText;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.thigas.quack.adapter.dto;
 
-import com.thigas.quack.infrastructure.persistence.entity.TaskText;
+import com.thigas.quack.domain.entity.TaskText;
 import lombok.Data;
 
 import java.util.Set;
