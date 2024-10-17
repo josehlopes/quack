@@ -1,43 +1,48 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.UserRoadmapMapper;
-import com.thigas.quack.domain.entity.UserRoadmapEntity;
 import com.thigas.quack.domain.repository.IUserRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserRoadmapModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserRoadmapModelRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRoadmapRepositoryImplementation implements IUserRoadmapRepository {
 
-    private final UserRoadmapMapper userRoadmapMapper = UserRoadmapMapper.INSTANCE;
     @Autowired
     private IUserRoadmapModelRepository userRoadmapModelRepository;
 
     @Override
-    public UserRoadmapEntity save(UserRoadmapEntity userRoadmapEntity) {
-        UserRoadmapModel userRoadmapMODEL = userRoadmapMapper.entityToModel(userRoadmapEntity);
-        UserRoadmapModel savedUserRoadmapModel = userRoadmapModelRepository.save(userRoadmapMODEL);
-        return userRoadmapMapper.modelToEntity(savedUserRoadmapModel);
+    @Transactional
+    public UserRoadmapModel save(UserRoadmapModel userRoadmapModel) {
+        return userRoadmapModelRepository.save(userRoadmapModel);
     }
 
     @Override
-    public Optional<UserRoadmapEntity> findById(int id) {
-        return userRoadmapModelRepository.findById(id).map(userRoadmapMapper::modelToEntity);
+    @Transactional
+    public Optional<UserRoadmapModel> findById(int id) {
+        return userRoadmapModelRepository.findById(id);
     }
 
     @Override
-    public Iterable<UserRoadmapEntity> findAll() {
-        return userRoadmapModelRepository.findAll().stream().map(userRoadmapMapper::modelToEntity)
-                .collect(Collectors.toList());
+    @Transactional
+    public List<UserRoadmapModel> findAll() {
+        return userRoadmapModelRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void deleteById(int id) {
         userRoadmapModelRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return userRoadmapModelRepository.existsById(id);
     }
 }

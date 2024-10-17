@@ -1,43 +1,38 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.StatisticsDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.StatisticsEntity;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface StatisticsMapper {
 
-    StatisticsMapper INSTANCE = Mappers.getMapper(StatisticsMapper.class);
+    @Mapping(source = "user.id", target = "user")
+    StatisticsDTO entityToDto(StatisticsEntity statistics, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "userId")
-    StatisticsDTO entityToDto(StatisticsEntity statistics);
+    @Mapping(source = "user", target = "user.id")
+    StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "userId", target = "user.id")
-    StatisticsEntity dtoToEntity(StatisticsDTO statisticsDTO);
+    StatisticsModel entityToModel(StatisticsEntity statistics, @Context CycleAvoidingMappingContext context);
+
+    StatisticsEntity modelToEntity(StatisticsModel statisticsModel, @Context CycleAvoidingMappingContext context);
+
+    @Mapping(source = "user", target = "user.id")
+    StatisticsModel dtoToModel(StatisticsDTO statisticsDTO, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "user.id", target = "user")
-    StatisticsModel entityToModel(StatisticsEntity statistics);
+    StatisticsDTO modelToDto(StatisticsModel statisticsModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user.id")
-    StatisticsEntity modelToEntity(StatisticsModel statisticsModel);
-
-    default UserModel map(Integer userId) {
-        if (userId == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(userId);
-        return userModel;
+    default Status map(int value) {
+        return Status.fromValue(value);
     }
 
-    default Integer map(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
+    default int map(Status status) {
+        return status.getValue();
     }
 }

@@ -19,7 +19,7 @@ src
     │           │   ├── persistence
     │           │   ├── configuration
     │           │   └── messaging
-    │           ├── presentation
+    │           ├── adapter
     │           │   ├── controller
     │           │   ├── dto
     │           │   └── mapper

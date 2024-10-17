@@ -1,22 +1,27 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AchievementDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.AchievementEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
+import org.mapstruct.Context;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface AchievementMapper {
 
-    AchievementMapper INSTANCE = Mappers.getMapper(AchievementMapper.class);
+    AchievementEntity dtoToEntity(AchievementDTO achievementDTO, @Context CycleAvoidingMappingContext context);
 
-    AchievementEntity dtoToEntity(AchievementDTO achievementDTO);
+    AchievementDTO entityToDto(AchievementEntity achievementEntity, @Context CycleAvoidingMappingContext context);
 
-    AchievementDTO entityToDto(AchievementEntity achievementEntity);
+    AchievementModel entityToModel(AchievementEntity achievementEntity, @Context CycleAvoidingMappingContext context);
 
-    AchievementModel entityToModel(AchievementEntity achievementEntity);
+    AchievementEntity modelToEntity(AchievementModel achievementModel, @Context CycleAvoidingMappingContext context);
 
-    AchievementEntity modelToEntity(AchievementModel achievementModel);
+    AchievementModel dtoToModel(AchievementDTO achievementDTO, @Context CycleAvoidingMappingContext context);
+
+    AchievementDTO modelToDto(AchievementModel achievementModel, @Context CycleAvoidingMappingContext context);
+
+
 }

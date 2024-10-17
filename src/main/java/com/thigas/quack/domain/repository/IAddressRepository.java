@@ -1,15 +1,16 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.AddressEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 
 import java.util.Optional;
 
 public interface IAddressRepository {
-    AddressEntity save(AddressEntity address);
+    AddressModel save(AddressModel address);
 
-    Optional<AddressEntity> findById(int id);
+    Optional<AddressModel> findById(int id);
 
-    Iterable<AddressEntity> findAll();
+    Iterable<AddressModel> findAll();
 
     void deleteById(int id);
 }

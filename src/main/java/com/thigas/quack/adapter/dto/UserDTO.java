@@ -7,6 +7,7 @@ public class UserDTO {
 
     private int id;
     private String name;
+    private String username;
     private String phone;
     private String email;
     private String password;
@@ -15,4 +16,5 @@ public class UserDTO {
     private Double points;
     private String registerAt;
     private String imagePath;
+    private int status;
 }

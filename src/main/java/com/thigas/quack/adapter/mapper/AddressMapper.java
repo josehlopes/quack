@@ -1,44 +1,35 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.AddressDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.AddressEntity;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
-import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface AddressMapper {
 
-    AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    AddressEntity dtoToEntity(AddressDTO addressDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "userId")
-    AddressDTO entityToDto(AddressEntity address);
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    AddressDTO entityToDto(AddressEntity address, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "userId", target = "user.id")
-    AddressEntity dtoToEntity(AddressDTO addressDTO);
+    AddressModel entityToModel(AddressEntity address, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user.id")
-    AddressModel entityToModel(AddressEntity address);
+    AddressEntity modelToEntity(AddressModel addressModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "user.id", target = "user.id")
-    AddressEntity modelToEntity(AddressModel addressModel);
+    @Mappings({@Mapping(source = "user", target = "user.id"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    AddressModel dtoToModel(AddressDTO addressDTO, @Context CycleAvoidingMappingContext context);
 
-    default UserModel map(Integer userId) {
-        if (userId == null) {
-            return null;
-        }
-        UserModel userModel = new UserModel();
-        userModel.setId(userId);
-        return userModel;
-    }
-
-    default Integer map(UserModel userModel) {
-        if (userModel == null) {
-            return null;
-        }
-        return userModel.getId();
-    }
+    @Mappings({@Mapping(source = "user.id", target = "user"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    AddressDTO modelToDto(AddressModel addressModel, @Context CycleAvoidingMappingContext context);
 
 }
