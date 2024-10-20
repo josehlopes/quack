@@ -32,6 +32,9 @@ public class UserRoadmapService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StatisticsService statisticsService;
+
 
     public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
         UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(userRoadmapDTO);
@@ -109,6 +112,9 @@ public class UserRoadmapService {
 
         UserRoadmapModel updatedModel = objectMapperService.toModel(userRoadmapEntity);
         userRoadmapRepository.save(updatedModel);
+
+        int userId = existingUserRoadmap.getUser();
+        statisticsService.incrementRoadmapsCompleted(userId);
         return true;
     }
 

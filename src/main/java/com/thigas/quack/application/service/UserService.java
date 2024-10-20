@@ -19,11 +19,15 @@ public class UserService {
     private IUserRepository userRepository;
 
     @Autowired
+    private StatisticsService statisticsService;
+
+    @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public UserDTO create(UserDTO userDTO) {
         UserModel user = objectMapperService.toModel(userDTO);
         UserModel savedUser = userRepository.save(user);
+        statisticsService.createInitialStatisticsForUser(savedUser.getId());
         return objectMapperService.toDto(savedUser);
     }
 
