@@ -1,22 +1,34 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.LessonDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.LessonEntity;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface LessonMapper {
 
-    LessonMapper INSTANCE = Mappers.getMapper(LessonMapper.class);
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "stepEntityToIntegers")
+    LessonDTO entityToDto(LessonEntity lessonEntity, @Context CycleAvoidingMappingContext context);
 
-    LessonModel entityToModel(LessonEntity lesson);
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")
+    LessonEntity dtoToEntity(LessonDTO lessonDTO, @Context CycleAvoidingMappingContext context);
 
-    LessonEntity modelToEntity(LessonModel lessonModel);
+//    @Mapping(source = "steps", target = "steps")
+    LessonModel entityToModel(LessonEntity lessonEntity, @Context CycleAvoidingMappingContext context);
 
-    LessonDTO entityToDto(LessonEntity lesson);
+//    @Mapping(source = "steps", target = "steps")
+    LessonEntity modelToEntity(LessonModel lessonModel, @Context CycleAvoidingMappingContext context);
 
-    LessonEntity dtoToEntity(LessonDTO lessonDTO);
+
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "stepModelsToIntegers")
+    LessonDTO modelToDto(LessonModel lessonModel, @Context CycleAvoidingMappingContext context);
+
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")
+    LessonModel dtoToModel(LessonDTO lessonDTO, @Context CycleAvoidingMappingContext context);
 
 }
+

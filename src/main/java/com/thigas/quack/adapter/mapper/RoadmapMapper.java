@@ -1,22 +1,41 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.RoadmapDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface RoadmapMapper {
 
-    RoadmapMapper INSTANCE = Mappers.getMapper(RoadmapMapper.class);
+    @Mappings({@Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger"),
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "stepEntityToIntegers")})
+    RoadmapDTO entityToDto(RoadmapEntity roadmapEntity, @Context CycleAvoidingMappingContext context);
 
-    RoadmapDTO entityToDto(RoadmapEntity roadmap);
+    @Mappings({@Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue"),
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")})
+    RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO, @Context CycleAvoidingMappingContext context);
 
-    RoadmapEntity dtoToEntity(RoadmapDTO roadmapDTO);
+//    @Mappings({@Mapping(source = "status", target = "status"),
+//            @Mapping(source = "steps", target = "steps")})
+    RoadmapModel entityToModel(RoadmapEntity roadmapEntity, @Context CycleAvoidingMappingContext context);
+//
+//    @Mappings({@Mapping(source = "status", target = "status"),
+//            @Mapping(source = "steps", target = "steps")})
+    RoadmapEntity modelToEntity(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
 
-    RoadmapModel entityToModel(RoadmapEntity roadmap);
+    @Mappings({@Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue"),
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")})
+    RoadmapModel dtoToModel(RoadmapDTO roadmapDTO, @Context CycleAvoidingMappingContext context);
 
-    RoadmapEntity modelToEntity(RoadmapModel roadmapModel);
+    @Mappings({@Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger"),
+            @Mapping(source = "steps", target = "steps", qualifiedByName = "stepModelsToIntegers")})
+    RoadmapDTO modelToDto(RoadmapModel roadmapModel, @Context CycleAvoidingMappingContext context);
+
+
 }
+
