@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
@@ -51,9 +52,10 @@ public class AuthController {
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
             newUser.setBornAt(String.valueOf(body.bornAt()));
-            newUser.setRegisterAt(String.valueOf(body.registerAt()));
-            newUser.setPoints(body.points());
+            newUser.setRegisterAt(OffsetDateTime.now().toString());
+            newUser.setPoints(0.0);
             newUser.setImagePath(body.imagePath());
+            newUser.setStatus(body.status());
 
             this.userService.create(newUser);
 
