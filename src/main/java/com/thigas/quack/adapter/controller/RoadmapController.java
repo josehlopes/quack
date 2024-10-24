@@ -11,12 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/roadmaps")
 public class RoadmapController {
 
-    private final RoadmapService roadmapService;
-
     @Autowired
-    public RoadmapController(RoadmapService roadmapService) {
-        this.roadmapService = roadmapService;
-    }
+    private RoadmapService roadmapService;
 
     @PostMapping
     public ResponseEntity<RoadmapDTO> create(@RequestBody RoadmapDTO roadmapDTO) {

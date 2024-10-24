@@ -1,41 +1,46 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.RoadmapMapper;
-import com.thigas.quack.domain.entity.RoadmapEntity;
 import com.thigas.quack.domain.repository.IRoadmapRepository;
 import com.thigas.quack.infrastructure.persistence.entity.RoadmapModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IRoadmapModelRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class RoadmapRepositoryImplementation implements IRoadmapRepository {
 
-    private final RoadmapMapper userMapper = RoadmapMapper.INSTANCE;
     @Autowired
     private IRoadmapModelRepository roadmapModelRepository;
 
     @Override
-    public RoadmapEntity save(RoadmapEntity roadmapEntity) {
-        RoadmapModel roadmapModel = userMapper.entityToModel(roadmapEntity);
-        RoadmapModel savedRoadmapModel = roadmapModelRepository.save(roadmapModel);
-        return userMapper.modelToEntity(savedRoadmapModel);
+    @Transactional
+    public RoadmapModel save(RoadmapModel roadmapModel) {
+        return roadmapModelRepository.save(roadmapModel);
     }
 
     @Override
-    public Optional<RoadmapEntity> findById(int id) {
-        return roadmapModelRepository.findById(id).map(userMapper::modelToEntity);
+    @Transactional
+    public Optional<RoadmapModel> findById(int id) {
+        return roadmapModelRepository.findById(id);
     }
 
     @Override
-    public Iterable<RoadmapEntity> findAll() {
-        return roadmapModelRepository.findAll().stream().map(userMapper::modelToEntity).collect(Collectors.toList());
+    @Transactional
+    public Boolean existsById(int id) {
+        return roadmapModelRepository.existsById(id);
     }
 
     @Override
+    @Transactional
+    public Iterable<RoadmapModel> findAll() {
+        return roadmapModelRepository.findAll();
+    }
+
+    @Override
+    @Transactional
     public void deleteById(int id) {
         roadmapModelRepository.deleteById(id);
     }

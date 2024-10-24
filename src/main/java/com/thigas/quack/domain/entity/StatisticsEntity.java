@@ -1,5 +1,6 @@
 package com.thigas.quack.domain.entity;
 
+import com.thigas.quack.adapter.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StatisticsEntity {
+public class StatisticsEntity implements BaseEntity {
 
     private int id;
 
@@ -21,8 +22,19 @@ public class StatisticsEntity {
 
     private Double userExperience;
 
-    private int challengesCompleted;
+    private int challengesCompletedCount;
 
-    private int lessonsCompleted;
+    private int roadmapsCompletedCount;
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
 }

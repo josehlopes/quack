@@ -7,7 +7,7 @@ public class StatisticsDTO {
 
     private int id;
 
-    private int userId;
+    private int user;
 
     private int streakDays;
 
@@ -17,7 +17,8 @@ public class StatisticsDTO {
 
     private Double userExperience;
 
-    private int challengesCompleted;
+    private int challengesCompletedCount;
 
-    private int lessonsCompleted;
+    private int roadmapsCompletedCount;
+
 }

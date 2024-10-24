@@ -2,6 +2,8 @@ package com.thigas.quack.adapter.dto;
 
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class LessonDTO {
 
@@ -10,5 +12,6 @@ public class LessonDTO {
     private String description;
     private String language;
     private String imagePath;
+    private Set<Integer> steps;
 
 }

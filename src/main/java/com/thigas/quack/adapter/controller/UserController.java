@@ -1,6 +1,9 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.dto.UserRoadmapDTO;
+import com.thigas.quack.application.service.UserRoadmapService;
 import com.thigas.quack.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserRoadmapService userRoadmapService;
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
@@ -51,4 +53,43 @@ public class UserController {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<String> getUser() {
+        return ResponseEntity.ok("Sucesso!");
+    }
+
+    @PostMapping("/start-roadmap")
+    public ResponseEntity<Void> startRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
+        try {
+            if (userRoadmapService.startRoadmap(userRoadmapDTO.getUser(), userRoadmapDTO.getRoadmap())) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PutMapping("/end-roadmap/{id}")
+    public ResponseEntity<Void> endRoadmap(@PathVariable Integer id) {
+        try {
+            if (id == 0) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if (userRoadmapService.endRoadmap(id)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
+

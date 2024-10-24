@@ -1,16 +1,17 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.StatisticsEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.StatisticsModel;
 
 import java.util.Optional;
 
 public interface IStatisticsRepository {
 
-    StatisticsEntity save(StatisticsEntity Statistics);
+    StatisticsModel save(StatisticsModel Statistics);
 
-    Optional<StatisticsEntity> findById(int id);
+    Optional<StatisticsModel> findById(int id);
 
-    Iterable<StatisticsEntity> findAll();
+    Iterable<StatisticsModel> findAll();
 
     void deleteById(int id);
 }

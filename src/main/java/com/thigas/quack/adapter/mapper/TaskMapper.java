@@ -1,51 +1,34 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.TaskDTO;
-import com.thigas.quack.domain.entity.LessonEntity;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.TaskEntity;
 import com.thigas.quack.infrastructure.persistence.entity.TaskModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface TaskMapper {
 
-    TaskMapper INSTANCE = Mappers.getMapper(TaskMapper.class);
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "stepEntityToIntegers")
+    TaskDTO entityToDto(TaskEntity taskEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "lessons", target = "lessonIds", qualifiedByName = "lessonsToIds")
-    TaskDTO entityToDto(TaskEntity taskEntity);
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepEntityId")
+    TaskEntity dtoToEntity(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "lessonIds", target = "lessons", qualifiedByName = "idsToLessons")
-    TaskEntity dtoToEntity(TaskDTO taskDTO);
+//    @Mapping(source = "steps", target = "steps")
+    TaskModel entityToModel(TaskEntity taskEntity, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "lessons", target = "lessons")
-    TaskModel entityToModel(TaskEntity taskEntity);
+//    @Mapping(source = "steps", target = "steps")
+    TaskEntity modelToEntity(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "lessons", target = "lessons")
-    TaskEntity modelToEntity(TaskModel taskModel);
 
-    @Named("lessonsToIds")
-    default Set<Integer> lessonsToIds(Set<LessonEntity> lessons) {
-        if (lessons == null) {
-            return null;
-        }
-        return lessons.stream().map(LessonEntity::getId).collect(Collectors.toSet());
-    }
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "stepModelsToIntegers")
+    TaskDTO modelToDto(TaskModel taskModel, @Context CycleAvoidingMappingContext context);
 
-    @Named("idsToLessons")
-    default Set<LessonEntity> idsToLessons(Set<Integer> lessonIds) {
-        if (lessonIds == null) {
-            return null;
-        }
-        return lessonIds.stream().map(id -> {
-            LessonEntity lesson = new LessonEntity();
-            lesson.setId(id);
-            return lesson;
-        }).collect(Collectors.toSet());
-    }
+    @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")
+    TaskModel dtoToModel(TaskDTO taskDTO, @Context CycleAvoidingMappingContext context);
+
+
 }

@@ -1,44 +1,40 @@
 package com.thigas.quack.adapter.mapper;
 
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.mapper.utils.CycleAvoidingMappingContext;
 import com.thigas.quack.domain.entity.UserEntity;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mappings;
 
-import java.time.OffsetDateTime;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {DefaultMapper.class})
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    UserDTO entityToDto(UserEntity user, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserDTO entityToDto(UserEntity user);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    UserEntity dtoToEntity(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
-    @Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd")
-    @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
-    UserEntity dtoToEntity(UserDTO userDTO);
+    UserModel entityToModel(UserEntity userEntity, @Context CycleAvoidingMappingContext context);
 
-    UserModel entityToModel(UserEntity userEntity);
+    UserEntity modelToEntity(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
-    UserEntity modelToEntity(UserModel userModel);
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "stringToOffsetDateTime"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "integerToStatusValue")})
+    UserModel dtoToModel(UserDTO userDTO, @Context CycleAvoidingMappingContext context);
 
-    default OffsetDateTime offSetToString(String date) {
-        if (date == null) {
-            return null;
-        }
-        OffsetDateTime offsetDateTime = OffsetDateTime.parse(date);
-        return offsetDateTime;
-    }
+    @Mappings({@Mapping(source = "bornAt", target = "bornAt", dateFormat = "yyyy-MM-dd"),
+            @Mapping(source = "registerAt", target = "registerAt", dateFormat = "yyyy-MM-dd'T'HH:mm:ss", qualifiedByName = "offsetDateTimeToString"),
+            @Mapping(source = "status", target = "status", qualifiedByName = "statusValueToInteger")})
+    UserDTO modelToDto(UserModel userModel, @Context CycleAvoidingMappingContext context);
 
-    default String stringToOffSet(OffsetDateTime date) {
-        if (date == null) {
-            return null;
-        }
-        String offsetDateTime = date.toString();
-        return offsetDateTime;
-    }
+
 }

@@ -1,15 +1,18 @@
 package com.thigas.quack.domain.repository;
 
-import com.thigas.quack.domain.entity.StepEntity;
+
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 
 import java.util.Optional;
 
 public interface IStepRepository {
-    StepEntity save(StepEntity step);
+    StepModel save(StepModel step);
 
-    Optional<StepEntity> findById(int id);
+    Boolean existsById(int id);
 
-    Iterable<StepEntity> findAll();
+    Optional<StepModel> findById(int id);
+
+    Iterable<StepModel> findAll();
 
     void deleteById(int id);
 }
