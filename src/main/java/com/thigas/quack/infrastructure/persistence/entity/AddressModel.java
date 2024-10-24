@@ -16,7 +16,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "address")
+@Table(name = "user_address")
 public class AddressModel implements BaseModel {
 
 

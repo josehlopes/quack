@@ -13,27 +13,28 @@ import org.mapstruct.Mappings;
 public interface UserTaskMapper {
 
     @Mappings({@Mapping(source = "user.id", target = "user"),
-            @Mapping(source = "task.id", target = "task")})
+            @Mapping(source = "task.id", target = "task"),
+            @Mapping(target = "status", qualifiedByName = "statusValueToInteger")
+    })
     UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
-            @Mapping(source = "task", target = "task.id")})
+            @Mapping(source = "task", target = "task.id"),
+            @Mapping(target = "status", qualifiedByName = "integerToStatusValue")})
     UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, @Context CycleAvoidingMappingContext context);
 
-    //    @Mappings({@Mapping(source = "user.id", target = "user.id"),
-//            @Mapping(source = "task.id", target = "task.id")})
     UserTaskModel entityToModel(UserTaskEntity userEntity, @Context CycleAvoidingMappingContext context);
 
-    //    @Mappings({@Mapping(source = "user.id", target = "user.id"),
-//            @Mapping(source = "task.id", target = "task.id")})
     UserTaskEntity modelToEntity(UserTaskModel userModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
-            @Mapping(source = "task", target = "task.id")})
+            @Mapping(source = "task", target = "task.id"),
+            @Mapping(target = "status", qualifiedByName = "integerToStatusValue")})
     UserTaskModel dtoToModel(UserTaskDTO userTaskDTO, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user.id", target = "user"),
-            @Mapping(source = "task.id", target = "task")})
+            @Mapping(source = "task.id", target = "task"),
+            @Mapping(target = "status", qualifiedByName = "statusValueToInteger")})
     UserTaskDTO modelToDto(UserTaskModel userTaskModel, @Context CycleAvoidingMappingContext context);
 
 }

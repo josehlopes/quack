@@ -14,7 +14,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "statistic")
+@Table(name = "user_statistic")
 public class StatisticsModel implements BaseModel {
 
     @Id

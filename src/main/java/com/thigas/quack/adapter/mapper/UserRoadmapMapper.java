@@ -23,12 +23,9 @@ public interface UserRoadmapMapper {
             @Mapping(target = "status", qualifiedByName = "integerToStatusValue")})
     UserRoadmapEntity dtoToEntity(UserRoadmapDTO userRoadmapDTO, @Context CycleAvoidingMappingContext context);
 
-    //    @Mappings({@Mapping(source = "user", target = "user.id"),
-//            @Mapping(source = "roadmap", target = "roadmap.id")})
+
     UserRoadmapModel entityToModel(UserRoadmapEntity userRoadmapEntity, @Context CycleAvoidingMappingContext context);
 
-    //    @Mappings({@Mapping(source = "user.id", target = "user"),
-//            @Mapping(source = "roadmap.id", target = "roadmap")})
     UserRoadmapEntity modelToEntity(UserRoadmapModel userRoadmapModel, @Context CycleAvoidingMappingContext context);
 
     @Mappings({@Mapping(source = "user", target = "user.id"),
