@@ -28,6 +28,7 @@ public interface LessonMapper {
     LessonDTO modelToDto(LessonModel lessonModel, @Context CycleAvoidingMappingContext context);
 
     @Mapping(source = "steps", target = "steps", qualifiedByName = "integersToStepModels")
+    @Mapping(source = "completed", target = "completed")
     LessonModel dtoToModel(LessonDTO lessonDTO, @Context CycleAvoidingMappingContext context);
 
 }

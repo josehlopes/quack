@@ -173,6 +173,8 @@ public class FakerService {
             lessonDTO.setDescription(faker.lorem().paragraph());
             lessonDTO.setLanguage(faker.educator().course());
             lessonDTO.setImagePath(faker.avatar().image());
+            lessonDTO.setLink(faker.internet().url());
+            lessonDTO.setCompleted(faker.bool().bool());
 
             lessonDTO = lessonService.create(lessonDTO);
 

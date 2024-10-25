@@ -36,6 +36,12 @@ public class LessonModel implements BaseModel {
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
+    @Column(name = "completed", nullable = false)
+    private boolean completed = false;
+
+    @Column(name = "link", nullable = true)
+    private String link;
+
     @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<StepModel> steps = new HashSet<>();

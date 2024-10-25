@@ -17,6 +17,8 @@ public class LessonEntity implements BaseEntity {
     private String description;
     private String language;
     private String imagePath;
+    private boolean completed;
+    private String link;
     private Set<StepEntity> steps;
 
     @Override
