@@ -1,31 +1,38 @@
 package com.thigas.quack.domain.entity;
 
-import com.thigas.quack.adapter.model.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class TaskEntity implements BaseEntity {
+
+public class TaskEntity {
 
     private int id;
     private String description;
     private TaskText tasktext;
     private Set<StepEntity> steps;
 
-    @Override
     public int getId() {
-        return this.id;
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public TaskText getTasktext() {
+        return tasktext;
+    }
+
+    public Set<StepEntity> getSteps() {
+        return steps;
     }
 
     @Override
-    public void setId(int id) {
-        this.id = id;
+    public String toString() {
+        return "TaskEntity{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", tasktext=" + tasktext +
+                ", steps=" + steps +
+                '}';
     }
-
-
 }
