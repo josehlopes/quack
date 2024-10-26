@@ -1,11 +1,17 @@
 package com.thigas.quack.domain.entity;
 
+import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.domain.model.Status;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
-
-public class UserAchievementEntity {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserAchievementEntity implements BaseEntity {
 
     private int id;
     private UserEntity user;
@@ -14,63 +20,16 @@ public class UserAchievementEntity {
     private OffsetDateTime obtainedDate;
     private Status status;
 
+
+
+    @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public AchievementEntity getAchievement() {
-        return achievement;
-    }
-
-    public void setAchievement(AchievementEntity achievement) {
-        this.achievement = achievement;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public OffsetDateTime getObtainedDate() {
-        return obtainedDate;
-    }
-
-    public void setObtainedDate(OffsetDateTime obtainedDate) {
-        this.obtainedDate = obtainedDate;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAchievementEntity{" +
-                "id=" + id +
-                ", user=" + user +
-                ", achievement=" + achievement +
-                ", imagePath='" + imagePath + '\'' +
-                ", obtainedDate=" + obtainedDate +
-                ", status=" + status +
-                '}';
-    }
 }

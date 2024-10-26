@@ -3,12 +3,22 @@ package com.thigas.quack.infrastructure.persistence.entity;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "user_roadmap")
-public class UserRoadmapModel {
+public class UserRoadmapModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,72 +45,29 @@ public class UserRoadmapModel {
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
 
+    @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    public UserModel getUser() {
-        return user;
-    }
-
-    public void setUser(UserModel user) {
-        this.user = user;
-    }
-
-    public RoadmapModel getRoadmap() {
-        return roadmap;
-    }
-
-    public void setRoadmap(RoadmapModel roadmap) {
-        this.roadmap = roadmap;
-    }
-
-    public Double getProgress() {
-        return progress;
-    }
-
-    public void setProgress(Double progress) {
-        this.progress = progress;
-    }
-
-    public LocalDate getStartedAt() {
-        return startedAt;
-    }
-
-    public void setStartedAt(LocalDate startedAt) {
-        this.startedAt = startedAt;
-    }
-
-    public LocalDate getFinishedAt() {
-        return finishedAt;
-    }
-
-    public void setFinishedAt(LocalDate finishedAt) {
-        this.finishedAt = finishedAt;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        UserRoadmapModel that = (UserRoadmapModel) o;
+        return getId() != 0 && Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public String toString() {
-        return "UserRoadmapModel{" +
-                "id=" + id +
-                ", user=" + user +
-                ", roadmap=" + roadmap +
-                ", progress=" + progress +
-                ", startedAt=" + startedAt +
-                ", finishedAt=" + finishedAt +
-                ", status=" + status +
-                '}';
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

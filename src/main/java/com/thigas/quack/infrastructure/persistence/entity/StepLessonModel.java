@@ -1,9 +1,15 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "step_lesson")
 public class StepLessonModel {
@@ -22,49 +28,8 @@ public class StepLessonModel {
     @ToString.Exclude
     private LessonModel lesson;
 
-    @Column(name = "image_path")
+    @Column(name = "image_path", nullable = true)
     private String imagePath;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public StepModel getStep() {
-        return step;
-    }
-
-    public void setStep(StepModel step) {
-        this.step = step;
-    }
-
-    public LessonModel getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(LessonModel lesson) {
-        this.lesson = lesson;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    @Override
-    public String toString() {
-        return "StepLessonModel{" +
-                "id=" + id +
-                ", step=" + step +
-                ", lesson=" + lesson +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
-    }
 }
 

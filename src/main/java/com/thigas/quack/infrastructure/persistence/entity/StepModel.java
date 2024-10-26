@@ -1,15 +1,25 @@
 package com.thigas.quack.infrastructure.persistence.entity;
 
+import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "step")
-public class StepModel {
+public class StepModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +38,7 @@ public class StepModel {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ToString.Exclude
     private Set<LessonModel> lessons = new HashSet<>();
 
     @Column(nullable = false)
@@ -40,72 +51,29 @@ public class StepModel {
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
 
+    @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    public Set<RoadmapModel> getRoadmaps() {
-        return roadmaps;
-    }
-
-    public void setRoadmaps(Set<RoadmapModel> roadmaps) {
-        this.roadmaps = roadmaps;
-    }
-
-    public Set<TaskModel> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(Set<TaskModel> tasks) {
-        this.tasks = tasks;
-    }
-
-    public Set<LessonModel> getLessons() {
-        return lessons;
-    }
-
-    public void setLessons(Set<LessonModel> lessons) {
-        this.lessons = lessons;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        StepModel stepModel = (StepModel) o;
+        return getId() != 0 && Objects.equals(getId(), stepModel.getId());
     }
 
     @Override
-    public String toString() {
-        return "StepModel{" +
-                "id=" + id +
-                ", roadmaps=" + roadmaps +
-                ", tasks=" + tasks +
-                ", lessons=" + lessons +
-                ", description='" + description + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", status=" + status +
-                '}';
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

@@ -3,7 +3,18 @@ package com.thigas.quack.infrastructure.persistence.entity;
 import com.thigas.quack.adapter.model.BaseModel;
 import com.thigas.quack.domain.model.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Objects;
+
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "user_task")
 public class UserTaskModel implements BaseModel {
@@ -29,7 +40,7 @@ public class UserTaskModel implements BaseModel {
 
     @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override
@@ -37,46 +48,21 @@ public class UserTaskModel implements BaseModel {
         this.id = id;
     }
 
-    public UserModel getUser() {
-        return user;
-    }
 
-    public void setUser(UserModel user) {
-        this.user = user;
-    }
 
-    public TaskModel getTask() {
-        return task;
-    }
-
-    public void setTask(TaskModel task) {
-        this.task = task;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        UserTaskModel that = (UserTaskModel) o;
+        return getId() != 0 && Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public String toString() {
-        return "UserTaskModel{" +
-                "id=" + id +
-                ", user=" + user +
-                ", task=" + task +
-                ", imagePath='" + imagePath + '\'' +
-                ", status=" + status +
-                '}';
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

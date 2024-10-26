@@ -2,11 +2,20 @@ package com.thigas.quack.infrastructure.persistence.entity;
 
 import com.thigas.quack.adapter.model.BaseModel;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+import java.util.Objects;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "user_statistic")
-public class StatisticsModel {
+public class StatisticsModel implements BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,81 +43,27 @@ public class StatisticsModel {
     @Column(name = "roadmaps_completed_count")
     private int roadmapsCompletedCount;
 
+
+    @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    public UserModel getUser() {
-        return user;
-    }
-
-    public void setUser(UserModel user) {
-        this.user = user;
-    }
-
-    public int getStreakDays() {
-        return streakDays;
-    }
-
-    public void setStreakDays(int streakDays) {
-        this.streakDays = streakDays;
-    }
-
-    public int getBestStreak() {
-        return bestStreak;
-    }
-
-    public void setBestStreak(int bestStreak) {
-        this.bestStreak = bestStreak;
-    }
-
-    public int getUserLevel() {
-        return userLevel;
-    }
-
-    public void setUserLevel(int userLevel) {
-        this.userLevel = userLevel;
-    }
-
-    public Double getUserExperience() {
-        return userExperience;
-    }
-
-    public void setUserExperience(Double userExperience) {
-        this.userExperience = userExperience;
-    }
-
-    public int getChallengesCompletedCount() {
-        return challengesCompletedCount;
-    }
-
-    public void setChallengesCompletedCount(int challengesCompletedCount) {
-        this.challengesCompletedCount = challengesCompletedCount;
-    }
-
-    public int getRoadmapsCompletedCount() {
-        return roadmapsCompletedCount;
-    }
-
-    public void setRoadmapsCompletedCount(int roadmapsCompletedCount) {
-        this.roadmapsCompletedCount = roadmapsCompletedCount;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        StatisticsModel that = (StatisticsModel) o;
+        return getId() != 0 && Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public String toString() {
-        return "StatisticsModel{" +
-                "id=" + id +
-                ", user=" + user +
-                ", streakDays=" + streakDays +
-                ", bestStreak=" + bestStreak +
-                ", userLevel=" + userLevel +
-                ", userExperience=" + userExperience +
-                ", challengesCompletedCount=" + challengesCompletedCount +
-                ", roadmapsCompletedCount=" + roadmapsCompletedCount +
-                '}';
+    public final int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,9 +1,15 @@
 package com.thigas.quack.domain.entity;
 
+import com.thigas.quack.adapter.model.BaseEntity;
 import com.thigas.quack.domain.model.Status;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-public class UserTaskEntity {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserTaskEntity implements BaseEntity {
 
     private int id;
     private UserEntity user;
@@ -11,54 +17,15 @@ public class UserTaskEntity {
     private Status status;
     private String imagePath;
 
+    @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public TaskEntity getTask() {
-        return task;
-    }
-
-    public void setTask(TaskEntity task) {
-        this.task = task;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    @Override
-    public String toString() {
-        return "UserTaskEntity{" +
-                "id=" + id +
-                ", user=" + user +
-                ", task=" + task +
-                ", status=" + status +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
-    }
 }

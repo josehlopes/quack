@@ -1,51 +1,27 @@
 package com.thigas.quack.domain.entity;
 
-public class AchievementEntity {
+import com.thigas.quack.adapter.model.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AchievementEntity implements BaseEntity {
 
     private int id;
     private String name;
     private String description;
     private String imagePath;
 
+    @Override
     public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+        return this.id;
     }
 
     @Override
-    public String toString() {
-        return "AchievementEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
+    public void setId(int id) {
+        this.id = id;
     }
 }
