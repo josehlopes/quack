@@ -50,4 +50,5 @@ public class UserAchievementModel implements BaseModel {
     public void setId(int id) {
         this.id = id;
     }
+
 }

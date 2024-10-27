@@ -23,10 +23,9 @@ public class RoadmapService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public RoadmapDTO create(RoadmapDTO roadmapDTO) {
+    public void create(RoadmapDTO roadmapDTO) {
         RoadmapModel roadmap = objectMapperService.toModel(roadmapDTO);
-        RoadmapModel toSaveRoadmap = roadmapRepository.save(roadmap);
-        return objectMapperService.toDto(toSaveRoadmap);
+        roadmapRepository.save(roadmap);
     }
 
     public Optional<RoadmapDTO> getById(int id) {

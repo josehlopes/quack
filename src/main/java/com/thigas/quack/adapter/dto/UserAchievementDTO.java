@@ -7,7 +7,6 @@ import java.time.OffsetDateTime;
 
 @Data
 public class UserAchievementDTO {
-
     private int id;
     private UserDTO user;
     private String imagePath;

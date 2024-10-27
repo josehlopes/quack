@@ -25,10 +25,9 @@ public class StatisticsService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public StatisticsDTO create(StatisticsDTO statisticsDTO) {
+    public void create(StatisticsDTO statisticsDTO) {
         StatisticsModel statisticsModel = objectMapperService.toModel(statisticsDTO);
-        StatisticsModel savedStatistics = statisticsRepository.save(statisticsModel);
-        return objectMapperService.toDto(savedStatistics);
+        statisticsRepository.save(statisticsModel);
     }
 
     public Optional<StatisticsDTO> getById(int id) {

@@ -58,7 +58,7 @@ public class AuthController {
             newUser.setImagePath(body.imagePath());
             newUser.setStatus(Status.fromValue(body.status()));
 
-            this.userService.create(newUser);
+            this.userService.register(newUser);
 
             String token = this.tokenService.generateToken(newUser);
             return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));

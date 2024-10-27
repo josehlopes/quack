@@ -27,7 +27,7 @@ public class TaskService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public TaskDTO create(TaskDTO taskDTO) {
+    public void create(TaskDTO taskDTO) {
         TaskModel taskModel = objectMapperService.toModel(taskDTO);
         Set<StepModel> stepEntities = new HashSet<>();
 
@@ -36,8 +36,7 @@ public class TaskService {
         }
 
         taskModel.setSteps(stepEntities);
-        TaskModel savedTask = taskRepository.save(taskModel);
-        return objectMapperService.toDto(savedTask);
+        taskRepository.save(taskModel);
     }
 
     public Optional<TaskDTO> getById(int id) {

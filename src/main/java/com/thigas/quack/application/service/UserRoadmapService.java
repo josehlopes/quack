@@ -35,10 +35,9 @@ public class UserRoadmapService {
     private StatisticsService statisticsService;
 
 
-    public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
+    public void create(UserRoadmapDTO userRoadmapDTO) {
         UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(userRoadmapDTO);
-        UserRoadmapModel savedUserRoadmap = userRoadmapRepository.save(objectMapperService.toModel(userRoadmapEntity));
-        return objectMapperService.toDto(savedUserRoadmap);
+        userRoadmapRepository.save(objectMapperService.toModel(userRoadmapEntity));
     }
 
     public Optional<UserRoadmapDTO> getById(int id) {

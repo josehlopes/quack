@@ -96,7 +96,6 @@ public interface MapStructMapper {
     UserStepModel dtoToModel(UserStepDTO userStepDTO, @Context CycleAvoidingMappingContext context);
     UserStepDTO modelToDto(UserStepModel userStepModel, @Context CycleAvoidingMappingContext context);
 
-
     UserTaskDTO entityToDto(UserTaskEntity roadmapUserEntity, @Context CycleAvoidingMappingContext context);
     UserTaskEntity dtoToEntity(UserTaskDTO roadmapUserDTO, @Context CycleAvoidingMappingContext context);
     UserTaskModel entityToModel(UserTaskEntity userEntity, @Context CycleAvoidingMappingContext context);

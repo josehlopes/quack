@@ -28,10 +28,9 @@ public class UserStepService {
     @Autowired
     private UserService userService;
 
-    public UserStepDTO create(UserStepDTO userStepDTO) {
+    public void create(UserStepDTO userStepDTO) {
         UserStepEntity userStepEntity = objectMapperService.toEntity(userStepDTO);
-        UserStepModel savedUserStep = userStepRepository.save(objectMapperService.toModel(userStepEntity));
-        return objectMapperService.toDto(savedUserStep);
+        userStepRepository.save(objectMapperService.toModel(userStepEntity));
     }
 
     public Optional<UserStepDTO> getById(int id) {

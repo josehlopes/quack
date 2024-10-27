@@ -14,4 +14,7 @@ public interface IAchievementRepository {
     Iterable<AchievementModel> findAll();
 
     void deleteById(int id);
+
+    Boolean existsById(int id);
+
 }

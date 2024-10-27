@@ -20,10 +20,9 @@ public class AddressService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public AddressDTO create(AddressDTO addressDTO) {
+    public void create(AddressDTO addressDTO) {
         AddressModel addressModel = objectMapperService.toModel(addressDTO);
-        AddressModel savedAddress = addressRepository.save(addressModel);
-        return objectMapperService.toDto(savedAddress);
+        addressRepository.save(addressModel);
     }
 
     public Optional<AddressDTO> getById(int id) {

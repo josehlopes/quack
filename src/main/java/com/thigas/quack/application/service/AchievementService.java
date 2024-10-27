@@ -20,10 +20,9 @@ public class AchievementService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public AchievementDTO create(AchievementDTO achievementDTO) {
+    public void create(AchievementDTO achievementDTO) {
         AchievementModel achievementModel = objectMapperService.toModel(achievementDTO);
-        AchievementModel savedAchievement = achievementRepository.save(achievementModel);
-        return objectMapperService.toDto(savedAchievement);
+        achievementRepository.save(achievementModel);
     }
 
     public Optional<AchievementDTO> getById(int id) {
@@ -48,4 +47,9 @@ public class AchievementService {
     public void delete(int id) {
         achievementRepository.deleteById(id);
     }
+
+    public Boolean existsById(int achievementId) {
+        return achievementRepository.existsById(achievementId);
+    }
+
 }

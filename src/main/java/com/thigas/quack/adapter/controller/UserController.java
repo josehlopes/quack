@@ -21,9 +21,9 @@ public class UserController {
     private UserRoadmapService userRoadmapService;
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        UserDTO createdUserDTO = userService.create(userDTO);
-        return new ResponseEntity<>(createdUserDTO, HttpStatus.CREATED);
+    public ResponseEntity<Void> create(@RequestBody UserDTO userDTO) {
+        userService.register(userDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

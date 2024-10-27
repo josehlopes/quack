@@ -217,6 +217,33 @@ public class ObjectMapperService {
         return mapStructMapper.modelToEntity(userLessonModel, context);
     }
 
+    //USER ACHIEVEMENT METHODS
+    public UserAchievementDTO toDto(UserAchievementEntity userAchievementEntity) {
+        if (userAchievementEntity == null) {
+            throw new IllegalArgumentException("UserAchievementEntity cannot be null");
+        }
+        return mapStructMapper.entityToDto(userAchievementEntity, context);
+    }
+
+    public UserAchievementEntity toEntity(UserAchievementDTO userAchievementDTO) {
+        if (userAchievementDTO == null) {
+            throw new IllegalArgumentException("UserAchievementDTO cannot be null");
+        }
+        return mapStructMapper.dtoToEntity(userAchievementDTO, context);
+    }
+    public UserAchievementModel toModel(UserAchievementEntity userAchievementEntity) {
+        if (userAchievementEntity == null) {
+            throw new IllegalArgumentException("UserAchievementEntity cannot be null");
+        }
+        return mapStructMapper.entityToModel(userAchievementEntity, context);
+    }
+    public UserAchievementDTO toDto(UserAchievementModel userAchievementModel) {
+        if (userAchievementModel == null) {
+            throw new IllegalArgumentException("UserAchievementModel cannot be null");
+        }
+        return mapStructMapper.modelToDto(userAchievementModel, context);
+    }
+
     //ACHIEVEMENT METHODS
     public AchievementModel toModel(AchievementDTO achievementDTO) {
         if (achievementDTO == null) {
@@ -231,6 +258,21 @@ public class ObjectMapperService {
         }
         return mapStructMapper.modelToDto(achievementModel, context);
     }
+
+    public AchievementEntity toEntity(AchievementModel achievementModel) {
+        if (achievementModel == null) {
+            throw new IllegalArgumentException("AchievementModel cannot be null");
+        }
+        return mapStructMapper.modelToEntity(achievementModel, context);
+    }
+
+    public AchievementEntity toEntity(AchievementDTO achievementDTO) {
+        if (achievementDTO == null) {
+            throw new IllegalArgumentException("AchievementDTO cannot be null");
+        }
+        return mapStructMapper.dtoToEntity(achievementDTO, context);
+    }
+
 
     //ADDRESS METHODS
     public AddressModel toModel(AddressDTO addressDTO) {

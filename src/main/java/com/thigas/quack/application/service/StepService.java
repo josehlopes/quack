@@ -31,10 +31,9 @@ public class StepService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public StepDTO create(StepDTO stepDTO) {
+    public void create(StepDTO stepDTO) {
         StepModel stepModel = objectMapperService.toModel(stepDTO);
-        StepModel savedStep = stepRepository.save(stepModel);
-        return objectMapperService.toDto(savedStep);
+        stepRepository.save(stepModel);
     }
 
     public Optional<StepDTO> getById(int id) {

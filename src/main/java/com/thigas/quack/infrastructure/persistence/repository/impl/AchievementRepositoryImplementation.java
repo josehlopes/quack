@@ -38,4 +38,10 @@ public class AchievementRepositoryImplementation implements IAchievementReposito
     public void deleteById(int id) {
         achievementModelRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Boolean existsById(int id) {
+        return achievementModelRepository.existsById(id);
+    }
 }

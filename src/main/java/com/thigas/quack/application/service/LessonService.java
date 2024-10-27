@@ -20,10 +20,9 @@ public class LessonService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public LessonDTO create(LessonDTO lessonDTO) {
+    public void create(LessonDTO lessonDTO) {
         LessonModel lessonModel = objectMapperService.toModel(lessonDTO);
-        LessonModel savedLesson = lessonRepository.save(lessonModel);
-        return objectMapperService.toDto(savedLesson);
+        lessonRepository.save(lessonModel);
     }
 
     public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs) {
