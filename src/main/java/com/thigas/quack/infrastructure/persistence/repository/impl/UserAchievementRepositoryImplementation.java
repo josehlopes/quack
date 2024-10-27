@@ -1,6 +1,5 @@
 package com.thigas.quack.infrastructure.persistence.repository.impl;
 
-import com.thigas.quack.adapter.mapper.UserAchievementMapper;
 import com.thigas.quack.domain.repository.IUserAchievementRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserAchievementModel;
 import com.thigas.quack.infrastructure.persistence.repository.jpa.IUserAchievementModelRepository;
@@ -13,8 +12,6 @@ import java.util.Optional;
 @Repository
 public class UserAchievementRepositoryImplementation implements IUserAchievementRepository {
 
-    @Autowired
-    private UserAchievementMapper userAchievementMapper;
 
     @Autowired
     private IUserAchievementModelRepository userAchievementModelRepository;

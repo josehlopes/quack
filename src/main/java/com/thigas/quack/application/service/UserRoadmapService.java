@@ -112,7 +112,7 @@ public class UserRoadmapService {
         UserRoadmapModel updatedModel = objectMapperService.toModel(userRoadmapEntity);
         userRoadmapRepository.save(updatedModel);
 
-        int userId = existingUserRoadmap.getUser();
+        int userId = existingUserRoadmap.getUser().getId();
         statisticsService.incrementRoadmapsCompleted(userId);
         return true;
     }

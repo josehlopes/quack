@@ -1,5 +1,6 @@
 package com.thigas.quack.application.service;
 
+import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.adapter.dto.TaskDTO;
 import com.thigas.quack.domain.repository.IStepRepository;
 import com.thigas.quack.domain.repository.ITaskRepository;
@@ -30,8 +31,8 @@ public class TaskService {
         TaskModel taskModel = objectMapperService.toModel(taskDTO);
         Set<StepModel> stepEntities = new HashSet<>();
 
-        for (Integer stepId : taskDTO.getSteps()) {
-            stepRepository.findById(stepId).ifPresent(stepEntities::add);
+        for (StepDTO stepDTO : taskDTO.getSteps()) {
+            stepRepository.findById(stepDTO.getId()).ifPresent(stepEntities::add);
         }
 
         taskModel.setSteps(stepEntities);

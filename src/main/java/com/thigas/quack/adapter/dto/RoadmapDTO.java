@@ -1,5 +1,6 @@
 package com.thigas.quack.adapter.dto;
 
+import com.thigas.quack.domain.model.Status;
 import lombok.Data;
 
 import java.util.Set;
@@ -11,7 +12,7 @@ public class RoadmapDTO {
     private String title;
     private String description;
     private String imagePath;
-    private int status;
-    private Set<Integer> steps;
+    private Status status;
+    private Set<StepDTO> steps;
 
 }

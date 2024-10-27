@@ -28,6 +28,7 @@ public class UserAchievementModel implements BaseModel {
 
     @ManyToOne
     @JoinColumn(name = "achievement_id", nullable = false)
+    @ToString.Exclude
     private AchievementModel achievement;
 
     @Column(name = "image_path")

@@ -1,5 +1,6 @@
 package com.thigas.quack.application.service;
 
+import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
@@ -76,9 +77,9 @@ public class StepService {
             return lessonSet;
         }
 
-        for (Integer lessonId : stepDto.getLessons()) {
-            LessonModel lesson = lessonRepository.findById(lessonId)
-                    .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonId));
+        for (LessonDTO lessonDto : stepDto.getLessons()) {
+            LessonModel lesson = lessonRepository.findById(lessonDto.getId())
+                    .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonDto.getId()));
             lessonSet.add(lesson);
         }
         return lessonSet;

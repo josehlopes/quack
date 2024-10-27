@@ -5,6 +5,7 @@ import com.thigas.quack.adapter.dto.RegisterRequestDTO;
 import com.thigas.quack.adapter.dto.ResponseDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.application.service.UserService;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -52,10 +53,10 @@ public class AuthController {
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
             newUser.setBornAt(String.valueOf(body.bornAt()));
-            newUser.setRegisterAt(OffsetDateTime.now().toString());
+            newUser.setRegisterAt(OffsetDateTime.parse(OffsetDateTime.now().toString()));
             newUser.setPoints(0.0);
             newUser.setImagePath(body.imagePath());
-            newUser.setStatus(body.status());
+            newUser.setStatus(Status.fromValue(body.status()));
 
             this.userService.create(newUser);
 

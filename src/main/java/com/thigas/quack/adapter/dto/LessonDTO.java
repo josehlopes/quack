@@ -14,6 +14,6 @@ public class LessonDTO {
     private String imagePath;
     private boolean completed;
     private String link;
-    private Set<Integer> steps;
+    private Set<StepDTO> steps;
 
 }

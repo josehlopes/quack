@@ -62,7 +62,7 @@ public class UserController {
     @PostMapping("/start-roadmap")
     public ResponseEntity<Void> startRoadmap(@RequestBody UserRoadmapDTO userRoadmapDTO) {
         try {
-            if (userRoadmapService.startRoadmap(userRoadmapDTO.getUser(), userRoadmapDTO.getRoadmap())) {
+            if (userRoadmapService.startRoadmap(userRoadmapDTO.getUser().getId(), userRoadmapDTO.getRoadmap().getId())) {
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
