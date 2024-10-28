@@ -20,9 +20,6 @@ public class StatisticsService {
     private IStatisticsRepository statisticsRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    @Autowired
     private IUserRepository userRepository;
 
     @Autowired
@@ -36,14 +33,9 @@ public class StatisticsService {
     public Optional<StatisticsDTO> getById(int id) {
         Optional<StatisticsModel> statistics = statisticsRepository.findById(id);
         return statistics.map(objectMapperService::toDto);
-        Optional<StatisticsModel> statistics = statisticsRepository.findById(id);
-        return statistics.map(objectMapperService::toDto);
     }
 
     public Iterable<StatisticsDTO> getAll() {
-        Iterable<StatisticsModel> statistics = statisticsRepository.findAll();
-        return StreamSupport.stream(statistics.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<StatisticsModel> statistics = statisticsRepository.findAll();
         return StreamSupport.stream(statistics.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -81,4 +73,3 @@ public class StatisticsService {
         statisticsRepository.deleteById(id);
     }
 }
-

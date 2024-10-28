@@ -43,14 +43,9 @@ public class UserRoadmapService {
     public Optional<UserRoadmapDTO> getById(int id) {
         return userRoadmapRepository.findById(id)
                 .map(objectMapperService::toDto);
-        return userRoadmapRepository.findById(id)
-                .map(objectMapperService::toDto);
     }
 
     public Iterable<UserRoadmapDTO> getAll() {
-        Iterable<UserRoadmapModel> userRoadmaps = userRoadmapRepository.findAll();
-        return StreamSupport.stream(userRoadmaps.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<UserRoadmapModel> userRoadmaps = userRoadmapRepository.findAll();
         return StreamSupport.stream(userRoadmaps.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -66,17 +61,7 @@ public class UserRoadmapService {
         UserRoadmapModel updatedModel = objectMapperService.toModel(updatedEntity);
 
         userRoadmapRepository.save(updatedModel);
-
-    public void update(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapModel existingUserRoadmap = userRoadmapRepository.findById(userRoadmapDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
-
-        UserRoadmapEntity updatedEntity = objectMapperService.toEntity(userRoadmapDTO);
-        UserRoadmapModel updatedModel = objectMapperService.toModel(updatedEntity);
-
-        userRoadmapRepository.save(updatedModel);
     }
-
 
 
     public void delete(int id) {

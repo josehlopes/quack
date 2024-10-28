@@ -44,30 +44,13 @@ public class LessonService {
         return savedLessons.stream()
                 .map(objectMapperService::toDto) // Usando ObjectMapperService
                 .collect(Collectors.toSet());
-        Set<LessonModel> savedLessons;
-        try {
-            savedLessons = lessonRepository.saveAll(lessonEntities);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to save lessons", e);
-        }
-
-        return savedLessons.stream()
-                .map(objectMapperService::toDto) // Usando ObjectMapperService
-                .collect(Collectors.toSet());
     }
 
     public Optional<LessonDTO> getById(int id) {
         Optional<LessonModel> lessonOpt = lessonRepository.findById(id);
         return lessonOpt.map(objectMapperService::toDto);
-    public Optional<LessonDTO> getById(int id) {
-        Optional<LessonModel> lessonOpt = lessonRepository.findById(id);
-        return lessonOpt.map(objectMapperService::toDto);
     }
 
-    public Iterable<LessonDTO> getAll() {
-        Iterable<LessonModel> lessons = lessonRepository.findAll();
-        return StreamSupport.stream(lessons.spliterator(), false)
-                .map(objectMapperService::toDto)
     public Iterable<LessonDTO> getAll() {
         Iterable<LessonModel> lessons = lessonRepository.findAll();
         return StreamSupport.stream(lessons.spliterator(), false)
@@ -75,8 +58,6 @@ public class LessonService {
                 .collect(Collectors.toList());
     }
 
-    public void update(LessonDTO lessonDTO) {
-        LessonModel lesson = objectMapperService.toModel(lessonDTO);
     public void update(LessonDTO lessonDTO) {
         LessonModel lesson = objectMapperService.toModel(lessonDTO);
         lessonRepository.save(lesson);

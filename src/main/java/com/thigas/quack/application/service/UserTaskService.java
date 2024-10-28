@@ -21,29 +21,19 @@ public class UserTaskService {
     @Autowired
     private ObjectMapperService objectMapperService;
 
-    @Autowired
-    private ObjectMapperService objectMapperService;
-
     public void create(UserTaskDTO userTaskDTO) {
         UserTaskEntity userTaskEntity = objectMapperService.toEntity(userTaskDTO);
         userTaskRepository.save(objectMapperService.toModel(userTaskEntity));
     }
 
 
-
     public Optional<UserTaskDTO> getById(int id) {
-        return userTaskRepository.findById(id)
-                .map(objectMapperService::toDto);
         return userTaskRepository.findById(id)
                 .map(objectMapperService::toDto);
     }
 
 
-
     public Iterable<UserTaskDTO> getAll() {
-        Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
-        return StreamSupport.stream(userTasks.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<UserTaskModel> userTasks = userTaskRepository.findAll();
         return StreamSupport.stream(userTasks.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -51,16 +41,7 @@ public class UserTaskService {
     }
 
 
-
     public void update(UserTaskDTO userTaskDTO) {
-        UserTaskModel existingUserTask = userTaskRepository.findById(userTaskDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User task not found"));
-
-        if (userTaskDTO.getId() != 0) {
-            existingUserTask.setId(userTaskDTO.getId());
-        }
-
-        userTaskRepository.save(existingUserTask);
         UserTaskModel existingUserTask = userTaskRepository.findById(userTaskDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User task not found"));
 
@@ -75,10 +56,6 @@ public class UserTaskService {
         if (!userTaskRepository.existsById(id)) {
             throw new EntityNotFoundException("User task not found");
         }
-        if (!userTaskRepository.existsById(id)) {
-            throw new EntityNotFoundException("User task not found");
-        }
         userTaskRepository.deleteById(id);
     }
 }
-

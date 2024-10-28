@@ -5,8 +5,6 @@ import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.application.service.UserRoadmapService;
-import com.thigas.quack.adapter.dto.UserRoadmapDTO;
-import com.thigas.quack.application.service.UserRoadmapService;
 import com.thigas.quack.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,11 +17,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private UserRoadmapService userRoadmapService;
     private UserRoadmapService userRoadmapService;
 
     @PostMapping

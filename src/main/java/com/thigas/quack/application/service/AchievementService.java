@@ -4,8 +4,6 @@ import com.thigas.quack.adapter.dto.AchievementDTO;
 import com.thigas.quack.domain.repository.IAchievementRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
 import jakarta.persistence.EntityNotFoundException;
-import com.thigas.quack.infrastructure.persistence.entity.AchievementModel;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +20,6 @@ public class AchievementService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
     public void create(AchievementDTO achievementDTO) {
         AchievementModel achievementModel = objectMapperService.toModel(achievementDTO);
         achievementRepository.save(achievementModel);
@@ -33,14 +28,9 @@ public class AchievementService {
     public Optional<AchievementDTO> getById(int id) {
         Optional<AchievementModel> achievement = achievementRepository.findById(id);
         return achievement.map(objectMapperService::toDto);
-        Optional<AchievementModel> achievement = achievementRepository.findById(id);
-        return achievement.map(objectMapperService::toDto);
     }
 
     public Iterable<AchievementDTO> getAll() {
-        Iterable<AchievementModel> achievements = achievementRepository.findAll();
-        return StreamSupport.stream(achievements.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<AchievementModel> achievements = achievementRepository.findAll();
         return StreamSupport.stream(achievements.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -48,10 +38,6 @@ public class AchievementService {
     }
 
     public void update(AchievementDTO achievementDTO) {
-        AchievementModel existingAchievement = achievementRepository.findById(achievementDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Achievement not found"));
-        AchievementModel updatedAchievement = objectMapperService.toModel(achievementDTO);
-        achievementRepository.save(updatedAchievement);
         AchievementModel existingAchievement = achievementRepository.findById(achievementDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Achievement not found"));
         AchievementModel updatedAchievement = objectMapperService.toModel(achievementDTO);
@@ -67,4 +53,3 @@ public class AchievementService {
     }
 
 }
-

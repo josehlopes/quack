@@ -23,12 +23,6 @@ public class RoadmapService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    @Autowired
-    private IUserRepository userRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
     public void create(RoadmapDTO roadmapDTO) {
         RoadmapModel roadmap = objectMapperService.toModel(roadmapDTO);
         roadmapRepository.save(roadmap);
@@ -37,14 +31,9 @@ public class RoadmapService {
     public Optional<RoadmapDTO> getById(int id) {
         Optional<RoadmapModel> roadmapOpt = roadmapRepository.findById(id);
         return roadmapOpt.map(objectMapperService::toDto);
-        Optional<RoadmapModel> roadmapOpt = roadmapRepository.findById(id);
-        return roadmapOpt.map(objectMapperService::toDto);
     }
 
     public Iterable<RoadmapDTO> getAll() {
-        Iterable<RoadmapModel> roadmaps = roadmapRepository.findAll();
-        return StreamSupport.stream(roadmaps.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<RoadmapModel> roadmaps = roadmapRepository.findAll();
         return StreamSupport.stream(roadmaps.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -53,16 +42,11 @@ public class RoadmapService {
 
     public void update(RoadmapDTO roadmapDTO) {
         RoadmapModel roadmap = objectMapperService.toModel(roadmapDTO);
-        RoadmapModel roadmap = objectMapperService.toModel(roadmapDTO);
         roadmapRepository.save(roadmap);
     }
 
     public void delete(int id) {
         roadmapRepository.deleteById(id);
-    }
-
-    public Boolean existsById(int roadmapId) {
-        return userRepository.existsById(roadmapId);
     }
 
     public Boolean existsById(int roadmapId) {

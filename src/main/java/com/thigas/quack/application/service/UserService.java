@@ -22,9 +22,6 @@ public class UserService {
     private IUserRepository userRepository;
 
     @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    @Autowired
     private StatisticsService statisticsService;
 
     @Autowired
@@ -42,14 +39,9 @@ public class UserService {
     public Optional<UserDTO> getById(int id) {
         return userRepository.findById(id)
                 .map(objectMapperService::toDto);
-        return userRepository.findById(id)
-                .map(objectMapperService::toDto);
     }
 
     public Iterable<UserDTO> getAll() {
-        Iterable<UserModel> users = userRepository.findAll();
-        return StreamSupport.stream(users.spliterator(), false)
-                .map(objectMapperService::toDto)
         Iterable<UserModel> users = userRepository.findAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -58,9 +50,7 @@ public class UserService {
 
     public void update(UserDTO userDTO) {
         UserModel existingUser = userRepository.findById(userDTO.getId())
-        UserModel existingUser = userRepository.findById(userDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
 
         if (userDTO.getName() != null) {
             existingUser.setName(userDTO.getName());
@@ -69,7 +59,6 @@ public class UserService {
             existingUser.setBornAt(LocalDate.parse(userDTO.getBornAt()));
         }
 
-
         userRepository.save(existingUser);
     }
 
@@ -77,22 +66,7 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found");
         }
-        if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found");
-        }
         userRepository.deleteById(id);
-    }
-
-    public Optional<UserDTO> findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .map(objectMapperService::toDto);
-    }
-
-
-    //TODO: Recuperar as outras classes, DTOS, Entities
-
-    public Boolean existsById(int userId) {
-        return userRepository.existsById(userId);
     }
 
     public Optional<UserDTO> findByEmail(String email) {

@@ -24,10 +24,6 @@ public class TaskService {
     @Autowired
     private IStepRepository stepRepository;
 
-
-    @Autowired
-    private IStepRepository stepRepository;
-
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
@@ -46,15 +42,9 @@ public class TaskService {
     public Optional<TaskDTO> getById(int id) {
         return taskRepository.findById(id)
                 .map(objectMapperService::toDto);
-        return taskRepository.findById(id)
-                .map(objectMapperService::toDto);
     }
 
     public Iterable<TaskDTO> getAll() {
-        Iterable<TaskModel> tasks = taskRepository.findAll();
-        return StreamSupport.stream(tasks.spliterator(), false)
-                .map(objectMapperService::toDto)
-                .collect(Collectors.toSet());
         Iterable<TaskModel> tasks = taskRepository.findAll();
         return StreamSupport.stream(tasks.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -64,18 +54,12 @@ public class TaskService {
     public void update(TaskDTO taskDTO) {
         TaskModel taskModel = objectMapperService.toModel(taskDTO);
         taskRepository.save(taskModel);
-        TaskModel taskModel = objectMapperService.toModel(taskDTO);
-        taskRepository.save(taskModel);
     }
 
     public void delete(int id) {
         if (!taskRepository.existsById(id)) {
             throw new IllegalArgumentException("Task não encontrada com id: " + id);
         }
-        if (!taskRepository.existsById(id)) {
-            throw new IllegalArgumentException("Task não encontrada com id: " + id);
-        }
         taskRepository.deleteById(id);
     }
 }
-
