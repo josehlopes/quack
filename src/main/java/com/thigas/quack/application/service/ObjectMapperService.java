@@ -376,4 +376,13 @@ public class ObjectMapperService {
         }
         return mapStructMapper.modelToDto(taskModel, context);
     }
+
+    //REGISTER METHODS
+    public UserModel toModel(RegisterUserDTO registerUserDTO) {
+        if (registerUserDTO == null) {
+            throw new IllegalArgumentException("RegisterUserDTO cannot be null");
+        }
+        return mapStructMapper.dtoToModel(registerUserDTO, context);
+    }
+
 }

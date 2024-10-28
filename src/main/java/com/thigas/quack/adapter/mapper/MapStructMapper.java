@@ -102,4 +102,11 @@ public interface MapStructMapper {
     UserTaskEntity modelToEntity(UserTaskModel userModel, @Context CycleAvoidingMappingContext context);
     UserTaskModel dtoToModel(UserTaskDTO userTaskDTO, @Context CycleAvoidingMappingContext context);
     UserTaskDTO modelToDto(UserTaskModel userTaskModel, @Context CycleAvoidingMappingContext context);
+
+    @Mappings({
+            @Mapping(target = "registerAt", ignore = true),
+            @Mapping(target = "points", ignore = true),
+            @Mapping(target = "status", ignore = true),
+    })
+    UserModel dtoToModel(RegisterUserDTO registerUserDTO, @Context CycleAvoidingMappingContext context);
 }

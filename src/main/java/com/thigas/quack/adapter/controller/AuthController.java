@@ -1,9 +1,6 @@
 package com.thigas.quack.adapter.controller;
 
-import com.thigas.quack.adapter.dto.LoginRequestDTO;
-import com.thigas.quack.adapter.dto.RegisterRequestDTO;
-import com.thigas.quack.adapter.dto.ResponseDTO;
-import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.dto.*;
 import com.thigas.quack.application.service.UserService;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.security.TokenService;
@@ -32,7 +29,7 @@ public class AuthController {
         UserDTO user = this.userService.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
+            String token = this.tokenService.generateToken(user.getEmail());
             return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
         }
         return ResponseEntity.badRequest().build();
@@ -40,11 +37,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        System.out.println("Register endpoint hit with email: " + body.email());
         Optional<UserDTO> user = this.userService.findByEmail(body.email());
 
         if (user.isEmpty()) {
-            UserDTO newUser = new UserDTO();
+            RegisterUserDTO newUser = new RegisterUserDTO();
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setId(body.id());
@@ -53,14 +49,11 @@ public class AuthController {
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
             newUser.setBornAt(String.valueOf(body.bornAt()));
-            newUser.setRegisterAt(OffsetDateTime.parse(OffsetDateTime.now().toString()));
-            newUser.setPoints(0.0);
             newUser.setImagePath(body.imagePath());
-            newUser.setStatus(Status.fromValue(body.status()));
 
             this.userService.register(newUser);
 
-            String token = this.tokenService.generateToken(newUser);
+            String token = this.tokenService.generateToken(newUser.getEmail());
             return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
         }
         return ResponseEntity.badRequest().build();

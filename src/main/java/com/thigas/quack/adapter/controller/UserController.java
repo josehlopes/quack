@@ -1,5 +1,6 @@
 package com.thigas.quack.adapter.controller;
 
+import com.thigas.quack.adapter.dto.RegisterUserDTO;
 import com.thigas.quack.adapter.dto.RoadmapDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
@@ -21,8 +22,8 @@ public class UserController {
     private UserRoadmapService userRoadmapService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserDTO userDTO) {
-        userService.register(userDTO);
+    public ResponseEntity<Void> create(@RequestBody RegisterUserDTO registerUserDTO) {
+        userService.register(registerUserDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -52,11 +53,6 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/status")
-    public ResponseEntity<String> getUser() {
-        return ResponseEntity.ok("Sucesso!");
     }
 
     @PostMapping("/start-roadmap")
