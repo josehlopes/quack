@@ -27,6 +27,10 @@ local.properties
 .loadpath
 .recommenders
 
+# Ignorar arquivos de configuração
+/src/main/resources/application.properties
+
+
 # External tool builders
 .externalToolBuilders/
 
