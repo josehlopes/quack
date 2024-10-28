@@ -38,4 +38,10 @@ public class StatisticsRepositoryImplementation implements IStatisticsRepository
     public void deleteById(int id) {
         statisticsModelRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional
+    public Optional<StatisticsModel> findByUserId(int userId) {
+        return statisticsModelRepository.findByUserId(userId);
+    }
 }

@@ -15,9 +15,9 @@ public class AchievementController {
     private AchievementService achievementService;
 
     @PostMapping
-    public ResponseEntity<AchievementDTO> create(@RequestBody AchievementDTO achievementDTO) {
-        AchievementDTO createdAchievement = achievementService.create(achievementDTO);
-        return new ResponseEntity<>(createdAchievement, HttpStatus.CREATED);
+    public ResponseEntity<Void> create(@RequestBody AchievementDTO achievementDTO) {
+        achievementService.create(achievementDTO);
+        return new ResponseEntity<> (HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

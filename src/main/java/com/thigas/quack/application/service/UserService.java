@@ -1,6 +1,8 @@
 package com.thigas.quack.application.service;
 
+import com.thigas.quack.adapter.dto.RegisterUserDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IUserRepository;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -19,12 +22,18 @@ public class UserService {
     private IUserRepository userRepository;
 
     @Autowired
+    private StatisticsService statisticsService;
+
+    @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public UserDTO create(UserDTO userDTO) {
-        UserModel user = objectMapperService.toModel(userDTO);
+    public void register(RegisterUserDTO registerUserDTO) {
+        UserModel user = objectMapperService.toModel(registerUserDTO);
+        user.setRegisterAt(OffsetDateTime.now());
+        user.setPoints(0.0);
+        user.setStatus(Status.ACTIVE);
         UserModel savedUser = userRepository.save(user);
-        return objectMapperService.toDto(savedUser);
+        statisticsService.createInitialStatisticsForUser(savedUser.getId());
     }
 
     public Optional<UserDTO> getById(int id) {

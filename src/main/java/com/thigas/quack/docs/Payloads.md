@@ -108,6 +108,30 @@ public class UserRoadmapDTO {
 }
 ```
 
+# Payload para Iniciar um Roadmap
+
+
+### Exemplo de Payload em JSON
+
+```json
+{
+  "user": 28,
+  "roadmap": 1
+}
+```
+
+# Payload para finalizar um Roadmap
+
+
+### Exemplo de Payload em JSON
+
+```json
+{
+  "id": 1 // id da tabela UserRoadmap;
+
+}
+```
+
 ### Descrição dos Campos
 
 - **id** (`int`): ID do UserRoadmap. Esse campo é geralmente gerado automaticamente no backend e não deve ser enviado no payload de criação.

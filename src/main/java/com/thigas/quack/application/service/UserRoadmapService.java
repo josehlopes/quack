@@ -31,11 +31,13 @@ public class UserRoadmapService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StatisticsService statisticsService;
 
-    public UserRoadmapDTO create(UserRoadmapDTO userRoadmapDTO) {
+
+    public void create(UserRoadmapDTO userRoadmapDTO) {
         UserRoadmapEntity userRoadmapEntity = objectMapperService.toEntity(userRoadmapDTO);
-        UserRoadmapModel savedUserRoadmap = userRoadmapRepository.save(objectMapperService.toModel(userRoadmapEntity));
-        return objectMapperService.toDto(savedUserRoadmap);
+        userRoadmapRepository.save(objectMapperService.toModel(userRoadmapEntity));
     }
 
     public Optional<UserRoadmapDTO> getById(int id) {
@@ -108,6 +110,9 @@ public class UserRoadmapService {
 
         UserRoadmapModel updatedModel = objectMapperService.toModel(userRoadmapEntity);
         userRoadmapRepository.save(updatedModel);
+
+        int userId = existingUserRoadmap.getUser().getId();
+        statisticsService.incrementRoadmapsCompleted(userId);
         return true;
     }
 

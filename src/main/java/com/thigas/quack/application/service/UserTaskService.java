@@ -21,10 +21,9 @@ public class UserTaskService {
     @Autowired
     private ObjectMapperService objectMapperService;
 
-    public UserTaskDTO create(UserTaskDTO userTaskDTO) {
+    public void create(UserTaskDTO userTaskDTO) {
         UserTaskEntity userTaskEntity = objectMapperService.toEntity(userTaskDTO);
-        UserTaskModel savedUserTask = userTaskRepository.save(objectMapperService.toModel(userTaskEntity));
-        return objectMapperService.toDto(savedUserTask);
+        userTaskRepository.save(objectMapperService.toModel(userTaskEntity));
     }
 
 

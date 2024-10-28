@@ -1,10 +1,8 @@
 package com.thigas.quack.adapter.controller;
 
-import com.thigas.quack.adapter.dto.LoginRequestDTO;
-import com.thigas.quack.adapter.dto.RegisterRequestDTO;
-import com.thigas.quack.adapter.dto.ResponseDTO;
-import com.thigas.quack.adapter.dto.UserDTO;
+import com.thigas.quack.adapter.dto.*;
 import com.thigas.quack.application.service.UserService;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.security.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +29,7 @@ public class AuthController {
         UserDTO user = this.userService.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
+            String token = this.tokenService.generateToken(user.getEmail());
             return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
         }
         return ResponseEntity.badRequest().build();
@@ -38,11 +37,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        System.out.println("Register endpoint hit with email: " + body.email());
         Optional<UserDTO> user = this.userService.findByEmail(body.email());
 
         if (user.isEmpty()) {
-            UserDTO newUser = new UserDTO();
+            RegisterUserDTO newUser = new RegisterUserDTO();
             newUser.setPassword(passwordEncoder.encode(body.password()));
             newUser.setEmail(body.email());
             newUser.setId(body.id());
@@ -51,13 +49,11 @@ public class AuthController {
             newUser.setCpf(body.cpf());
             newUser.setPhone(body.phone());
             newUser.setBornAt(String.valueOf(body.bornAt()));
-            newUser.setRegisterAt(String.valueOf(body.registerAt()));
-            newUser.setPoints(body.points());
             newUser.setImagePath(body.imagePath());
 
-            this.userService.create(newUser);
+            this.userService.register(newUser);
 
-            String token = this.tokenService.generateToken(newUser);
+            String token = this.tokenService.generateToken(newUser.getEmail());
             return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
         }
         return ResponseEntity.badRequest().build();

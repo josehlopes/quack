@@ -28,10 +28,9 @@ public class UserLessonService {
     private UserService userService;
 
 
-    public UserLessonDTO create(UserLessonDTO userLessonDTO) {
+    public void create(UserLessonDTO userLessonDTO) {
         UserLessonEntity userLessonEntity = objectMapperService.toEntity(userLessonDTO);
-        UserLessonModel savedUserLesson = userLessonRepository.save(objectMapperService.toModel(userLessonEntity));
-        return objectMapperService.toDto(savedUserLesson);
+        userLessonRepository.save(objectMapperService.toModel(userLessonEntity));
     }
 
     public Optional<UserLessonDTO> getById(int id) {

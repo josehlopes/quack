@@ -13,9 +13,9 @@ import java.util.Set;
 public class TaskEntity implements BaseEntity {
 
     private int id;
-    private String description;
     private TaskText tasktext;
     private Set<StepEntity> steps;
+    private String imagePath;
 
     @Override
     public int getId() {
