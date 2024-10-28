@@ -3,8 +3,11 @@ package com.thigas.quack.application.service;
 import com.thigas.quack.adapter.dto.LessonDTO;
 import com.thigas.quack.adapter.dto.StepDTO;
 import com.thigas.quack.domain.model.Status;
+import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.ILessonRepository;
 import com.thigas.quack.domain.repository.IStepRepository;
+import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
+import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import com.thigas.quack.infrastructure.persistence.entity.LessonModel;
 import com.thigas.quack.infrastructure.persistence.entity.StepModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +25,12 @@ public class StepService {
     // TODO: Melhorar a lógica de criação do Step
     // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
 
+    // TODO: Melhorar a lógica de criação do Step
+    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
+
     @Autowired
     private IStepRepository stepRepository;
+
 
     @Autowired
     private ILessonRepository lessonRepository;
@@ -39,9 +46,14 @@ public class StepService {
     public Optional<StepDTO> getById(int id) {
         return stepRepository.findById(id)
                 .map(objectMapperService::toDto);
+        return stepRepository.findById(id)
+                .map(objectMapperService::toDto);
     }
 
     public Iterable<StepDTO> getAll() {
+        Iterable<StepModel> steps = stepRepository.findAll();
+        return StreamSupport.stream(steps.spliterator(), false)
+                .map(objectMapperService::toDto)
         Iterable<StepModel> steps = stepRepository.findAll();
         return StreamSupport.stream(steps.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -49,6 +61,8 @@ public class StepService {
     }
 
     public void update(StepDTO stepDTO) {
+        StepModel stepModel = objectMapperService.toModel(stepDTO);
+        stepRepository.save(stepModel);
         StepModel stepModel = objectMapperService.toModel(stepDTO);
         stepRepository.save(stepModel);
     }

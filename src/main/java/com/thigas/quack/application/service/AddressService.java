@@ -4,6 +4,8 @@ import com.thigas.quack.adapter.dto.AddressDTO;
 import com.thigas.quack.domain.repository.IAddressRepository;
 import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
 import jakarta.persistence.EntityNotFoundException;
+import com.thigas.quack.infrastructure.persistence.entity.AddressModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class AddressService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
+    @Autowired
+    private ObjectMapperService objectMapperService = new ObjectMapperService();
+
     public void create(AddressDTO addressDTO) {
         AddressModel addressModel = objectMapperService.toModel(addressDTO);
         addressRepository.save(addressModel);
@@ -28,9 +33,14 @@ public class AddressService {
     public Optional<AddressDTO> getById(int id) {
         Optional<AddressModel> address = addressRepository.findById(id);
         return address.map(objectMapperService::toDto);
+        Optional<AddressModel> address = addressRepository.findById(id);
+        return address.map(objectMapperService::toDto);
     }
 
     public Iterable<AddressDTO> getAll() {
+        Iterable<AddressModel> addresses = addressRepository.findAll();
+        return StreamSupport.stream(addresses.spliterator(), false)
+                .map(objectMapperService::toDto)
         Iterable<AddressModel> addresses = addressRepository.findAll();
         return StreamSupport.stream(addresses.spliterator(), false)
                 .map(objectMapperService::toDto)
@@ -38,6 +48,10 @@ public class AddressService {
     }
 
     public void update(AddressDTO addressDTO) {
+        AddressModel existingAddress = addressRepository.findById(addressDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Address not found"));
+        AddressModel updatedAddress = objectMapperService.toModel(addressDTO);
+        addressRepository.save(updatedAddress);
         AddressModel existingAddress = addressRepository.findById(addressDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
         AddressModel updatedAddress = objectMapperService.toModel(addressDTO);
