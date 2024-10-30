@@ -1,6 +1,6 @@
 package com.thigas.quack.application.service;
 
-import com.thigas.quack.adapter.dto.RegisterUserDTO;
+import com.thigas.quack.adapter.dto.UserRegisterDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.domain.repository.IUserRepository;
@@ -27,10 +27,9 @@ public class UserService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public void register(RegisterUserDTO registerUserDTO) {
-        UserModel user = objectMapperService.toModel(registerUserDTO);
+    public void register(UserRegisterDTO userRegisterDTO) {
+        UserModel user = objectMapperService.toModel(userRegisterDTO);
         user.setRegisterAt(OffsetDateTime.now());
-        user.setPoints(0.0);
         user.setStatus(Status.ACTIVE);
         UserModel savedUser = userRepository.save(user);
         statisticsService.createInitialStatisticsForUser(savedUser.getId());
@@ -71,6 +70,11 @@ public class UserService {
 
     public Optional<UserDTO> findByEmail(String email) {
         return userRepository.findByEmail(email)
+                .map(objectMapperService::toDto);
+    }
+
+    public Optional<UserDTO> findByUsername(String username) {
+        return userRepository.findByUsername(username)
                 .map(objectMapperService::toDto);
     }
 

@@ -31,7 +31,7 @@ public class UserTaskModel implements BaseModel {
     @JoinColumn(name = "task_id", nullable = false)
     private TaskModel task;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imagePath;
 
     @Column(name = "status")

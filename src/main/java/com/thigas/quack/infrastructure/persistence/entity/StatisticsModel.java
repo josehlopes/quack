@@ -34,6 +34,9 @@ public class StatisticsModel implements BaseModel {
     @Column(name = "level")
     private int userLevel;
 
+    @Column(name = "points", nullable = false)
+    private Double points = 0.0;
+
     @Column(name = "experience")
     private Double userExperience;
 

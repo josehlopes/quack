@@ -22,7 +22,6 @@ public class UserEntity implements BaseEntity {
     private String password;
     private String cpf;
     private LocalDate bornAt;
-    private Double points;
     private OffsetDateTime registerAt;
     private String imagePath;
     private Status status;

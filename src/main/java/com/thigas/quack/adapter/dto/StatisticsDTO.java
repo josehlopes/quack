@@ -13,5 +13,7 @@ public class StatisticsDTO {
     private Double userExperience;
     private int challengesCompletedCount;
     private int roadmapsCompletedCount;
+    private Double points;
+
 
 }

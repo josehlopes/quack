@@ -45,9 +45,6 @@ public class UserModel implements BaseModel {
     @Column(name = "born_at", columnDefinition = "DATE", nullable = false)
     private LocalDate bornAt;
 
-    @Column(name = "points", nullable = false)
-    private Double points;
-
     @Column(name = "register_at", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private OffsetDateTime registerAt;
 

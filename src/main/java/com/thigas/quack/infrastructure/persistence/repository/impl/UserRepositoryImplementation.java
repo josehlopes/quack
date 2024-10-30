@@ -50,4 +50,10 @@ public class UserRepositoryImplementation implements IUserRepository {
     public Optional<UserModel> findByEmail(String email) {
         return userModelRepository.findByEmail(email);
     }
+
+    @Override
+    @Transactional
+    public Optional<UserModel> findByUsername(String username) {
+        return userModelRepository.findByUsername(username);
+    }
 }

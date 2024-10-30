@@ -378,11 +378,11 @@ public class ObjectMapperService {
     }
 
     //REGISTER METHODS
-    public UserModel toModel(RegisterUserDTO registerUserDTO) {
-        if (registerUserDTO == null) {
-            throw new IllegalArgumentException("RegisterUserDTO cannot be null");
+    public UserModel toModel(UserRegisterDTO userRegisterDTO) {
+        if (userRegisterDTO == null) {
+            throw new IllegalArgumentException("UserRegisterDTO cannot be null");
         }
-        return mapStructMapper.dtoToModel(registerUserDTO, context);
+        return mapStructMapper.dtoToModel(userRegisterDTO, context);
     }
 
 }

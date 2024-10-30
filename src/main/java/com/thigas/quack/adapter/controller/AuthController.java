@@ -2,9 +2,10 @@ package com.thigas.quack.adapter.controller;
 
 import com.thigas.quack.adapter.dto.*;
 import com.thigas.quack.application.service.UserService;
-import com.thigas.quack.domain.model.Status;
 import com.thigas.quack.infrastructure.security.TokenService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
@@ -24,39 +24,43 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        System.out.println("Attempting to log in with email: " + body.email());
-        UserDTO user = this.userService.findByEmail(body.email())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user.getEmail());
-            return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginDTO loginBody) {
+
+        Optional<UserDTO> userOptional = this.userService.findByEmail(loginBody.getEmail())
+                .or(() -> this.userService.findByUsername(loginBody.getUsername()));
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorDTO("Usuário não encontrado", HttpStatus.NOT_FOUND.value()));
         }
-        return ResponseEntity.badRequest().build();
+
+        UserDTO user = userOptional.get();
+        if (!passwordEncoder.matches(loginBody.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorDTO("Credenciais inválidas", HttpStatus.UNAUTHORIZED.value()));
+        }
+
+        String token = this.tokenService.generateToken(user.getEmail());
+        return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
     }
+
+
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
-        Optional<UserDTO> user = this.userService.findByEmail(body.email());
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDTO registerBody) {
+        Optional<UserDTO> user = this.userService.findByEmail(registerBody.getEmail());
 
-        if (user.isEmpty()) {
-            RegisterUserDTO newUser = new RegisterUserDTO();
-            newUser.setPassword(passwordEncoder.encode(body.password()));
-            newUser.setEmail(body.email());
-            newUser.setId(body.id());
-            newUser.setName(body.name());
-            newUser.setUsername(body.username());
-            newUser.setCpf(body.cpf());
-            newUser.setPhone(body.phone());
-            newUser.setBornAt(String.valueOf(body.bornAt()));
-            newUser.setImagePath(body.imagePath());
-
-            this.userService.register(newUser);
-
-            String token = this.tokenService.generateToken(newUser.getEmail());
-            return ResponseEntity.ok(new ResponseDTO(newUser.getEmail(), token));
+        if (user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new ErrorDTO("E-mail já cadastrado", HttpStatus.CONFLICT.value()));
         }
-        return ResponseEntity.badRequest().build();
+
+        this.userService.register(registerBody);
+        String token = this.tokenService.generateToken(registerBody.getEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDTO(registerBody.getEmail(), token));
     }
+
 
 }

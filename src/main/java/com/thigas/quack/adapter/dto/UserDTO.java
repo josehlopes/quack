@@ -16,7 +16,6 @@ public class UserDTO {
     private String password;
     private String cpf;
     private String bornAt;
-    private Double points;
     private OffsetDateTime registerAt;
     private String imagePath;
     private Status status;

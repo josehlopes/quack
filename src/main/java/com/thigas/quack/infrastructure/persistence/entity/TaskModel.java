@@ -35,7 +35,7 @@ public class TaskModel implements BaseModel {
     @ColumnTransformer(write = "?::jsonb")
     private TaskText tasktext;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imagePath;
 
     @Override

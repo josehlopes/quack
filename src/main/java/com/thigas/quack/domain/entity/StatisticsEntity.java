@@ -26,6 +26,9 @@ public class StatisticsEntity implements BaseEntity {
 
     private int roadmapsCompletedCount;
 
+    private Double points;
+
+
     @Override
     public int getId() {
         return this.id;

@@ -31,7 +31,7 @@ public class UserLessonModel implements BaseModel {
     @JoinColumn(name = "lesson_id", nullable = false)
     private LessonModel lesson;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imagePath;
 
     @Column(name = "status")

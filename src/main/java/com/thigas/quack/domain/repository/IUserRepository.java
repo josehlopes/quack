@@ -1,6 +1,7 @@
 package com.thigas.quack.domain.repository;
 
 
+import aj.org.objectweb.asm.commons.Remapper;
 import com.thigas.quack.infrastructure.persistence.entity.UserModel;
 
 import java.util.Optional;
@@ -18,4 +19,6 @@ public interface IUserRepository {
     void deleteById(int id);
 
     Optional<UserModel> findByEmail(String email);
+
+    Optional<UserModel>  findByUsername(String username);
 }

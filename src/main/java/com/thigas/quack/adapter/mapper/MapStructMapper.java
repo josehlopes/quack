@@ -105,8 +105,7 @@ public interface MapStructMapper {
 
     @Mappings({
             @Mapping(target = "registerAt", ignore = true),
-            @Mapping(target = "points", ignore = true),
             @Mapping(target = "status", ignore = true),
     })
-    UserModel dtoToModel(RegisterUserDTO registerUserDTO, @Context CycleAvoidingMappingContext context);
+    UserModel dtoToModel(UserRegisterDTO userRegisterDTO, @Context CycleAvoidingMappingContext context);
 }

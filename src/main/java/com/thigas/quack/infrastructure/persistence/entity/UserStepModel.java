@@ -31,7 +31,7 @@ public class UserStepModel implements BaseModel {
     @JoinColumn(name = "step_id", nullable = false)
     private StepModel step;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String imagePath;
 
     @Column(name = "status")

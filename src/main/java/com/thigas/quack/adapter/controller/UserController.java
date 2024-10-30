@@ -1,7 +1,6 @@
 package com.thigas.quack.adapter.controller;
 
-import com.thigas.quack.adapter.dto.RegisterUserDTO;
-import com.thigas.quack.adapter.dto.RoadmapDTO;
+import com.thigas.quack.adapter.dto.UserRegisterDTO;
 import com.thigas.quack.adapter.dto.UserDTO;
 import com.thigas.quack.adapter.dto.UserRoadmapDTO;
 import com.thigas.quack.application.service.UserRoadmapService;
@@ -22,8 +21,8 @@ public class UserController {
     private UserRoadmapService userRoadmapService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody RegisterUserDTO registerUserDTO) {
-        userService.register(registerUserDTO);
+    public ResponseEntity<Void> create(@RequestBody UserRegisterDTO userRegisterDTO) {
+        userService.register(userRegisterDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
