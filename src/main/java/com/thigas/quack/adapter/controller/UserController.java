@@ -33,6 +33,14 @@ public class UserController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/by-email")
+    public ResponseEntity<UserDTO> getByEmail(@RequestParam String email) {
+        return userService.findByEmail(email)
+                .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
     @GetMapping
     public ResponseEntity<Iterable<UserDTO>> getAll() {
         Iterable<UserDTO> users = userService.getAll();
