@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.StepDataMapper;
+import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaStepRepository;
 import org.springframework.beans.factory.annotation.Autowired;

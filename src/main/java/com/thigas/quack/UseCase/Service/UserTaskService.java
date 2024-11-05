@@ -2,8 +2,8 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.UserTaskDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.UserTaskDataMapper;
-import com.thigas.quack.UseCase.Model.Request.UserTaskDsRequestModel;
+import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
+import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class UserTaskService {
     private ObjectMapperService objectMapperService;
 
     public void create(UserTaskDTO userTaskDTO) {
-        UserTaskDsRequestModel userTaskDsRequestModel = objectMapperService.toEntity(userTaskDTO);
-        userTaskRepository.save(objectMapperService.toModel(userTaskDsRequestModel));
+        UserTaskDtoRequestModel userTaskDtoRequestModel = objectMapperService.toEntity(userTaskDTO);
+        userTaskRepository.save(objectMapperService.toModel(userTaskDtoRequestModel));
     }
 
 

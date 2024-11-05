@@ -2,8 +2,8 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.UserLessonDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.UserLessonDataMapper;
-import com.thigas.quack.UseCase.Model.Request.UserLessonDsRequestModel;
+import com.thigas.quack.Infrastructure.Entity.UserLessonDataMapper;
+import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +30,8 @@ public class UserLessonService {
 
 
     public void create(UserLessonDTO userLessonDTO) {
-        UserLessonDsRequestModel userLessonDsRequestModel = objectMapperService.toEntity(userLessonDTO);
-        userLessonRepository.save(objectMapperService.toModel(userLessonDsRequestModel));
+        UserLessonDtoRequestModel userLessonDtoRequestModel = objectMapperService.toEntity(userLessonDTO);
+        userLessonRepository.save(objectMapperService.toModel(userLessonDtoRequestModel));
     }
 
     public Optional<UserLessonDTO> getById(int id) {
@@ -51,7 +51,7 @@ public class UserLessonService {
         UserLessonDataMapper existingUserLesson = userLessonRepository.findById(userLessonDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User-Lesson not found"));
 
-        UserLessonDsRequestModel updatedEntity = objectMapperService.toEntity(userLessonDTO);
+        UserLessonDtoRequestModel updatedEntity = objectMapperService.toEntity(userLessonDTO);
         UserLessonDataMapper updatedModel = objectMapperService.toModel(updatedEntity);
 
         userLessonRepository.save(updatedModel);

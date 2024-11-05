@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Model.AchievementDataMapper;
+import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
 
 import java.util.Optional;
 

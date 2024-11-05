@@ -1,6 +1,6 @@
 package com.thigas.quack.UseCase.Gateway;
 
-import com.thigas.quack.Infrastructure.Model.UserStepDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
 
 import java.util.Optional;
 

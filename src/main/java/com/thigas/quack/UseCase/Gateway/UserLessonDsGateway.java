@@ -1,6 +1,6 @@
 package com.thigas.quack.UseCase.Gateway;
 
-import com.thigas.quack.Infrastructure.Model.UserLessonDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserLessonDataMapper;
 
 import java.util.Optional;
 

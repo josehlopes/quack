@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Model.UserRoadmapDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserRoadmapDataMapper;
 
 import java.util.List;
 import java.util.Optional;

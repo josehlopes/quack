@@ -2,7 +2,7 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.AchievementDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.AchievementDataMapper;
+import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,10 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
-import com.thigas.quack.Infrastructure.Model.UserDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserRepository;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,7 +25,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     }
 
     @Override
-    public void save(UserDsRequestModel requestModel) {
+    public void save(UserDtoRequestModel requestModel) {
         String username = UsernameGenerator.generateUsername(requestModel.getName(), requestModel.getCpf());
 
         UserDataMapper accountDataMapper = new UserDataMapper(
@@ -45,7 +45,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     }
 
     @Override
-    public Optional<UserDsRequestModel> findById(int id) {
+    public Optional<UserDtoRequestModel> findById(int id) {
         return repository.findById(id)
                 .map(objectMapperService::toEntity);
     }
@@ -56,7 +56,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     }
 
     @Override
-    public Iterable<UserDsRequestModel> findAll() {
+    public Iterable<UserDtoRequestModel> findAll() {
         return repository.findAll()
                 .stream()
                 .map(objectMapperService::toEntity)
@@ -69,13 +69,13 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     }
 
     @Override
-    public Optional<UserDsRequestModel> findByEmail(String email) {
+    public Optional<UserDtoRequestModel> findByEmail(String email) {
         return repository.findByEmail(email)
                 .map(objectMapperService::toEntity);
     }
 
     @Override
-    public Optional<UserDsRequestModel> findByUsername(String username) {
+    public Optional<UserDtoRequestModel> findByUsername(String username) {
         return repository.findByUsername(username)
                 .map(objectMapperService::toEntity);
     }

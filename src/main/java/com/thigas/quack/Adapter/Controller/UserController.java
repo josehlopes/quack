@@ -4,9 +4,7 @@ import com.thigas.quack.Adapter.Dto.UserRegisterDTO;
 import com.thigas.quack.Adapter.Dto.UserDTO;
 import com.thigas.quack.Adapter.Dto.UserRoadmapDTO;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
-import com.thigas.quack.UseCase.Service.UserRoadmapService;
-import com.thigas.quack.UseCase.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody UserRegisterDTO userRegisterDTO) {
-        userInput.create(userRegisterDTO);
+    public ResponseEntity<Void> create(@RequestBody UserDtoRequestModel userRequest) {
+        userInput.create(userRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

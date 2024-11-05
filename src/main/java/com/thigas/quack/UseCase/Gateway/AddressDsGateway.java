@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Model.AddressDataMapper;
+import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
 
 import java.util.Optional;
 

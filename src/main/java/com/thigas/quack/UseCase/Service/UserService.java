@@ -8,14 +8,12 @@ import com.thigas.quack.Domain.Factory.UserFactory;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.UserResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
@@ -35,16 +33,17 @@ public class UserService implements UserInputBoundary {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public UserResponseModel create(UserRegisterDTO userRegisterDTO) {
-        if (userDsGateway.existsByEmail(userRegisterDTO.getEmail())) {
+    @Override
+    public UserResponseModel create(UserDtoRequestModel userRequest) {
+        if (userDsGateway.existsByEmail(userRequest.getEmail())) {
             return userPresenter.prepareFailView("User already exists");
         }
-        User user = userFactory.create(userRegisterDTO.getName(),userRegisterDTO.getPhone(),userRegisterDTO.getEmail(),userRegisterDTO.getPassword(),userRegisterDTO.getCpf(), LocalDate.parse(userRegisterDTO.getBornDate()),userRegisterDTO.getImagePath());
+        User user = userFactory.create(userRequest.getName(),userRequest.getPhone(),userRequest.getEmail(),userRequest.getPassword(),userRequest.getCpf(), userRequest.getBornDate(),userRequest.getImagePath());
         if (!user.passwordIsValid()) {
             return userPresenter.prepareFailView("User password must have more than 8 characters.");
         }
         OffsetDateTime now = OffsetDateTime.now();
-        UserDsRequestModel userDsModel = new UserDsRequestModel();
+        UserDtoRequestModel userDsModel = new UserDtoRequestModel();
         userDsModel.setName(user.getName());
         userDsModel.setPhone(user.getPhone());
         userDsModel.setEmail(user.getEmail());
@@ -95,11 +94,11 @@ public class UserService implements UserInputBoundary {
 //        userRepository.deleteById(id);
 //    }
 //
-    public Optional<UserDsRequestModel> findByEmail(String email) {
+    public Optional<UserDtoRequestModel> findByEmail(String email) {
     return userDsGateway.findByEmail(email);
     }
 
-    public Optional<UserDsRequestModel> findByUsername(String username) {
+    public Optional<UserDtoRequestModel> findByUsername(String username) {
         return userDsGateway.findByUsername(username);
     }
 

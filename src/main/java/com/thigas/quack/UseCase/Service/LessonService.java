@@ -2,7 +2,7 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.LessonDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.LessonDataMapper;
+import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

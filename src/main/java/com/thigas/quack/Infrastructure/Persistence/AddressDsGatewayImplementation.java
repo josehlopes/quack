@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.AddressDataMapper;
+import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;

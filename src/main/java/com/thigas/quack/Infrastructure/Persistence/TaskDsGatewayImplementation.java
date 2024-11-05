@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.TaskDataMapper;
+import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaTaskRepository;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import jakarta.transaction.Transactional;

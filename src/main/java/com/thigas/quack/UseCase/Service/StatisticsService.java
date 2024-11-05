@@ -1,11 +1,10 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.StatisticsDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.Infrastructure.Model.StatisticsDataMapper;
-import com.thigas.quack.Infrastructure.Model.UserDataMapper;
+import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,9 @@ public class StatisticsService {
 
 
     //TODO: Consertar estatisticas
+    //TODO: Ajeitar o tipo de dados que vem do front, para não haver furos de camadas
     @Autowired
-    private StatisticsDsGateway statisticsRepository;
+    private StatisticsDsGateway statisticsGateway;
 
     @Autowired
     private UserDsGateway userRepository;
@@ -28,51 +28,47 @@ public class StatisticsService {
     @Autowired
     private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public void create(StatisticsDTO statisticsDTO) {
-        StatisticsDataMapper statisticsDataMapper = objectMapperService.toModel(statisticsDTO);
-        statisticsRepository.save(statisticsDataMapper);
+    public void create(StatisticsDtoRequestModel statisticsRequest) {
+        statisticsGateway.save(statisticsRequest);
     }
 
-    public Optional<StatisticsDTO> getById(int id) {
-        Optional<StatisticsDataMapper> statistics = statisticsRepository.findById(id);
-        return statistics.map(objectMapperService::toDto);
+    public Optional<StatisticsDtoRequestModel> getById(int id) {
+        return statisticsGateway.findById(id);
     }
 
-    public Iterable<StatisticsDTO> getAll() {
-        Iterable<StatisticsDataMapper> statistics = statisticsRepository.findAll();
+    public Iterable<StatisticsDtoRequestModel> getAll() {
+        Iterable<StatisticsDtoRequestModel> statistics = statisticsGateway.findAll();
         return StreamSupport.stream(statistics.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(StatisticsDTO statisticsDTO) {
-        StatisticsDataMapper existingStatistics = statisticsRepository.findById(statisticsDTO.getId())
+    public void update(StatisticsDtoRequestModel statisticsRequest) {
+        StatisticsDtoRequestModel existingStatistics = statisticsGateway.findById(statisticsRequest.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found"));
-        StatisticsDataMapper statisticsDataMapper = objectMapperService.toModel(statisticsDTO);
-        statisticsRepository.save(statisticsDataMapper);
+        statisticsGateway.save(statisticsRequest);
     }
 
     public void createInitialStatisticsForUser(int userId) {
 
-        UserDataMapper user = userRepository.findById(userId)
+        UserDtoRequestModel user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        StatisticsDataMapper statisticsDataMapper = new StatisticsDataMapper();
-        statisticsDataMapper.setUser(user);
-        statisticsDataMapper.setRoadmapsCompletedCount(0);
-        statisticsDataMapper.setChallengesCompletedCount(0);
-        statisticsDataMapper.setBestStreak(0);
-        statisticsRepository.save(statisticsDataMapper);
+        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel();
+        statistics.setUser(user);
+        statistics.setRoadmapsCompletedCount(0);
+        statistics.setChallengesCompletedCount(0);
+        statistics.setBestStreak(0);
+        statisticsGateway.save(statistics);
     }
 
     public void incrementRoadmapsCompleted(int userId) {
-        StatisticsDataMapper statisticsDataMapper = statisticsRepository.findByUserId(userId)
+        StatisticsDtoRequestModel statistics = statisticsGateway.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
-        statisticsDataMapper.setRoadmapsCompletedCount(statisticsDataMapper.getRoadmapsCompletedCount() + 1);
-        statisticsRepository.save(statisticsDataMapper);;
+        statistics.setRoadmapsCompletedCount(statistics.getRoadmapsCompletedCount() + 1);
+        statisticsGateway.save(statistics);;
     }
 
     public void delete(int id) {
-        statisticsRepository.deleteById(id);
+        statisticsGateway.deleteById(id);
     }
 }

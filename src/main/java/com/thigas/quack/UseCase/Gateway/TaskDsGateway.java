@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Model.TaskDataMapper;
+import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
 
 import java.util.Optional;
 

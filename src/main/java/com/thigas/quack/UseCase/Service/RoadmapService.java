@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Dto.RoadmapDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.Infrastructure.Model.RoadmapDataMapper;
+import com.thigas.quack.Infrastructure.Entity.RoadmapDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

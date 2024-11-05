@@ -1,8 +1,9 @@
 package com.thigas.quack.Infrastructure.Security;
 
-import com.thigas.quack.Infrastructure.Model.UserDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,15 +14,15 @@ import java.util.ArrayList;
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    //TODO: Consertar segurança
+    //TODO: CRIAR MÉTODO PERSONALIZADO "loadByEmail"
     @Autowired
     private UserDsGateway userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDataMapper user = this.userRepository.findByEmail(username)
+        UserDtoRequestModel user = this.userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+        return new User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());
     }
 }

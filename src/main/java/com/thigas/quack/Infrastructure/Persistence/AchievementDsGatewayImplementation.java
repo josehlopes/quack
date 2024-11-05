@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.AchievementDataMapper;
+import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAchievementRepository;
 import org.springframework.beans.factory.annotation.Autowired;

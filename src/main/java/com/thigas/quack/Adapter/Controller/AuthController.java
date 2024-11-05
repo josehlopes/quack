@@ -1,7 +1,7 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.Adapter.Dto.*;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Service.UserService;
 import com.thigas.quack.Infrastructure.Security.TokenService;
 import jakarta.validation.Valid;
@@ -27,7 +27,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDTO loginBody) {
 
-        Optional<UserDsRequestModel> userOptional = this.userService.findByEmail(loginBody.getEmail())
+        Optional<UserDtoRequestModel> userOptional = this.userService.findByEmail(loginBody.getEmail())
                 .or(() -> this.userService.findByUsername(loginBody.getUsername()));
 
         if (userOptional.isEmpty()) {
@@ -35,7 +35,7 @@ public class AuthController {
                     .body(new ErrorDTO("Usuário não encontrado", HttpStatus.NOT_FOUND.value()));
         }
 
-        UserDsRequestModel user = userOptional.get();
+        UserDtoRequestModel user = userOptional.get();
         if (!passwordEncoder.matches(loginBody.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorDTO("Credenciais inválidas", HttpStatus.UNAUTHORIZED.value()));
@@ -49,7 +49,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDTO registerBody) {
-        Optional<UserDsRequestModel> user = this.userService.findByEmail(registerBody.getEmail());
+        Optional<UserDtoRequestModel> user = this.userService.findByEmail(registerBody.getEmail());
 
         if (user.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)

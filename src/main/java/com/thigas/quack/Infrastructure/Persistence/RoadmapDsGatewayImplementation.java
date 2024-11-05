@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.RoadmapDataMapper;
+import com.thigas.quack.Infrastructure.Entity.RoadmapDataMapper;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaRoadmapRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
-import com.thigas.quack.Infrastructure.Model.UserAchievementDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserAchievementDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaUserAchievementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

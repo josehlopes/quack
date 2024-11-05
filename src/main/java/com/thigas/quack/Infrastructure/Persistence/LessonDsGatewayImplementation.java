@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.LessonDataMapper;
+import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Model.UserStepDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
 
 import com.thigas.quack.Infrastructure.Repository.JpaUserStepRepository;

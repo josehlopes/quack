@@ -2,10 +2,10 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.UserStepDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.UseCase.Model.Request.UserStepDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-import com.thigas.quack.Infrastructure.Model.UserStepDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class UserStepService {
     private UserService userService;
 
     public void create(UserStepDTO userStepDTO) {
-        UserStepDsRequestModel userStepDsRequestModel = objectMapperService.toEntity(userStepDTO);
-        userStepRepository.save(objectMapperService.toModel(userStepDsRequestModel));
+        UserStepDtoRequestModel userStepDtoRequestModel = objectMapperService.toEntity(userStepDTO);
+        userStepRepository.save(objectMapperService.toModel(userStepDtoRequestModel));
     }
 
     public Optional<UserStepDTO> getById(int id) {
@@ -50,7 +50,7 @@ public class UserStepService {
         UserStepDataMapper existingUserStep = userStepRepository.findById(userStepDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDsRequestModel updatedEntity = objectMapperService.toEntity(userStepDTO);
+        UserStepDtoRequestModel updatedEntity = objectMapperService.toEntity(userStepDTO);
         UserStepDataMapper updatedModel = objectMapperService.toModel(updatedEntity);
 
         userStepRepository.save(updatedModel);
@@ -65,14 +65,14 @@ public class UserStepService {
 //            return false;
 //        }
 //
-//        UserDsRequestModel user = objectMapperService.toEntity(userService.getById(userId).orElse(null));
-//        StepDsRequestModel step = objectMapperService.toEntity(stepService.getById(stepId).orElse(null));
+//        UserDtoRequestModel user = objectMapperService.toEntity(userService.getById(userId).orElse(null));
+//        StepDtoRequestModel step = objectMapperService.toEntity(stepService.getById(stepId).orElse(null));
 //
 //        if (user == null || step == null) {
 //            return false;
 //        }
 //
-//        UserStepDsRequestModel userStepEntity = new UserStepDsRequestModel();
+//        UserStepDtoRequestModel userStepEntity = new UserStepDtoRequestModel();
 //        userStepEntity.setUser(user);
 //        userStepEntity.setStep(step);
 //        userStepEntity.setStatus(Status.ACTIVE);
@@ -87,10 +87,10 @@ public class UserStepService {
         UserStepDTO existingUserStep = getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDsRequestModel userStepDsRequestModel = objectMapperService.toEntity(existingUserStep);
-        userStepDsRequestModel.setStatus(Status.FINISHED);
+        UserStepDtoRequestModel userStepDtoRequestModel = objectMapperService.toEntity(existingUserStep);
+        userStepDtoRequestModel.setStatus(Status.FINISHED);
 
-        UserStepDataMapper updatedModel = objectMapperService.toModel(userStepDsRequestModel);
+        UserStepDataMapper updatedModel = objectMapperService.toModel(userStepDtoRequestModel);
         userStepRepository.save(updatedModel);
         return true;
     }

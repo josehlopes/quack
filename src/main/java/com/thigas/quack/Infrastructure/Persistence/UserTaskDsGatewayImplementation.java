@@ -1,7 +1,7 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
-import com.thigas.quack.Infrastructure.Model.UserTaskDataMapper;
+import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaUserTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

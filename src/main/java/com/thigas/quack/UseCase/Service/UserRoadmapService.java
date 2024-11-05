@@ -2,10 +2,10 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Dto.UserRoadmapDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.UserRoadmapDataMapper;
-import com.thigas.quack.UseCase.Model.Request.RoadmapDsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapDsRequestModel;
+import com.thigas.quack.Infrastructure.Entity.UserRoadmapDataMapper;
+import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +19,9 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class UserRoadmapService {
+
+    //TODO: Ajeitar o tipo de dados que vem do front, para não haver furos de camadas
+    //TODO: Utilizar Gateways no lugar das services
 
     @Autowired
     private UserRoadmapDsGateway userRoadmapRepository;
@@ -37,8 +40,8 @@ public class UserRoadmapService {
 
 
     public void create(UserRoadmapDTO userRoadmapDTO) {
-        UserRoadmapDsRequestModel userRoadmapDsRequestModel = objectMapperService.toEntity(userRoadmapDTO);
-        userRoadmapRepository.save(objectMapperService.toModel(userRoadmapDsRequestModel));
+        UserRoadmapDtoRequestModel userRoadmapDtoRequestModel = objectMapperService.toEntity(userRoadmapDTO);
+        userRoadmapRepository.save(objectMapperService.toModel(userRoadmapDtoRequestModel));
     }
 
     public Optional<UserRoadmapDTO> getById(int id) {
@@ -58,7 +61,7 @@ public class UserRoadmapService {
         UserRoadmapDataMapper existingUserRoadmap = userRoadmapRepository.findById(userRoadmapDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
 
-        UserRoadmapDsRequestModel updatedEntity = objectMapperService.toEntity(userRoadmapDTO);
+        UserRoadmapDtoRequestModel updatedEntity = objectMapperService.toEntity(userRoadmapDTO);
         UserRoadmapDataMapper updatedModel = objectMapperService.toModel(updatedEntity);
 
         userRoadmapRepository.save(updatedModel);
@@ -74,21 +77,21 @@ public class UserRoadmapService {
             return false;
         }
 
-        UserDsRequestModel user = objectMapperService.toEntity(userService.getById(userId).orElse(null));
-        RoadmapDsRequestModel roadmap = objectMapperService.toEntity(roadmapService.getById(roadmapId).orElse(null));
+        UserDtoRequestModel user = objectMapperService.toEntity(userService.getById(userId).orElse(null));
+        RoadmapDtoRequestModel roadmap = objectMapperService.toEntity(roadmapService.getById(roadmapId).orElse(null));
 
         if (user == null || roadmap == null) {
             return false;
         }
 
-        UserRoadmapDsRequestModel userRoadmapDsRequestModel = new UserRoadmapDsRequestModel();
-        userRoadmapDsRequestModel.setUser(user);
-        userRoadmapDsRequestModel.setRoadmap(roadmap);
-        userRoadmapDsRequestModel.setProgress(0.0);
-        userRoadmapDsRequestModel.setStartedAt(LocalDate.now());
-        userRoadmapDsRequestModel.setStatus(Status.ACTIVE);
+        UserRoadmapDtoRequestModel userRoadmapDtoRequestModel = new UserRoadmapDtoRequestModel();
+        userRoadmapDtoRequestModel.setUser(user);
+        userRoadmapDtoRequestModel.setRoadmap(roadmap);
+        userRoadmapDtoRequestModel.setProgress(0.0);
+        userRoadmapDtoRequestModel.setStartedAt(LocalDate.now());
+        userRoadmapDtoRequestModel.setStatus(Status.ACTIVE);
 
-        UserRoadmapDataMapper userRoadmapDataMapper = objectMapperService.toModel(userRoadmapDsRequestModel);
+        UserRoadmapDataMapper userRoadmapDataMapper = objectMapperService.toModel(userRoadmapDtoRequestModel);
         userRoadmapRepository.save(userRoadmapDataMapper);
 
         return true;
@@ -99,17 +102,17 @@ public class UserRoadmapService {
                 .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
 
 
-        UserRoadmapDsRequestModel userRoadmapDsRequestModel = objectMapperService.toEntity(existingUserRoadmap);
+        UserRoadmapDtoRequestModel userRoadmapDtoRequestModel = objectMapperService.toEntity(existingUserRoadmap);
 
         if (existingUserRoadmap.getStartedAt() != null) {
-            userRoadmapDsRequestModel.setStartedAt(LocalDate.parse(existingUserRoadmap.getStartedAt()));
+            userRoadmapDtoRequestModel.setStartedAt(LocalDate.parse(existingUserRoadmap.getStartedAt()));
         }
 
-        userRoadmapDsRequestModel.setStatus(Status.FINISHED);
-        userRoadmapDsRequestModel.setFinishedAt(LocalDate.now());
-        userRoadmapDsRequestModel.setProgress(100.0);
+        userRoadmapDtoRequestModel.setStatus(Status.FINISHED);
+        userRoadmapDtoRequestModel.setFinishedAt(LocalDate.now());
+        userRoadmapDtoRequestModel.setProgress(100.0);
 
-        UserRoadmapDataMapper updatedModel = objectMapperService.toModel(userRoadmapDsRequestModel);
+        UserRoadmapDataMapper updatedModel = objectMapperService.toModel(userRoadmapDtoRequestModel);
         userRoadmapRepository.save(updatedModel);
 
         int userId = existingUserRoadmap.getUser().getId();

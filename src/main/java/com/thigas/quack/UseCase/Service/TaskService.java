@@ -3,10 +3,10 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.Adapter.Dto.StepDTO;
 import com.thigas.quack.Adapter.Dto.TaskDTO;
 import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Model.TaskDataMapper;
+import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
-import com.thigas.quack.Infrastructure.Model.StepDataMapper;
+import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
