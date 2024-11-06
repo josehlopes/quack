@@ -1,14 +1,15 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
+
+import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
 
 import java.util.Optional;
 
 public interface StepDsGateway {
-    void save(StepDataMapper step);
+    void save(StepDtoRequestModel step);
     Boolean existsById(int id);
-    Optional<StepDataMapper> findById(int id);
-    Iterable<StepDataMapper> findAll();
+    Optional<StepDtoRequestModel> findById(int id);
+    Iterable<StepDtoRequestModel> findAll();
     void deleteById(int id);
 }

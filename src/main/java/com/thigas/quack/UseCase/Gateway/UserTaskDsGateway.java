@@ -1,14 +1,15 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
+
+import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
 
 import java.util.Optional;
 
 public interface UserTaskDsGateway {
-    void save(UserTaskDataMapper userTask);
-    Optional<UserTaskDataMapper> findById(int id);
-    Iterable<UserTaskDataMapper> findAll();
+    void save(UserTaskDtoRequestModel userTask);
+    Optional<UserTaskDtoRequestModel> findById(int id);
+    Iterable<UserTaskDtoRequestModel> findAll();
     Boolean existsById(int id);
     void deleteById(int id);
 }

@@ -1,9 +1,9 @@
 package com.thigas.quack.UseCase.Boundary;
 
-import com.thigas.quack.Adapter.Dto.UserRegisterDTO;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.UserResponseModel;
+import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 
 public interface UserInputBoundary {
-    UserResponseModel create(UserDtoRequestModel requestModel);
+    UserLoginDtoResponseModel create(UserRegisterDtoRequestModel requestModel);
 }

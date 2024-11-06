@@ -1,18 +1,12 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.StepDTO;
-import com.thigas.quack.Adapter.Dto.TaskDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
-import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
-import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
+import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,47 +14,38 @@ import java.util.stream.StreamSupport;
 public class TaskService {
 
     @Autowired
-    private TaskDsGateway taskRepository;
+    private TaskDsGateway taskDsGateway;
 
-    @Autowired
-    private StepDsGateway stepRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    public void create(TaskDTO taskDTO) {
-        TaskDataMapper taskDataMapper = objectMapperService.toModel(taskDTO);
-        Set<StepDataMapper> stepEntities = new HashSet<>();
-
-        for (StepDTO stepDTO : taskDTO.getSteps()) {
-            stepRepository.findById(stepDTO.getId()).ifPresent(stepEntities::add);
-        }
-
-        taskDataMapper.setSteps(stepEntities);
-        taskRepository.save(taskDataMapper);
+    public void create(TaskDtoRequestModel taskDtoRequest) {
+        taskDsGateway.save(taskDtoRequest);
     }
 
-    public Optional<TaskDTO> getById(int id) {
-        return taskRepository.findById(id)
-                .map(objectMapperService::toDto);
+    public Optional<TaskDtoRequestModel> getById(int id) {
+        return taskDsGateway.findById(id);
     }
 
-    public Iterable<TaskDTO> getAll() {
-        Iterable<TaskDataMapper> tasks = taskRepository.findAll();
+    public Iterable<TaskDtoRequestModel> getAll() {
+        Iterable<TaskDtoRequestModel> tasks = taskDsGateway.findAll();
         return StreamSupport.stream(tasks.spliterator(), false)
-                .map(objectMapperService::toDto)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    public void update(TaskDTO taskDTO) {
-        TaskDataMapper taskDataMapper = objectMapperService.toModel(taskDTO);
-        taskRepository.save(taskDataMapper);
+    public void update(TaskDtoRequestModel taskDtoRequest) {
+        TaskDtoRequestModel existingTask = taskDsGateway.findById(taskDtoRequest.id())
+                .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+        TaskDtoRequestModel updatedTask = new TaskDtoRequestModel(
+                taskDtoRequest.id(),
+                taskDtoRequest.tasktext() != null ? taskDtoRequest.tasktext() : existingTask.tasktext(),
+                taskDtoRequest.stepsIds() != null ? taskDtoRequest.stepsIds() : existingTask.stepsIds(),
+                taskDtoRequest.imagePath() != null ? taskDtoRequest.imagePath() : existingTask.imagePath()
+        );
+        taskDsGateway.save(updatedTask);
     }
 
     public void delete(int id) {
-        if (!taskRepository.existsById(id)) {
-            throw new IllegalArgumentException("Task não encontrada com id: " + id);
+        if (!taskDsGateway.existsById(id)) {
+            throw new IllegalArgumentException("Task not found with id: " + id);
         }
-        taskRepository.deleteById(id);
+        taskDsGateway.deleteById(id);
     }
 }

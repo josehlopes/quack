@@ -1,10 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.UserLessonDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Entity.UserLessonDataMapper;
-import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
+import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +14,8 @@ import java.util.stream.StreamSupport;
 public class UserLessonService {
 
     @Autowired
-    private UserLessonDsGateway userLessonRepository;
+    private UserLessonDsGateway userLessonDsGateway;
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     @Autowired
     private LessonService lessonService;
@@ -28,37 +23,36 @@ public class UserLessonService {
     @Autowired
     private UserService userService;
 
-
-    public void create(UserLessonDTO userLessonDTO) {
-        UserLessonDtoRequestModel userLessonDtoRequestModel = objectMapperService.toEntity(userLessonDTO);
-        userLessonRepository.save(objectMapperService.toModel(userLessonDtoRequestModel));
+    public void create(UserLessonDtoRequestModel userLessonDtoRequest) {
+        userLessonDsGateway.save(userLessonDtoRequest);
     }
 
-    public Optional<UserLessonDTO> getById(int id) {
-        return userLessonRepository.findById(id)
-                .map(objectMapperService::toDto);
+    public Optional<UserLessonDtoRequestModel> getById(int id) {
+        return userLessonDsGateway.findById(id);
     }
 
-    public Iterable<UserLessonDTO> getAll() {
-        Iterable<UserLessonDataMapper> userLessons = userLessonRepository.findAll();
+    public Iterable<UserLessonDtoRequestModel> getAll() {
+        Iterable<UserLessonDtoRequestModel> userLessons = userLessonDsGateway.findAll();
         return StreamSupport.stream(userLessons.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-
-    public void update(UserLessonDTO userLessonDTO) {
-        UserLessonDataMapper existingUserLesson = userLessonRepository.findById(userLessonDTO.getId())
+    public void update(UserLessonDtoRequestModel userLessonDtoRequest) {
+        UserLessonDtoRequestModel existingUserLesson = userLessonDsGateway.findById(userLessonDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("User-Lesson not found"));
 
-        UserLessonDtoRequestModel updatedEntity = objectMapperService.toEntity(userLessonDTO);
-        UserLessonDataMapper updatedModel = objectMapperService.toModel(updatedEntity);
+        UserLessonDtoRequestModel updatedEntity = new UserLessonDtoRequestModel(
+                userLessonDtoRequest.id(),
+                userLessonDtoRequest.userId() != null ? userLessonDtoRequest.userId() : existingUserLesson.userId(),
+                userLessonDtoRequest.lessonId() != null ? userLessonDtoRequest.lessonId() : existingUserLesson.lessonId(),
+                userLessonDtoRequest.status() != null ? userLessonDtoRequest.status() : existingUserLesson.status(),
+                userLessonDtoRequest.imagePath() != null ? userLessonDtoRequest.imagePath() : existingUserLesson.imagePath()
+        );
 
-        userLessonRepository.save(updatedModel);
+        userLessonDsGateway.save(updatedEntity);
     }
 
-
     public void delete(int id) {
-        userLessonRepository.deleteById(id);
+        userLessonDsGateway.deleteById(id);
     }
 }

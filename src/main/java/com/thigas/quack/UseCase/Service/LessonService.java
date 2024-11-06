@@ -1,9 +1,8 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.LessonDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
+import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,55 +15,54 @@ import java.util.stream.StreamSupport;
 public class LessonService {
 
     @Autowired
-    private LessonDsGateway lessonRepository;
+    private LessonDsGateway lessonDsGateway;
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    public void create(LessonDTO lessonDTO) {
-        LessonDataMapper lessonDataMapper = objectMapperService.toModel(lessonDTO);
-        lessonRepository.save(lessonDataMapper);
+    public void create(LessonDtoRequestModel lessonDtoRequest) {
+        lessonDsGateway.save(lessonDtoRequest);
     }
 
-    public Set<LessonDTO> createAll(Set<LessonDTO> lessonDTOs) {
-        if (lessonDTOs == null || lessonDTOs.isEmpty()) {
-            throw new IllegalArgumentException("LessonDTOs list cannot be null or empty");
+    public Set<LessonDtoRequestModel> createAll(Set<LessonDtoRequestModel> lessonDtoRequests) {
+        if (lessonDtoRequests == null || lessonDtoRequests.isEmpty()) {
+            throw new IllegalArgumentException("LessonDtoRequests list cannot be null or empty");
         }
 
-        Set<LessonDataMapper> lessonEntities = lessonDTOs.stream()
-                .map(objectMapperService::toModel)
-                .collect(Collectors.toSet());
-
-        Set<LessonDataMapper> savedLessons;
+        Set<LessonDtoRequestModel> savedLessons;
         try {
-            savedLessons = lessonRepository.saveAll(lessonEntities);
+            savedLessons = lessonDsGateway.saveAll(lessonDtoRequests);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save lessons", e);
         }
 
-        return savedLessons.stream()
-                .map(objectMapperService::toDto) // Usando ObjectMapperService
-                .collect(Collectors.toSet());
+        return savedLessons;
     }
 
-    public Optional<LessonDTO> getById(int id) {
-        Optional<LessonDataMapper> lessonOpt = lessonRepository.findById(id);
-        return lessonOpt.map(objectMapperService::toDto);
+    public Optional<LessonDtoRequestModel> getById(int id) {
+        return lessonDsGateway.findById(id);
     }
 
-    public Iterable<LessonDTO> getAll() {
-        Iterable<LessonDataMapper> lessons = lessonRepository.findAll();
+    public Iterable<LessonDtoRequestModel> getAll() {
+        Iterable<LessonDtoRequestModel> lessons = lessonDsGateway.findAll();
         return StreamSupport.stream(lessons.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(LessonDTO lessonDTO) {
-        LessonDataMapper lesson = objectMapperService.toModel(lessonDTO);
-        lessonRepository.save(lesson);
+    public void update(LessonDtoRequestModel lessonDtoRequest) {
+        LessonDtoRequestModel existingLesson = lessonDsGateway.findById(lessonDtoRequest.id())
+                .orElseThrow(() -> new EntityNotFoundException("Lesson not found"));
+        LessonDtoRequestModel updatedLesson = new LessonDtoRequestModel(
+                lessonDtoRequest.id(),
+                lessonDtoRequest.title() != null ? lessonDtoRequest.title() : existingLesson.title(),
+                lessonDtoRequest.description() != null ? lessonDtoRequest.description() : existingLesson.description(),
+                lessonDtoRequest.language() != null ? lessonDtoRequest.language() : existingLesson.language(),
+                lessonDtoRequest.imagePath() != null ? lessonDtoRequest.imagePath() : existingLesson.imagePath(),
+                lessonDtoRequest.completed() != null ? lessonDtoRequest.completed() : existingLesson.completed(),
+                lessonDtoRequest.link() != null ? lessonDtoRequest.link() : existingLesson.link(),
+                lessonDtoRequest.stepsIds() != null ? lessonDtoRequest.stepsIds() : existingLesson.stepsIds()
+        );
+        lessonDsGateway.save(updatedLesson);
     }
 
     public void deleteLesson(int id) {
-        lessonRepository.deleteById(id);
+        lessonDsGateway.deleteById(id);
     }
 }

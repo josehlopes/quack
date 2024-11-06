@@ -1,8 +1,8 @@
 package com.thigas.quack.UseCase.Presenter;
 
-import com.thigas.quack.UseCase.Model.Response.UserResponseModel;
+import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 
 public interface UserPresenter {
-    UserResponseModel prepareSuccessView(UserResponseModel user);
-    UserResponseModel prepareFailView(String error);
+    UserLoginDtoResponseModel prepareSuccessView(UserLoginDtoResponseModel user);
+    UserLoginDtoResponseModel prepareFailView(String error);
 }

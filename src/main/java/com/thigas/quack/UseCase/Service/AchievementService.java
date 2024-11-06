@@ -1,9 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.AchievementDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
+import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,41 +14,41 @@ import java.util.stream.StreamSupport;
 public class AchievementService {
 
     @Autowired
-    private AchievementDsGateway achievementRepository;
+    private AchievementDsGateway achievementDsGateway;
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public void create(AchievementDTO achievementDTO) {
-        AchievementDataMapper achievementDataMapper = objectMapperService.toModel(achievementDTO);
-        achievementRepository.save(achievementDataMapper);
+    public void create(AchievementDtoRequestModel achievementDtoRequest) {
+        achievementDsGateway.save(achievementDtoRequest);
     }
 
-    public Optional<AchievementDTO> getById(int id) {
-        Optional<AchievementDataMapper> achievement = achievementRepository.findById(id);
-        return achievement.map(objectMapperService::toDto);
+    public Optional<AchievementDtoRequestModel> getById(int id) {
+        return achievementDsGateway.findById(id);
     }
 
-    public Iterable<AchievementDTO> getAll() {
-        Iterable<AchievementDataMapper> achievements = achievementRepository.findAll();
+    public Iterable<AchievementDtoRequestModel> getAll() {
+        Iterable<AchievementDtoRequestModel> achievements = achievementDsGateway.findAll();
         return StreamSupport.stream(achievements.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(AchievementDTO achievementDTO) {
-        AchievementDataMapper existingAchievement = achievementRepository.findById(achievementDTO.getId())
+    public void update(AchievementDtoRequestModel achievementDtoRequest) {
+        AchievementDtoRequestModel existingAchievement = achievementDsGateway.findById(achievementDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Achievement not found"));
-        AchievementDataMapper updatedAchievement = objectMapperService.toModel(achievementDTO);
-        achievementRepository.save(updatedAchievement);
+        AchievementDtoRequestModel updatedAchievement = new AchievementDtoRequestModel(
+                achievementDtoRequest.id(),
+                achievementDtoRequest.name() != null ? achievementDtoRequest.name() : existingAchievement.name(),
+                achievementDtoRequest.description() != null ? achievementDtoRequest.description() : existingAchievement.description(),
+                achievementDtoRequest.imagePath() != null ? achievementDtoRequest.imagePath() : existingAchievement.imagePath()
+        );
+        achievementDsGateway.save(updatedAchievement);
     }
 
     public void delete(int id) {
-        achievementRepository.deleteById(id);
+        achievementDsGateway.deleteById(id);
     }
 
     public Boolean existsById(int achievementId) {
-        return achievementRepository.existsById(achievementId);
+        return achievementDsGateway.existsById(achievementId);
     }
 
 }

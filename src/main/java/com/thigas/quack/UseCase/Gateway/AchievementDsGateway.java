@@ -1,15 +1,16 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
+
+import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
 
 import java.util.Optional;
 
 public interface AchievementDsGateway {
 
-    void save(AchievementDataMapper achievement);
-    Optional<AchievementDataMapper> findById(int id);
-    Iterable<AchievementDataMapper> findAll();
+    void save(AchievementDtoRequestModel achievement);
+    Optional<AchievementDtoRequestModel> findById(int id);
+    Iterable<AchievementDtoRequestModel> findAll();
     void deleteById(int id);
     Boolean existsById(int id);
 

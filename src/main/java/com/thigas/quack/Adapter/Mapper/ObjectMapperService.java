@@ -18,19 +18,19 @@ public class ObjectMapperService {
     private CycleAvoidingMappingContext context;
 
     //USER METHODS
-    public UserDtoRequestModel toDto(UserDataMapper userDataMapper) {
+    public UserDtoRequestModel toDtoModel(UserDataMapper userDataMapper) {
         if (userDataMapper == null) {
             throw new IllegalArgumentException("UserDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(userDataMapper, context);
     }
 
-//    public UserDataMapper toEntity(UserDtoRequestModel userDataMapper) {
-//        if (userDataMapper == null) {
-//            throw new IllegalArgumentException("UserDataMapper cannot be null");
-//        }
-//        return mapStructMapper.modelToEntity(userDataMapper, context);
-//    }
+    public UserDataMapper toDatabaseModel(UserDtoRequestModel userDataMapper) {
+        if (userDataMapper == null) {
+            throw new IllegalArgumentException("UserDataMapper cannot be null");
+        }
+        return mapStructMapper.modelToEntity(userDataMapper, context);
+    }
 
     public UserDataMapper toModel(UserDtoRequestModel userDTO) {
         if (userDTO == null) {
@@ -39,7 +39,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(userDTO, context);
     }
 
-//    public UserDtoRequestModel toEntity(UserDTO userDTO) {
+//    public UserDtoRequestModel toDatabaseModel(UserDTO userDTO) {
 //        if (userDTO == null) {
 //            throw new IllegalArgumentException("UserDTO cannot be null");
 //        }
@@ -47,14 +47,14 @@ public class ObjectMapperService {
 //    }
 
     //USER ROADMAP METHOD
-    public UserRoadmapDTO toDto(UserRoadmapDtoRequestModel userRoadmapDtoRequestModel) {
+    public UserRoadmapDTO toDtoModel(UserRoadmapDtoRequestModel userRoadmapDtoRequestModel) {
         if (userRoadmapDtoRequestModel == null) {
             throw new IllegalArgumentException("UserRoadmapDtoRequestModel cannot be null");
         }
         return mapStructMapper.entityToDto(userRoadmapDtoRequestModel, context);
     }
 
-    public UserRoadmapDtoRequestModel toEntity(UserRoadmapDTO userRoadmapDTO) {
+    public UserRoadmapDtoRequestModel toDatabaseModel(UserRoadmapDTO userRoadmapDTO) {
         if (userRoadmapDTO == null) {
             throw new IllegalArgumentException("UserRoadmapDTO cannot be null");
         }
@@ -76,14 +76,14 @@ public class ObjectMapperService {
         return mapStructMapper.entityToModel(userRoadmapDtoRequestModel, context);
     }
 
-    public UserRoadmapDTO toDto(UserRoadmapDataMapper savedUserRoadmap) {
+    public UserRoadmapDTO toDtoModel(UserRoadmapDataMapper savedUserRoadmap) {
         if (savedUserRoadmap == null) {
             throw new IllegalArgumentException("UserRoadmapDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(savedUserRoadmap, context);
     }
 
-    public UserRoadmapDtoRequestModel toEntity(UserRoadmapDataMapper userRoadmapDataMapper) {
+    public UserRoadmapDtoRequestModel toDatabaseModel(UserRoadmapDataMapper userRoadmapDataMapper) {
         if (userRoadmapDataMapper == null) {
             throw new IllegalArgumentException("UserRoadmapDtoRequestModel cannot be null");
         }
@@ -91,14 +91,14 @@ public class ObjectMapperService {
     }
 
     //USER TASK METHODS
-    public UserTaskDTO toDto(UserTaskDtoRequestModel userTaskDtoRequestModel) {
+    public UserTaskDTO toDtoModel(UserTaskDtoRequestModel userTaskDtoRequestModel) {
         if (userTaskDtoRequestModel == null) {
             throw new IllegalArgumentException("UserTaskDtoRequestModel cannot be null");
         }
         return mapStructMapper.entityToDto(userTaskDtoRequestModel, context);
     }
 
-    public UserTaskDtoRequestModel toEntity(UserTaskDTO userTaskDTO) {
+    public UserTaskDtoRequestModel toDatabaseModel(UserTaskDTO userTaskDTO) {
         if (userTaskDTO == null) {
             throw new IllegalArgumentException("UserTaskDTO cannot be null");
         }
@@ -120,7 +120,7 @@ public class ObjectMapperService {
         return mapStructMapper.entityToModel(userTaskDtoRequestModel, context);
     }
 
-    public UserTaskDTO toDto(UserTaskDataMapper savedUserTask) {
+    public UserTaskDTO toDtoModel(UserTaskDataMapper savedUserTask) {
         if (savedUserTask == null) {
             throw new IllegalArgumentException("UserTaskDataMapper cannot be null");
         }
@@ -128,14 +128,14 @@ public class ObjectMapperService {
     }
 
     //USER STEP METHOD
-    public UserStepDTO toDto(UserStepDtoRequestModel userStepDtoRequestModel) {
+    public UserStepDTO toDtoModel(UserStepDtoRequestModel userStepDtoRequestModel) {
         if (userStepDtoRequestModel == null) {
             throw new IllegalArgumentException("UserStepDtoRequestModel cannot be null");
         }
         return mapStructMapper.entityToDto(userStepDtoRequestModel, context);
     }
 
-    public UserStepDtoRequestModel toEntity(UserStepDTO userStepDTO) {
+    public UserStepDtoRequestModel toDatabaseModel(UserStepDTO userStepDTO) {
         if (userStepDTO == null) {
             throw new IllegalArgumentException("UserStepDTO cannot be null");
         }
@@ -157,14 +157,14 @@ public class ObjectMapperService {
         return mapStructMapper.entityToModel(userStepDtoRequestModel, context);
     }
 
-    public UserStepDTO toDto(UserStepDataMapper savedUserStep) {
+    public UserStepDTO toDtoModel(UserStepDataMapper savedUserStep) {
         if (savedUserStep == null) {
             throw new IllegalArgumentException("UserStepDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(savedUserStep, context);
     }
 
-    public UserStepDtoRequestModel toEntity(UserStepDataMapper userStepDataMapper) {
+    public UserStepDtoRequestModel toDatabaseModel(UserStepDataMapper userStepDataMapper) {
         if (userStepDataMapper == null) {
             throw new IllegalArgumentException("UserStepDataMapper cannot be null");
         }
@@ -172,14 +172,14 @@ public class ObjectMapperService {
     }
 
     //USER LESSON METHODS
-    public UserLessonDTO toDto(UserLessonDtoRequestModel userLessonDtoRequestModel) {
+    public UserLessonDTO toDtoModel(UserLessonDtoRequestModel userLessonDtoRequestModel) {
         if (userLessonDtoRequestModel == null) {
             throw new IllegalArgumentException("UserLessonDtoRequestModel cannot be null");
         }
         return mapStructMapper.entityToDto(userLessonDtoRequestModel, context);
     }
 
-    public UserLessonDtoRequestModel toEntity(UserLessonDTO userLessonDTO) {
+    public UserLessonDtoRequestModel toDatabaseModel(UserLessonDTO userLessonDTO) {
         if (userLessonDTO == null) {
             throw new IllegalArgumentException("UserLessonDTO cannot be null");
         }
@@ -200,14 +200,14 @@ public class ObjectMapperService {
         return mapStructMapper.entityToModel(userLessonDtoRequestModel, context);
     }
 
-    public UserLessonDTO toDto(UserLessonDataMapper savedUserLesson) {
+    public UserLessonDTO toDtoModel(UserLessonDataMapper savedUserLesson) {
         if (savedUserLesson == null) {
             throw new IllegalArgumentException("UserLessonDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(savedUserLesson, context);
     }
 
-    public UserLessonDtoRequestModel toEntity(UserLessonDataMapper userLessonDataMapper) {
+    public UserLessonDtoRequestModel toDatabaseModel(UserLessonDataMapper userLessonDataMapper) {
         if (userLessonDataMapper == null) {
             throw new IllegalArgumentException("UserLessonDataMapper cannot be null");
         }
@@ -215,14 +215,14 @@ public class ObjectMapperService {
     }
 
     //USER ACHIEVEMENT METHODS
-    public UserAchievementDTO toDto(UserAchievementDtoRequestModel userAchievementDtoRequestModel) {
+    public UserAchievementDTO toDtoModel(UserAchievementDtoRequestModel userAchievementDtoRequestModel) {
         if (userAchievementDtoRequestModel == null) {
             throw new IllegalArgumentException("UserAchievementDtoRequestModel cannot be null");
         }
         return mapStructMapper.entityToDto(userAchievementDtoRequestModel, context);
     }
 
-    public UserAchievementDtoRequestModel toEntity(UserAchievementDTO userAchievementDTO) {
+    public UserAchievementDtoRequestModel toDatabaseModel(UserAchievementDTO userAchievementDTO) {
         if (userAchievementDTO == null) {
             throw new IllegalArgumentException("UserAchievementDTO cannot be null");
         }
@@ -234,7 +234,7 @@ public class ObjectMapperService {
         }
         return mapStructMapper.entityToModel(userAchievementDtoRequestModel, context);
     }
-    public UserAchievementDTO toDto(UserAchievementDataMapper userAchievementDataMapper) {
+    public UserAchievementDTO toDtoModel(UserAchievementDataMapper userAchievementDataMapper) {
         if (userAchievementDataMapper == null) {
             throw new IllegalArgumentException("UserAchievementDataMapper cannot be null");
         }
@@ -249,21 +249,21 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(achievementDTO, context);
     }
 
-    public AchievementDTO toDto(AchievementDataMapper achievementDataMapper) {
+    public AchievementDTO toDtoModel(AchievementDataMapper achievementDataMapper) {
         if (achievementDataMapper == null) {
             throw new IllegalArgumentException("AchievementDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(achievementDataMapper, context);
     }
 
-    public AchievementDtoRequestModel toEntity(AchievementDataMapper achievementDataMapper) {
+    public AchievementDtoRequestModel toDatabaseModel(AchievementDataMapper achievementDataMapper) {
         if (achievementDataMapper == null) {
             throw new IllegalArgumentException("AchievementDataMapper cannot be null");
         }
         return mapStructMapper.modelToEntity(achievementDataMapper, context);
     }
 
-    public AchievementDtoRequestModel toEntity(AchievementDTO achievementDTO) {
+    public AchievementDtoRequestModel toDatabaseModel(AchievementDTO achievementDTO) {
         if (achievementDTO == null) {
             throw new IllegalArgumentException("AchievementDTO cannot be null");
         }
@@ -279,7 +279,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(addressDTO, context);
     }
 
-    public AddressDTO toDto(AddressDataMapper addressDataMapper) {
+    public AddressDTO toDtoModel(AddressDataMapper addressDataMapper) {
         if (addressDataMapper == null) {
             throw new IllegalArgumentException("AddressDataMapper cannot be null");
         }
@@ -294,7 +294,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(lessonDTO, context);
     }
 
-    public LessonDTO toDto(LessonDataMapper lessonDataMapper) {
+    public LessonDTO toDtoModel(LessonDataMapper lessonDataMapper) {
         if (lessonDataMapper == null) {
             throw new IllegalArgumentException("LessonDataMapper cannot be null");
         }
@@ -309,21 +309,21 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(roadmapDTO, context);
     }
 
-    public RoadmapDTO toDto(RoadmapDataMapper roadmapDataMapper) {
+    public RoadmapDTO toDtoModel(RoadmapDataMapper roadmapDataMapper) {
         if (roadmapDataMapper == null) {
             throw new IllegalArgumentException("LessonDataMapper cannot be null");
         }
         return mapStructMapper.modelToDto(roadmapDataMapper, context);
     }
 
-    public RoadmapDtoRequestModel toEntity(RoadmapDataMapper roadmapDataMapper) {
+    public RoadmapDtoRequestModel toDatabaseModel(RoadmapDataMapper roadmapDataMapper) {
         if (roadmapDataMapper == null) {
             throw new IllegalArgumentException("RoadmapDataMapper cannot be null");
         }
         return mapStructMapper.modelToEntity(roadmapDataMapper, context);
     }
 
-    public RoadmapDtoRequestModel toEntity(RoadmapDTO roadmapDTO) {
+    public RoadmapDtoRequestModel toDatabaseModel(RoadmapDTO roadmapDTO) {
         if (roadmapDTO == null) {
             throw new IllegalArgumentException("UserDTO cannot be null");
         }
@@ -338,7 +338,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(statisticsDTO, context);
     }
 
-    public StatisticsDtoRequestModel toDto(StatisticsDataMapper statisticsDataMapper) {
+    public StatisticsDtoRequestModel toDtoModel(StatisticsDataMapper statisticsDataMapper) {
         if (statisticsDataMapper == null) {
             throw new IllegalArgumentException("StatisticsDataMapper cannot be null");
         }
@@ -352,7 +352,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(stepDTO, context);
     }
 
-    public StepDTO toDto(StepDataMapper stepDataMapper) {
+    public StepDTO toDtoModel(StepDataMapper stepDataMapper) {
         if (stepDataMapper == null) {
             throw new IllegalArgumentException("StepDataMapper cannot be null");
         }
@@ -367,7 +367,7 @@ public class ObjectMapperService {
         return mapStructMapper.dtoToModel(taskDTO, context);
     }
 
-    public TaskDTO toDto(TaskDataMapper taskDataMapper) {
+    public TaskDTO toDtoModel(TaskDataMapper taskDataMapper) {
         if (taskDataMapper == null) {
             throw new IllegalArgumentException("TaskDataMapper cannot be null");
         }

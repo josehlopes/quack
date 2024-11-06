@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Controller;
 
-import com.thigas.quack.Adapter.Dto.TaskDTO;
+import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
 import com.thigas.quack.UseCase.Service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,27 +15,27 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody TaskDTO taskDTO) {
-        taskService.create(taskDTO);
+    public ResponseEntity<Void> create(@RequestBody TaskDtoRequestModel taskDtoRequest) {
+        taskService.create(taskDtoRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskDTO> getById(@PathVariable Integer id) {
-        return taskService.getById(id).map(taskDTO -> new ResponseEntity<>(taskDTO, HttpStatus.OK))
+    public ResponseEntity<TaskDtoRequestModel> getById(@PathVariable Integer id) {
+        return taskService.getById(id).map(taskDtoRequest -> new ResponseEntity<>(taskDtoRequest, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<TaskDTO>> getAll() {
-        Iterable<TaskDTO> tasks = taskService.getAll();
+    public ResponseEntity<Iterable<TaskDtoRequestModel>> getAll() {
+        Iterable<TaskDtoRequestModel> tasks = taskService.getAll();
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDTO taskDTO) {
-        if (id.equals(taskDTO.getId())) {
-            taskService.update(taskDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody TaskDtoRequestModel taskDtoRequest) {
+        if (id.equals(taskDtoRequest.id())) {
+            taskService.update(taskDtoRequest);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

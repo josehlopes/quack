@@ -1,8 +1,8 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
+import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -16,8 +16,8 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
     private JpaLessonRepository lessonModelRepository;
 
     @Override
-    public void save(LessonDataMapper lessonDataMapper) {
-         lessonModelRepository.save(lessonDataMapper);
+    public void save(LessonDtoRequestModel lessonDtoRequest) {
+         lessonModelRepository.save(lessonDtoRequest);
     }
 
     @Override
@@ -26,22 +26,22 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
     }
 
     @Override
-    public Set<LessonDataMapper> saveAll(Set<LessonDataMapper> lessons) {
-        List<LessonDataMapper> savedLessonDataMappers = lessonModelRepository.saveAll(lessons);
+    public Set<LessonDtoRequestModel> saveAll(Set<LessonDtoRequestModel> lessons) {
+        List<LessonDtoRequestModel> savedLessonDtoRequestModels = lessonModelRepository.saveAll(lessons);
 
-        return new HashSet<>(savedLessonDataMappers);
+        return new HashSet<>(savedLessonDtoRequestModels);
     }
 
     @Override
-    public Optional<LessonDataMapper> findById(int id) {
+    public Optional<LessonDtoRequestModel> findById(int id) {
         return lessonModelRepository.findById(id); // Usando lambda para passar contexto
     }
 
     @Override
-    public Set<LessonDataMapper> findAll() {
-        List<LessonDataMapper> lessonDataMappers = lessonModelRepository.findAll();
+    public Set<LessonDtoRequestModel> findAll() {
+        List<LessonDtoRequestModel> lessonDtoRequests = lessonModelRepository.findAll();
 
-        return new HashSet<>(lessonDataMappers);
+        return new HashSet<>(lessonDtoRequests);
     }
 
     @Override

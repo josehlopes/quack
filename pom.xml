@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.3.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.thigas</groupId>
@@ -17,7 +17,7 @@
         <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.6.2</org.mapstruct.version>
         <org.projectlombok.version>1.18.34</org.projectlombok.version>
     </properties>
     <dependencies>
@@ -188,10 +188,10 @@
                     <showWarnings>true</showWarnings>
 
                     <compilerArgs>
-                        <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
-                        <arg>-Amapstruct.verbose=true</arg>
-                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
-                        <arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>
+<!--                        <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>-->
+<!--                        <arg>-Amapstruct.verbose=true</arg>-->
+<!--                        <arg>-Amapstruct.defaultComponentModel=spring</arg>-->
+<!--                        <arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>

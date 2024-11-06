@@ -1,10 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.UserTaskDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
-import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
+import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,46 +14,42 @@ import java.util.stream.StreamSupport;
 public class UserTaskService {
 
     @Autowired
-    private UserTaskDsGateway userTaskRepository;
+    private UserTaskDsGateway userTaskDsGateway;
 
-    @Autowired
-    private ObjectMapperService objectMapperService;
 
-    public void create(UserTaskDTO userTaskDTO) {
-        UserTaskDtoRequestModel userTaskDtoRequestModel = objectMapperService.toEntity(userTaskDTO);
-        userTaskRepository.save(objectMapperService.toModel(userTaskDtoRequestModel));
+    public void create(UserTaskDtoRequestModel userTaskDtoRequest) {
+        userTaskDsGateway.save(userTaskDtoRequest);
     }
 
-
-    public Optional<UserTaskDTO> getById(int id) {
-        return userTaskRepository.findById(id)
-                .map(objectMapperService::toDto);
+    public Optional<UserTaskDtoRequestModel> getById(int id) {
+        return userTaskDsGateway.findById(id);
     }
 
-
-    public Iterable<UserTaskDTO> getAll() {
-        Iterable<UserTaskDataMapper> userTasks = userTaskRepository.findAll();
+    public Iterable<UserTaskDtoRequestModel> getAll() {
+        Iterable<UserTaskDtoRequestModel> userTasks = userTaskDsGateway.findAll();
         return StreamSupport.stream(userTasks.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-
-    public void update(UserTaskDTO userTaskDTO) {
-        UserTaskDataMapper existingUserTask = userTaskRepository.findById(userTaskDTO.getId())
+    public void update(UserTaskDtoRequestModel userTaskDtoRequest) {
+        UserTaskDtoRequestModel existingUserTask = userTaskDsGateway.findById(userTaskDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("User task not found"));
 
-        if (userTaskDTO.getId() != 0) {
-            existingUserTask.setId(userTaskDTO.getId());
-        }
+        UserTaskDtoRequestModel updatedEntity = new UserTaskDtoRequestModel(
+                userTaskDtoRequest.id(),
+                userTaskDtoRequest.userId() != null ? userTaskDtoRequest.userId() : existingUserTask.userId(),
+                userTaskDtoRequest.taskId() != null ? userTaskDtoRequest.taskId() : existingUserTask.taskId(),
+                userTaskDtoRequest.status() != null ? userTaskDtoRequest.status() : existingUserTask.status(),
+                userTaskDtoRequest.imagePath() != null ? userTaskDtoRequest.imagePath() : existingUserTask.imagePath()
+        );
 
-        userTaskRepository.save(existingUserTask);
+        userTaskDsGateway.save(updatedEntity);
     }
 
     public void delete(int id) {
-        if (!userTaskRepository.existsById(id)) {
+        if (!userTaskDsGateway.existsById(id)) {
             throw new EntityNotFoundException("User task not found");
         }
-        userTaskRepository.deleteById(id);
+        userTaskDsGateway.deleteById(id);
     }
 }

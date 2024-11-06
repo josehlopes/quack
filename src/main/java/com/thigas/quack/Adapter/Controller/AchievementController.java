@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Controller;
 
-import com.thigas.quack.Adapter.Dto.AchievementDTO;
+import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
 import com.thigas.quack.UseCase.Service.AchievementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,27 +15,27 @@ public class AchievementController {
     private AchievementService achievementService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody AchievementDTO achievementDTO) {
-        achievementService.create(achievementDTO);
-        return new ResponseEntity<> (HttpStatus.CREATED);
+    public ResponseEntity<Void> create(@RequestBody AchievementDtoRequestModel achievementDtoRequest) {
+        achievementService.create(achievementDtoRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AchievementDTO> getById(@PathVariable Integer id) {
+    public ResponseEntity<AchievementDtoRequestModel> getById(@PathVariable Integer id) {
         return achievementService.getById(id).map(dto -> new ResponseEntity<>(dto, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<AchievementDTO>> getAll() {
-        Iterable<AchievementDTO> achievements = achievementService.getAll();
+    public ResponseEntity<Iterable<AchievementDtoRequestModel>> getAll() {
+        Iterable<AchievementDtoRequestModel> achievements = achievementService.getAll();
         return new ResponseEntity<>(achievements, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AchievementDTO achievementDTO) {
-        if (id.equals(achievementDTO.getId())) {
-            achievementService.update(achievementDTO);
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody AchievementDtoRequestModel achievementDtoRequest) {
+        if (id.equals(achievementDtoRequest.id())) {
+            achievementService.update(achievementDtoRequest);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -1,11 +1,10 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.UserStepDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
+import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +17,7 @@ import java.util.stream.StreamSupport;
 public class UserStepService {
 
     @Autowired
-    private UserStepDsGateway userStepRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
+    private UserStepDsGateway userStepDsGateway;
 
     @Autowired
     private StepService stepService;
@@ -29,69 +25,76 @@ public class UserStepService {
     @Autowired
     private UserService userService;
 
-    public void create(UserStepDTO userStepDTO) {
-        UserStepDtoRequestModel userStepDtoRequestModel = objectMapperService.toEntity(userStepDTO);
-        userStepRepository.save(objectMapperService.toModel(userStepDtoRequestModel));
+    public void create(UserStepDtoRequestModel userStepDtoRequest) {
+        userStepDsGateway.save(userStepDtoRequest);
     }
 
-    public Optional<UserStepDTO> getById(int id) {
-        return userStepRepository.findById(id)
-                .map(objectMapperService::toDto);
+    public Optional<UserStepDtoRequestModel> getById(int id) {
+        return userStepDsGateway.findById(id);
     }
 
-    public Iterable<UserStepDTO> getAll() {
-        Iterable<UserStepDataMapper> userSteps = userStepRepository.findAll();
+    public Iterable<UserStepDtoRequestModel> getAll() {
+        Iterable<UserStepDtoRequestModel> userSteps = userStepDsGateway.findAll();
         return StreamSupport.stream(userSteps.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(UserStepDTO userStepDTO) {
-        UserStepDataMapper existingUserStep = userStepRepository.findById(userStepDTO.getId())
+    public void update(UserStepDtoRequestModel userStepDtoRequest) {
+        UserStepDtoRequestModel existingUserStep = userStepDsGateway.findById(userStepDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDtoRequestModel updatedEntity = objectMapperService.toEntity(userStepDTO);
-        UserStepDataMapper updatedModel = objectMapperService.toModel(updatedEntity);
+        UserStepDtoRequestModel updatedEntity = new UserStepDtoRequestModel(
+                userStepDtoRequest.id(),
+                userStepDtoRequest.userId() != null ? userStepDtoRequest.userId() : existingUserStep.userId(),
+                userStepDtoRequest.stepId() != null ? userStepDtoRequest.stepId() : existingUserStep.stepId(),
+                userStepDtoRequest.status() != null ? userStepDtoRequest.status() : existingUserStep.status(),
+                userStepDtoRequest.imagePath() != null ? userStepDtoRequest.imagePath() : existingUserStep.imagePath()
+        );
 
-        userStepRepository.save(updatedModel);
+        userStepDsGateway.save(updatedEntity);
     }
 
     public void delete(int id) {
-        userStepRepository.deleteById(id);
+        if (!userStepDsGateway.existsById(id)) {
+            throw new EntityNotFoundException("User-Step not found");
+        }
+        userStepDsGateway.deleteById(id);
     }
 
-//    public Boolean startStep(int userId, int stepId) {
-//        if (!userService.existsById(userId) || !stepService.existsById(stepId)) {
-//            return false;
-//        }
-//
-//        UserDtoRequestModel user = objectMapperService.toEntity(userService.getById(userId).orElse(null));
-//        StepDtoRequestModel step = objectMapperService.toEntity(stepService.getById(stepId).orElse(null));
-//
-//        if (user == null || step == null) {
-//            return false;
-//        }
-//
-//        UserStepDtoRequestModel userStepEntity = new UserStepDtoRequestModel();
-//        userStepEntity.setUser(user);
-//        userStepEntity.setStep(step);
-//        userStepEntity.setStatus(Status.ACTIVE);
-//
-//        UserStepDataMapper userStepModel = objectMapperService.toModel(userStepEntity);
-//        userStepRepository.save(userStepModel);
-//
-//        return true;
-//    }
+    public Boolean startStep(int userId, int stepId) {
+        if (!userService.existsById(userId) || !stepService.existsById(stepId)) {
+            return false;
+        }
+
+        UserDtoRequestModel user = userService.getById(userId).orElse(null);
+        StepDtoRequestModel step = stepService.getById(stepId).orElse(null);
+
+        if (user == null || step == null) {
+            return false;
+        }
+
+        UserStepDtoRequestModel userStepDtoRequestModel = new UserStepDtoRequestModel(
+                null, user.id(), step.id(), Status.ACTIVE.getValue(), null
+        );
+
+        userStepDsGateway.save(userStepDtoRequestModel);
+
+        return true;
+    }
 
     public Boolean endStep(int id) {
-        UserStepDTO existingUserStep = getById(id)
+        UserStepDtoRequestModel existingUserStep = getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDtoRequestModel userStepDtoRequestModel = objectMapperService.toEntity(existingUserStep);
-        userStepDtoRequestModel.setStatus(Status.FINISHED);
+        UserStepDtoRequestModel userStepDtoRequestModel = new UserStepDtoRequestModel(
+                existingUserStep.id(),
+                existingUserStep.userId(),
+                existingUserStep.stepId(),
+                Status.FINISHED.getValue(),
+                existingUserStep.imagePath()
+        );
 
-        UserStepDataMapper updatedModel = objectMapperService.toModel(userStepDtoRequestModel);
-        userStepRepository.save(updatedModel);
+        userStepDsGateway.save(userStepDtoRequestModel);
         return true;
     }
 }

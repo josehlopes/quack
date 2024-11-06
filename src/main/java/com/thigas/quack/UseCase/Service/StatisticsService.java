@@ -1,6 +1,5 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
@@ -16,17 +15,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class StatisticsService {
 
-
-    //TODO: Consertar estatisticas
-    //TODO: Ajeitar o tipo de dados que vem do front, para não haver furos de camadas
     @Autowired
     private StatisticsDsGateway statisticsGateway;
 
     @Autowired
     private UserDsGateway userRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
     public void create(StatisticsDtoRequestModel statisticsRequest) {
         statisticsGateway.save(statisticsRequest);
@@ -43,29 +36,41 @@ public class StatisticsService {
     }
 
     public void update(StatisticsDtoRequestModel statisticsRequest) {
-        StatisticsDtoRequestModel existingStatistics = statisticsGateway.findById(statisticsRequest.getId())
+        StatisticsDtoRequestModel existingStatistics = statisticsGateway.findById(statisticsRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found"));
-        statisticsGateway.save(statisticsRequest);
+        StatisticsDtoRequestModel updatedStatistics = new StatisticsDtoRequestModel(
+                statisticsRequest.id(),
+                statisticsRequest.userId() != null ? statisticsRequest.userId() : existingStatistics.userId(),
+                statisticsRequest.streakDays() != null ? statisticsRequest.streakDays() : existingStatistics.streakDays(),
+                statisticsRequest.bestStreak() != null ? statisticsRequest.bestStreak() : existingStatistics.bestStreak(),
+                statisticsRequest.userLevel() != null ? statisticsRequest.userLevel() : existingStatistics.userLevel(),
+                statisticsRequest.points() != null ? statisticsRequest.points() : existingStatistics.points(),
+                statisticsRequest.userExperience() != null ? statisticsRequest.userExperience() : existingStatistics.userExperience(),
+                statisticsRequest.challengesCompletedCount() != null ? statisticsRequest.challengesCompletedCount() : existingStatistics.challengesCompletedCount(),
+                statisticsRequest.roadmapsCompletedCount() != null ? statisticsRequest.roadmapsCompletedCount() : existingStatistics.roadmapsCompletedCount()
+        );
+        statisticsGateway.save(updatedStatistics);
     }
 
     public void createInitialStatisticsForUser(int userId) {
-
         UserDtoRequestModel user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel();
-        statistics.setUser(user);
-        statistics.setRoadmapsCompletedCount(0);
-        statistics.setChallengesCompletedCount(0);
-        statistics.setBestStreak(0);
+        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(
+                null, user.id(), 0, 0, 0, 0.0, 0.0, 0, 0
+        );
         statisticsGateway.save(statistics);
     }
 
     public void incrementRoadmapsCompleted(int userId) {
         StatisticsDtoRequestModel statistics = statisticsGateway.findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
-        statistics.setRoadmapsCompletedCount(statistics.getRoadmapsCompletedCount() + 1);
-        statisticsGateway.save(statistics);;
+        statistics = new StatisticsDtoRequestModel(
+                statistics.id(), statistics.userId(), statistics.streakDays(), statistics.bestStreak(),
+                statistics.userLevel(), statistics.points(), statistics.userExperience(),
+                statistics.challengesCompletedCount(), statistics.roadmapsCompletedCount() + 1
+        );
+        statisticsGateway.save(statistics);
     }
 
     public void delete(int id) {

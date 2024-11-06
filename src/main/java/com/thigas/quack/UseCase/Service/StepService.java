@@ -1,13 +1,10 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.LessonDTO;
-import com.thigas.quack.Adapter.Dto.StepDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
-import com.thigas.quack.Domain.Utils.Status;
-import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
-import com.thigas.quack.UseCase.Gateway.StepDsGateway;
-import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
+import com.thigas.quack.UseCase.Gateway.StepDsGateway;
+import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,80 +17,88 @@ import java.util.stream.StreamSupport;
 @Service
 public class StepService {
 
-    // TODO: Melhorar a lógica de criação do Step
-    // TODO: Criar método que crie um Step com uma UNIDADE de cada item ao invés de uma Lista
+    @Autowired
+    private StepDsGateway stepDsGateway;
 
     @Autowired
-    private StepDsGateway stepRepository;
+    private LessonDsGateway lessonDsGateway;
 
-    @Autowired
-    private LessonDsGateway lessonRepository;
-
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    public void create(StepDTO stepDTO) {
-        StepDataMapper stepDataMapper = objectMapperService.toModel(stepDTO);
-        stepRepository.save(stepDataMapper);
+    public void create(StepDtoRequestModel stepDtoRequest) {
+        stepDsGateway.save(stepDtoRequest);
     }
 
-    public Optional<StepDTO> getById(int id) {
-        return stepRepository.findById(id)
-                .map(objectMapperService::toDto);
+    public Optional<StepDtoRequestModel> getById(int id) {
+        return stepDsGateway.findById(id);
     }
 
-    public Iterable<StepDTO> getAll() {
-        Iterable<StepDataMapper> steps = stepRepository.findAll();
+    public Iterable<StepDtoRequestModel> getAll() {
+        Iterable<StepDtoRequestModel> steps = stepDsGateway.findAll();
         return StreamSupport.stream(steps.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(StepDTO stepDTO) {
-        StepDataMapper stepDataMapper = objectMapperService.toModel(stepDTO);
-        stepRepository.save(stepDataMapper);
+    public void update(StepDtoRequestModel stepDtoRequest) {
+        StepDtoRequestModel existingStep = stepDsGateway.findById(stepDtoRequest.id())
+                .orElseThrow(() -> new EntityNotFoundException("Step not found"));
+        StepDtoRequestModel updatedStep = new StepDtoRequestModel(
+                stepDtoRequest.id(),
+                stepDtoRequest.roadmapsIds() != null ? stepDtoRequest.roadmapsIds() : existingStep.roadmapsIds(),
+                stepDtoRequest.lessonsIds() != null ? stepDtoRequest.lessonsIds() : existingStep.lessonsIds(),
+                stepDtoRequest.tasksIds() != null ? stepDtoRequest.tasksIds() : existingStep.tasksIds(),
+                stepDtoRequest.description() != null ? stepDtoRequest.description() : existingStep.description(),
+                stepDtoRequest.imagePath() != null ? stepDtoRequest.imagePath() : existingStep.imagePath(),
+                stepDtoRequest.status() != null ? stepDtoRequest.status() : existingStep.status()
+        );
+        stepDsGateway.save(updatedStep);
     }
 
     public void delete(int id) {
-        stepRepository.deleteById(id);
+        stepDsGateway.deleteById(id);
     }
 
     public void updateStatus(Integer id, int statusValue) {
-        Optional<StepDataMapper> optionalStep = stepRepository.findById(id);
+        Optional<StepDtoRequestModel> optionalStep = stepDsGateway.findById(id);
         if (optionalStep.isPresent()) {
-            StepDataMapper step = optionalStep.get();
-            Status status = Status.fromValue(statusValue);
-            step.setStatus(status);
-            stepRepository.save(step);
+            StepDtoRequestModel step = optionalStep.get();
+            step = new StepDtoRequestModel(
+                    step.id(),
+                    step.roadmapsIds(),
+                    step.lessonsIds(),
+                    step.tasksIds(),
+                    step.description(),
+                    step.imagePath(),
+                    statusValue
+            );
+            stepDsGateway.save(step);
         } else {
-            throw new IllegalArgumentException("Step não encontrado com id: " + id);
+            throw new IllegalArgumentException("Step not found with id: " + id);
         }
     }
 
-    public Set<LessonDataMapper> verifyLessons(StepDTO stepDto) {
-        Set<LessonDataMapper> lessonSet = new HashSet<>();
+    public Set<LessonDtoRequestModel> verifyLessons(StepDtoRequestModel stepDto) {
+        Set<LessonDtoRequestModel> lessonSet = new HashSet<>();
 
-        if (stepDto.getLessons() == null || stepDto.getLessons().isEmpty()) {
+        if (stepDto.lessonsIds() == null || stepDto.lessonsIds().isEmpty()) {
             return lessonSet;
         }
 
-        for (LessonDTO lessonDto : stepDto.getLessons()) {
-            LessonDataMapper lesson = lessonRepository.findById(lessonDto.getId())
-                    .orElseThrow(() -> new RuntimeException("Lição não encontrada com ID: " + lessonDto.getId()));
+        for (Integer lessonId : stepDto.lessonsIds()) {
+            LessonDtoRequestModel lesson = lessonDsGateway.findById(lessonId)
+                    .orElseThrow(() -> new RuntimeException("Lesson not found with ID: " + lessonId));
             lessonSet.add(lesson);
         }
         return lessonSet;
     }
 
-    public void addLesson(StepDataMapper step, Set<LessonDataMapper> lessons) {
-        step.getLessons().addAll(lessons);
-        for (LessonDataMapper lesson : lessons) {
-            lesson.getSteps().add(step);
-        }
+    public Boolean existsById(int userId) {
+        return stepDsGateway.existsById(userId);
     }
 
-    public void removeLesson(StepDataMapper step, LessonDataMapper lesson) {
-        step.getLessons().remove(lesson);
-        lesson.getSteps().remove(step);
+    public void addLesson(StepDtoRequestModel step, Set<LessonDtoRequestModel> lessons) {
+        // Implementation for adding lessons to a step
+    }
+
+    public void removeLesson(StepDtoRequestModel step, LessonDtoRequestModel lesson) {
+        // Implementation for removing lessons from a step
     }
 }

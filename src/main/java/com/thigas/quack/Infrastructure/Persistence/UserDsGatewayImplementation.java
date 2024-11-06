@@ -16,10 +16,6 @@ public class UserDsGatewayImplementation implements UserDsGateway {
 
     final JpaUserRepository repository;
 
-
-    @Autowired
-    private ObjectMapperService objectMapperService;
-
     public UserDsGatewayImplementation(JpaUserRepository repository) {
         this.repository = repository;
     }

@@ -1,9 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.AddressDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
-import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
+import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,36 +14,41 @@ import java.util.stream.StreamSupport;
 public class AddressService {
 
     @Autowired
-    private AddressDsGateway addressRepository;
+    private AddressDsGateway addressDsGateway;
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
 
-    public void create(AddressDTO addressDTO) {
-        AddressDataMapper addressDataMapper = objectMapperService.toModel(addressDTO);
-        addressRepository.save(addressDataMapper);
+    public void create(AddressDtoRequestModel addressDtoRequest) {
+        addressDsGateway.save(addressDtoRequest);
     }
 
-    public Optional<AddressDTO> getById(int id) {
-        Optional<AddressDataMapper> address = addressRepository.findById(id);
-        return address.map(objectMapperService::toDto);
+    public Optional<AddressDtoRequestModel> getById(int id) {
+        return addressDsGateway.findById(id);
     }
 
-    public Iterable<AddressDTO> getAll() {
-        Iterable<AddressDataMapper> addresses = addressRepository.findAll();
+    public Iterable<AddressDtoRequestModel> getAll() {
+        Iterable<AddressDtoRequestModel> addresses = addressDsGateway.findAll();
         return StreamSupport.stream(addresses.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(AddressDTO addressDTO) {
-        AddressDataMapper existingAddress = addressRepository.findById(addressDTO.getId())
+    public void update(AddressDtoRequestModel addressDtoRequest) {
+        AddressDtoRequestModel existingAddress = addressDsGateway.findById(addressDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
-        AddressDataMapper updatedAddress = objectMapperService.toModel(addressDTO);
-        addressRepository.save(updatedAddress);
+        AddressDtoRequestModel updatedAddress = new AddressDtoRequestModel(
+                addressDtoRequest.id(),
+                addressDtoRequest.userId(),
+                addressDtoRequest.street() != null ? addressDtoRequest.street() : existingAddress.street(),
+                addressDtoRequest.city() != null ? addressDtoRequest.city() : existingAddress.city(),
+                addressDtoRequest.state() != null ? addressDtoRequest.state() : existingAddress.state(),
+                addressDtoRequest.country() != null ? addressDtoRequest.country() : existingAddress.country(),
+                addressDtoRequest.zipCode() != null ? addressDtoRequest.zipCode() : existingAddress.zipCode(),
+                addressDtoRequest.number() != null ? addressDtoRequest.number() : existingAddress.number(),
+                addressDtoRequest.status() != null ? addressDtoRequest.status() : existingAddress.status()
+        );
+        addressDsGateway.save(updatedAddress);
     }
 
     public void delete(int id) {
-        addressRepository.deleteById(id);
+        addressDsGateway.deleteById(id);
     }
 }

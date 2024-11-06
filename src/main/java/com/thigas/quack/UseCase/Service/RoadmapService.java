@@ -1,10 +1,9 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Adapter.Dto.RoadmapDTO;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.Infrastructure.Entity.RoadmapDataMapper;
+import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,38 +15,41 @@ import java.util.stream.StreamSupport;
 public class RoadmapService {
 
     @Autowired
-    private RoadmapDsGateway roadmapRepository;
+    private RoadmapDsGateway roadmapDsGateway;
 
     @Autowired
     private UserDsGateway userRepository;
 
-    @Autowired
-    private ObjectMapperService objectMapperService = new ObjectMapperService();
-
-    public void create(RoadmapDTO roadmapDTO) {
-        RoadmapDataMapper roadmap = objectMapperService.toModel(roadmapDTO);
-        roadmapRepository.save(roadmap);
+    public void create(RoadmapDtoRequestModel roadmapDtoRequest) {
+        roadmapDsGateway.save(roadmapDtoRequest);
     }
 
-    public Optional<RoadmapDTO> getById(int id) {
-        Optional<RoadmapDataMapper> roadmapOpt = roadmapRepository.findById(id);
-        return roadmapOpt.map(objectMapperService::toDto);
+    public Optional<RoadmapDtoRequestModel> getById(int id) {
+        return roadmapDsGateway.findById(id);
     }
 
-    public Iterable<RoadmapDTO> getAll() {
-        Iterable<RoadmapDataMapper> roadmaps = roadmapRepository.findAll();
+    public Iterable<RoadmapDtoRequestModel> getAll() {
+        Iterable<RoadmapDtoRequestModel> roadmaps = roadmapDsGateway.findAll();
         return StreamSupport.stream(roadmaps.spliterator(), false)
-                .map(objectMapperService::toDto)
                 .collect(Collectors.toList());
     }
 
-    public void update(RoadmapDTO roadmapDTO) {
-        RoadmapDataMapper roadmap = objectMapperService.toModel(roadmapDTO);
-        roadmapRepository.save(roadmap);
+    public void update(RoadmapDtoRequestModel roadmapDtoRequest) {
+        RoadmapDtoRequestModel existingRoadmap = roadmapDsGateway.findById(roadmapDtoRequest.id())
+                .orElseThrow(() -> new EntityNotFoundException("Roadmap not found"));
+        RoadmapDtoRequestModel updatedRoadmap = new RoadmapDtoRequestModel(
+                roadmapDtoRequest.id(),
+                roadmapDtoRequest.title() != null ? roadmapDtoRequest.title() : existingRoadmap.title(),
+                roadmapDtoRequest.description() != null ? roadmapDtoRequest.description() : existingRoadmap.description(),
+                roadmapDtoRequest.imagePath() != null ? roadmapDtoRequest.imagePath() : existingRoadmap.imagePath(),
+                roadmapDtoRequest.status() != null ? roadmapDtoRequest.status() : existingRoadmap.status(),
+                roadmapDtoRequest.stepsIds() != null ? roadmapDtoRequest.stepsIds() : existingRoadmap.stepsIds()
+        );
+        roadmapDsGateway.save(updatedRoadmap);
     }
 
     public void delete(int id) {
-        roadmapRepository.deleteById(id);
+        roadmapDsGateway.deleteById(id);
     }
 
     public Boolean existsById(int roadmapId) {
