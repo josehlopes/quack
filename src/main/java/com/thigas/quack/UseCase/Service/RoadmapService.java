@@ -14,11 +14,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class RoadmapService {
 
-    @Autowired
-    private RoadmapDsGateway roadmapDsGateway;
+    private final RoadmapDsGateway roadmapDsGateway;
 
-    @Autowired
-    private UserDsGateway userRepository;
+    private final UserDsGateway userDsGateway;
+
+    public RoadmapService(RoadmapDsGateway roadmapDsGateway, UserDsGateway userDsGateway) {
+        this.roadmapDsGateway = roadmapDsGateway;
+        this.userDsGateway = userDsGateway;
+    }
 
     public void create(RoadmapDtoRequestModel roadmapDtoRequest) {
         roadmapDsGateway.save(roadmapDtoRequest);
@@ -53,6 +56,6 @@ public class RoadmapService {
     }
 
     public Boolean existsById(int roadmapId) {
-        return userRepository.existsById(roadmapId);
+        return userDsGateway.existsById(roadmapId);
     }
 }

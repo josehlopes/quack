@@ -1,6 +1,5 @@
 package com.thigas.quack.Infrastructure.Security;
 
-import com.thigas.quack.Adapter.Dto.UserDTO;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Service.UserService;
 import jakarta.servlet.FilterChain;

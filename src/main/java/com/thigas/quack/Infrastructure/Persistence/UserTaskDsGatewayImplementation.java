@@ -1,39 +1,52 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
+import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserTaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
 
-    @Autowired
-    private JpaUserTaskRepository userTaskModelRepository;
+    final JpaUserTaskRepository repository;
+    private final MapStructMapper mapper;
 
-    @Override
-    public void save(UserTaskDataMapper userTaskDataMapper) {
-         userTaskModelRepository.save(userTaskDataMapper);
+    public UserTaskDsGatewayImplementation(JpaUserTaskRepository repository, MapStructMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Optional<UserTaskDataMapper> findById(int id) {
-        return userTaskModelRepository.findById(id);
+    public void save(UserTaskDtoRequestModel userTaskDtoRequest) {
+        UserTaskDataMapper toSaveUserTask = mapper.mapUserTaskDtoRequestToDataMapper(userTaskDtoRequest);
+        repository.save(toSaveUserTask);
     }
 
     @Override
-    public Iterable<UserTaskDataMapper> findAll() {
-        return userTaskModelRepository.findAll();
+    public Optional<UserTaskDtoRequestModel> findById(int id) {
+        Optional<UserTaskDataMapper> userTask = repository.findById(id);
+        return userTask.map(mapper::mapUserTaskDataMapperToDtoRequest);
+    }
+
+    @Override
+    public List<UserTaskDtoRequestModel> findAll() {
+        List<UserTaskDataMapper> userTasks = repository.findAll();
+        return userTasks.stream()
+                .map(mapper::mapUserTaskDataMapperToDtoRequest)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(int id) {
-        userTaskModelRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public Boolean existsById(int id) {
-        return userTaskModelRepository.existsById(id);
+        return repository.existsById(id);
     }
 }

@@ -13,15 +13,17 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserLessonService {
 
-    @Autowired
-    private UserLessonDsGateway userLessonDsGateway;
+    private final UserLessonDsGateway userLessonDsGateway;
 
+    private final LessonService lessonService;
 
-    @Autowired
-    private LessonService lessonService;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public UserLessonService(UserLessonDsGateway userLessonDsGateway, LessonService lessonService, UserService userService) {
+        this.userLessonDsGateway = userLessonDsGateway;
+        this.lessonService = lessonService;
+        this.userService = userService;
+    }
 
     public void create(UserLessonDtoRequestModel userLessonDtoRequest) {
         userLessonDsGateway.save(userLessonDtoRequest);

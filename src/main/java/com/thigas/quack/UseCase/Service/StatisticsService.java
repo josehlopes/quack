@@ -15,11 +15,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class StatisticsService {
 
-    @Autowired
-    private StatisticsDsGateway statisticsGateway;
+    private final StatisticsDsGateway statisticsGateway;
 
-    @Autowired
-    private UserDsGateway userRepository;
+    private final UserDsGateway userRepository;
+
+    public StatisticsService(StatisticsDsGateway statisticsGateway, UserDsGateway userRepository) {
+        this.statisticsGateway = statisticsGateway;
+        this.userRepository = userRepository;
+    }
 
     public void create(StatisticsDtoRequestModel statisticsRequest) {
         statisticsGateway.save(statisticsRequest);

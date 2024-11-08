@@ -1,61 +1,51 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
 import com.thigas.quack.Infrastructure.Entity.UserDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserRepository;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class UserDsGatewayImplementation implements UserDsGateway {
 
-
     final JpaUserRepository repository;
+    private final MapStructMapper mapper;
 
-    public UserDsGatewayImplementation(JpaUserRepository repository) {
+    public UserDsGatewayImplementation(JpaUserRepository repository, MapStructMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
     public void save(UserDtoRequestModel requestModel) {
-        String username = UsernameGenerator.generateUsername(requestModel.getName(), requestModel.getCpf());
-
-        UserDataMapper accountDataMapper = new UserDataMapper(
-                requestModel.getId(),
-                requestModel.getName(),
-                username,
-                requestModel.getPhone(),
-                requestModel.getEmail(),
-                requestModel.getPassword(),
-                requestModel.getCpf(),
-                requestModel.getBornDate(),
-                requestModel.getRegisterOn(),
-                requestModel.getStatus(),
-                requestModel.getImagePath()
-        );
-        repository.save(accountDataMapper);
+        String username = UsernameGenerator.generateUsername(requestModel.name(), requestModel.name());
+        UserDataMapper userDataMapper = mapper.mapUserDtoRequestToUserDataMapper(requestModel);
+        userDataMapper.setUsername(username);
+        repository.save(userDataMapper);
     }
 
     @Override
     public Optional<UserDtoRequestModel> findById(int id) {
-        return repository.findById(id)
-                .map(objectMapperService::toEntity);
+        Optional<UserDataMapper> user = repository.findById(id);
+        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
-    public boolean existsById(int id) {
+    public Boolean existsById(int id) {
         return repository.existsById(id);
     }
 
     @Override
     public Iterable<UserDtoRequestModel> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(objectMapperService::toEntity)
+        Iterable<UserDataMapper> users = repository.findAll();
+        return StreamSupport.stream(users.spliterator(), false)
+                .map(mapper::mapUserDataMapperToUserDtoRequest)
                 .collect(Collectors.toList());
     }
 
@@ -66,24 +56,23 @@ public class UserDsGatewayImplementation implements UserDsGateway {
 
     @Override
     public Optional<UserDtoRequestModel> findByEmail(String email) {
-        return repository.findByEmail(email)
-                .map(objectMapperService::toEntity);
+        Optional<UserDataMapper> user = repository.findByEmail(email);
+        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
     public Optional<UserDtoRequestModel> findByUsername(String username) {
-        return repository.findByUsername(username)
-                .map(objectMapperService::toEntity);
-    }
-
-    //TODO: Implementar métodos
-    @Override
-    public boolean existsByEmail(String email) {
-        return false;
+        Optional<UserDataMapper> user = repository.findByUsername(username);
+        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
-    public boolean existsByUsername(String username) {
-        return false;
+    public Boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return repository.existsByUsername(username);
     }
 }

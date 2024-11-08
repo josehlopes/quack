@@ -1,50 +1,53 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaTaskRepository;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
+import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
 import jakarta.transaction.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class TaskDsGatewayImplementation implements TaskDsGateway {
 
+    final JpaTaskRepository repository;
+    private final MapStructMapper mapper;
 
-    final JpaTaskRepository taskModelRepository;
-
-    public TaskDsGatewayImplementation(JpaTaskRepository taskModelRepository) {
-        this.taskModelRepository = taskModelRepository;
+    public TaskDsGatewayImplementation(JpaTaskRepository repository, MapStructMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    @Transactional
-    public void save(TaskDataMapper taskDataMapper) {
-        taskModelRepository.save(taskDataMapper);
+    public void save(TaskDtoRequestModel taskDtoRequest) {
+        TaskDataMapper toSaveTask = mapper.mapTaskDtoRequestToDataMapper(taskDtoRequest);
+        repository.save(toSaveTask);
     }
 
     @Override
-    @Transactional
     public boolean existsById(int id) {
-        return taskModelRepository.existsById(id);
+        return repository.existsById(id);
     }
 
     @Override
-    @Transactional
-    public Optional<TaskDataMapper> findById(int id) {
-        return taskModelRepository.findById(id);
+    public Optional<TaskDtoRequestModel> findById(int id) {
+        Optional<TaskDataMapper> task = repository.findById(id);
+        return task.map(mapper::mapTaskDataMapperToDtoRequest);
     }
 
-
     @Override
-    @Transactional
-    public Iterable<TaskDataMapper> findAll() {
-        return taskModelRepository.findAll();
+    public Iterable<TaskDtoRequestModel> findAll() {
+        Iterable<TaskDataMapper> tasks = repository.findAll();
+        return StreamSupport.stream(tasks.spliterator(), false)
+                .map(mapper::mapTaskDataMapperToDtoRequest)
+                .collect(Collectors.toList());
     }
 
-
     @Override
-    @Transactional
     public void deleteById(int id) {
-        taskModelRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

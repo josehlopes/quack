@@ -13,8 +13,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class AchievementService {
 
-    @Autowired
-    private AchievementDsGateway achievementDsGateway;
+    private final AchievementDsGateway achievementDsGateway;
+
+    public AchievementService(AchievementDsGateway achievementDsGateway) {
+        this.achievementDsGateway = achievementDsGateway;
+    }
 
 
     public void create(AchievementDtoRequestModel achievementDtoRequest) {

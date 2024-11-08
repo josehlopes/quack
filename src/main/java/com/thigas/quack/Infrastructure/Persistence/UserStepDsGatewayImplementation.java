@@ -1,41 +1,53 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-
 import com.thigas.quack.Infrastructure.Repository.JpaUserStepRepository;
+import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserStepDsGatewayImplementation implements UserStepDsGateway {
 
-    @Autowired
-    private JpaUserStepRepository userStepModelRepository;
+    final JpaUserStepRepository repository;
+    private final MapStructMapper mapper;
 
-    @Override
-    public void save(UserStepDataMapper userRoadmapModel) {
-         userStepModelRepository.save(userRoadmapModel);
+    public UserStepDsGatewayImplementation(JpaUserStepRepository repository, MapStructMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Optional<UserStepDataMapper> findById(int id) {
-        return userStepModelRepository.findById(id);
+    public void save(UserStepDtoRequestModel userStepDtoRequest) {
+        UserStepDataMapper toSaveUserStep = mapper.mapUserStepDtoRequestToDataMapper(userStepDtoRequest);
+        repository.save(toSaveUserStep);
     }
 
     @Override
-    public List<UserStepDataMapper> findAll() {
-        return userStepModelRepository.findAll();
+    public Optional<UserStepDtoRequestModel> findById(int id) {
+        Optional<UserStepDataMapper> userStep = repository.findById(id);
+        return userStep.map(mapper::mapUserStepDataMapperToDtoRequest);
+    }
+
+    @Override
+    public List<UserStepDtoRequestModel> findAll() {
+        List<UserStepDataMapper> userSteps = repository.findAll();
+        return userSteps.stream()
+                .map(mapper::mapUserStepDataMapperToDtoRequest)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(int id) {
-        userStepModelRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public boolean existsById(int id) {
-        return userStepModelRepository.existsById(id);
+        return repository.existsById(id);
     }
 }

@@ -14,8 +14,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class LessonService {
 
-    @Autowired
-    private LessonDsGateway lessonDsGateway;
+    private final LessonDsGateway lessonDsGateway;
+
+    public LessonService(LessonDsGateway lessonDsGateway) {
+        this.lessonDsGateway = lessonDsGateway;
+    }
 
     public void create(LessonDtoRequestModel lessonDtoRequest) {
         lessonDsGateway.save(lessonDtoRequest);

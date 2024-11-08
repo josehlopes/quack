@@ -13,8 +13,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class AddressService {
 
-    @Autowired
-    private AddressDsGateway addressDsGateway;
+    private final AddressDsGateway addressDsGateway;
+
+    public AddressService(AddressDsGateway addressDsGateway) {
+        this.addressDsGateway = addressDsGateway;
+    }
 
 
     public void create(AddressDtoRequestModel addressDtoRequest) {

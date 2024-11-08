@@ -1,7 +1,9 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
+import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,44 +11,56 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LessonDsGatewayImplementation implements LessonDsGateway {
 
-    @Autowired
-    private JpaLessonRepository lessonModelRepository;
+    final JpaLessonRepository repository;
+    private final MapStructMapper mapper;
+
+    public LessonDsGatewayImplementation(JpaLessonRepository repository, MapStructMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public void save(LessonDtoRequestModel lessonDtoRequest) {
-         lessonModelRepository.save(lessonDtoRequest);
+        LessonDataMapper toSaveLesson = mapper.mapLessonDtoRequestToDataMapper(lessonDtoRequest);
+        repository.save(toSaveLesson);
     }
 
     @Override
     public boolean existsById(int id) {
-        return lessonModelRepository.existsById(id);
+        return repository.existsById(id);
     }
 
     @Override
     public Set<LessonDtoRequestModel> saveAll(Set<LessonDtoRequestModel> lessons) {
-        List<LessonDtoRequestModel> savedLessonDtoRequestModels = lessonModelRepository.saveAll(lessons);
-
-        return new HashSet<>(savedLessonDtoRequestModels);
+        Set<LessonDataMapper> lessonDataMappers = lessons.stream()
+                .map(mapper::mapLessonDtoRequestToDataMapper)
+                .collect(Collectors.toSet());
+        List<LessonDataMapper> savedLessonDataMappers = repository.saveAll(lessonDataMappers);
+        return savedLessonDataMappers.stream()
+                .map(mapper::mapLessonDataMapperToDtoRequest)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public Optional<LessonDtoRequestModel> findById(int id) {
-        return lessonModelRepository.findById(id); // Usando lambda para passar contexto
+        Optional<LessonDataMapper> lesson = repository.findById(id);
+        return lesson.map(mapper::mapLessonDataMapperToDtoRequest);
     }
 
     @Override
     public Set<LessonDtoRequestModel> findAll() {
-        List<LessonDtoRequestModel> lessonDtoRequests = lessonModelRepository.findAll();
-
-        return new HashSet<>(lessonDtoRequests);
+        List<LessonDataMapper> lessonDataMappers = repository.findAll();
+        return lessonDataMappers.stream()
+                .map(mapper::mapLessonDataMapperToDtoRequest)
+                .collect(Collectors.toSet());
     }
 
     @Override
     public void deleteById(int id) {
-        lessonModelRepository.deleteById(id);
+        repository.deleteById(id);
     }
-
 }

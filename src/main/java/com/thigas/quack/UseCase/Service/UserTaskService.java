@@ -13,8 +13,11 @@ import java.util.stream.StreamSupport;
 @Service
 public class UserTaskService {
 
-    @Autowired
-    private UserTaskDsGateway userTaskDsGateway;
+    private final UserTaskDsGateway userTaskDsGateway;
+
+    public UserTaskService(UserTaskDsGateway userTaskDsGateway) {
+        this.userTaskDsGateway = userTaskDsGateway;
+    }
 
 
     public void create(UserTaskDtoRequestModel userTaskDtoRequest) {

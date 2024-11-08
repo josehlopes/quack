@@ -17,11 +17,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class StepService {
 
-    @Autowired
-    private StepDsGateway stepDsGateway;
+    private final StepDsGateway stepDsGateway;
 
-    @Autowired
-    private LessonDsGateway lessonDsGateway;
+    private final LessonDsGateway lessonDsGateway;
+
+    public StepService(StepDsGateway stepDsGateway, LessonDsGateway lessonDsGateway) {
+        this.stepDsGateway = stepDsGateway;
+        this.lessonDsGateway = lessonDsGateway;
+    }
 
     public void create(StepDtoRequestModel stepDtoRequest) {
         stepDsGateway.save(stepDtoRequest);

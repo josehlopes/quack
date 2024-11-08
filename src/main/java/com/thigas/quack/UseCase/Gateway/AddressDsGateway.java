@@ -11,4 +11,6 @@ public interface AddressDsGateway {
     Optional<AddressDtoRequestModel> findById(int id);
     Iterable<AddressDtoRequestModel> findAll();
     void deleteById(int id);
+
+    Boolean existsById(int id);
 }

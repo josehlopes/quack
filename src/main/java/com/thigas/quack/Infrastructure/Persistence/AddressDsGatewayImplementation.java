@@ -1,34 +1,52 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AddressDsGatewayImplementation implements AddressDsGateway {
 
-    @Autowired
-    private JpaAddressRepository addressModelRepository;
+    final JpaAddressRepository repository;
+    private final MapStructMapper mapper;
 
-    @Override
-    public void save(AddressDataMapper addressDataMapper) {
-         addressModelRepository.save(addressDataMapper);
+    public AddressDsGatewayImplementation(JpaAddressRepository repository, MapStructMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Optional<AddressDataMapper> findById(int id) {
-        return addressModelRepository.findById(id);
+    public void save(AddressDtoRequestModel addressDtoRequest) {
+        AddressDataMapper toSaveAddress = mapper.mapAddressDtoRequestToDataMapper(addressDtoRequest);
+        repository.save(toSaveAddress);
     }
 
     @Override
-    public Iterable<AddressDataMapper> findAll() {
-        return addressModelRepository.findAll();
+    public Optional<AddressDtoRequestModel> findById(int id) {
+        Optional<AddressDataMapper> address = repository.findById(id);
+        return address.map(mapper::mapAddressDataMapperToDtoRequest);
+    }
+
+    @Override
+    public List<AddressDtoRequestModel> findAll() {
+        List<AddressDataMapper> addresses = repository.findAll();
+        return addresses.stream()
+                .map(mapper::mapAddressDataMapperToDtoRequest)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(int id) {
-        addressModelRepository.deleteById(id);
+        repository.deleteById(id);
+    }
+
+    @Override
+    public Boolean existsById(int id) {
+        return repository.existsById(id);
     }
 }

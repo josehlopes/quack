@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.ObjectMapperService;
+import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.StatisticsDataMapper;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaStatisticsRepository;
@@ -9,45 +9,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+import java.util.stream.StreamSupport;
 
 public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
     final JpaStatisticsRepository repository;
+    private final MapStructMapper mapper;
 
-
-    @Autowired
-    private ObjectMapperService objectMapperService;
-
-    public StatisticsDsGatewayImplementation(JpaStatisticsRepository repository) {
+    public StatisticsDsGatewayImplementation(JpaStatisticsRepository repository, MapStructMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
-
 
     @Override
     public void save(StatisticsDtoRequestModel statisticsRequest) {
-        StatisticsDataMapper statisticsToSave = new StatisticsDataMapper(
-                statisticsRequest.getId(),
-                objectMapperService.toModel(statisticsRequest.getUser()),
-                statisticsRequest.getStreakDays(),
-                statisticsRequest.getBestStreak(),
-                statisticsRequest.getUserLevel(),
-                statisticsRequest.getUserExperience(),
-                statisticsRequest.getChallengesCompletedCount(),
-                statisticsRequest.getRoadmapsCompletedCount(),
-                statisticsRequest.getPoints()
-        );
-        repository.save(statisticsToSave);
+        StatisticsDataMapper toSaveStatistics = mapper.mapStatisticsDtoRequestToDataMapper(statisticsRequest);
+        repository.save(toSaveStatistics);
     }
 
     @Override
     public Optional<StatisticsDtoRequestModel> findById(int id) {
-        return repository.findById(id).map(objectMapperService::toDto);
+        Optional<StatisticsDataMapper> statistics = repository.findById(id);
+        return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
     }
 
     @Override
     public Iterable<StatisticsDtoRequestModel> findAll() {
-        return repository.findAll().stream().map(objectMapperService::toDto).collect(Collectors.toList());
+        Iterable<StatisticsDataMapper> statistics = repository.findAll();
+        return StreamSupport.stream(statistics.spliterator(), false)
+                .map(mapper::mapStatisticsDataMapperToDtoRequest)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -57,6 +48,7 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
     @Override
     public Optional<StatisticsDtoRequestModel> findByUserId(int userId) {
-        return repository.findByUserId(userId).map(objectMapperService::toDto);
+        Optional<StatisticsDataMapper> statistics = repository.findByUserId(userId);
+        return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
     }
 }
