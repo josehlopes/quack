@@ -4,6 +4,7 @@ import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserAchievementDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -11,11 +12,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
+
 public class UserAchievementService {
 
     private UserAchievementDsGateway userAchievementDsGateway;
-
 
     private AchievementService achievementService;
 

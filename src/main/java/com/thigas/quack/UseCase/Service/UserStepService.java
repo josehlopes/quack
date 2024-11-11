@@ -6,6 +6,7 @@ import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class UserStepService {
 
     private final UserStepDsGateway userStepDsGateway;
@@ -21,12 +22,6 @@ public class UserStepService {
     private final StepService stepService;
 
     private final UserService userService;
-
-    public UserStepService(UserStepDsGateway userStepDsGateway, StepService stepService, UserService userService) {
-        this.userStepDsGateway = userStepDsGateway;
-        this.stepService = stepService;
-        this.userService = userService;
-    }
 
     public void create(UserStepDtoRequestModel userStepDtoRequest) {
         userStepDsGateway.save(userStepDtoRequest);

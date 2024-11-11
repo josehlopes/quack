@@ -5,6 +5,7 @@ import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class StepService {
 
     private final StepDsGateway stepDsGateway;
 
     private final LessonDsGateway lessonDsGateway;
-
-    public StepService(StepDsGateway stepDsGateway, LessonDsGateway lessonDsGateway) {
-        this.stepDsGateway = stepDsGateway;
-        this.lessonDsGateway = lessonDsGateway;
-    }
 
     public void create(StepDtoRequestModel stepDtoRequest) {
         stepDsGateway.save(stepDtoRequest);

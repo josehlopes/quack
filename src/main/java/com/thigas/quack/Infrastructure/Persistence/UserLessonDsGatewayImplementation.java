@@ -5,21 +5,18 @@ import com.thigas.quack.Infrastructure.Entity.UserLessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserLessonRepository;
 import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class UserLessonDsGatewayImplementation implements UserLessonDsGateway {
 
-    final JpaUserLessonRepository repository;
+    private final JpaUserLessonRepository repository;
     private final MapStructMapper mapper;
-
-    public UserLessonDsGatewayImplementation(JpaUserLessonRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(UserLessonDtoRequestModel userLessonDtoRequest) {

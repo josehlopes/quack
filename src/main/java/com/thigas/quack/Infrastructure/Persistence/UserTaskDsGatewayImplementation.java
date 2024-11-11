@@ -5,20 +5,17 @@ import com.thigas.quack.Infrastructure.Entity.UserTaskDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserTaskRepository;
 import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
 
-    final JpaUserTaskRepository repository;
+    private final JpaUserTaskRepository repository;
     private final MapStructMapper mapper;
-
-    public UserTaskDsGatewayImplementation(JpaUserTaskRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(UserTaskDtoRequestModel userTaskDtoRequest) {

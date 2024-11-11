@@ -6,20 +6,17 @@ import com.thigas.quack.Infrastructure.Repository.JpaTaskRepository;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@RequiredArgsConstructor
 public class TaskDsGatewayImplementation implements TaskDsGateway {
 
-    final JpaTaskRepository repository;
+    private final JpaTaskRepository repository;
     private final MapStructMapper mapper;
-
-    public TaskDsGatewayImplementation(JpaTaskRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(TaskDtoRequestModel taskDtoRequest) {

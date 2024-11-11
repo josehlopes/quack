@@ -10,6 +10,7 @@ import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +20,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class UserService implements UserInputBoundary {
 
-    final UserDsGateway userDsGateway;
-    final UserPresenter userPresenter;
-    final UserFactory userFactory;
-
-    public UserService(UserDsGateway userDsGateway, UserPresenter userPresenter, UserFactory userFactory) {
-        this.userDsGateway = userDsGateway;
-        this.userPresenter = userPresenter;
-        this.userFactory = userFactory;
-    }
+    private final UserDsGateway userDsGateway;
+    private final UserPresenter userPresenter;
+    private final UserFactory userFactory;
 
     @Override
     public UserLoginDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {

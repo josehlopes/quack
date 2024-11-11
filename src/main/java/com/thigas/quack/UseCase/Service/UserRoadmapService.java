@@ -1,11 +1,15 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Domain.Utils.Status;
+import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
+import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
+import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +18,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class UserRoadmapService {
 
-    @Autowired
     private UserRoadmapDsGateway userRoadmapDsGateway;
-
-
-    @Autowired
-    private RoadmapService roadmapService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private StatisticsService statisticsService;
+    private RoadmapDsGateway roadmapDsGateway;
+    private UserDsGateway userDsGateway;
+    private StatisticsDsGateway statisticsDsGateway;
 
     public void create(UserRoadmapDtoRequestModel userRoadmapDtoRequest) {
         userRoadmapDsGateway.save(userRoadmapDtoRequest);
@@ -66,12 +62,12 @@ public class UserRoadmapService {
     }
 
     public Boolean startRoadmap(int userId, int roadmapId) {
-        if (!userService.existsById(userId) || !roadmapService.existsById(roadmapId)) {
+        if (!userDsGateway.existsById(userId) || !roadmapDsGateway.existsById(roadmapId)) {
             return false;
         }
 
-        UserDtoRequestModel user = userService.getById(userId).orElse(null);
-        RoadmapDtoRequestModel roadmap = roadmapService.getById(roadmapId).orElse(null);
+        UserDtoRequestModel user = userDsGateway.findById(userId).orElse(null);
+        RoadmapDtoRequestModel roadmap = roadmapDsGateway.findById(roadmapId).orElse(null);
 
         if (user == null || roadmap == null) {
             return false;
@@ -103,7 +99,7 @@ public class UserRoadmapService {
         userRoadmapDsGateway.save(userRoadmapDtoRequestModel);
 
         int userId = existingUserRoadmap.userId();
-        statisticsService.incrementRoadmapsCompleted(userId);
+        statisticsDsGateway.incrementRoadmapsCompleted(userId);
         return true;
     }
 }

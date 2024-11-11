@@ -5,21 +5,18 @@ import com.thigas.quack.Infrastructure.Entity.RoadmapDataMapper;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaRoadmapRepository;
 import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@RequiredArgsConstructor
 public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
 
-    final JpaRoadmapRepository repository;
+    private final JpaRoadmapRepository repository;
     private final MapStructMapper mapper;
-
-    public RoadmapDsGatewayImplementation(JpaRoadmapRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(RoadmapDtoRequestModel roadmapDtoRequest) {

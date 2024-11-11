@@ -3,6 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +11,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class TaskService {
 
     private final TaskDsGateway taskDsGateway;
-
-    public TaskService(TaskDsGateway taskDsGateway) {
-        this.taskDsGateway = taskDsGateway;
-    }
 
     public void create(TaskDtoRequestModel taskDtoRequest) {
         taskDsGateway.save(taskDtoRequest);

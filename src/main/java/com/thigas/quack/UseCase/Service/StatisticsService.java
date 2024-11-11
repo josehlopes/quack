@@ -5,6 +5,7 @@ import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class StatisticsService {
 
     private final StatisticsDsGateway statisticsGateway;
 
     private final UserDsGateway userRepository;
-
-    public StatisticsService(StatisticsDsGateway statisticsGateway, UserDsGateway userRepository) {
-        this.statisticsGateway = statisticsGateway;
-        this.userRepository = userRepository;
-    }
 
     public void create(StatisticsDtoRequestModel statisticsRequest) {
         statisticsGateway.save(statisticsRequest);

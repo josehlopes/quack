@@ -5,21 +5,18 @@ import com.thigas.quack.Infrastructure.Entity.StepDataMapper;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaStepRepository;
 import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@RequiredArgsConstructor
 public class StepDsGatewayImplementation implements StepDsGateway {
 
-    final JpaStepRepository repository;
+    private final JpaStepRepository repository;
     private final MapStructMapper mapper;
-
-    public StepDsGatewayImplementation(JpaStepRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(StepDtoRequestModel stepDtoRequest) {

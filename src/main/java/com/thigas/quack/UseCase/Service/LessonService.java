@@ -3,6 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class LessonService {
 
     private final LessonDsGateway lessonDsGateway;
-
-    public LessonService(LessonDsGateway lessonDsGateway) {
-        this.lessonDsGateway = lessonDsGateway;
-    }
 
     public void create(LessonDtoRequestModel lessonDtoRequest) {
         lessonDsGateway.save(lessonDtoRequest);

@@ -5,20 +5,17 @@ import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAddressRepository;
 import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class AddressDsGatewayImplementation implements AddressDsGateway {
 
-    final JpaAddressRepository repository;
+    private final JpaAddressRepository repository;
     private final MapStructMapper mapper;
-
-    public AddressDsGatewayImplementation(JpaAddressRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(AddressDtoRequestModel addressDtoRequest) {

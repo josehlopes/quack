@@ -4,6 +4,7 @@ import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Service
+@RequiredArgsConstructor
 public class RoadmapService {
 
     private final RoadmapDsGateway roadmapDsGateway;
 
     private final UserDsGateway userDsGateway;
-
-    public RoadmapService(RoadmapDsGateway roadmapDsGateway, UserDsGateway userDsGateway) {
-        this.roadmapDsGateway = roadmapDsGateway;
-        this.userDsGateway = userDsGateway;
-    }
 
     public void create(RoadmapDtoRequestModel roadmapDtoRequest) {
         roadmapDsGateway.save(roadmapDtoRequest);

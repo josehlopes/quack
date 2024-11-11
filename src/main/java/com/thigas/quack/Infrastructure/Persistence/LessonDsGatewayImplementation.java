@@ -5,6 +5,7 @@ import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -13,15 +14,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class LessonDsGatewayImplementation implements LessonDsGateway {
 
-    final JpaLessonRepository repository;
+    private final JpaLessonRepository repository;
     private final MapStructMapper mapper;
-
-    public LessonDsGatewayImplementation(JpaLessonRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(LessonDtoRequestModel lessonDtoRequest) {

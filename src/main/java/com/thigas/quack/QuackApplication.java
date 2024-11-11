@@ -16,7 +16,7 @@ import org.springframework.core.type.filter.TypeFilter;
 public class QuackApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuackApplication.class, args);
+        SpringApplication.run(QuackApplication.class);
     }
 
     @Bean

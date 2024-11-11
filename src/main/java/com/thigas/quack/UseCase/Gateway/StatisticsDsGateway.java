@@ -12,4 +12,6 @@ public interface StatisticsDsGateway {
     Iterable<StatisticsDtoRequestModel> findAll();
     void deleteById(int id);
     Optional<StatisticsDtoRequestModel> findByUserId(int userId);
+    void incrementRoadmapsCompleted(int userId);
+    void createInitialStatisticsForUser(int userId);
 }

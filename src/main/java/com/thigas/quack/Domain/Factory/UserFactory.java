@@ -8,5 +8,4 @@ import java.time.LocalDateTime;
 
 public interface UserFactory {
     User create(String name, String phone, String email, String password, String cpf, LocalDate bornAt, String imagePath);
-
 }

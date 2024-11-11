@@ -5,21 +5,18 @@ import com.thigas.quack.Infrastructure.Entity.UserAchievementDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserAchievementRepository;
 import com.thigas.quack.UseCase.Model.Request.UserAchievementDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@RequiredArgsConstructor
 public class UserAchievementDsGatewayImplementation implements UserAchievementDsGateway {
 
-    final JpaUserAchievementRepository repository;
+    private final JpaUserAchievementRepository repository;
     private final MapStructMapper mapper;
-
-    public UserAchievementDsGatewayImplementation(JpaUserAchievementRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(UserAchievementDtoRequestModel userAchievementDtoRequest) {

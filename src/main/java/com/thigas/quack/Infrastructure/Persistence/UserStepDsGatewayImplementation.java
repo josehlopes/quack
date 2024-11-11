@@ -5,21 +5,18 @@ import com.thigas.quack.Infrastructure.Entity.UserStepDataMapper;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserStepRepository;
 import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class UserStepDsGatewayImplementation implements UserStepDsGateway {
 
-    final JpaUserStepRepository repository;
+    private final JpaUserStepRepository repository;
     private final MapStructMapper mapper;
-
-    public UserStepDsGatewayImplementation(JpaUserStepRepository repository, MapStructMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public void save(UserStepDtoRequestModel userStepDtoRequest) {
