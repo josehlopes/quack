@@ -1,6 +1,7 @@
 # CrudRepository Interface
 
-A interface `CrudRepository<T, ID>` define um conjunto de operações CRUD (Create, Read, Update, Delete) genéricas para manipulação de entidades em um repositório de dados. Ela estende a interface base `Repository<T, ID>`.
+A interface `CrudRepository<T, ID>` define um conjunto de operações CRUD (Create, Read, Update, Delete) genéricas para
+manipulação de entidades em um repositório de dados. Ela estende a interface base `Repository<T, ID>`.
 
 ## Tipos genéricos:
 
@@ -107,4 +108,6 @@ Remove todas as entidades no repositório.
 
 # Anotação: `@NoRepositoryBean`
 
-A anotação `@NoRepositoryBean` indica que essa interface não será diretamente considerada como um bean repositório pelo Spring. Isso significa que ela serve como uma interface de base, que deve ser estendida por outras interfaces repositório, mas não deve ser instanciada diretamente.
+A anotação `@NoRepositoryBean` indica que essa interface não será diretamente considerada como um bean repositório pelo
+Spring. Isso significa que ela serve como uma interface de base, que deve ser estendida por outras interfaces
+repositório, mas não deve ser instanciada diretamente.

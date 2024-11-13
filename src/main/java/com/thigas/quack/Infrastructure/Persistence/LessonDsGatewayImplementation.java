@@ -2,13 +2,11 @@ package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.LessonDataMapper;
-import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaLessonRepository;
+import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

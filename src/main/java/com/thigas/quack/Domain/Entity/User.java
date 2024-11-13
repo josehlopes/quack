@@ -3,7 +3,6 @@ package com.thigas.quack.Domain.Entity;
 import com.thigas.quack.Domain.Utils.Status;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 public interface User {
@@ -30,5 +29,5 @@ public interface User {
 
     Status getStatus();
 
-    boolean passwordIsValid();
+    Boolean passwordIsValid();
 }

@@ -1,19 +1,16 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
-import com.thigas.quack.UseCase.Service.UserRoadmapService;
-import com.thigas.quack.UseCase.Service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserInputBoundary userInput;
@@ -22,7 +19,7 @@ public class UserController {
         this.userInput = userInput;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Void> create(@RequestBody UserRegisterDtoRequestModel userRequest) {
         userInput.create(userRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -85,7 +82,5 @@ public class UserController {
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 //    }
-
-
 }
 

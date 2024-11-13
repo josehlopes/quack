@@ -23,9 +23,11 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ## 2. Escopo `provided`
 
-**Objetivo**: O escopo `provided` indica que a dependência é fornecida pelo ambiente de execução, como um servidor de aplicações. Ela é necessária para compilar e executar o projeto, mas não será incluída no pacote final.
+**Objetivo**: O escopo `provided` indica que a dependência é fornecida pelo ambiente de execução, como um servidor de
+aplicações. Ela é necessária para compilar e executar o projeto, mas não será incluída no pacote final.
 
-**Quando usar**: Use este escopo para dependências que são fornecidas externamente pelo ambiente onde a aplicação será executada (como APIs de contêineres).
+**Quando usar**: Use este escopo para dependências que são fornecidas externamente pelo ambiente onde a aplicação será
+executada (como APIs de contêineres).
 
 ### Exemplo
 
@@ -40,9 +42,11 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ## 3. Escopo `runtime`
 
-**Objetivo**: O escopo `runtime` indica que a dependência é necessária apenas em tempo de execução e não em tempo de compilação. As dependências com este escopo são incluídas no pacote final.
+**Objetivo**: O escopo `runtime` indica que a dependência é necessária apenas em tempo de execução e não em tempo de
+compilação. As dependências com este escopo são incluídas no pacote final.
 
-**Quando usar**: Utilize este escopo para dependências que são necessárias para executar o projeto, mas não para a compilação.
+**Quando usar**: Utilize este escopo para dependências que são necessárias para executar o projeto, mas não para a
+compilação.
 
 ### Exemplo
 
@@ -57,7 +61,8 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ## 4. Escopo `test`
 
-**Objetivo**: O escopo `test` é usado para dependências necessárias apenas para a compilação e execução de testes. Essas dependências não são incluídas no pacote final.
+**Objetivo**: O escopo `test` é usado para dependências necessárias apenas para a compilação e execução de testes. Essas
+dependências não são incluídas no pacote final.
 
 **Quando usar**: Utilize este escopo para bibliotecas e ferramentas que são usadas apenas durante a fase de teste.
 
@@ -74,9 +79,11 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ## 5. Escopo `system`
 
-**Objetivo**: O escopo `system` permite que você forneça explicitamente a dependência com um caminho de sistema. Esse escopo é raramente usado e pode causar problemas de portabilidade.
+**Objetivo**: O escopo `system` permite que você forneça explicitamente a dependência com um caminho de sistema. Esse
+escopo é raramente usado e pode causar problemas de portabilidade.
 
-**Quando usar**: Use este escopo com cuidado, geralmente apenas quando for necessário referenciar uma dependência específica do sistema.
+**Quando usar**: Use este escopo com cuidado, geralmente apenas quando for necessário referenciar uma dependência
+específica do sistema.
 
 ### Exemplo
 
@@ -92,7 +99,8 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ## 6. Escopo `import`
 
-**Objetivo**: O escopo `import` é usado em dependências de tipo `pom` para importar dependências de outros projetos Maven. Esse escopo é usado apenas em arquivos `pom.xml` para gerenciar dependências comuns.
+**Objetivo**: O escopo `import` é usado em dependências de tipo `pom` para importar dependências de outros projetos
+Maven. Esse escopo é usado apenas em arquivos `pom.xml` para gerenciar dependências comuns.
 
 **Quando usar**: Utilize este escopo para importar e gerenciar dependências compartilhadas em vários projetos.
 
@@ -121,12 +129,14 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 
 ### Processando Dados:
 
-1. **Inclusão no Pacote**: Dependências com escopos `compile`, `runtime` e `system` são incluídas no pacote final, enquanto as com escopo `provided` não são.
+1. **Inclusão no Pacote**: Dependências com escopos `compile`, `runtime` e `system` são incluídas no pacote final,
+   enquanto as com escopo `provided` não são.
 2. **Execução**: Durante a execução, o Maven utiliza as dependências conforme o escopo definido.
 
 ### Benefícios:
 
-- **Controle**: O uso adequado dos escopos ajuda a controlar quais dependências são incluídas no pacote final e quando são necessárias.
+- **Controle**: O uso adequado dos escopos ajuda a controlar quais dependências são incluídas no pacote final e quando
+  são necessárias.
 - **Segurança**: Dependências não utilizadas não são incluídas, reduzindo a superfície de ataque e o tamanho do pacote.
 - **Desempenho**: Otimização do tempo de construção e execução ao incluir apenas o necessário.
 
@@ -136,7 +146,8 @@ Os escopos Maven determinam a disponibilidade e a inclusão das dependências du
 - **Documentação**: Mantenha a documentação do projeto atualizada para refletir as dependências e seus escopos.
 - **Revisão**: Revise periodicamente as dependências e seus escopos para garantir que estão corretamente configurados.
 
-A escolha adequada do escopo é fundamental para garantir que o projeto seja construído e executado de maneira eficiente e segura.
+A escolha adequada do escopo é fundamental para garantir que o projeto seja construído e executado de maneira eficiente
+e segura.
 
 ---
 

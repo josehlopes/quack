@@ -16,20 +16,35 @@ import org.springframework.core.type.filter.TypeFilter;
 public class QuackApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QuackApplication.class);
+        SpringApplication.run(QuackApplication.class, args);
     }
 
     @Bean
     BeanFactoryPostProcessor beanFactoryPostProcessor(ApplicationContext beanRegistry) {
         return beanFactory -> {
-            genericApplicationContext(
-                    (BeanDefinitionRegistry) ((AnnotationConfigServletWebServerApplicationContext) beanRegistry)
-                            .getBeanFactory());
+            if (beanRegistry instanceof AnnotationConfigServletWebServerApplicationContext) {
+                genericApplicationContext((BeanDefinitionRegistry) ((AnnotationConfigServletWebServerApplicationContext) beanRegistry).getBeanFactory());
+            } else {
+                throw new IllegalStateException("ApplicationContext is not of type AnnotationConfigServletWebServerApplicationContext");
+            }
         };
     }
 
     void genericApplicationContext(BeanDefinitionRegistry beanRegistry) {
         ClassPathBeanDefinitionScanner beanDefinitionScanner = new ClassPathBeanDefinitionScanner(beanRegistry);
+        beanDefinitionScanner.addExcludeFilter((MetadataReader mr, MetadataReaderFactory mrf) -> mr.getClassMetadata().getClassName().equals(QuackApplication.class.getName()));
+        beanDefinitionScanner.addExcludeFilter((MetadataReader mr, MetadataReaderFactory mrf) -> {
+            String className = mr.getClassMetadata().getClassName();
+            return className.startsWith("com.thigas.quack.Domain.Entity");
+        });
+        beanDefinitionScanner.addExcludeFilter((MetadataReader mr, MetadataReaderFactory mrf) -> {
+            String className = mr.getClassMetadata().getClassName();
+            return className.startsWith("com.thigas.quack.Domain.Utils");
+        });
+        beanDefinitionScanner.addExcludeFilter((MetadataReader mr, MetadataReaderFactory mrf) -> {
+            String className = mr.getClassMetadata().getClassName();
+            return className.startsWith("com.thigas.quack.Infrastructure.Entity");
+        });
         beanDefinitionScanner.addIncludeFilter(removeModelAndEntitiesFilter());
         beanDefinitionScanner.scan("com.thigas.quack");
     }
@@ -39,4 +54,8 @@ public class QuackApplication {
                 .getClassName()
                 .endsWith("Model");
     }
+
+
+
+
 }

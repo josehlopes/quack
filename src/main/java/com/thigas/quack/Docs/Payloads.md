@@ -55,8 +55,8 @@ public class UserDTO {
 
 - O campo `id` não deve ser enviado no payload de criação, pois ele será gerado automaticamente pelo sistema.
 - Certifique-se de que a senha seja armazenada de forma segura (preferencialmente, criptografada).
-- O formato ISO 8601 é utilizado para a data de registro (`registerAt`) para garantir a compatibilidade com fuso horário.
-
+- O formato ISO 8601 é utilizado para a data de registro (`registerAt`) para garantir a compatibilidade com fuso
+  horário.
 
 # Payload para fazer Login
 
@@ -77,6 +77,7 @@ public record LoginRequestDTO(String email, String password) {
 ```
 
 Descrição dos Campos
+
 - **email** (String): E-mail do usuário que está tentando fazer login.
 - **password** (String): Senha do usuário para autenticação.
 
@@ -110,7 +111,6 @@ public class UserRoadmapDTO {
 
 # Payload para Iniciar um Roadmap
 
-
 ### Exemplo de Payload em JSON
 
 ```json
@@ -121,7 +121,6 @@ public class UserRoadmapDTO {
 ```
 
 # Payload para finalizar um Roadmap
-
 
 ### Exemplo de Payload em JSON
 
@@ -134,26 +133,27 @@ public class UserRoadmapDTO {
 
 ### Descrição dos Campos
 
-- **id** (`int`): ID do UserRoadmap. Esse campo é geralmente gerado automaticamente no backend e não deve ser enviado no payload de criação.
+- **id** (`int`): ID do UserRoadmap. Esse campo é geralmente gerado automaticamente no backend e não deve ser enviado no
+  payload de criação.
 - **user** (`int`): ID do usuário associado a este roadmap.
 - **roadmap** (`int`): ID do roadmap que o usuário está seguindo.
-- **progress** (`Double`): Progresso do usuário no roadmap, representado em percentual (ex: `100` significa 100% completo).
+- **progress** (`Double`): Progresso do usuário no roadmap, representado em percentual (ex: `100` significa 100%
+  completo).
 - **startedAt** (`String`): Data de início do roadmap no formato `"YYYY-MM-DD"`.
-- **finishedAt** (`String`): Data de finalização do roadmap no formato `"YYYY-MM-DD"`. Se o roadmap ainda não estiver concluído, este campo pode ser omitido ou preenchido com `null`.
+- **finishedAt** (`String`): Data de finalização do roadmap no formato `"YYYY-MM-DD"`. Se o roadmap ainda não estiver
+  concluído, este campo pode ser omitido ou preenchido com `null`.
 - **status** (`int`): Status do roadmap, por exemplo, `1` para ativo, `0` para inativo ou pausado.
 
 ### Observações
 
 - O campo `finishedAt` pode ser omitido caso o roadmap ainda não tenha sido concluído.
 - O progresso deve ser um número de ponto flutuante entre 0 e 100, indicando o percentual de conclusão.
-- O formato de data utilizado para `startedAt` e `finishedAt` deve seguir o padrão `"YYYY-MM-DD"` para garantir consistência.
+- O formato de data utilizado para `startedAt` e `finishedAt` deve seguir o padrão `"YYYY-MM-DD"` para garantir
+  consistência.
 
-
-
-##  Payload para Criação de UserTask
+## Payload para Criação de UserTask
 
 ### Classe `UserTaskDTO`
-
 
 ``` java
 public class UserTaskDTO {
@@ -178,6 +178,7 @@ public class UserTaskDTO {
 ### Descrição dos Campos
 
 Descrição dos Campos
+
 - **id** (`int`): ID do UserTask (gerado automaticamente no backend).
 - **user** (`int`): ID do usuário associado à tarefa.
 - **task** (`int`: ID da tarefa atribuída ao usuário.
@@ -187,6 +188,7 @@ Descrição dos Campos
 ## Payload para Criação de UserAchievement
 
 ### Classe `UserAchievementDTO`
+
 ``` java
 public class UserAchievementDTO {
 private int id;
@@ -207,12 +209,12 @@ private String obtainedDate;
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID do UserAchievement (gerado automaticamente no backend).
 - **user** (int): ID do usuário associado à conquista.
 - **achievement** (int): ID da conquista.
 - **imagePath** (String): Caminho da imagem relacionada à conquista.
 - **obtainedDate** (String): Data em que a conquista foi obtida ("YYYY-MM-DD").
-
 
 # Payload para Criação de Task
 
@@ -252,6 +254,7 @@ Descrição dos Campos
 ## Payload para Criação de Step
 
 ### Classe `StepDTO `
+
 ``` java
 public class StepDTO {
     private int id;
@@ -263,6 +266,7 @@ public class StepDTO {
     private int status;
 }
 ```
+
 ```json
 {
 "roadmaps": [1, 2],
@@ -275,6 +279,7 @@ public class StepDTO {
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID do passo (gerado automaticamente no backend).
 - **roadmaps** (Set<Integer>): Conjunto de IDs dos roadmaps associados.
 - **lessons** (Set<Integer>): Conjunto de IDs das lições associadas.
@@ -299,6 +304,7 @@ public class StatisticsDTO {
     private int roadmapsCompletedCount;
 }
 ```
+
 ```json
 {
 "user": 28,
@@ -310,7 +316,9 @@ public class StatisticsDTO {
 "roadmapsCompletedCount": 2
 }
 ```
+
 Descrição dos Campos
+
 - **id** (int): ID das estatísticas (gerado automaticamente no backend).
 - **user** (int): ID do usuário.
 - **streakDays** (int): Número de dias consecutivos em que o usuário completou atividades.
@@ -319,7 +327,6 @@ Descrição dos Campos
 - **userExperience** (Double): Experiência total acumulada pelo usuário.
 - **challengesCompletedCount** (int): Número de desafios concluídos.
 - **roadmapsCompletedCount** (int): Número de roadmaps concluídos.
-
 
 ## Payload para Criação de Roadmap
 
@@ -346,13 +353,13 @@ public class RoadmapDTO {
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID do roadmap (gerado automaticamente no backend).
 - **title** (String): Título do roadmap.
 - **description** (String): Descrição do roadmap.
 - **imagePath** (String): Caminho da imagem relacionada ao roadmap.
 - **status** (int): Status do roadmap (1 para ativo, 0 para inativo).
 - **steps** (Set<Integer>): Conjunto de IDs dos passos associados ao roadmap.
-
 
 ## Payload para Criação de Lesson
 
@@ -380,13 +387,13 @@ public class LessonDTO {
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID da lição (gerado automaticamente no backend).
 - **title** (String): Título da lição.
 - **description** (String): Descrição da lição.
 - **language** (String): Linguagem de programação utilizada.
 - **imagePath** (String): Caminho da imagem relacionada à lição.
 - **steps** (Set<Integer>): Conjunto de IDs dos passos associados à lição.
-
 
 ## Payload para Criação de Address
 
@@ -420,6 +427,7 @@ public class AddressDTO {
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID do endereço (gerado automaticamente no backend).
 - **user** (int): ID do usuário associado ao endereço.
 - **street** (String): Rua do endereço.
@@ -454,6 +462,7 @@ public class AchievementDTO {
 ```
 
 Descrição dos Campos
+
 - **id** (int): ID da conquista (gerado automaticamente no backend).
 - **title** (String): Título da conquista.
 - **description** (String): Descrição da conquista.

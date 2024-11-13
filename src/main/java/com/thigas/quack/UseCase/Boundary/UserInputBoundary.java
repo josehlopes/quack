@@ -1,6 +1,5 @@
 package com.thigas.quack.UseCase.Boundary;
 
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 

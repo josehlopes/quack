@@ -3,7 +3,8 @@ Copiar código
 
 # Documentação de Atualização e Reinicialização do Serviço `quack`
 
-Este documento explica o processo para atualizar o JAR da aplicação `quack` e reiniciar o serviço no Ubuntu utilizando o `systemd`.
+Este documento explica o processo para atualizar o JAR da aplicação `quack` e reiniciar o serviço no Ubuntu utilizando o
+`systemd`.
 
 ## Pré-requisitos
 
@@ -16,7 +17,8 @@ Este documento explica o processo para atualizar o JAR da aplicação `quack` e 
 
 ### 1. Substituir o JAR Antigo pelo Novo
 
-Se o novo JAR foi baixado para o mesmo caminho do antigo, não é necessário mover ou copiar o arquivo. Certifique-se de que ele está no local correto.
+Se o novo JAR foi baixado para o mesmo caminho do antigo, não é necessário mover ou copiar o arquivo. Certifique-se de
+que ele está no local correto.
 
 ### 2. Reiniciar o Serviço `quack`
 

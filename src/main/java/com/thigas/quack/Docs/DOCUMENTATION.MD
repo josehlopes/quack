@@ -1,30 +1,31 @@
 # Documentação do Código
 
-Este documento explica o funcionamento dos principais componentes do código, com detalhes sobre serviços, repositórios, controladores e como as diferentes partes da aplicação interagem entre si.
+Este documento explica o funcionamento dos principais componentes do código, com detalhes sobre serviços, repositórios,
+controladores e como as diferentes partes da aplicação interagem entre si.
 
 ## Índice
 
 - [Documentação do Código](#documentação-do-código)
-  - [Índice](#índice)
-  - [Serviços (application/service)](#serviços-applicationservice)
-    - [Descrição](#descrição)
-    - [Exemplo](#exemplo)
-  - [Casos de Uso (application/usecase)](#casos-de-uso-applicationusecase)
-    - [Descrição:](#descrição-1)
-    - [Exemplo: RunUserCodeUseCase](#exemplo-runusercodeusecase)
-  - [Modelos de Domínio (domain/model)](#modelos-de-domínio-domainmodel)
-    - [Descrição](#descrição-2)
-    - [Exemplo: User](#exemplo-user)
-  - [Repositórios (domain/repository)](#repositórios-domainrepository)
-    - [Descrição](#descrição-3)
-    - [Exemplo: IUserRepository](#exemplo-iuserrepository)
-  - [Controladores (presentation/controller)](#controladores-presentationcontroller)
-    - [Descrição](#descrição-4)
-    - [Exemplo: UserController](#exemplo-usercontroller)
-    - [DTO/MAPPERS](#dtomappers)
-  - [Persistência (infrastructure/persistence)](#persistência-infrastructurepersistence)
-    - [Descrição](#descrição-5)
-    - [Exemplo: UserModelRepository](#exemplo-usermodelrepository)
+    - [Índice](#índice)
+    - [Serviços (application/service)](#serviços-applicationservice)
+        - [Descrição](#descrição)
+        - [Exemplo](#exemplo)
+    - [Casos de Uso (application/usecase)](#casos-de-uso-applicationusecase)
+        - [Descrição:](#descrição-1)
+        - [Exemplo: RunUserCodeUseCase](#exemplo-runusercodeusecase)
+    - [Modelos de Domínio (domain/model)](#modelos-de-domínio-domainmodel)
+        - [Descrição](#descrição-2)
+        - [Exemplo: User](#exemplo-user)
+    - [Repositórios (domain/repository)](#repositórios-domainrepository)
+        - [Descrição](#descrição-3)
+        - [Exemplo: IUserRepository](#exemplo-iuserrepository)
+    - [Controladores (presentation/controller)](#controladores-presentationcontroller)
+        - [Descrição](#descrição-4)
+        - [Exemplo: UserController](#exemplo-usercontroller)
+        - [DTO/MAPPERS](#dtomappers)
+    - [Persistência (infrastructure/persistence)](#persistência-infrastructurepersistence)
+        - [Descrição](#descrição-5)
+        - [Exemplo: UserModelRepository](#exemplo-usermodelrepository)
 
 ---
 
@@ -32,7 +33,8 @@ Este documento explica o funcionamento dos principais componentes do código, co
 
 ### Descrição
 
-Os serviços na camada de `application` orquestram a execução de casos de uso e interagem com a camada de domínio. Eles não contêm lógica de negócio, mas coordenam as operações.
+Os serviços na camada de `application` orquestram a execução de casos de uso e interagem com a camada de domínio. Eles
+não contêm lógica de negócio, mas coordenam as operações.
 
 ### Exemplo
 
@@ -69,7 +71,8 @@ public class UserService {
 
 ### Descrição:
 
-Os casos de uso `"usecases"` implementam regras de negócio específicas e descrevem ações que o sistema pode executar, como criar um usuário, processar uma transação, etc.
+Os casos de uso `"usecases"` implementam regras de negócio específicas e descrevem ações que o sistema pode executar,
+como criar um usuário, processar uma transação, etc.
 
 ### Exemplo: RunUserCodeUseCase
 
@@ -80,9 +83,7 @@ public class RunUserCodeUseCase {
     public String runTests(String userCode) {
         String result = CodeExecutor.runCode(userCode);
 
-        StringBuilder resultBuilder = new StringBuilder("Resultados dos Testes:\n");
-        resultBuilder.append(result);
-        return resultBuilder.toString();
+        return "Resultados dos Testes:\n" + result;
     }
 }
 ```
@@ -91,7 +92,8 @@ public class RunUserCodeUseCase {
 
 ### Descrição
 
-Os modelos de domínio `"domain models"` representam entidades e agregados que encapsulam a lógica de negócios principal. Eles não dependem de frameworks e são totalmente focados na lógica de negócios.
+Os modelos de domínio `"domain models"` representam entidades e agregados que encapsulam a lógica de negócios principal.
+Eles não dependem de frameworks e são totalmente focados na lógica de negócios.
 
 ### Exemplo: User
 
@@ -125,7 +127,8 @@ public class User {
 
 ### Descrição
 
-Os repositórios `"repositories"` são responsáveis por abstrair o acesso ao banco de dados ou outras fontes de dados. Eles fornecem interfaces que a camada de aplicação ou domínio utiliza.
+Os repositórios `"repositories"` são responsáveis por abstrair o acesso ao banco de dados ou outras fontes de dados.
+Eles fornecem interfaces que a camada de aplicação ou domínio utiliza.
 
 ### Exemplo: IUserRepository
 
@@ -143,7 +146,8 @@ public interface IUserRepository {
 
 ### Descrição
 
-Os controladores `"controllers"` recebem as requisições da interface do usuário (geralmente HTTP) e delegam a execução para os serviços e casos de uso. Eles são responsáveis por enviar as respostas adequadas de volta ao cliente.
+Os controladores `"controllers"` recebem as requisições da interface do usuário (geralmente HTTP) e delegam a execução
+para os serviços e casos de uso. Eles são responsáveis por enviar as respostas adequadas de volta ao cliente.
 
 ### Exemplo: UserController
 
@@ -187,13 +191,15 @@ public class UserController {
 
 DTOs e Mapeadores (presentation/dto e presentation/mapper)
 Descrição
-Os DTOs (Data Transfer Objects) são usados para transferir dados entre a camada de apresentação e a camada de aplicação. Os mapeadores convertem entre entidades de domínio e DTOs.
+Os DTOs (Data Transfer Objects) são usados para transferir dados entre a camada de apresentação e a camada de aplicação.
+Os mapeadores convertem entre entidades de domínio e DTOs.
 
 ## Persistência (infrastructure/persistence)
 
 ### Descrição
 
-Nesta camada, são implementadas as interfaces de repositório definidas no domínio. Aqui você pode usar frameworks de persistência, como JPA, para conectar a aplicação ao banco de dados.
+Nesta camada, são implementadas as interfaces de repositório definidas no domínio. Aqui você pode usar frameworks de
+persistência, como JPA, para conectar a aplicação ao banco de dados.
 
 ### Exemplo: UserModelRepository
 

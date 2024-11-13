@@ -2,11 +2,10 @@ package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.RoadmapDataMapper;
-import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaRoadmapRepository;
+import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -2,16 +2,14 @@ package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.AchievementDataMapper;
-import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAchievementRepository;
+import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 public class AchievementDsGatewayImplementation implements AchievementDsGateway {
@@ -22,7 +20,7 @@ public class AchievementDsGatewayImplementation implements AchievementDsGateway 
     @Override
     public void save(AchievementDtoRequestModel achievementDtoRequest) {
         AchievementDataMapper toSaveAchievement = mapper.mapAchievementDtoRequestToDataMapper(achievementDtoRequest);
-                repository.save(toSaveAchievement);
+        repository.save(toSaveAchievement);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class AchievementDsGatewayImplementation implements AchievementDsGateway 
     @Override
     public Iterable<AchievementDtoRequestModel> findAll() {
         Iterable<AchievementDataMapper> achievements = repository.findAll();
-        
+
         return StreamSupport.stream(achievements.spliterator(), false)
                 .map(mapper::mapAchievementDataMapperToDtoRequest)
                 .collect(Collectors.toList());

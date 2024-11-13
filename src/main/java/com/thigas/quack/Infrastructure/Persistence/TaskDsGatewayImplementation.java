@@ -5,7 +5,6 @@ import com.thigas.quack.Infrastructure.Entity.TaskDataMapper;
 import com.thigas.quack.Infrastructure.Repository.JpaTaskRepository;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

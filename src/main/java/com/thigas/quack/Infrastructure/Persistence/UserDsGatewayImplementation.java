@@ -3,11 +3,10 @@ package com.thigas.quack.Infrastructure.Persistence;
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
 import com.thigas.quack.Infrastructure.Entity.UserDataMapper;
-import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserRepository;
+import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;

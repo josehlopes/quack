@@ -65,7 +65,8 @@ Se você precisar de consultas mais complexas, o Spring Data JPA permite persona
 Optional<UserModel> findByEmail(@Param("email") String email);
 ```
 
-Esse método oferece mais controle sobre a consulta, mas para casos simples como `findByEmail`, o Spring Data JPA gera a consulta automaticamente.
+Esse método oferece mais controle sobre a consulta, mas para casos simples como `findByEmail`, o Spring Data JPA gera a
+consulta automaticamente.
 
 #### Outros Tipos de Consultas Automáticas
 
@@ -83,7 +84,9 @@ Você pode criar vários outros tipos de consultas baseadas no nome dos métodos
 
 #### Conclusão
 
-O Spring Data JPA simplifica a criação de consultas ao gerar automaticamente SQL com base nos nomes dos métodos. Isso permite que os desenvolvedores se concentrem na lógica de negócios, ao invés de se preocupar com consultas SQL para operações simples e comuns.
+O Spring Data JPA simplifica a criação de consultas ao gerar automaticamente SQL com base nos nomes dos métodos. Isso
+permite que os desenvolvedores se concentrem na lógica de negócios, ao invés de se preocupar com consultas SQL para
+operações simples e comuns.
 
 ```
 

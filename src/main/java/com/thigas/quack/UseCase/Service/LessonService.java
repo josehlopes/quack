@@ -4,8 +4,6 @@ import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.Set;

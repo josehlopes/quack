@@ -21,10 +21,9 @@ public class CommonUser implements User {
     private String imagePath;
     private Status status;
 
-    public CommonUser(Integer id, String name, String username,
+    public CommonUser(String name, String username,
                       String phone, String email, String password,
                       String cpf, LocalDate bornDate, OffsetDateTime registerOn, String imagePath, Status status) {
-        this.id = id;
         this.name = name;
         this.username = username;
         this.phone = phone;
@@ -39,7 +38,7 @@ public class CommonUser implements User {
 
 
     @Override
-    public boolean passwordIsValid() {
+    public Boolean passwordIsValid() {
         return password != null && password.length() >= 8;
     }
 }

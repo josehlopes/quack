@@ -1,6 +1,8 @@
 # Estrutura de Pastas do Projeto
 
-Este projeto foi desenvolvido seguindo os princípios do Clean Architecture, que promove a separação de preocupações e a modularidade do código, facilitando a testabilidade e a manutenção. Abaixo está a estrutura de pastas utilizada no projeto:
+Este projeto foi desenvolvido seguindo os princípios do Clean Architecture, que promove a separação de preocupações e a
+modularidade do código, facilitando a testabilidade e a manutenção. Abaixo está a estrutura de pastas utilizada no
+projeto:
 
 ```bash
 src

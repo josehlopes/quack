@@ -2,11 +2,10 @@ package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.UserAchievementDataMapper;
-import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaUserAchievementRepository;
+import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserAchievementDtoRequestModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -10,8 +10,6 @@ import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Optional;

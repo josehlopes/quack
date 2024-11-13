@@ -2,8 +2,8 @@ package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Infrastructure.Entity.AddressDataMapper;
-import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.Infrastructure.Repository.JpaAddressRepository;
+import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
 import lombok.RequiredArgsConstructor;
 

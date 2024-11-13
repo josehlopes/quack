@@ -11,8 +11,6 @@ import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
