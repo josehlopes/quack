@@ -24,6 +24,7 @@ public class UserRoadmapService {
     private UserDsGateway userDsGateway;
     private StatisticsDsGateway statisticsDsGateway;
 
+    //TODO: ALTERAR NOME DOS MÉTODOS
     public void create(UserRoadmapDtoRequestModel userRoadmapDtoRequest) {
         userRoadmapDsGateway.save(userRoadmapDtoRequest);
     }
@@ -60,11 +61,11 @@ public class UserRoadmapService {
     }
 
     public Boolean startRoadmap(int userId, int roadmapId) {
-        if (!userDsGateway.existsById(userId) || !roadmapDsGateway.existsById(roadmapId)) {
+        if (!userDsGateway.findById(userId) || !roadmapDsGateway.existsById(roadmapId)) {
             return false;
         }
 
-        UserDtoRequestModel user = userDsGateway.findById(userId).orElse(null);
+        UserDtoRequestModel user = userDsGateway.getById(userId).orElse(null);
         RoadmapDtoRequestModel roadmap = roadmapDsGateway.findById(roadmapId).orElse(null);
 
         if (user == null || roadmap == null) {

@@ -25,9 +25,10 @@ public class UserService implements UserInputBoundary {
     private final UserPresenter userPresenter;
     private final UserFactory userFactory;
 
+    //TODO: ALTERAR NOME DOS MÉTODOS SE NECESSÁRIO
     @Override
     public UserLoginDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {
-        if (userDsGateway.existsByEmail(userRequest.email())) {
+        if (userDsGateway.findByEmail(userRequest.email())) {
             return userPresenter.prepareFailView("User already exists");
         }
         User user = userFactory.create(userRequest.name(), userRequest.phone(), userRequest.email(), userRequest.password(), userRequest.cpf(), LocalDate.parse(userRequest.bornDate()), userRequest.imagePath());
@@ -46,17 +47,17 @@ public class UserService implements UserInputBoundary {
     }
 
     public Optional<UserDtoRequestModel> getById(int id) {
-        return userDsGateway.findById(id);
+        return userDsGateway.getById(id);
     }
 
     public Iterable<UserDtoRequestModel> getAll() {
-        Iterable<UserDtoRequestModel> users = userDsGateway.findAll();
+        Iterable<UserDtoRequestModel> users = userDsGateway.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     public void update(UserDtoRequestModel userDTO) {
-        UserDtoRequestModel existingUser = userDsGateway.findById(userDTO.id())
+        UserDtoRequestModel existingUser = userDsGateway.getById(userDTO.id())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         UserDtoRequestModel updatedUser = new UserDtoRequestModel(
@@ -75,26 +76,26 @@ public class UserService implements UserInputBoundary {
         userDsGateway.save(updatedUser);
     }
 
-    public void delete(int id) {
-        if (!userDsGateway.existsById(id)) {
+    public void deleteById(int id) {
+        if (!userDsGateway.findById(id)) {
             throw new EntityNotFoundException("User not found");
         }
         userDsGateway.deleteById(id);
     }
 
     public Optional<UserDtoRequestModel> findByEmail(String email) {
-        return userDsGateway.findByEmail(email);
+        return userDsGateway.getByEmail(email);
     }
 
     public Optional<UserDtoRequestModel> findByUsername(String username) {
-        return userDsGateway.findByUsername(username);
+        return userDsGateway.getByUsername(username);
     }
 
     public boolean existsByEmailOrUsername(String email, String username) {
-        return userDsGateway.existsByEmail(email) || userDsGateway.existsByUsername(username);
+        return userDsGateway.findByEmail(email) || userDsGateway.findByUsername(username);
     }
 
     public Boolean existsById(int userId) {
-        return userDsGateway.existsById(userId);
+        return userDsGateway.findById(userId);
     }
 }

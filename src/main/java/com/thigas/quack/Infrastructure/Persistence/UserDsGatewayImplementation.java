@@ -1,13 +1,17 @@
 package com.thigas.quack.Infrastructure.Persistence;
 
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
 import com.thigas.quack.Infrastructure.Entity.UserDataMapper;
-import com.thigas.quack.Infrastructure.Repository.JpaUserRepository;
+import com.thigas.quack.Infrastructure.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -15,7 +19,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class UserDsGatewayImplementation implements UserDsGateway {
 
-    private final JpaUserRepository repository;
+    private final UserRepository repository;
     private final MapStructMapper mapper;
 
     @Override
@@ -26,20 +30,36 @@ public class UserDsGatewayImplementation implements UserDsGateway {
         repository.save(userDataMapper);
     }
 
+    //TODO:RESOLVER O DATAPAERSE ERROR
     @Override
-    public Optional<UserDtoRequestModel> findById(int id) {
+    public Optional<UserDtoRequestModel> getById(int id) {
         Optional<UserDataMapper> user = repository.findById(id);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
-    public Boolean existsById(int id) {
+    public Boolean findById(int id) {
         return repository.existsById(id);
+    }
+    public Boolean update(UserDtoRequestModel user) {
+        UserDataMapper existingUser = repository.findById(user.id())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        existingUser.setName(user.name());
+        existingUser.setPhone(user.phone());
+        existingUser.setEmail(user.email());
+        existingUser.setPassword(user.password());
+        existingUser.setCpf(user.cpf());
+        existingUser.setBornDate(LocalDate.parse(user.bornDate()));
+        existingUser.setRegisterOn(OffsetDateTime.parse(user.registerOn()));
+        existingUser.setImagePath(user.imagePath());
+        existingUser.setStatus(Status.fromValue(user.status()));
+        repository.save(existingUser);
+        return true;
     }
 
     @Override
-    public Iterable<UserDtoRequestModel> findAll() {
-        Iterable<UserDataMapper> users = repository.findAll();
+    public Iterable<UserDtoRequestModel> getAll() {
+        Iterable<UserDataMapper> users = repository.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .map(mapper::mapUserDataMapperToUserDtoRequest)
                 .collect(Collectors.toList());
@@ -51,24 +71,24 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     }
 
     @Override
-    public Optional<UserDtoRequestModel> findByEmail(String email) {
+    public Optional<UserDtoRequestModel> getByEmail(String email) {
         Optional<UserDataMapper> user = repository.findByEmail(email);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
-    public Optional<UserDtoRequestModel> findByUsername(String username) {
+    public Optional<UserDtoRequestModel> getByUsername(String username) {
         Optional<UserDataMapper> user = repository.findByUsername(username);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
     @Override
-    public Boolean existsByEmail(String email) {
+    public Boolean findByEmail(String email) {
         return repository.existsByEmail(email);
     }
 
     @Override
-    public Boolean existsByUsername(String username) {
+    public Boolean findByUsername(String username) {
         return repository.existsByUsername(username);
     }
 }

@@ -50,7 +50,7 @@ public class StatisticsService {
     }
 
     public void createInitialStatisticsForUser(int userId) {
-        UserDtoRequestModel user = userRepository.findById(userId)
+        UserDtoRequestModel user = userRepository.getById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(

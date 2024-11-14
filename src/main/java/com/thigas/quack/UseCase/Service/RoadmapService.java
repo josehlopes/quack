@@ -50,6 +50,6 @@ public class RoadmapService {
     }
 
     public Boolean existsById(int roadmapId) {
-        return userDsGateway.existsById(roadmapId);
+        return userDsGateway.findById(roadmapId);
     }
 }

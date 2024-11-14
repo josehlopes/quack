@@ -8,20 +8,22 @@ import java.util.Optional;
 public interface UserDsGateway {
     void save(UserDtoRequestModel user);
 
-    Optional<UserDtoRequestModel> findById(int id);
+    Boolean update(UserDtoRequestModel user);
 
-    Boolean existsById(int id);
+    Optional<UserDtoRequestModel> getById(int id);
 
-    Iterable<UserDtoRequestModel> findAll();
+    Boolean findById(int id);
+
+    Iterable<UserDtoRequestModel> getAll();
 
     void deleteById(int id);
 
-    Optional<UserDtoRequestModel> findByEmail(String email);
+    Optional<UserDtoRequestModel> getByEmail(String email);
 
-    Optional<UserDtoRequestModel> findByUsername(String username);
+    Optional<UserDtoRequestModel> getByUsername(String username);
 
-    Boolean existsByEmail(String email);
+    Boolean findByEmail(String email);
 
-    Boolean existsByUsername(String username);
+    Boolean findByUsername(String username);
 
 }
