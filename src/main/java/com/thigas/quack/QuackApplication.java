@@ -43,7 +43,7 @@ public class QuackApplication {
         });
         beanDefinitionScanner.addExcludeFilter((MetadataReader mr, MetadataReaderFactory mrf) -> {
             String className = mr.getClassMetadata().getClassName();
-            return className.startsWith("com.thigas.quack.Infrastructure.Entity");
+            return className.startsWith("com.thigas.quack.Adapter.Entity");
         });
         beanDefinitionScanner.addIncludeFilter(removeModelAndEntitiesFilter());
         beanDefinitionScanner.scan("com.thigas.quack");
@@ -54,8 +54,4 @@ public class QuackApplication {
                 .getClassName()
                 .endsWith("Model");
     }
-
-
-
-
 }

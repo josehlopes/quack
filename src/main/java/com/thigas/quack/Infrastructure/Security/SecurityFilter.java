@@ -20,7 +20,7 @@ import java.util.Collections;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    TokenService tokenService;
+    TokenProvider tokenProvider;
 
     @Autowired
     UserService userService;
@@ -36,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
 
         if (token != null) {
-            var login = tokenService.validateToken(token);
+            var login = tokenProvider.validateToken(token);
 
             UserDtoRequestModel user = userService.findByEmail(login)
                     .orElseThrow(() -> new RuntimeException("User Not Found"));

@@ -4,13 +4,18 @@ import com.thigas.quack.Domain.Entity.User;
 import com.thigas.quack.Domain.Factory.UserFactory;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
+import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Response.ErrorDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -24,29 +29,53 @@ public class UserService implements UserInputBoundary {
     private final UserDsGateway userDsGateway;
     private final UserPresenter userPresenter;
     private final UserFactory userFactory;
+    private final TokenGateway tokenGateway;
 
     //TODO: ALTERAR NOME DOS MÉTODOS SE NECESSÁRIO
-    @Override
-    public UserLoginDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {
+    public UserRegisterDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {
         if (userDsGateway.findByEmail(userRequest.email())) {
-            return userPresenter.prepareFailView("User already exists");
+            return userPresenter.prepareRegisterFailView(
+                    new ErrorDtoResponseModel("User already exists", HttpStatus.CONFLICT.value())
+            );
         }
-        User user = userFactory.create(userRequest.name(), userRequest.phone(), userRequest.email(), userRequest.password(), userRequest.cpf(), LocalDate.parse(userRequest.bornDate()), userRequest.imagePath());
+        User user = userFactory.create(
+                userRequest.name(), userRequest.phone(), userRequest.email(), userRequest.password(),
+                userRequest.cpf(), LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
+        );
         if (!user.passwordIsValid()) {
-            return userPresenter.prepareFailView("User password must have more than 8 characters.");
+            return userPresenter.prepareRegisterFailView(
+                    new ErrorDtoResponseModel("User password must have more than 8 characters.", HttpStatus.BAD_REQUEST.value())
+            );
         }
         OffsetDateTime now = OffsetDateTime.now();
         UserDtoRequestModel userDsModel = new UserDtoRequestModel(
-                null, user.getName(), user.getPhone(), user.getEmail(), user.getPassword(), user.getCpf(), user.getBornDate().toString(), now.toString(), user.getImagePath(), Status.ACTIVE.getValue()
+                null, user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),
+                user.getCpf(), user.getBornDate().toString(), now.toString(), user.getImagePath(), Status.ACTIVE.getValue()
         );
-
         userDsGateway.save(userDsModel);
-
-        UserLoginDtoResponseModel accountResponseModel = new UserLoginDtoResponseModel(user.getUsername(), now.toString(), "User created successfully!");
-        return userPresenter.prepareSuccessView(accountResponseModel);
+        String token = tokenGateway.generateToken(user.getEmail());
+        UserRegisterDtoResponseModel accountResponseModel = new UserRegisterDtoResponseModel(user.getEmail(), user.getPassword(), token);
+        return userPresenter.prepareRegisterSuccessView(accountResponseModel);
     }
 
-    public Optional<UserDtoRequestModel> getById(int id) {
+    @Override
+    public UserLoginDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
+        Optional<UserDtoRequestModel> user = userDsGateway.getByEmail(userRequest.email());
+        if (user.isEmpty()) {
+            return userPresenter.prepareLoginFailView(
+                    new ErrorDtoResponseModel("User not found", HttpStatus.NOT_FOUND.value())
+            );
+        }
+        if (!user.get().password().equals(userRequest.password())) {
+            return userPresenter.prepareLoginFailView(
+                    new ErrorDtoResponseModel("Invalid password", HttpStatus.UNAUTHORIZED.value())
+            );
+        }
+        String token = tokenGateway.generateToken(user.get().email());
+        return userPresenter.prepareLoginSuccessView(new UserLoginDtoResponseModel(user.get().id(), token));
+    }
+
+    public Optional<UserDtoRequestModel>getById(int id) {
         return userDsGateway.getById(id);
     }
 
@@ -76,7 +105,7 @@ public class UserService implements UserInputBoundary {
         userDsGateway.save(updatedUser);
     }
 
-    public void deleteById(int id) {
+    public void delete(int id) {
         if (!userDsGateway.findById(id)) {
             throw new EntityNotFoundException("User not found");
         }

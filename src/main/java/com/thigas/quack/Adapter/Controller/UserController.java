@@ -1,20 +1,32 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
+import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserInputBoundary userInput;
+    private final UserDsGateway userDsGateway;
 
-    public UserController(UserInputBoundary userInput) {
-        this.userInput = userInput;
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDtoRequestModel> getById(@PathVariable Integer id) {
+        return userDsGateway.getById(id).map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<UserDtoRequestModel>> getAll() {
+        Iterable<UserDtoRequestModel> users = userDsGateway.getAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -23,18 +35,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDtoRequestModel> getById(@PathVariable Integer id) {
-        return userInput.getById(id).map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping
-    public ResponseEntity<Iterable<UserDtoRequestModel>> getAll() {
-        Iterable<UserDtoRequestModel> users = userInput.getAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
-
+    //TODO: TESTAR MÉTODO UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDtoRequestModel userDTO) {
         if (id.equals(userDTO.id())) {
@@ -47,7 +48,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        userInput.deleteById(id);
+        userInput.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 //

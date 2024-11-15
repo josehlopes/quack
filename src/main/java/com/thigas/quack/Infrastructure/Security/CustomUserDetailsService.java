@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class CustomUserDetailsService implements UserDetailsService {
 
     //TODO: CRIAR MÉTODO PERSONALIZADO "loadByEmail"
+    //TODO: DESCOBRIR PARA QUE SERVE A CLASSE UserDetailsService
     @Autowired
     private UserDsGateway userRepository;
 

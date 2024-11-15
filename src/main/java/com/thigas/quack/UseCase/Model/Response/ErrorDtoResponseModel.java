@@ -1,4 +1,4 @@
 package com.thigas.quack.UseCase.Model.Response;
 
-public record ErrorDtoResponseModel(String message, Integer error) {
+public record ErrorDtoResponseModel(String errorMessage, Integer errorCode) {
 }

@@ -1,7 +1,7 @@
 package com.thigas.quack.Adapter.Mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thigas.quack.Infrastructure.Entity.*;
+import com.thigas.quack.Adapter.Entity.*;
 import com.thigas.quack.UseCase.Model.Request.*;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import org.mapstruct.Mapper;
