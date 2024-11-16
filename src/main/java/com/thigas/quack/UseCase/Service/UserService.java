@@ -36,10 +36,10 @@ public class UserService implements UserInputBoundary {
     private final EncoderGateway encoderGateway;
 
     //TODO: ALTERAR NOME DOS MÉTODOS SE NECESSÁRIO
-    public UserRegisterDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {
+    public UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
         if (userDsGateway.findByEmail(userRequest.email())) {
             return userPresenter.prepareRegisterFailView(
-                    new ErrorDtoResponseModel("User already exists", HttpStatus.CONFLICT.value())
+                    new ErrorDtoResponseModel("This email is already in use", HttpStatus.CONFLICT.value())
             );
         }
 
@@ -47,19 +47,19 @@ public class UserService implements UserInputBoundary {
         String encodedCpf = encoderInputBoundary.encode(userRequest.cpf());
 
         User user = userFactory.create(
-                userRequest.name(), userRequest.phone(), userRequest.email(), encodedPassword,
+                userRequest.name(), userRequest.surname(),userRequest.phone(), userRequest.email(), encodedPassword,
                 encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
         );
 
         if (!user.passwordIsValid()) {
             return userPresenter.prepareRegisterFailView(
-                    new ErrorDtoResponseModel("User password must have more than 8 characters.", HttpStatus.BAD_REQUEST.value())
+                    new ErrorDtoResponseModel("User password must have at least 8 characters, one uppercase letter, and one special character.", HttpStatus.BAD_REQUEST.value())
             );
         }
 
         UserDtoRequestModel userDsModel = new UserDtoRequestModel(
-                null, user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),
-                user.getCpf(), user.getBornDate().toString(), OffsetDateTime.now().toString(), user.getImagePath(), Status.ACTIVE.getValue()
+                null, user.getName(), user.getSurname(), user.getFullName(), user.getUsername(),user.getPhone(), user.getEmail(), user.getPassword(),
+                user.getCpf(), user.getBornDate().toString(), OffsetDateTime.now().toString(), user.getImagePath(), user.getIsActive()
         );
 
         userDsGateway.save(userDsModel);
@@ -103,6 +103,9 @@ public class UserService implements UserInputBoundary {
         UserDtoRequestModel updatedUser = new UserDtoRequestModel(
                 userDTO.id(),
                 userDTO.name() != null ? userDTO.name() : existingUser.name(),
+                userDTO.surname() != null ? userDTO.surname() : existingUser.surname(),
+                userDTO.fullName() != null ? userDTO.fullName() : existingUser.fullName(),
+                userDTO.username() != null ? userDTO.username() : existingUser.username(),
                 userDTO.phone() != null ? userDTO.phone() : existingUser.phone(),
                 userDTO.email() != null ? userDTO.email() : existingUser.email(),
                 userDTO.password() != null ? userDTO.password() : existingUser.password(),
@@ -110,7 +113,7 @@ public class UserService implements UserInputBoundary {
                 userDTO.bornDate() != null ? userDTO.bornDate() : existingUser.bornDate(),
                 existingUser.registerOn(),
                 userDTO.imagePath() != null ? userDTO.imagePath() : existingUser.imagePath(),
-                userDTO.status() != null ? userDTO.status() : existingUser.status()
+                userDTO.isActive() != null ? userDTO.isActive() : existingUser.isActive()
         );
 
         userDsGateway.update(updatedUser);

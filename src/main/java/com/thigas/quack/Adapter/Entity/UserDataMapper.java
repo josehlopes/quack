@@ -22,6 +22,10 @@ public class UserDataMapper {
     private Integer id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
+    private String surname;
+    @Column(nullable = false)
+    private String fullName;
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
@@ -36,9 +40,8 @@ public class UserDataMapper {
     private LocalDate bornDate;
     @Column(name = "register_at", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private OffsetDateTime registerOn;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
-    private Status status = Status.ACTIVE;
+    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER CHECK (is_active IN (0, 1))")
+    private Integer isActive = 1;
     @Column(name = "image_path")
     private String imagePath;
 

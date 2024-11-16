@@ -24,9 +24,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
 
     @Override
     public void save(UserDtoRequestModel requestModel) {
-        String username = UsernameGenerator.generateUsername(requestModel.name(), requestModel.name());
         UserDataMapper userDataMapper = mapper.mapUserDtoRequestToUserDataMapper(requestModel);
-        userDataMapper.setUsername(username);
         repository.save(userDataMapper);
     }
 
@@ -45,6 +43,9 @@ public class UserDsGatewayImplementation implements UserDsGateway {
         UserDataMapper existingUser = repository.findById(user.id())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         existingUser.setName(user.name());
+        existingUser.setSurname(user.surname());
+        existingUser.setFullName(user.fullName());
+        existingUser.setUsername(user.username());
         existingUser.setPhone(user.phone());
         existingUser.setEmail(user.email());
         existingUser.setBornDate(LocalDate.parse(user.bornDate()));

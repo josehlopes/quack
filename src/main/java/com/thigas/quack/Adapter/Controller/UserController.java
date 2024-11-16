@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<Void> create(@RequestBody UserRegisterDtoRequestModel userRequest) {
-        userInput.create(userRequest);
+        userInput.register(userRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 public interface UserInputBoundary {
-    UserRegisterDtoResponseModel create(UserRegisterDtoRequestModel requestModel);
+    UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel requestModel);
     UserLoginDtoResponseModel login(UserLoginDtoRequestModel requestModel);
     void update(UserDtoRequestModel userDto);
     void delete(int id);
