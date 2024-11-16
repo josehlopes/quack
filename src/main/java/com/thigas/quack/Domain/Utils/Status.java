@@ -8,6 +8,7 @@ public enum Status {
 
     private final int value;
 
+    //TODO: Transformar enums em status apenas para roadmaps e usar boolean "enabled" para o usuário
     Status(int value) {
         this.value = value;
     }

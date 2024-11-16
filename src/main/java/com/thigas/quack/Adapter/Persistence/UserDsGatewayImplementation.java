@@ -50,7 +50,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
         existingUser.setBornDate(LocalDate.parse(user.bornDate()));
         existingUser.setRegisterOn(OffsetDateTime.parse(user.registerOn()));
         existingUser.setImagePath(user.imagePath());
-        repository.save(existingUser);
+        repository.update(existingUser);
         return true;
     }
 

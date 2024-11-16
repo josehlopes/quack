@@ -3,7 +3,9 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.Domain.Entity.User;
 import com.thigas.quack.Domain.Factory.UserFactory;
 import com.thigas.quack.Domain.Utils.Status;
+import com.thigas.quack.UseCase.Boundary.EncoderInputBoundary;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
+import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
@@ -30,6 +32,8 @@ public class UserService implements UserInputBoundary {
     private final UserPresenter userPresenter;
     private final UserFactory userFactory;
     private final TokenGateway tokenGateway;
+    private final EncoderInputBoundary encoderInputBoundary;
+    private final EncoderGateway encoderGateway;
 
     //TODO: ALTERAR NOME DOS MÉTODOS SE NECESSÁRIO
     public UserRegisterDtoResponseModel create(UserRegisterDtoRequestModel userRequest) {
@@ -38,24 +42,31 @@ public class UserService implements UserInputBoundary {
                     new ErrorDtoResponseModel("User already exists", HttpStatus.CONFLICT.value())
             );
         }
+
+        String encodedPassword = encoderInputBoundary.encode(userRequest.password());
+        String encodedCpf = encoderInputBoundary.encode(userRequest.cpf());
+
         User user = userFactory.create(
-                userRequest.name(), userRequest.phone(), userRequest.email(), userRequest.password(),
-                userRequest.cpf(), LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
+                userRequest.name(), userRequest.phone(), userRequest.email(), encodedPassword,
+                encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
         );
+
         if (!user.passwordIsValid()) {
             return userPresenter.prepareRegisterFailView(
                     new ErrorDtoResponseModel("User password must have more than 8 characters.", HttpStatus.BAD_REQUEST.value())
             );
         }
-        OffsetDateTime now = OffsetDateTime.now();
+
         UserDtoRequestModel userDsModel = new UserDtoRequestModel(
                 null, user.getName(), user.getPhone(), user.getEmail(), user.getPassword(),
-                user.getCpf(), user.getBornDate().toString(), now.toString(), user.getImagePath(), Status.ACTIVE.getValue()
+                user.getCpf(), user.getBornDate().toString(), OffsetDateTime.now().toString(), user.getImagePath(), Status.ACTIVE.getValue()
         );
+
         userDsGateway.save(userDsModel);
         String token = tokenGateway.generateToken(user.getEmail());
-        UserRegisterDtoResponseModel accountResponseModel = new UserRegisterDtoResponseModel(user.getEmail(), user.getPassword(), token);
-        return userPresenter.prepareRegisterSuccessView(accountResponseModel);
+        return userPresenter.prepareRegisterSuccessView(
+                new UserRegisterDtoResponseModel(user.getEmail(), user.getPassword(), token)
+        );
     }
 
     @Override
@@ -66,7 +77,7 @@ public class UserService implements UserInputBoundary {
                     new ErrorDtoResponseModel("User not found", HttpStatus.NOT_FOUND.value())
             );
         }
-        if (!user.get().password().equals(userRequest.password())) {
+        if (!encoderGateway.match(userRequest.password(), user.get().password())) {
             return userPresenter.prepareLoginFailView(
                     new ErrorDtoResponseModel("Invalid password", HttpStatus.UNAUTHORIZED.value())
             );
@@ -102,7 +113,7 @@ public class UserService implements UserInputBoundary {
                 userDTO.status() != null ? userDTO.status() : existingUser.status()
         );
 
-        userDsGateway.save(updatedUser);
+        userDsGateway.update(updatedUser);
     }
 
     public void delete(int id) {

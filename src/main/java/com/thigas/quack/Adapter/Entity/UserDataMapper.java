@@ -30,7 +30,7 @@ public class UserDataMapper {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true)
     private String cpf;
     @Column(name = "born_at", columnDefinition = "DATE", nullable = false)
     private LocalDate bornDate;

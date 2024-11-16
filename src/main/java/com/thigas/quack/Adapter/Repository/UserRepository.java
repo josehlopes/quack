@@ -20,6 +20,11 @@ public class UserRepository {
         entityManager.persist(user);
     }
 
+    @Transactional
+    public void update(UserDataMapper user) {
+        entityManager.merge(user);
+    }
+
     @Transactional(readOnly = true)
     public Optional<UserDataMapper> findById(Integer id) {
         return Optional.ofNullable(entityManager.find(UserDataMapper.class, id));
