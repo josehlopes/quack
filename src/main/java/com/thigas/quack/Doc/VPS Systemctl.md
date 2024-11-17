@@ -1,6 +1,3 @@
-markdown
-Copiar código
-
 # Documentação de Atualização e Reinicialização do Serviço `quack`
 
 Este documento explica o processo para atualizar o JAR da aplicação `quack` e reiniciar o serviço no Ubuntu utilizando o

@@ -1,4 +1,4 @@
-package com.thigas.quack.Adapter.Mapper.utils;
+package com.thigas.quack.Adapter.Mapper.Utils;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

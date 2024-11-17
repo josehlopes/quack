@@ -1,3 +1,5 @@
+//TODO: Atualizar a documentação da arquitetura do projeto
+
 # Estrutura de Pastas do Projeto
 
 Este projeto foi desenvolvido seguindo os princípios do Clean Architecture, que promove a separação de preocupações e a
@@ -10,25 +12,38 @@ src
     ├── java
     │   └── com
     │       └── quack
-    │           ├── application
-    │           │   ├── service
-    │           │   └── usecase
-    │           ├── domain
-    │           │   ├── model
-    │           │   ├── repository
-    │           │   └── service
-    │           ├── infrastructure
-    │           │   ├── persistence
-    │           │   ├── configuration
-    │           │   └── messaging
-    │           ├── adapter
-    │           │   ├── controller
-    │           │   ├── dto
-    │           │   └── mapper
-    │           └── config
+    │           ├── Adapter
+    │           │   ├── Controller
+    │           │   ├── Entity
+    │           │   ├── Formatter
+    │           │   ├── Mapper
+    │           │   ├── Utils
+    │           │   ├── Persistence
+    │           │   ├── Repository
+    │           │   └── Security
+    │           ├── Doc
+    │           ├── Domain
+    │           │   ├── Entity
+    │           │   ├── Example
+    │           │   ├── Factory
+    │           │   └── Utils
+    │           ├── Infrastructure
+    │           │   ├── Security
+    │           │   └── Tools
+    │           ├── Logs 
+    │           ├── UseCase
+    │           │   ├── Boundary
+    │           │   ├── Gateway
+    │           │   ├── Model
+    │           │   │   ├── Request
+    │           │   │   └── Response
+    │           │   ├── Presenter
+    │           │   ├── Service
+    │           │   └── Usecase
     └── resources
-        └── application.properties
-
+        ├── application.properties
+        └── logback.xml
+        
 Descrição das Pastas
 application: Contém a lógica de orquestração da aplicação, incluindo os serviços e os casos de uso. Esta camada é responsável por coordenar as interações entre a interface (UI) e o domínio.
 

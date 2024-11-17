@@ -29,13 +29,6 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Void> create(@RequestBody UserRegisterDtoRequestModel userRequest) {
-        userInput.register(userRequest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    //TODO: TESTAR MÉTODO UPDATE
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDtoRequestModel userDTO) {
         if (id.equals(userDTO.id())) {

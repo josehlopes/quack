@@ -1,12 +1,16 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.usecase.RunUserCodeUseCase;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequiredArgsConstructor
+
+@AllArgsConstructor
+@RequestMapping("/api/code")
 public class CodeController {
 
     private final RunUserCodeUseCase runUserCodeUseCase;

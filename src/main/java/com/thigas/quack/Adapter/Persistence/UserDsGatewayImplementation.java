@@ -8,6 +8,7 @@ import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -16,29 +17,69 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+/**
+ * Implementação da interface {@link UserDsGateway} que fornece acesso aos dados persistidos dos usuários.
+ *
+ * <p>Essa classe atua como um adaptador entre a camada de domínio e a camada de persistência,
+ * utilizando o repositório {@link UserRepository} para realizar operações no banco de dados
+ * e o mapeador {@link MapStructMapper} para converter entre modelos de dados das camadas de aplicação e persistência.</p>
+ *
+ * <p>Fornece métodos para criar, buscar, atualizar e excluir usuários, além de operações
+ * para verificar a existência de usuários com base em identificadores específicos.</p>
+ *
+ * @see UserDsGateway
+ * @see UserRepository
+ * @see MapStructMapper
+ * @see UserDtoRequestModel
+ * @see UserDataMapper
+ */
+@AllArgsConstructor
 public class UserDsGatewayImplementation implements UserDsGateway {
 
     private final UserRepository repository;
     private final MapStructMapper mapper;
 
+    /**
+     * Salva um novo usuário no banco de dados.
+     *
+     * @param requestModel O modelo de dados contendo as informações do usuário a ser salvo.
+     */
     @Override
     public void save(UserDtoRequestModel requestModel) {
         UserDataMapper userDataMapper = mapper.mapUserDtoRequestToUserDataMapper(requestModel);
         repository.save(userDataMapper);
     }
 
-    //TODO:RESOLVER O DATAPARSE ERROR
+    /**
+     * Busca um usuário pelo seu ID.
+     *
+     * @param id O ID do usuário a ser buscado.
+     * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
+     */
     @Override
     public Optional<UserDtoRequestModel> getById(int id) {
         Optional<UserDataMapper> user = repository.findById(id);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
+    /**
+     * Verifica se um usuário existe com base no seu ID.
+     *
+     * @param id O ID do usuário.
+     * @return {@code true} se o usuário existir, {@code false} caso contrário.
+     */
     @Override
     public Boolean findById(int id) {
         return repository.existsById(id);
     }
+
+    /**
+     * Atualiza os dados de um usuário existente no banco de dados.
+     *
+     * @param user O modelo de dados contendo as novas informações do usuário.
+     * @return {@code true} se a atualização foi bem-sucedida.
+     * @throws EntityNotFoundException Se o usuário não for encontrado pelo ID fornecido.
+     */
     public Boolean update(UserDtoRequestModel user) {
         UserDataMapper existingUser = repository.findById(user.id())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
@@ -55,6 +96,11 @@ public class UserDsGatewayImplementation implements UserDsGateway {
         return true;
     }
 
+    /**
+     * Obtém todos os usuários do banco de dados.
+     *
+     * @return Uma lista iterável contendo os modelos de dados dos usuários.
+     */
     @Override
     public Iterable<UserDtoRequestModel> getAll() {
         Iterable<UserDataMapper> users = repository.getAll();
@@ -63,28 +109,57 @@ public class UserDsGatewayImplementation implements UserDsGateway {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Exclui um usuário do banco de dados com base no seu ID.
+     *
+     * @param id O ID do usuário a ser excluído.
+     */
     @Override
     public void deleteById(int id) {
         repository.deleteById(id);
     }
 
+    /**
+     * Busca um usuário pelo seu e-mail.
+     *
+     * @param email O e-mail do usuário a ser buscado.
+     * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
+     */
     @Override
     public Optional<UserDtoRequestModel> getByEmail(String email) {
         Optional<UserDataMapper> user = repository.findByEmail(email);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
+    /**
+     * Busca um usuário pelo seu nome de usuário (username).
+     *
+     * @param username O nome de usuário a ser buscado.
+     * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
+     */
     @Override
     public Optional<UserDtoRequestModel> getByUsername(String username) {
         Optional<UserDataMapper> user = repository.findByUsername(username);
         return user.map(mapper::mapUserDataMapperToUserDtoRequest);
     }
 
+    /**
+     * Verifica se um usuário existe com base no e-mail.
+     *
+     * @param email O e-mail do usuário.
+     * @return {@code true} se o usuário existir, {@code false} caso contrário.
+     */
     @Override
     public Boolean findByEmail(String email) {
         return repository.existsByEmail(email);
     }
 
+    /**
+     * Verifica se um usuário existe com base no nome de usuário (username).
+     *
+     * @param username O nome de usuário.
+     * @return {@code true} se o usuário existir, {@code false} caso contrário.
+     */
     @Override
     public Boolean findByUsername(String username) {
         return repository.existsByUsername(username);
