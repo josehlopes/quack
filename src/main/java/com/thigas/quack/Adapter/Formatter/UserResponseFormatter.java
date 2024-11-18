@@ -1,7 +1,5 @@
 package com.thigas.quack.Adapter.Formatter;
 
-import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.ErrorDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;

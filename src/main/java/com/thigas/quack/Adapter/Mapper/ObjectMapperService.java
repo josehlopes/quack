@@ -17,28 +17,28 @@
 //    private CycleAvoidingMappingContext context;
 //
 //    //USER METHODS
-//    public UserDtoRequestModel toDtoModel(UserDataMapper userDataMapper) {
+//    public UserDsDtoRequestModel toDtoModel(UserDataMapper userDataMapper) {
 //        if (userDataMapper == null) {
 //            throw new IllegalArgumentException("UserDataMapper cannot be null");
 //        }
 //        return mapStructMapper.modelToDto(userDataMapper, context);
 //    }
 //
-//    public UserDataMapper toDatabaseModel(UserDtoRequestModel userDataMapper) {
+//    public UserDataMapper toDatabaseModel(UserDsDtoRequestModel userDataMapper) {
 //        if (userDataMapper == null) {
 //            throw new IllegalArgumentException("UserDataMapper cannot be null");
 //        }
 //        return mapStructMapper.modelToEntity(userDataMapper, context);
 //    }
 //
-//    public UserDataMapper toModel(UserDtoRequestModel userDTO) {
+//    public UserDataMapper toModel(UserDsDtoRequestModel userDTO) {
 //        if (userDTO == null) {
 //            throw new IllegalArgumentException("UserDTO cannot be null");
 //        }
 //        return mapStructMapper.dtoToModel(userDTO, context);
 //    }
 //
-////    public UserDtoRequestModel toDatabaseModel(UserDTO userDTO) {
+////    public UserDsDtoRequestModel toDatabaseModel(UserDTO userDTO) {
 ////        if (userDTO == null) {
 ////            throw new IllegalArgumentException("UserDTO cannot be null");
 ////        }

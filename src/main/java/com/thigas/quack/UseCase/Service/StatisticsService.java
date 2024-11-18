@@ -3,7 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -50,7 +50,7 @@ public class StatisticsService {
     }
 
     public void createInitialStatisticsForUser(int userId) {
-        UserDtoRequestModel user = userRepository.getById(userId)
+        UserDsDtoRequestModel user = userRepository.getById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(

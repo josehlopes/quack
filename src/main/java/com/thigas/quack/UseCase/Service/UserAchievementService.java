@@ -60,7 +60,7 @@ public class UserAchievementService {
 //            return false;
 //        }
 //
-//        UserDtoRequestModel user = userService.getById(userId).orElse(null);
+//        UserDsDtoRequestModel user = userService.getById(userId).orElse(null);
 //        AchievementDtoRequestModel achievement = achievementService.getById(achievementId).orElse(null);
 //
 //        if (user == null || achievement == null) {

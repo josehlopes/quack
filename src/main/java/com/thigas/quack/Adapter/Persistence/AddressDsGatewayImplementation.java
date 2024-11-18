@@ -3,13 +3,11 @@ package com.thigas.quack.Adapter.Persistence;
 import com.thigas.quack.Adapter.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Repository.AddressRepository;
-import com.thigas.quack.Adapter.Repository.JpaAddressRepository;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
-import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,7 +19,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(AddressDtoRequestModel addressDtoRequest) {
+    public void save(AddressDsDtoRequestModel addressDtoRequest) {
         AddressDataMapper toSaveAddress = mapper.mapAddressDtoRequestToDataMapper(addressDtoRequest);
         repository.save(toSaveAddress);
     }
@@ -46,7 +44,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
                 .collect(Collectors.toList());    }
 
     @Override
-    public Boolean update(AddressDtoRequestModel addressDtoRequest) {
+    public Boolean update(AddressDsDtoRequestModel addressDtoRequest) {
         AddressDataMapper toUpdateAddress = mapper.mapAddressDtoRequestToDataMapper(addressDtoRequest);
         repository.update(toUpdateAddress);
         return true;

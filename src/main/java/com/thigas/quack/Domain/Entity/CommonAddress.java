@@ -17,7 +17,7 @@ public class CommonAddress implements Address{
     private String country;
     private String zipCode;
     private String number;
-    private Integer isActive = 1;
+    private Integer isActive;
 
     @Override
     public Boolean isValid() {

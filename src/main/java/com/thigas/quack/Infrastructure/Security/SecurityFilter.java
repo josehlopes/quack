@@ -1,6 +1,6 @@
 package com.thigas.quack.Infrastructure.Security;
 
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import com.thigas.quack.UseCase.Service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -39,7 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (token != null) {
             var login = tokenProvider.validateToken(token);
             try {
-                UserDtoRequestModel user = userService.findByEmail(login)
+                UserDsDtoRequestModel user = userService.findByEmail(login)
                         .orElseThrow(() -> new RuntimeException("User Not Found"));
                 var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);

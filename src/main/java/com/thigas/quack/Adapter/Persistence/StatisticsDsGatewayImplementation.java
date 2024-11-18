@@ -6,7 +6,7 @@ import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -66,7 +66,7 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
     @Override
     public void createInitialStatisticsForUser(int userId) {
-        UserDtoRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
+        UserDsDtoRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(

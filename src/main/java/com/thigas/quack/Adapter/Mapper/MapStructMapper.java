@@ -25,9 +25,9 @@ public interface MapStructMapper {
     AchievementDtoRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
 
     @Mapping(source = "userId", target = "user.id")
-    AddressDataMapper mapAddressDtoRequestToDataMapper(AddressDtoRequestModel addressDtoRequestModel);
+    AddressDataMapper mapAddressDtoRequestToDataMapper(AddressDsDtoRequestModel addressDsDtoRequestModel);
 
-    AddressDtoRequestModel mapAddressDataMapperToDtoRequest(AddressDataMapper addressDataMapper);
+    AddressDsDtoRequestModel mapAddressDataMapperToDtoRequest(AddressDataMapper addressDataMapper);
 
     AddressInfoDtoResponseModel mapAddressDataMapperToInfoDtoResponse(AddressDataMapper addressDataMapper);
 
@@ -62,9 +62,9 @@ public interface MapStructMapper {
 
     UserLoginDtoResponseModel mapUserDataMapperToUserLoginDtoResponse(UserDataMapper userDataMapper);
 
-    UserDtoRequestModel mapUserDataMapperToUserDtoRequest(UserDataMapper userDataMapper);
+    UserDsDtoRequestModel mapUserDataMapperToUserDtoRequest(UserDataMapper userDataMapper);
 
-    UserDataMapper mapUserDtoRequestToUserDataMapper(UserDtoRequestModel userDtoRequestModel);
+    UserDataMapper mapUserDtoRequestToUserDataMapper(UserDsDtoRequestModel userDsDtoRequestModel);
 
     UserLessonDataMapper mapUserLessonDtoRequestToDataMapper(UserLessonDtoRequestModel userLessonDtoRequestModel);
 

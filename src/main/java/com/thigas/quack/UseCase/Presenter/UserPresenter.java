@@ -1,6 +1,6 @@
 package com.thigas.quack.UseCase.Presenter;
 
-import com.thigas.quack.UseCase.Model.Response.ErrorDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
 
@@ -26,7 +26,7 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    UserLoginDtoResponseModel prepareLoginFailView(ErrorDtoResponseModel error);
+    UserLoginDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
 
     /**
      * Prepara a visualização de sucesso para a operação de registro.
@@ -42,5 +42,5 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    UserRegisterDtoResponseModel prepareRegisterFailView(ErrorDtoResponseModel error);
+    UserRegisterDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
 }

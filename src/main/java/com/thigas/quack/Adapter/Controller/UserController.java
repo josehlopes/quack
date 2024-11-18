@@ -5,16 +5,13 @@ import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.AddressCreateDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -27,19 +24,19 @@ public class UserController {
     private final AddressInputBoundary addressInput;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDtoRequestModel> getById(@PathVariable Integer id) {
+    public ResponseEntity<UserDsDtoRequestModel> getById(@PathVariable Integer id) {
         return userDsGateway.getById(id).map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<UserDtoRequestModel>> getAll() {
-        Iterable<UserDtoRequestModel> users = userDsGateway.getAll();
+    public ResponseEntity<Iterable<UserDsDtoRequestModel>> getAll() {
+        Iterable<UserDsDtoRequestModel> users = userDsGateway.getAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDtoRequestModel userDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDsDtoRequestModel userDTO) {
         if (id.equals(userDTO.id())) {
             userInput.update(userDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,7 +71,7 @@ public class UserController {
     }
 
     @PutMapping("/address/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDtoRequestModel address) {
+    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDsDtoRequestModel address) {
         if (id.equals(address.id())) {
             addressInput.update(address);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

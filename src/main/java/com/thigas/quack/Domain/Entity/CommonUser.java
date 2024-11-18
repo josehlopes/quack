@@ -102,7 +102,7 @@ public class CommonUser implements User {
      *     <li><strong>0</strong>: O usuário está desabilitado (inativo ou suspenso).</li>
      * </ul>
      */
-    private Integer isActive = 1;
+    private Integer isActive;
 
 
     /**
