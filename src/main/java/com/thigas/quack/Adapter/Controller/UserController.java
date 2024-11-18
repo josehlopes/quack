@@ -1,13 +1,20 @@
 package com.thigas.quack.Adapter.Controller;
 
+import com.thigas.quack.UseCase.Boundary.AddressInputBoundary;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
+import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Model.Request.AddressCreateDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,6 +23,8 @@ public class UserController {
 
     private final UserInputBoundary userInput;
     private final UserDsGateway userDsGateway;
+    private final AddressDsGateway addressDsGateway;
+    private final AddressInputBoundary addressInput;
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDtoRequestModel> getById(@PathVariable Integer id) {
@@ -42,6 +51,41 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         userInput.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/address/create")
+    public ResponseEntity<Void> createAddress(@RequestBody AddressCreateDtoRequestModel address) {
+        addressInput.create(address);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/address/{userId}")
+    public ResponseEntity<AddressInfoDtoResponseModel> getAddressByUserId(@PathVariable Integer userId) {
+        return addressDsGateway.getByUserId(userId)
+                .map(address -> new ResponseEntity<>(address, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/address")
+    public ResponseEntity<Iterable<AddressInfoDtoResponseModel>> getAllAddresses(@PathVariable Integer userId) {
+        Iterable<AddressInfoDtoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
+        return new ResponseEntity<>(addresses, HttpStatus.OK);
+    }
+
+    @PutMapping("/address/{id}")
+    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDtoRequestModel address) {
+        if (id.equals(address.id())) {
+            addressInput.update(address);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/address/{id}")
+    public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
+        addressInput.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 //

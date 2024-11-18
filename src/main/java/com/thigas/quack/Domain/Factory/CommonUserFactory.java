@@ -50,9 +50,6 @@ public class CommonUserFactory implements UserFactory {
         // Gera a data de registro como o momento atual
         OffsetDateTime registerOn = OffsetDateTime.now();
 
-        // Define o status inicial do usuário como ativo
-        Integer isActive = 1;
-
         // Gera o nome completo concatenando nome e sobrenome
         String fullName = name + " " + surname;
 
@@ -60,6 +57,6 @@ public class CommonUserFactory implements UserFactory {
         String username = UsernameGenerator.generateUsername(name, surname);
 
         // Retorna uma nova instância de CommonUser
-        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, imagePath, isActive);
+        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, imagePath, 1);
     }
 }

@@ -119,7 +119,7 @@ public class UserService implements UserInputBoundary {
         userDsGateway.update(updatedUser);
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         if (!userDsGateway.findById(id)) {
             throw new EntityNotFoundException("User not found");
         }
@@ -138,7 +138,7 @@ public class UserService implements UserInputBoundary {
         return userDsGateway.findByEmail(email) || userDsGateway.findByUsername(username);
     }
 
-    public Boolean existsById(int userId) {
+    public Boolean existsById(Integer userId) {
         return userDsGateway.findById(userId);
     }
 }

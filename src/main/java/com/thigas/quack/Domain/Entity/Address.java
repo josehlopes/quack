@@ -5,7 +5,7 @@ import com.thigas.quack.Domain.Utils.Status;
 
 public interface Address {
 
-    int getId();
+    Integer getId();
 
     User getUser();
 
@@ -21,7 +21,11 @@ public interface Address {
 
     String getNumber();
 
-    Status getStatus();
+    Integer getIsActive();
+
+    Boolean isValid();
+
+    Boolean isCepValid();
 
 
 }

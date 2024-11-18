@@ -3,8 +3,10 @@ package com.thigas.quack.Adapter.Mapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thigas.quack.Adapter.Entity.*;
 import com.thigas.quack.UseCase.Model.Request.*;
+import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.time.OffsetDateTime;
@@ -22,9 +24,12 @@ public interface MapStructMapper {
 
     AchievementDtoRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
 
+    @Mapping(source = "userId", target = "user.id")
     AddressDataMapper mapAddressDtoRequestToDataMapper(AddressDtoRequestModel addressDtoRequestModel);
 
     AddressDtoRequestModel mapAddressDataMapperToDtoRequest(AddressDataMapper addressDataMapper);
+
+    AddressInfoDtoResponseModel mapAddressDataMapperToInfoDtoResponse(AddressDataMapper addressDataMapper);
 
     LessonDataMapper mapLessonDtoRequestToDataMapper(LessonDtoRequestModel lessonDtoRequestModel);
 

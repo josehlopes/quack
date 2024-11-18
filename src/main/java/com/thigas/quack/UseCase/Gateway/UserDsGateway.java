@@ -5,6 +5,7 @@ import com.thigas.quack.UseCase.Model.Request.UserDtoRequestModel;
 
 import java.util.Optional;
 
+//TODO: DEIXAR APENAS MÉTODOS RELACIONADOS A SAÍDA DE DADOS
 public interface UserDsGateway {
     void save(UserDtoRequestModel user);
     Boolean update(UserDtoRequestModel user);

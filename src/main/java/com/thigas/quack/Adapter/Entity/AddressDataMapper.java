@@ -35,9 +35,8 @@ public class AddressDataMapper {
     private String zipCode;
     @Column(nullable = false)
     private String number;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
-    private Status status = Status.ACTIVE;
+    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER CHECK (is_active IN (0, 1))")
+    private Integer isActive = 1;
 
     @Override
     public final boolean equals(Object o) {
