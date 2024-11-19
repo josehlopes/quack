@@ -12,6 +12,7 @@ public class AddressResponseFormatter implements AddressPresenter {
     @Override
     public AddressInfoDtoResponseModel prepareGetAddressSuccessView(AddressInfoDtoResponseModel address) {
         return new AddressInfoDtoResponseModel(
+                address.id(),
                 address.street(),
                 address.city(),
                 address.state(),
@@ -23,6 +24,6 @@ public class AddressResponseFormatter implements AddressPresenter {
 
     @Override
     public AddressInfoDtoResponseModel prepareGetAddressFailView(ResultDtoResponseModel error) {
-        throw new ResponseStatusException(error.message(), HttpStatus.valueOf(error.code()), ResponseType.ERROR);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.message());
     }
 }

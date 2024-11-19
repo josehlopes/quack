@@ -16,12 +16,12 @@ public interface UserDsGateway {
     Optional<UserDsDtoRequestModel> getById(int id);
     Boolean findById(int id);
     Optional<UserDsDtoRequestModel> getByEmail(String email);
-    Optional<UserInfoDtoResponseModel> getByUsername(String username);
+    Optional<UserDsDtoRequestModel> getByUsername(String username);
     Boolean findByEmail(String email);
     Boolean findByUsername(String username);
-    Iterable<UserInfoDtoResponseModel> getAll();
+    Iterable<UserDsDtoRequestModel> getAll();
 
-    ResultDtoResponseModel update(UserDsDtoRequestModel user);
+    Boolean update(UserDsDtoRequestModel user);
 
     void deleteById(int id);
 }

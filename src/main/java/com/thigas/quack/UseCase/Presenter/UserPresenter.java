@@ -18,7 +18,7 @@ public interface UserPresenter {
      * @param user o modelo de resposta contendo as informações do usuário logado.
      * @return o modelo de resposta preparado para a visualização de sucesso.
      */
-    UserLoginDtoResponseModel prepareLoginSuccessView(UserLoginDtoResponseModel user);
+    ResultDtoResponseModel prepareLoginSuccessView(ResultDtoResponseModel user);
 
     /**
      * Prepara a visualização de falha para a operação de login.
@@ -26,7 +26,7 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    UserLoginDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
+    ResultDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
 
     /**
      * Prepara a visualização de sucesso para a operação de registro.
@@ -34,7 +34,7 @@ public interface UserPresenter {
      * @param user o modelo de resposta contendo as informações do usuário registrado.
      * @return o modelo de resposta preparado para a visualização de sucesso.
      */
-    UserRegisterDtoResponseModel prepareRegisterSuccessView(UserRegisterDtoResponseModel user);
+    ResultDtoResponseModel prepareRegisterSuccessView(ResultDtoResponseModel user);
 
     /**
      * Prepara a visualização de falha para a operação de registro.
@@ -42,5 +42,5 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    UserRegisterDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
+    ResultDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
 }

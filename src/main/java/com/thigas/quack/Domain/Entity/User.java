@@ -110,7 +110,7 @@ public interface User {
      *
      * @return {@code true} se o usuário estiver habilitado (ativo), {@code false} caso contrário.
      */
-    Integer getIsActive();
+    Boolean getIsActive();
 
 
     /**

@@ -1,4 +1,4 @@
-package com.thigas.quack.Adapter.Mapper;
+package com.thigas.quack.UseCase.Mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thigas.quack.Adapter.Entity.*;
@@ -24,12 +24,7 @@ public interface MapStructMapper {
 
     AchievementDtoRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
 
-    @Mapping(source = "userId", target = "user.id")
-    AddressDataMapper mapAddressDtoRequestToDataMapper(AddressDsDtoRequestModel addressDsDtoRequestModel);
 
-    AddressDsDtoRequestModel mapAddressDataMapperToDtoRequest(AddressDataMapper addressDataMapper);
-
-    AddressInfoDtoResponseModel mapAddressDataMapperToInfoDtoResponse(AddressDataMapper addressDataMapper);
 
     LessonDataMapper mapLessonDtoRequestToDataMapper(LessonDtoRequestModel lessonDtoRequestModel);
 
@@ -57,14 +52,6 @@ public interface MapStructMapper {
     UserAchievementDataMapper mapUserAchievementDtoRequestToDataMapper(UserAchievementDtoRequestModel userAchievementDtoRequestModel);
 
     UserAchievementDtoRequestModel mapUserAchievementDataMapperToDtoRequest(UserAchievementDataMapper userAchievementDataMapper);
-
-    UserDataMapper mapUserRegisterDtoToUserDataMapper(UserRegisterDtoRequestModel userRegisterDtoRequestModel);
-
-    UserLoginDtoResponseModel mapUserDataMapperToUserLoginDtoResponse(UserDataMapper userDataMapper);
-
-    UserDsDtoRequestModel mapUserDataMapperToUserDtoRequest(UserDataMapper userDataMapper);
-
-    UserDataMapper mapUserDtoRequestToUserDataMapper(UserDsDtoRequestModel userDsDtoRequestModel);
 
     UserLessonDataMapper mapUserLessonDtoRequestToDataMapper(UserLessonDtoRequestModel userLessonDtoRequestModel);
 

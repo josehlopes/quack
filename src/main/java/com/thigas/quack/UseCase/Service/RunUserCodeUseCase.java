@@ -1,4 +1,4 @@
-package com.thigas.quack.UseCase.usecase;
+package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Controller.CodeExecutor;
 import org.springframework.stereotype.Service;

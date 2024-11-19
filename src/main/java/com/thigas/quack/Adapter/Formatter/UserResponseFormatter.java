@@ -1,5 +1,7 @@
 package com.thigas.quack.Adapter.Formatter;
 
+import com.thigas.quack.Domain.Utils.ResponseType;
+import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
@@ -21,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
  * @see UserPresenter
  * @see UserLoginDtoResponseModel
  * @see UserRegisterDtoResponseModel
- * @see ErrorDtoResponseModel
+ * @see ResultDtoResponseModel
  */
 public class UserResponseFormatter implements UserPresenter {
 
@@ -35,22 +37,22 @@ public class UserResponseFormatter implements UserPresenter {
      * @return Uma nova instância de {@link UserLoginDtoResponseModel}.
      */
     @Override
-    public UserLoginDtoResponseModel prepareLoginSuccessView(UserLoginDtoResponseModel response) {
-        return new UserLoginDtoResponseModel(response.id(), response.token());
+    public ResultDtoResponseModel prepareLoginSuccessView(ResultDtoResponseModel response) {
+        return new ResultDtoResponseModel(response.message(), response.code(), response.responseType());
     }
 
     /**
      * Prepara a resposta em caso de falha no login do usuário.
      *
      * <p>Lança uma exceção {@link ResponseStatusException} com o código de erro HTTP e a mensagem
-     * de erro especificados no modelo {@link ErrorDtoResponseModel}.</p>
+     * de erro especificados no modelo {@link ResultDtoResponseModel}.</p>
      *
      * @param error O modelo de erro contendo informações sobre o motivo da falha no login.
      * @throws ResponseStatusException Sempre que ocorre uma falha no login.
      */
     @Override
-    public UserLoginDtoResponseModel prepareLoginFailView(ErrorDtoResponseModel error) {
-        throw new ResponseStatusException(HttpStatus.valueOf(error.errorCode()), error.errorMessage());
+    public ResultDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.message());
     }
 
     /**
@@ -63,21 +65,21 @@ public class UserResponseFormatter implements UserPresenter {
      * @return Uma nova instância de {@link UserRegisterDtoResponseModel}.
      */
     @Override
-    public UserRegisterDtoResponseModel prepareRegisterSuccessView(UserRegisterDtoResponseModel response) {
-        return new UserRegisterDtoResponseModel(response.email(), response.password(), response.token());
+    public ResultDtoResponseModel prepareRegisterSuccessView(ResultDtoResponseModel response) {
+        return new ResultDtoResponseModel(response.message(), response.code(), response.responseType());
     }
 
     /**
      * Prepara a resposta em caso de falha no registro do usuário.
      *
      * <p>Lança uma exceção {@link ResponseStatusException} com o código de erro HTTP e a mensagem
-     * de erro especificados no modelo {@link ErrorDtoResponseModel}.</p>
+     * de erro especificados no modelo {@link ResultDtoResponseModel}.</p>
      *
      * @param error O modelo de erro contendo informações sobre o motivo da falha no registro.
      * @throws ResponseStatusException Sempre que ocorre uma falha no registro.
      */
     @Override
-    public UserRegisterDtoResponseModel prepareRegisterFailView(ErrorDtoResponseModel error) {
-        throw new ResponseStatusException(HttpStatus.valueOf(error.errorCode()), error.errorMessage());
+    public ResultDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.message());
     }
 }

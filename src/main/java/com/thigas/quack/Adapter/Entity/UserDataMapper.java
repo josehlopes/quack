@@ -139,8 +139,8 @@ public class UserDataMapper {
      * <p>É representado por um valor inteiro (0 ou 1) e validado com um check SQL no banco de dados.
      * O valor padrão é 1 (ativo).</p>
      */
-    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER CHECK (is_active IN (0, 1))")
-    private Integer isActive = 1;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     /**
      * Caminho da imagem de perfil do usuário.

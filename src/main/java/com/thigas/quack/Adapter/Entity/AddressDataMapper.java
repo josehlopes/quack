@@ -35,8 +35,8 @@ public class AddressDataMapper {
     private String zipCode;
     @Column(nullable = false)
     private String number;
-    @Column(name = "is_active", nullable = false, columnDefinition = "INTEGER CHECK (is_active IN (0, 1))")
-    private Integer isActive = 1;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     @Override
     public final boolean equals(Object o) {

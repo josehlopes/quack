@@ -18,5 +18,5 @@ public interface StatisticsDsGateway {
 
     void incrementRoadmapsCompleted(int userId);
 
-    void createInitialStatisticsForUser(int userId);
+//    void createInitialStatisticsForUser(int userId);
 }

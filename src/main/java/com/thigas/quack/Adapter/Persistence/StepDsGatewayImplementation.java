@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.StepDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaStepRepository;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;

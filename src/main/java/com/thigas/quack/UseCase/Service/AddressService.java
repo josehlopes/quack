@@ -6,6 +6,7 @@ import com.thigas.quack.Domain.Utils.ResponseType;
 import com.thigas.quack.UseCase.Boundary.AddressInputBoundary;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Mapper.AddressMapper;
 import com.thigas.quack.UseCase.Model.Request.AddressCreateDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
@@ -27,7 +28,9 @@ public class AddressService implements AddressInputBoundary {
     private final AddressDsGateway addressDsGateway;
     private final AddressPresenter addressPresenter;
     private final AddressFactory addressFactory;
+    private final AddressMapper addressMapper;
     private final UserDsGateway userDsGateway;
+    private final ResponseService responseService;
 
     public ResultDtoResponseModel create(AddressCreateDtoRequestModel addressCreateDtoRequestModel) {
         UserDsDtoRequestModel userDto = userDsGateway.getById(addressCreateDtoRequestModel.userId())
@@ -42,39 +45,19 @@ public class AddressService implements AddressInputBoundary {
                 addressCreateDtoRequestModel.number()
         );
 
-        AddressDsDtoRequestModel addressDsDtoRequestModel = new AddressDsDtoRequestModel(
-                null,
-                addressCreateDtoRequestModel.userId(),
-                address.getStreet(),
-                address.getCity(),
-                address.getState(),
-                address.getCountry(),
-                address.getZipCode(),
-                address.getNumber(),
-                address.getIsActive()
-        );
+        AddressDsDtoRequestModel addressDsDtoRequestModel = addressMapper.toDsModel(address, addressCreateDtoRequestModel.userId());
 
         addressDsGateway.update(addressDsDtoRequestModel);
         return new ResultDtoResponseModel("Address created successfully", HttpStatus.CREATED.value(), ResponseType.SUCCESS);
     }
 
     public Optional<AddressInfoDtoResponseModel> getByUserId(int userId) {
-        Optional<AddressInfoDtoResponseModel> address = addressDsGateway.getByUserId(userId);
-        return address.map(addressDtoRequestModel -> addressPresenter.prepareGetAddressSuccessView(
-                new AddressInfoDtoResponseModel(addressDtoRequestModel.id(),
-                        addressDtoRequestModel.street(),
-                        addressDtoRequestModel.city(), addressDtoRequestModel.state(), addressDtoRequestModel.country(), addressDtoRequestModel.zipCode(),
-                        addressDtoRequestModel.number())
-        )).or(() -> Optional.of(addressPresenter.prepareGetAddressFailView(
-                new ResultDtoResponseModel("Address not found", HttpStatus.NOT_FOUND.value(), ResponseType.ERROR)
-        )));
+        return addressDsGateway.getByUserId(userId);
     }
 
     public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(int userId) {
         Iterable<AddressInfoDtoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
         return StreamSupport.stream(addresses.spliterator(), false)
-                .map(address -> new AddressInfoDtoResponseModel(address.id(),address.street(),
-                        address.city(), address.state(), address.country(), address.zipCode(), address.number()))
                 .collect(Collectors.toList());
     }
 
@@ -95,7 +78,7 @@ public class AddressService implements AddressInputBoundary {
                 addressDtoRequest.isActive()
         );
 
-        addressDsGateway.save(updatedAddress);
+        addressDsGateway.update(updatedAddress);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.thigas.quack.Adapter.Mapper.TaskTextConverter;
+import com.thigas.quack.UseCase.Mapper.TaskTextConverter;
 import com.thigas.quack.UseCase.Model.Request.TaskTextDtoRequestModel;
 import jakarta.persistence.*;
 import lombok.Getter;

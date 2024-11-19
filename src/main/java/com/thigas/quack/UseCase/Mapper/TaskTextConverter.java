@@ -1,4 +1,4 @@
-package com.thigas.quack.Adapter.Mapper;
+package com.thigas.quack.UseCase.Mapper;
 
 import com.google.gson.Gson;
 import com.thigas.quack.UseCase.Model.Request.TaskTextDtoRequestModel;

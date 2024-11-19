@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.AchievementDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaAchievementRepository;
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;

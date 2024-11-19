@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
@@ -64,14 +64,14 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
         save(statistics);
     }
 
-    @Override
-    public void createInitialStatisticsForUser(int userId) {
-        UserDsDtoRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(
-                null, user.id(), 0, 0, 0, 0.0, 0.0, 0, 0
-        );
-        save(statistics);
-    }
+//    @Override
+//    public void createInitialStatisticsForUser(int userId) {
+//        UserDsDtoRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
+//                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+//
+//        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(
+//                null, user.id(), 0, 0, 0, 0.0, 0.0, 0, 0
+//        );
+//        save(statistics);
+//    }
 }

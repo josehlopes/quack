@@ -14,7 +14,7 @@ public interface AddressDsGateway {
     Optional<AddressInfoDtoResponseModel> getById(int id);
     Boolean existsById(int id);
 
-    ResultDtoResponseModel update(AddressDsDtoRequestModel address);
+    Boolean update(AddressDsDtoRequestModel address);
 
     void deleteById(int id);
 }

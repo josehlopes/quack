@@ -3,6 +3,7 @@ package com.thigas.quack.Adapter.Controller;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
 import jakarta.validation.Valid;
@@ -21,14 +22,14 @@ public class AuthController {
     private final UserInputBoundary userInput;
 
     @PostMapping("users/login")
-    public ResponseEntity<UserLoginDtoResponseModel> login(@Valid @RequestBody UserLoginDtoRequestModel loginBody) {
-        UserLoginDtoResponseModel response = userInput.login(loginBody);
+    public ResponseEntity<ResultDtoResponseModel> login(@Valid @RequestBody UserLoginDtoRequestModel loginBody) {
+        ResultDtoResponseModel response = userInput.login(loginBody);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("users/register")
-    public ResponseEntity<UserRegisterDtoResponseModel> register(@Valid @RequestBody UserRegisterDtoRequestModel registerBody) {
-        UserRegisterDtoResponseModel response = userInput.register(registerBody);
+    public ResponseEntity<ResultDtoResponseModel> register(@Valid @RequestBody UserRegisterDtoRequestModel registerBody) {
+        ResultDtoResponseModel response = userInput.register(registerBody);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

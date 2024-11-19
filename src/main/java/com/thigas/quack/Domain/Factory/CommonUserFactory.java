@@ -57,6 +57,6 @@ public class CommonUserFactory implements UserFactory {
         String username = UsernameGenerator.generateUsername(name, surname);
 
         // Retorna uma nova instância de CommonUser
-        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, imagePath, 1);
+        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, imagePath, true);
     }
 }

@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserRoadmapRepository;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;

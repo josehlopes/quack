@@ -21,7 +21,7 @@ public interface Address {
 
     String getNumber();
 
-    Integer getIsActive();
+    Boolean getIsActive();
 
     Boolean isValid();
 

@@ -8,6 +8,7 @@ import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Mapper.UserMapper;
 import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
@@ -35,12 +36,13 @@ public class UserService implements UserInputBoundary {
     private final TokenGateway tokenGateway;
     private final EncoderInputBoundary encoderInputBoundary;
     private final EncoderGateway encoderGateway;
+    private final UserMapper userMapper;
+    private final ResponseService responseService;
 
-    //TODO: ALTERAR NOME DOS MÉTODOS SE NECESSÁRIO
-    public UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
+    public ResultDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
         if (userDsGateway.findByEmail(userRequest.email())) {
             return userPresenter.prepareRegisterFailView(
-                    new ResultDtoResponseModel("This email is already in use", HttpStatus.CONFLICT.value(), ResponseType.ERROR)
+                    responseService.createErrorResponse("This email is already in use", HttpStatus.CONFLICT)
             );
         }
 
@@ -48,30 +50,21 @@ public class UserService implements UserInputBoundary {
         String encodedCpf = encoderInputBoundary.encode(userRequest.cpf());
 
         User user = userFactory.create(
-                userRequest.name(), userRequest.surname(),userRequest.phone(), userRequest.email(), encodedPassword,
+                userRequest.name(), userRequest.surname(), userRequest.phone(), userRequest.email(), encodedPassword,
                 encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
         );
 
-        if (!user.passwordIsValid()) {
-            return userPresenter.prepareRegisterFailView(
-                    new ResultDtoResponseModel("User password must have at least 8 characters, one uppercase letter, and one special character.", HttpStatus.BAD_REQUEST.value(), ResponseType.ERROR)
-            );
-        }
-
-        UserDsDtoRequestModel userDsModel = new UserDsDtoRequestModel(
-                null, user.getName(), user.getSurname(), user.getFullName(), user.getUsername(),user.getPhone(), user.getEmail(), user.getPassword(),
-                user.getCpf(), user.getBornDate().toString(), OffsetDateTime.now().toString(), user.getImagePath(), user.getIsActive()
-        );
+        UserDsDtoRequestModel userDsModel = userMapper.toDsModel(user);
 
         userDsGateway.save(userDsModel);
         String token = tokenGateway.generateToken(user.getEmail());
-        return userPresenter.prepareRegisterSuccessView(
-                new UserRegisterDtoResponseModel(user.getEmail(), user.getPassword(), token)
+        return userPresenter.prepareRegisterSuccessView(responseService.createSuccessResponse(
+                String.format("User registered successfully: %s, %s, %s", user.getEmail(), token), HttpStatus.CREATED)
         );
     }
 
     @Override
-    public UserLoginDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
+    public ResultDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
         Optional<UserDsDtoRequestModel> user = userDsGateway.getByEmail(userRequest.email());
         if (user.isEmpty()) {
             return userPresenter.prepareLoginFailView(
@@ -84,15 +77,17 @@ public class UserService implements UserInputBoundary {
             );
         }
         String token = tokenGateway.generateToken(user.get().email());
-        return userPresenter.prepareLoginSuccessView(new UserLoginDtoResponseModel(user.get().id(), token));
+        return userPresenter.prepareLoginSuccessView(responseService.createSuccessResponse(
+                String.format("User logged in successfully: %s, %s", user.get().email(), token), HttpStatus.OK)
+        );
     }
 
     public Optional<UserDsDtoRequestModel>getById(int id) {
         return userDsGateway.getById(id);
     }
 
-    public Iterable<UserInfoDtoResponseModel> getAll() {
-        Iterable<UserInfoDtoResponseModel> users = userDsGateway.getAll();
+    public Iterable<UserDsDtoRequestModel> getAll() {
+        Iterable<UserDsDtoRequestModel> users = userDsGateway.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -131,7 +126,7 @@ public class UserService implements UserInputBoundary {
         return userDsGateway.getByEmail(email);
     }
 
-    public Optional<UserInfoDtoResponseModel> findByUsername(String username) {
+    public Optional<UserDsDtoRequestModel> findByUsername(String username) {
         return userDsGateway.getByUsername(username);
     }
 

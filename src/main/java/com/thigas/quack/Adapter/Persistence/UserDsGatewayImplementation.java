@@ -1,9 +1,10 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.Adapter.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Mapper.UserMapper;
 import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -34,7 +35,7 @@ import java.util.stream.StreamSupport;
 public class UserDsGatewayImplementation implements UserDsGateway {
 
     private final UserRepository repository;
-    private final MapStructMapper mapper;
+    private final UserMapper mapper;
 
     /**
      * Salva um novo usuário no banco de dados.
@@ -43,7 +44,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      */
     @Override
     public void save(UserDsDtoRequestModel requestModel) {
-        UserDataMapper userDataMapper = mapper.mapUserDtoRequestToUserDataMapper(requestModel);
+        UserDataMapper userDataMapper = mapper.toDataMapper(requestModel);
         repository.save(userDataMapper);
     }
 
@@ -56,7 +57,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     @Override
     public Optional<UserDsDtoRequestModel> getById(int id) {
         Optional<UserDataMapper> user = repository.findById(id);
-        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
+        return user.map(mapper::toDsModel);
     }
 
     /**
@@ -102,7 +103,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     public Iterable<UserDsDtoRequestModel> getAll() {
         Iterable<UserDataMapper> users = repository.getAll();
         return StreamSupport.stream(users.spliterator(), false)
-                .map(mapper::mapUserDataMapperToUserDtoRequest)
+                .map(mapper::toDsModel)
                 .collect(Collectors.toList());
     }
 
@@ -125,7 +126,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     @Override
     public Optional<UserDsDtoRequestModel> getByEmail(String email) {
         Optional<UserDataMapper> user = repository.findByEmail(email);
-        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
+        return user.map(mapper::toDsModel);
     }
 
     /**
@@ -137,7 +138,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
     @Override
     public Optional<UserDsDtoRequestModel> getByUsername(String username) {
         Optional<UserDataMapper> user = repository.findByUsername(username);
-        return user.map(mapper::mapUserDataMapperToUserDtoRequest);
+        return user.map(mapper::toDsModel);
     }
 
     /**
