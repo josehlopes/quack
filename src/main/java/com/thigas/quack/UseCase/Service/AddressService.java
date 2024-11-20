@@ -43,6 +43,13 @@ public class AddressService implements AddressInputBoundary {
                 addressCreateDtoRequestModel.number()
         );
 
+        Boolean isValid = address.isValid();
+        Boolean isCepValid = address.isCepValid();
+
+        if (!isValid || !isCepValid) {
+            return false;
+        }
+
         AddressDsDtoRequestModel addressDsDtoRequestModel = addressMapper.toDsModel(address);
 
         addressDsGateway.save(addressDsDtoRequestModel);
