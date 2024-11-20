@@ -1,8 +1,8 @@
 package com.thigas.quack.Domain.Utils;
 
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Classe utilitária para geração de nomes de usuário.

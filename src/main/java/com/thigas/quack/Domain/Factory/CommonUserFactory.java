@@ -2,7 +2,6 @@ package com.thigas.quack.Domain.Factory;
 
 import com.thigas.quack.Domain.Entity.CommonUser;
 import com.thigas.quack.Domain.Entity.User;
-import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
 
 import java.time.LocalDate;
@@ -34,13 +33,13 @@ public class CommonUserFactory implements UserFactory {
      *   <li><strong>isActive</strong>: Inicializado como {@code true}, indicando que o usuário está ativo.</li>
      * </ul>
      *
-     * @param name O nome do usuário.
-     * @param surname O sobrenome do usuário.
-     * @param phone O número de telefone do usuário.
-     * @param email O endereço de e-mail do usuário.
-     * @param password A senha do usuário.
-     * @param cpf O CPF do usuário.
-     * @param bornAt A data de nascimento do usuário.
+     * @param name      O nome do usuário.
+     * @param surname   O sobrenome do usuário.
+     * @param phone     O número de telefone do usuário.
+     * @param email     O endereço de e-mail do usuário.
+     * @param password  A senha do usuário.
+     * @param cpf       O CPF do usuário.
+     * @param bornAt    A data de nascimento do usuário.
      * @param imagePath O caminho para a imagem de perfil do usuário.
      * @return Uma instância de {@link CommonUser} preenchida com os dados fornecidos e gerados.
      */

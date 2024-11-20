@@ -3,7 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 

@@ -1,6 +1,5 @@
 package com.thigas.quack.Domain.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

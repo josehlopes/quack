@@ -1,6 +1,5 @@
 package com.thigas.quack.Adapter.Formatter;
 
-import com.thigas.quack.Domain.Utils.ResponseType;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.AddressPresenter;

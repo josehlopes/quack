@@ -1,8 +1,8 @@
 package com.thigas.quack.UseCase.Presenter;
 
 import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
 
 /**
  * Interface responsável por preparar as visualizações de resposta para operações relacionadas ao usuário.
@@ -18,7 +18,7 @@ public interface UserPresenter {
      * @param user o modelo de resposta contendo as informações do usuário logado.
      * @return o modelo de resposta preparado para a visualização de sucesso.
      */
-    ResultDtoResponseModel prepareLoginSuccessView(ResultDtoResponseModel user);
+    UserLoginDtoResponseModel prepareLoginSuccessView(UserLoginDtoResponseModel user);
 
     /**
      * Prepara a visualização de falha para a operação de login.
@@ -26,7 +26,7 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    ResultDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
+    UserLoginDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
 
     /**
      * Prepara a visualização de sucesso para a operação de registro.
@@ -34,7 +34,7 @@ public interface UserPresenter {
      * @param user o modelo de resposta contendo as informações do usuário registrado.
      * @return o modelo de resposta preparado para a visualização de sucesso.
      */
-    ResultDtoResponseModel prepareRegisterSuccessView(ResultDtoResponseModel user);
+    UserRegisterDtoResponseModel prepareRegisterSuccessView(UserRegisterDtoResponseModel user);
 
     /**
      * Prepara a visualização de falha para a operação de registro.
@@ -42,5 +42,5 @@ public interface UserPresenter {
      * @param error o modelo de resposta contendo as informações de erro.
      * @return o modelo de resposta preparado para a visualização de falha.
      */
-    ResultDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
+    UserRegisterDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
 }

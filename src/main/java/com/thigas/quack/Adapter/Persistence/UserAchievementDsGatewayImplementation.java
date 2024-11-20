@@ -1,10 +1,10 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserAchievementDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserAchievementRepository;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Model.Request.User.UserAchievementDtoRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

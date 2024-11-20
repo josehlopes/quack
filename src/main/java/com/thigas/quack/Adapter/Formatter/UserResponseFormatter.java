@@ -1,9 +1,8 @@
 package com.thigas.quack.Adapter.Formatter;
 
-import com.thigas.quack.Domain.Utils.ResponseType;
 import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -37,8 +36,8 @@ public class UserResponseFormatter implements UserPresenter {
      * @return Uma nova instância de {@link UserLoginDtoResponseModel}.
      */
     @Override
-    public ResultDtoResponseModel prepareLoginSuccessView(ResultDtoResponseModel response) {
-        return new ResultDtoResponseModel(response.message(), response.code(), response.responseType());
+    public UserLoginDtoResponseModel prepareLoginSuccessView(UserLoginDtoResponseModel response) {
+        return new UserLoginDtoResponseModel(response.id(), response.token());
     }
 
     /**
@@ -51,7 +50,7 @@ public class UserResponseFormatter implements UserPresenter {
      * @throws ResponseStatusException Sempre que ocorre uma falha no login.
      */
     @Override
-    public ResultDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error) {
+    public UserLoginDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.message());
     }
 
@@ -65,8 +64,8 @@ public class UserResponseFormatter implements UserPresenter {
      * @return Uma nova instância de {@link UserRegisterDtoResponseModel}.
      */
     @Override
-    public ResultDtoResponseModel prepareRegisterSuccessView(ResultDtoResponseModel response) {
-        return new ResultDtoResponseModel(response.message(), response.code(), response.responseType());
+    public UserRegisterDtoResponseModel prepareRegisterSuccessView(UserRegisterDtoResponseModel response) {
+        return new UserRegisterDtoResponseModel(response.token());
     }
 
     /**
@@ -79,7 +78,7 @@ public class UserResponseFormatter implements UserPresenter {
      * @throws ResponseStatusException Sempre que ocorre uma falha no registro.
      */
     @Override
-    public ResultDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error) {
+    public UserRegisterDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.message());
     }
 }

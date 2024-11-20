@@ -1,13 +1,12 @@
 package com.thigas.quack.Infrastructure.Security;
 
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
 import com.thigas.quack.UseCase.Service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +20,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     private final UserService userService;
 
@@ -31,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         var token = recoverToken(request);
 
-        if (request.getRequestURI().equals("/api/auth/register") || request.getRequestURI().equals("/api/auth/login")) {
+        if (request.getRequestURI().equals("/api/users/register") || request.getRequestURI().equals("/api/users/login")) {
             filterChain.doFilter(request, response);
             return;
         }

@@ -3,11 +3,12 @@ package com.thigas.quack.Adapter.Repository;
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 /**

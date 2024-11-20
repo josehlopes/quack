@@ -1,11 +1,11 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -55,7 +55,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
      */
     @Override
-    public Optional<UserDsDtoRequestModel> getById(int id) {
+    public Optional<UserDsDtoRequestModel> getById(Integer id) {
         Optional<UserDataMapper> user = repository.findById(id);
         return user.map(mapper::toDsModel);
     }
@@ -67,7 +67,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se o usuário existir, {@code false} caso contrário.
      */
     @Override
-    public Boolean findById(int id) {
+    public Boolean findById(Integer id) {
         return repository.existsById(id);
     }
 
@@ -111,10 +111,12 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * Exclui um usuário do banco de dados com base no seu ID.
      *
      * @param id O ID do usuário a ser excluído.
+     * @return
      */
     @Override
-    public void deleteById(int id) {
+    public Boolean deleteById(Integer id) {
         repository.deleteById(id);
+        return true;
     }
 
     /**

@@ -1,10 +1,10 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserLessonDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserLessonRepository;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Model.Request.User.UserLessonDtoRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

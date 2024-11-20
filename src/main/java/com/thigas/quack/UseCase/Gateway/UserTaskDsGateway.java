@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserTaskDtoRequestModel;
 
 import java.util.Optional;
 

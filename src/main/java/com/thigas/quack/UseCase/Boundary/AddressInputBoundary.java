@@ -1,19 +1,19 @@
 package com.thigas.quack.UseCase.Boundary;
 
-import com.thigas.quack.UseCase.Model.Request.AddressCreateDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressCreateDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 
 import java.util.Optional;
 
 public interface AddressInputBoundary {
-    ResultDtoResponseModel create(AddressCreateDtoRequestModel address);
+    Boolean create(AddressCreateDtoRequestModel address);
 
-    Optional<AddressInfoDtoResponseModel> getByUserId(int userId);
-    Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(int userId);
+    Optional<AddressInfoDtoResponseModel> getUserAddress(Integer userId, Integer addressId);
 
-    void update(AddressDsDtoRequestModel userDto);
+    Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(Integer userId);
 
-    void delete(int id);
+    Boolean update(AddressDsDtoRequestModel addressDsDtoRequestModel);
+
+    Boolean delete(Integer id);
 }

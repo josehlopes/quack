@@ -1,6 +1,6 @@
 package com.thigas.quack.UseCase.Gateway;
 
-import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserStepDtoRequestModel;
 
 import java.util.Optional;
 

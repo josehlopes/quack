@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommonAddress implements Address{
+public class CommonAddress implements Address {
 
     private Integer id;
-    private User user;
+    private Integer userId;
     private String street;
     private String city;
     private String state;

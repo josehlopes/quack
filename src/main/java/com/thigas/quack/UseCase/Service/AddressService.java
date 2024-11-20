@@ -2,22 +2,19 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Domain.Entity.Address;
 import com.thigas.quack.Domain.Factory.AddressFactory;
-import com.thigas.quack.Domain.Utils.ResponseType;
 import com.thigas.quack.UseCase.Boundary.AddressInputBoundary;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
-import com.thigas.quack.UseCase.Model.Request.AddressCreateDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressCreateDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserInfoDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.AddressPresenter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -32,11 +29,12 @@ public class AddressService implements AddressInputBoundary {
     private final UserDsGateway userDsGateway;
     private final ResponseService responseService;
 
-    public ResultDtoResponseModel create(AddressCreateDtoRequestModel addressCreateDtoRequestModel) {
+    public Boolean create(AddressCreateDtoRequestModel addressCreateDtoRequestModel) {
         UserDsDtoRequestModel userDto = userDsGateway.getById(addressCreateDtoRequestModel.userId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         Address address = addressFactory.create(
+                userDto.id(),
                 addressCreateDtoRequestModel.street(),
                 addressCreateDtoRequestModel.city(),
                 addressCreateDtoRequestModel.state(),
@@ -45,24 +43,24 @@ public class AddressService implements AddressInputBoundary {
                 addressCreateDtoRequestModel.number()
         );
 
-        AddressDsDtoRequestModel addressDsDtoRequestModel = addressMapper.toDsModel(address, addressCreateDtoRequestModel.userId());
+        AddressDsDtoRequestModel addressDsDtoRequestModel = addressMapper.toDsModel(address);
 
-        addressDsGateway.update(addressDsDtoRequestModel);
-        return new ResultDtoResponseModel("Address created successfully", HttpStatus.CREATED.value(), ResponseType.SUCCESS);
+        addressDsGateway.save(addressDsDtoRequestModel);
+        return true;
     }
 
-    public Optional<AddressInfoDtoResponseModel> getByUserId(int userId) {
-        return addressDsGateway.getByUserId(userId);
+    public Optional<AddressInfoDtoResponseModel> getUserAddress(Integer userId, Integer addressId) {
+        return addressDsGateway.getUserAddress(userId, addressId);
     }
 
-    public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(int userId) {
+    public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(Integer userId) {
         Iterable<AddressInfoDtoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
         return StreamSupport.stream(addresses.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void update(AddressDsDtoRequestModel addressDtoRequest) {
+    public Boolean update(AddressDsDtoRequestModel addressDtoRequest) {
         AddressInfoDtoResponseModel existingAddress = addressDsGateway.getById(addressDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
 
@@ -75,17 +73,19 @@ public class AddressService implements AddressInputBoundary {
                 addressDtoRequest.country() != null ? addressDtoRequest.country() : existingAddress.country(),
                 addressDtoRequest.zipCode() != null ? addressDtoRequest.zipCode() : existingAddress.zipCode(),
                 addressDtoRequest.number() != null ? addressDtoRequest.number() : existingAddress.number(),
-                addressDtoRequest.isActive()
+                true
         );
 
         addressDsGateway.update(updatedAddress);
+        return true;
     }
 
     @Override
-    public void delete(int id) {
+    public Boolean delete(Integer id) {
         if (!addressDsGateway.existsById(id)) {
-            throw new EntityNotFoundException("Address not found");
+            throw new NoSuchElementException("Address not found");
         }
         addressDsGateway.deleteById(id);
+        return true;
     }
 }

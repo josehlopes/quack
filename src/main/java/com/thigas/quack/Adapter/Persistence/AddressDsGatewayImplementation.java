@@ -1,11 +1,10 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.AddressMapper;
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Repository.AddressRepository;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
-import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
+import com.thigas.quack.UseCase.Mapper.AddressMapper;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
 import lombok.RequiredArgsConstructor;
 
@@ -26,23 +25,24 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Optional<AddressInfoDtoResponseModel> getById(int id) {
+    public Optional<AddressInfoDtoResponseModel> getById(Integer id) {
         Optional<AddressDataMapper> address = repository.getById(id);
         return address.map(mapper::toInfoDto);
     }
 
     @Override
-    public Optional<AddressInfoDtoResponseModel> getByUserId(int userId) {
-        Optional<AddressDataMapper> address = repository.getByUserId(userId);
+    public Optional<AddressInfoDtoResponseModel> getUserAddress(Integer userId, Integer addressId) {
+        Optional<AddressDataMapper> address = repository.getUserAddress(userId, addressId);
         return address.map(mapper::toInfoDto);
     }
 
     @Override
-    public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(int userId) {
+    public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(Integer userId) {
         Iterable<AddressDataMapper> addresses = repository.getAllUserAddresses(userId);
         return StreamSupport.stream(addresses.spliterator(), false)
                 .map(mapper::toInfoDto)
-                .collect(Collectors.toList());    }
+                .collect(Collectors.toList());
+    }
 
     @Override
     public Boolean update(AddressDsDtoRequestModel addressDtoRequest) {
@@ -50,13 +50,15 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
         repository.update(toUpdateAddress);
         return true;
     }
+
     @Override
-    public void deleteById(int id) {
+    public Boolean deleteById(Integer id) {
         repository.deleteById(id);
+        return true;
     }
 
     @Override
-    public Boolean existsById(int id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 }

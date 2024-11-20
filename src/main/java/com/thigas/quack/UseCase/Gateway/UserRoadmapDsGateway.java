@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserRoadmapDtoRequestModel;
 
 import java.util.List;
 import java.util.Optional;

@@ -2,7 +2,7 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserAchievementDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 

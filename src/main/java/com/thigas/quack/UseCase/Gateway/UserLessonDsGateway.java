@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.UserLessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserLessonDtoRequestModel;
 
 import java.util.Optional;
 

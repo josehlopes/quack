@@ -38,12 +38,12 @@
 //        return mapStructMapper.dtoToModel(userDTO, context);
 //    }
 //
-////    public UserDsDtoRequestModel toDatabaseModel(UserDTO userDTO) {
-////        if (userDTO == null) {
-////            throw new IllegalArgumentException("UserDTO cannot be null");
-////        }
-////        return mapStructMapper.dtoToEntity(userDTO, context);
-////    }
+/// /    public UserDsDtoRequestModel toDatabaseModel(UserDTO userDTO) {
+/// /        if (userDTO == null) {
+/// /            throw new IllegalArgumentException("UserDTO cannot be null");
+/// /        }
+/// /        return mapStructMapper.dtoToEntity(userDTO, context);
+/// /    }
 //
 //    //USER ROADMAP METHOD
 //    public UserRoadmapDTO toDtoModel(UserRoadmapDtoRequestModel userRoadmapDtoRequestModel) {

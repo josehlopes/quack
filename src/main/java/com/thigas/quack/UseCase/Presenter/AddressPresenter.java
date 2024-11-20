@@ -5,5 +5,6 @@ import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 
 public interface AddressPresenter {
     AddressInfoDtoResponseModel prepareGetAddressSuccessView(AddressInfoDtoResponseModel address);
+
     AddressInfoDtoResponseModel prepareGetAddressFailView(ResultDtoResponseModel error);
 }

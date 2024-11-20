@@ -1,9 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserInfoDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
 
 import java.util.Optional;
 
@@ -13,15 +11,21 @@ import java.util.Optional;
 public interface UserDsGateway {
     void save(UserDsDtoRequestModel user);
 
-    Optional<UserDsDtoRequestModel> getById(int id);
-    Boolean findById(int id);
+    Optional<UserDsDtoRequestModel> getById(Integer id);
+
+    Boolean findById(Integer id);
+
     Optional<UserDsDtoRequestModel> getByEmail(String email);
+
     Optional<UserDsDtoRequestModel> getByUsername(String username);
+
     Boolean findByEmail(String email);
+
     Boolean findByUsername(String username);
+
     Iterable<UserDsDtoRequestModel> getAll();
 
     Boolean update(UserDsDtoRequestModel user);
 
-    void deleteById(int id);
+    Boolean deleteById(Integer id);
 }

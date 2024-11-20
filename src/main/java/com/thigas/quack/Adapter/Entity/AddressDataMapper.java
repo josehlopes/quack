@@ -1,6 +1,5 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -19,24 +18,33 @@ public class AddressDataMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @ToString.Exclude
     private UserDataMapper user;
+
     @Column(nullable = false)
     private String street;
+
     @Column(nullable = false)
     private String city;
+
     @Column(nullable = false)
     private String state;
+
     @Column(nullable = false)
     private String country;
-    @Column(name = "zip_code", nullable = false, length = 20)
+
+    @Column(name = "zip_code", nullable = false)
     private String zipCode;
+
     @Column(nullable = false)
     private String number;
+
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
+
 
     @Override
     public final boolean equals(Object o) {

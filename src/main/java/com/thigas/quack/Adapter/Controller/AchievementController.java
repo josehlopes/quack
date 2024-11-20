@@ -1,6 +1,6 @@
 //package com.thigas.quack.Adapter.Controller;
 //
-//import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
+//import com.thigas.quack.UseCase.Model.Request.Address.AchievementDtoRequestModel;
 //import com.thigas.quack.UseCase.Service.AchievementService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.beans.factory.annotation.Autowired;

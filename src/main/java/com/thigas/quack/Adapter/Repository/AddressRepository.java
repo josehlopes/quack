@@ -1,7 +1,6 @@
 package com.thigas.quack.Adapter.Repository;
 
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
-import com.thigas.quack.Adapter.Entity.UserDataMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -64,14 +63,15 @@ public class AddressRepository {
     }
 
     @Transactional(readOnly = true)
-    public Optional<AddressDataMapper> getByUserId(Integer userId) {
+    public Optional<AddressDataMapper> getUserAddress(Integer userId, Integer addressId) {
         try {
             TypedQuery<AddressDataMapper> query = entityManager.createQuery(
-                    "SELECT a FROM AddressDataMapper a WHERE a.user.id = :user_id", AddressDataMapper.class);
+                    "SELECT a FROM AddressDataMapper a WHERE a.user.id = :user_id AND a.id = :address_id", AddressDataMapper.class);
             query.setParameter("user_id", userId);
+            query.setParameter("address_id", addressId);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
-            logger.error("Erro ao buscar endereço por ID do endereço: {}", e.getMessage(), e);
+            logger.error("Erro ao buscar endereço do usuário: {}", e.getMessage(), e);
         }
         return Optional.empty();
     }
@@ -84,7 +84,7 @@ public class AddressRepository {
             query.setParameter("user_id", userId);
             return query.getResultList();
         } catch (Exception e) {
-            logger.error("Erro ao buscar todos os endereços do endereço: {}", e.getMessage(), e);
+            logger.error("Erro ao buscar endereços do usuário: {}", e.getMessage(), e);
         }
         return null;
     }
@@ -100,8 +100,6 @@ public class AddressRepository {
             logger.error("Erro ao excluir endereço por ID: {}", e.getMessage(), e);
         }
     }
-
-
 
 
 }

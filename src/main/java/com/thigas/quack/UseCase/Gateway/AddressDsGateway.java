@@ -1,20 +1,23 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.AddressDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
 
 import java.util.Optional;
 
 public interface AddressDsGateway {
     void save(AddressDsDtoRequestModel address);
-    Optional<AddressInfoDtoResponseModel> getByUserId(int userId);
-    Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(int userId);
-    Optional<AddressInfoDtoResponseModel> getById(int id);
-    Boolean existsById(int id);
+
+    Optional<AddressInfoDtoResponseModel> getUserAddress(Integer userId, Integer addressId);
+
+    Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(Integer userId);
+
+    Optional<AddressInfoDtoResponseModel> getById(Integer id);
+
+    Boolean existsById(Integer id);
 
     Boolean update(AddressDsDtoRequestModel address);
 
-    void deleteById(int id);
+    Boolean deleteById(Integer id);
 }

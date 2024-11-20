@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.AchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.Address.AchievementDtoRequestModel;
 
 import java.util.Optional;
 

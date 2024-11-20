@@ -1,21 +1,20 @@
 package com.thigas.quack.UseCase.Boundary;
 
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserLoginDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
 
 
 //TODO: DEIXAR APENAS MÉTODOS RELACIONADOS A ENTRADA DE DADOS
 public interface UserInputBoundary {
-    ResultDtoResponseModel register(UserRegisterDtoRequestModel requestModel);
+    UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel requestModel);
 
-    ResultDtoResponseModel login(UserLoginDtoRequestModel requestModel);
+    UserLoginDtoResponseModel login(UserLoginDtoRequestModel requestModel);
 
-    void update(UserDsDtoRequestModel userDto);
+    Boolean update(UserDsDtoRequestModel userDto);
 
-    void delete(int id);
+    Boolean delete(Integer id);
 
 }

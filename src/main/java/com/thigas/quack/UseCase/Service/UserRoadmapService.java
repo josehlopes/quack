@@ -6,8 +6,8 @@ import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserRoadmapDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 

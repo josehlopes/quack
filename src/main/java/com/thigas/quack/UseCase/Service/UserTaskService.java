@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserTaskDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserTaskDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 

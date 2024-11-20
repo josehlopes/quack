@@ -9,20 +9,18 @@ import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRegisterDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserLoginDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.User.UserRegisterDtoRequestModel;
 import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserInfoDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -37,12 +35,11 @@ public class UserService implements UserInputBoundary {
     private final EncoderInputBoundary encoderInputBoundary;
     private final EncoderGateway encoderGateway;
     private final UserMapper userMapper;
-    private final ResponseService responseService;
 
-    public ResultDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
+    public UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
         if (userDsGateway.findByEmail(userRequest.email())) {
             return userPresenter.prepareRegisterFailView(
-                    responseService.createErrorResponse("This email is already in use", HttpStatus.CONFLICT)
+                    new ResultDtoResponseModel("Email already in use", HttpStatus.CONFLICT.value(), ResponseType.ERROR)
             );
         }
 
@@ -58,13 +55,11 @@ public class UserService implements UserInputBoundary {
 
         userDsGateway.save(userDsModel);
         String token = tokenGateway.generateToken(user.getEmail());
-        return userPresenter.prepareRegisterSuccessView(responseService.createSuccessResponse(
-                String.format("User registered successfully: %s, %s, %s", user.getEmail(), token), HttpStatus.CREATED)
-        );
+        return userPresenter.prepareRegisterSuccessView(new UserRegisterDtoResponseModel(token));
     }
 
     @Override
-    public ResultDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
+    public UserLoginDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
         Optional<UserDsDtoRequestModel> user = userDsGateway.getByEmail(userRequest.email());
         if (user.isEmpty()) {
             return userPresenter.prepareLoginFailView(
@@ -77,12 +72,10 @@ public class UserService implements UserInputBoundary {
             );
         }
         String token = tokenGateway.generateToken(user.get().email());
-        return userPresenter.prepareLoginSuccessView(responseService.createSuccessResponse(
-                String.format("User logged in successfully: %s, %s", user.get().email(), token), HttpStatus.OK)
-        );
+        return userPresenter.prepareLoginSuccessView(new UserLoginDtoResponseModel(user.get().id(), token));
     }
 
-    public Optional<UserDsDtoRequestModel>getById(int id) {
+    public Optional<UserDsDtoRequestModel> getById(Integer id) {
         return userDsGateway.getById(id);
     }
 
@@ -92,9 +85,9 @@ public class UserService implements UserInputBoundary {
                 .collect(Collectors.toList());
     }
 
-    public void update(UserDsDtoRequestModel userDTO) {
+    public Boolean update(UserDsDtoRequestModel userDTO) {
         UserDsDtoRequestModel existingUser = userDsGateway.getById(userDTO.id())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         UserDsDtoRequestModel updatedUser = new UserDsDtoRequestModel(
                 userDTO.id(),
@@ -113,13 +106,15 @@ public class UserService implements UserInputBoundary {
         );
 
         userDsGateway.update(updatedUser);
+        return true;
     }
 
-    public void delete(int id) {
+    public Boolean delete(Integer id) {
         if (!userDsGateway.findById(id)) {
-            throw new EntityNotFoundException("User not found");
+            throw new NoSuchElementException("User not found");
         }
         userDsGateway.deleteById(id);
+        return true;
     }
 
     public Optional<UserDsDtoRequestModel> findByEmail(String email) {
@@ -137,4 +132,5 @@ public class UserService implements UserInputBoundary {
     public Boolean existsById(int userId) {
         return userDsGateway.findById(userId);
     }
+
 }

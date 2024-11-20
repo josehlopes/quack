@@ -1,6 +1,5 @@
 package com.thigas.quack.Domain.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 

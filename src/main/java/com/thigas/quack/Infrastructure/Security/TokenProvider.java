@@ -27,23 +27,26 @@ public class TokenProvider implements TokenGateway {
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while authenticating");
+            throw new RuntimeException("Error while generating the JWT token for user: " + email, exception);
         }
     }
-
 
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.require(algorithm).withIssuer("quack").build().verify(token).getSubject();
+            return JWT.require(algorithm)
+                    .withIssuer("quack")
+                    .build()
+                    .verify(token)
+                    .getSubject();
         } catch (JWTVerificationException exception) {
             System.out.println("Token Validation Error: " + exception.getMessage());
-            throw new RuntimeException("Invalid or expired token");
+            throw new RuntimeException("Invalid or expired token: " + exception.getMessage(), exception);
         }
     }
 
     @Override
     public Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(5).toInstant(ZoneOffset.of("-03:00"));
+        return LocalDateTime.now().plusHours(5).toInstant(ZoneOffset.UTC);
     }
 }

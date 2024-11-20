@@ -21,13 +21,13 @@ public interface UserFactory {
     /**
      * Cria uma nova instância de {@link User}.
      *
-     * @param name O nome do usuário.
-     * @param surname O sobrenome do usuário.
-     * @param phone O número de telefone do usuário.
-     * @param email O endereço de e-mail do usuário.
-     * @param password A senha do usuário.
-     * @param cpf O CPF do usuário.
-     * @param bornAt A data de nascimento do usuário.
+     * @param name      O nome do usuário.
+     * @param surname   O sobrenome do usuário.
+     * @param phone     O número de telefone do usuário.
+     * @param email     O endereço de e-mail do usuário.
+     * @param password  A senha do usuário.
+     * @param cpf       O CPF do usuário.
+     * @param bornAt    A data de nascimento do usuário.
      * @param imagePath O caminho para a imagem de perfil do usuário.
      * @return Uma instância de {@link User}.
      */

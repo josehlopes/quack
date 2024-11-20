@@ -19,6 +19,12 @@ public class QuackApplication {
         SpringApplication.run(QuackApplication.class, args);
     }
 
+    static TypeFilter removeModelAndEntitiesFilter() {
+        return (MetadataReader mr, MetadataReaderFactory mrf) -> !mr.getClassMetadata()
+                .getClassName()
+                .endsWith("Model");
+    }
+
     @Bean
     BeanFactoryPostProcessor beanFactoryPostProcessor(ApplicationContext beanRegistry) {
         return beanFactory -> {
@@ -47,11 +53,5 @@ public class QuackApplication {
         });
         beanDefinitionScanner.addIncludeFilter(removeModelAndEntitiesFilter());
         beanDefinitionScanner.scan("com.thigas.quack");
-    }
-
-    static TypeFilter removeModelAndEntitiesFilter() {
-        return (MetadataReader mr, MetadataReaderFactory mrf) -> !mr.getClassMetadata()
-                .getClassName()
-                .endsWith("Model");
     }
 }

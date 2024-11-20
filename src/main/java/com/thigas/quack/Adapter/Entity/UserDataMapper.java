@@ -1,12 +1,13 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Entidade JPA que mapeia os dados do usuário para a tabela "app_user" no banco de dados.
@@ -97,7 +98,7 @@ public class UserDataMapper {
      *
      * <p>Esse campo é obrigatório e não pode ser nulo.</p>
      */
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     /**
@@ -150,12 +151,16 @@ public class UserDataMapper {
     @Column(name = "image_path")
     private String imagePath;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<AddressDataMapper> addresses = new HashSet<>();
+
     /**
      * Método sobrescrito para comparar objetos de forma segura, considerando proxies do Hibernate.
      *
      * @param o O objeto a ser comparado.
      * @return {@code true} se os objetos forem iguais, {@code false} caso contrário.
      */
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

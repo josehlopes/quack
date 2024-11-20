@@ -1,10 +1,10 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.UserStepDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserStepRepository;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-import com.thigas.quack.UseCase.Model.Request.UserStepDtoRequestModel;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Model.Request.User.UserStepDtoRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

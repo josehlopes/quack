@@ -1,13 +1,10 @@
 package com.thigas.quack.Domain.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
-
-
 public interface Address {
 
     Integer getId();
 
-    User getUser();
+    Integer getUserId();
 
     String getStreet();
 

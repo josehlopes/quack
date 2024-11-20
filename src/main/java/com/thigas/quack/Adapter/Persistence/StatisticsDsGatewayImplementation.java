@@ -1,12 +1,11 @@
 package com.thigas.quack.Adapter.Persistence;
 
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
+import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsDtoRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
