@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.UserTaskDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserTaskRepository;
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserTaskDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserTaskRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,19 +18,19 @@ public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(UserTaskDtoRequestModel userTaskDtoRequest) {
+    public void save(UserTaskRequestModel userTaskDtoRequest) {
         UserTaskDataMapper toSaveUserTask = mapper.mapUserTaskDtoRequestToDataMapper(userTaskDtoRequest);
         repository.save(toSaveUserTask);
     }
 
     @Override
-    public Optional<UserTaskDtoRequestModel> findById(int id) {
+    public Optional<UserTaskRequestModel> findById(int id) {
         Optional<UserTaskDataMapper> userTask = repository.findById(id);
         return userTask.map(mapper::mapUserTaskDataMapperToDtoRequest);
     }
 
     @Override
-    public List<UserTaskDtoRequestModel> findAll() {
+    public List<UserTaskRequestModel> findAll() {
         List<UserTaskDataMapper> userTasks = repository.findAll();
         return userTasks.stream()
                 .map(mapper::mapUserTaskDataMapperToDtoRequest)

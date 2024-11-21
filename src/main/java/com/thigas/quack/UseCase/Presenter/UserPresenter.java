@@ -1,46 +1,26 @@
 package com.thigas.quack.UseCase.Presenter;
 
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 
-/**
- * Interface responsável por preparar as visualizações de resposta para operações relacionadas ao usuário.
- *
- * <p>Esta interface define métodos para preparar as respostas de sucesso e falha
- * para operações de login e registro de usuários.</p>
- */
 public interface UserPresenter {
 
     /**
-     * Prepara a visualização de sucesso para a operação de login.
+     * Prepara a visualização de falha para a operação, encapsulando os dados de erro
+     * em uma resposta com falha e o código HTTP apropriado, aceitando qualquer tipo de resposta.
      *
-     * @param user o modelo de resposta contendo as informações do usuário logado.
-     * @return o modelo de resposta preparado para a visualização de sucesso.
+     * @param error o modelo de erro contendo as informações de falha.
+     * @param <T> O tipo genérico de resposta, pode ser UserLoginResponseModel, UserRegisterResponseModel ou outros.
+     * @return o modelo de resposta encapsulado em um {@link ResponseWrapper} com erro.
      */
-    UserLoginDtoResponseModel prepareLoginSuccessView(UserLoginDtoResponseModel user);
+    <T> ResponseWrapper<T> prepareFailView(T error, int statusCode);
 
     /**
-     * Prepara a visualização de falha para a operação de login.
+     * Prepara a visualização de sucesso para a operação, encapsulando os dados de sucesso
+     * em uma resposta com sucesso e o código HTTP apropriado, aceitando qualquer tipo de resposta.
      *
-     * @param error o modelo de resposta contendo as informações de erro.
-     * @return o modelo de resposta preparado para a visualização de falha.
+     * @param response o modelo de resposta contendo as informações de sucesso.
+     * @param <T> O tipo genérico de resposta, pode ser UserLoginResponseModel, UserRegisterResponseModel ou outros.
+     * @return o modelo de resposta encapsulado em um {@link ResponseWrapper} com sucesso.
      */
-    UserLoginDtoResponseModel prepareLoginFailView(ResultDtoResponseModel error);
-
-    /**
-     * Prepara a visualização de sucesso para a operação de registro.
-     *
-     * @param user o modelo de resposta contendo as informações do usuário registrado.
-     * @return o modelo de resposta preparado para a visualização de sucesso.
-     */
-    UserRegisterDtoResponseModel prepareRegisterSuccessView(UserRegisterDtoResponseModel user);
-
-    /**
-     * Prepara a visualização de falha para a operação de registro.
-     *
-     * @param error o modelo de resposta contendo as informações de erro.
-     * @return o modelo de resposta preparado para a visualização de falha.
-     */
-    UserRegisterDtoResponseModel prepareRegisterFailView(ResultDtoResponseModel error);
+    <T> ResponseWrapper<T> prepareSuccessView(T response, int statusCode);
 }

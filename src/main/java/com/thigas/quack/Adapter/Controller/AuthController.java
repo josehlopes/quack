@@ -1,10 +1,10 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
-import com.thigas.quack.UseCase.Model.Request.User.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserRegisterDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
+import com.thigas.quack.UseCase.Model.Response.UserLoginResponseModel;
+import com.thigas.quack.UseCase.Model.Response.UserRegisterResponseModel;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,14 +21,14 @@ public class AuthController {
     private final UserInputBoundary userInput;
 
     @PostMapping("users/login")
-    public ResponseEntity<UserLoginDtoResponseModel> login(@Valid @RequestBody UserLoginDtoRequestModel loginBody) {
-        UserLoginDtoResponseModel response = userInput.login(loginBody);
+    public ResponseEntity<UserLoginResponseModel> login(@Valid @RequestBody UserLoginRequestModel loginBody) {
+        UserLoginResponseModel response = userInput.login(loginBody);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("users/register")
-    public ResponseEntity<UserRegisterDtoResponseModel> register(@Valid @RequestBody UserRegisterDtoRequestModel registerBody) {
-        UserRegisterDtoResponseModel response = userInput.register(registerBody);
+    public ResponseEntity<UserRegisterResponseModel> register(@Valid @RequestBody UserRegisterRequestModel registerBody) {
+        UserRegisterResponseModel response = userInput.register(registerBody);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

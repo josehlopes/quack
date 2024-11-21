@@ -173,9 +173,9 @@ public class UserDataMapper {
     }
 
     /**
-     * Método sobrescrito para calcular o hash code de forma segura, considerando proxies do Hibernate.
+     * Método sobrescrito para calcular o hash statusCode de forma segura, considerando proxies do Hibernate.
      *
-     * @return O hash code da classe ou do proxy correspondente.
+     * @return O hash statusCode da classe ou do proxy correspondente.
      */
     @Override
     public final int hashCode() {

@@ -1,23 +1,22 @@
+// src/main/java/com/thigas/quack/UseCase/Service/UserService.java
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Domain.Entity.User;
+import com.thigas.quack.Domain.Entity.Interface.User;
 import com.thigas.quack.Domain.Factory.UserFactory;
-import com.thigas.quack.Domain.Utils.ResponseType;
 import com.thigas.quack.UseCase.Boundary.EncoderInputBoundary;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserRegisterDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Model.Response.UserLoginResponseModel;
 import com.thigas.quack.UseCase.Presenter.UserPresenter;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
@@ -36,11 +35,9 @@ public class UserService implements UserInputBoundary {
     private final EncoderGateway encoderGateway;
     private final UserMapper userMapper;
 
-    public UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel userRequest) {
+    public ResponseWrapper<GenericResponseModel> register(UserRegisterRequestModel userRequest) {
         if (userDsGateway.findByEmail(userRequest.email())) {
-            return userPresenter.prepareRegisterFailView(
-                    new ResultDtoResponseModel("Email already in use", HttpStatus.CONFLICT.value(), ResponseType.ERROR)
-            );
+            return userPresenter.prepareFailView( new GenericResponseModel("Email already in use"), 409);
         }
 
         String encodedPassword = encoderInputBoundary.encode(userRequest.password());
@@ -51,45 +48,39 @@ public class UserService implements UserInputBoundary {
                 encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
         );
 
-        UserDsDtoRequestModel userDsModel = userMapper.toDsModel(user);
+        UserDsRequestModel userDsModel = userMapper.toDsModel(user);
 
         userDsGateway.save(userDsModel);
         String token = tokenGateway.generateToken(user.getEmail());
-        return userPresenter.prepareRegisterSuccessView(new UserRegisterDtoResponseModel(token));
+        return userPresenter.prepareSuccessView(new GenericResponseModel(token), 201);
     }
 
     @Override
-    public UserLoginDtoResponseModel login(UserLoginDtoRequestModel userRequest) {
-        Optional<UserDsDtoRequestModel> user = userDsGateway.getByEmail(userRequest.email());
+    public ResponseWrapper<UserLoginResponseModel> login(UserLoginRequestModel userRequest) {
+        Optional<UserDsRequestModel> user = userDsGateway.getByEmail(userRequest.email());
         if (user.isEmpty()) {
-            return userPresenter.prepareLoginFailView(
-                    new ResultDtoResponseModel("User not found", HttpStatus.NOT_FOUND.value(), ResponseType.ERROR)
-            );
+            return userPresenter.prepareFailView(new GenericResponseModel("User not found"), 404);
         }
+
         if (!encoderGateway.match(userRequest.password(), user.get().password())) {
-            return userPresenter.prepareLoginFailView(
-                    new ResultDtoResponseModel("Invalid password", HttpStatus.UNAUTHORIZED.value(), ResponseType.ERROR)
-            );
+            return userPresenter.prepareFailView(new GenericResponseModel("Invalid password"), 401);
         }
+
         String token = tokenGateway.generateToken(user.get().email());
-        return userPresenter.prepareLoginSuccessView(new UserLoginDtoResponseModel(user.get().id(), token));
+        UserLoginResponseModel responseModel = new UserLoginResponseModel(user.get().id(), token);
+        return userPresenter.prepareSuccessView(responseModel, 200);
     }
-
-    public Optional<UserDsDtoRequestModel> getById(Integer id) {
-        return userDsGateway.getById(id);
-    }
-
-    public Iterable<UserDsDtoRequestModel> getAll() {
-        Iterable<UserDsDtoRequestModel> users = userDsGateway.getAll();
+    public Iterable<UserDsRequestModel> getAll() {
+        Iterable<UserDsRequestModel> users = userDsGateway.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public Boolean update(UserDsDtoRequestModel userDTO) {
-        UserDsDtoRequestModel existingUser = userDsGateway.getById(userDTO.id())
+    public Boolean update(UserDsRequestModel userDTO) {
+        UserDsRequestModel existingUser = userDsGateway.getById(userDTO.id())
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
-        UserDsDtoRequestModel updatedUser = new UserDsDtoRequestModel(
+        UserDsRequestModel updatedUser = new UserDsRequestModel(
                 userDTO.id(),
                 userDTO.name() != null ? userDTO.name() : existingUser.name(),
                 userDTO.surname() != null ? userDTO.surname() : existingUser.surname(),
@@ -117,11 +108,11 @@ public class UserService implements UserInputBoundary {
         return true;
     }
 
-    public Optional<UserDsDtoRequestModel> findByEmail(String email) {
+    public Optional<UserDsRequestModel> findByEmail(String email) {
         return userDsGateway.getByEmail(email);
     }
 
-    public Optional<UserDsDtoRequestModel> findByUsername(String username) {
+    public Optional<UserDsRequestModel> findByUsername(String username) {
         return userDsGateway.getByUsername(username);
     }
 
@@ -132,5 +123,4 @@ public class UserService implements UserInputBoundary {
     public Boolean existsById(int userId) {
         return userDsGateway.findById(userId);
     }
-
 }

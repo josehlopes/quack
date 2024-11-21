@@ -4,8 +4,8 @@ import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Repository.AddressRepository;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
-import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
+import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -19,25 +19,25 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     private final AddressMapper mapper;
 
     @Override
-    public void save(AddressDsDtoRequestModel addressDtoRequest) {
+    public void save(AddressDsRequestModel addressDtoRequest) {
         AddressDataMapper toSaveAddress = mapper.toDataMapper(addressDtoRequest);
         repository.save(toSaveAddress);
     }
 
     @Override
-    public Optional<AddressInfoDtoResponseModel> getById(Integer id) {
+    public Optional<AddressInfoResponseModel> getById(Integer id) {
         Optional<AddressDataMapper> address = repository.getById(id);
         return address.map(mapper::toInfoDto);
     }
 
     @Override
-    public Optional<AddressInfoDtoResponseModel> getUserAddress(Integer userId, Integer addressId) {
+    public Optional<AddressInfoResponseModel> getUserAddress(Integer userId, Integer addressId) {
         Optional<AddressDataMapper> address = repository.getUserAddress(userId, addressId);
         return address.map(mapper::toInfoDto);
     }
 
     @Override
-    public Iterable<AddressInfoDtoResponseModel> getAllUserAddresses(Integer userId) {
+    public Iterable<AddressInfoResponseModel> getAllUserAddresses(Integer userId) {
         Iterable<AddressDataMapper> addresses = repository.getAllUserAddresses(userId);
         return StreamSupport.stream(addresses.spliterator(), false)
                 .map(mapper::toInfoDto)
@@ -45,7 +45,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean update(AddressDsDtoRequestModel addressDtoRequest) {
+    public Boolean update(AddressDsRequestModel addressDtoRequest) {
         AddressDataMapper toUpdateAddress = mapper.toDataMapper(addressDtoRequest);
         repository.update(toUpdateAddress);
         return true;

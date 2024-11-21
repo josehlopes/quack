@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
-import com.thigas.quack.UseCase.Model.Request.User.UserLessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -18,25 +18,25 @@ public class UserLessonService {
 
     private final UserService userService;
 
-    public void create(UserLessonDtoRequestModel userLessonDtoRequest) {
+    public void create(UserLessonRequestModel userLessonDtoRequest) {
         userLessonDsGateway.save(userLessonDtoRequest);
     }
 
-    public Optional<UserLessonDtoRequestModel> getById(int id) {
+    public Optional<UserLessonRequestModel> getById(int id) {
         return userLessonDsGateway.findById(id);
     }
 
-    public Iterable<UserLessonDtoRequestModel> getAll() {
-        Iterable<UserLessonDtoRequestModel> userLessons = userLessonDsGateway.findAll();
+    public Iterable<UserLessonRequestModel> getAll() {
+        Iterable<UserLessonRequestModel> userLessons = userLessonDsGateway.findAll();
         return StreamSupport.stream(userLessons.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(UserLessonDtoRequestModel userLessonDtoRequest) {
-        UserLessonDtoRequestModel existingUserLesson = userLessonDsGateway.findById(userLessonDtoRequest.id())
+    public void update(UserLessonRequestModel userLessonDtoRequest) {
+        UserLessonRequestModel existingUserLesson = userLessonDsGateway.findById(userLessonDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("User-Lesson not found"));
 
-        UserLessonDtoRequestModel updatedEntity = new UserLessonDtoRequestModel(
+        UserLessonRequestModel updatedEntity = new UserLessonRequestModel(
                 userLessonDtoRequest.id(),
                 userLessonDtoRequest.userId() != null ? userLessonDtoRequest.userId() : existingUserLesson.userId(),
                 userLessonDtoRequest.lessonId() != null ? userLessonDtoRequest.lessonId() : existingUserLesson.lessonId(),

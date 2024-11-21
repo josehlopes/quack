@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.RoadmapDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaRoadmapRepository;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.RoadmapDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -18,13 +18,13 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(RoadmapDtoRequestModel roadmapDtoRequest) {
+    public void save(RoadmapRequestModel roadmapDtoRequest) {
         RoadmapDataMapper toSaveRoadmap = mapper.mapRoadmapDtoRequestToDataMapper(roadmapDtoRequest);
         repository.save(toSaveRoadmap);
     }
 
     @Override
-    public Optional<RoadmapDtoRequestModel> findById(int id) {
+    public Optional<RoadmapRequestModel> findById(int id) {
         Optional<RoadmapDataMapper> roadmap = repository.findById(id);
         return roadmap.map(mapper::mapRoadmapDataMapperToDtoRequest);
     }
@@ -35,7 +35,7 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
     }
 
     @Override
-    public Iterable<RoadmapDtoRequestModel> findAll() {
+    public Iterable<RoadmapRequestModel> findAll() {
         Iterable<RoadmapDataMapper> roadmaps = repository.findAll();
         return StreamSupport.stream(roadmaps.spliterator(), false)
                 .map(mapper::mapRoadmapDataMapperToDtoRequest)

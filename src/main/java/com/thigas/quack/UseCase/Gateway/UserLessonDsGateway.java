@@ -1,16 +1,16 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.User.UserLessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
 
 import java.util.Optional;
 
 public interface UserLessonDsGateway {
-    void save(UserLessonDtoRequestModel userLesson);
+    void save(UserLessonRequestModel userLesson);
 
-    Optional<UserLessonDtoRequestModel> findById(int id);
+    Optional<UserLessonRequestModel> findById(int id);
 
-    Iterable<UserLessonDtoRequestModel> findAll();
+    Iterable<UserLessonRequestModel> findAll();
 
     boolean existsById(int id);
 

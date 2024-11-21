@@ -1,20 +1,20 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 
 import java.util.Optional;
 
 public interface StatisticsDsGateway {
-    void save(StatisticsDtoRequestModel statistics);
+    void save(StatisticsRequestModel statistics);
 
-    Optional<StatisticsDtoRequestModel> findById(int id);
+    Optional<StatisticsRequestModel> findById(int id);
 
-    Iterable<StatisticsDtoRequestModel> findAll();
+    Iterable<StatisticsRequestModel> findAll();
 
     void deleteById(int id);
 
-    Optional<StatisticsDtoRequestModel> findByUserId(int userId);
+    Optional<StatisticsRequestModel> findByUserId(int userId);
 
     void incrementRoadmapsCompleted(int userId);
 

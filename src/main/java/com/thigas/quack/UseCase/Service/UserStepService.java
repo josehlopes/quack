@@ -2,9 +2,9 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserStepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -21,25 +21,25 @@ public class UserStepService {
 
     private final UserService userService;
 
-    public void create(UserStepDtoRequestModel userStepDtoRequest) {
+    public void create(UserStepRequestModel userStepDtoRequest) {
         userStepDsGateway.save(userStepDtoRequest);
     }
 
-    public Optional<UserStepDtoRequestModel> getById(int id) {
+    public Optional<UserStepRequestModel> getById(int id) {
         return userStepDsGateway.findById(id);
     }
 
-    public Iterable<UserStepDtoRequestModel> getAll() {
-        Iterable<UserStepDtoRequestModel> userSteps = userStepDsGateway.findAll();
+    public Iterable<UserStepRequestModel> getAll() {
+        Iterable<UserStepRequestModel> userSteps = userStepDsGateway.findAll();
         return StreamSupport.stream(userSteps.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(UserStepDtoRequestModel userStepDtoRequest) {
-        UserStepDtoRequestModel existingUserStep = userStepDsGateway.findById(userStepDtoRequest.id())
+    public void update(UserStepRequestModel userStepDtoRequest) {
+        UserStepRequestModel existingUserStep = userStepDsGateway.findById(userStepDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDtoRequestModel updatedEntity = new UserStepDtoRequestModel(
+        UserStepRequestModel updatedEntity = new UserStepRequestModel(
                 userStepDtoRequest.id(),
                 userStepDtoRequest.userId() != null ? userStepDtoRequest.userId() : existingUserStep.userId(),
                 userStepDtoRequest.stepId() != null ? userStepDtoRequest.stepId() : existingUserStep.stepId(),
@@ -62,27 +62,27 @@ public class UserStepService {
             return false;
         }
 
-        UserDsDtoRequestModel user = userService.getById(userId).orElse(null);
-        StepDtoRequestModel step = stepService.getById(stepId).orElse(null);
+        UserDsRequestModel user = userService.getById(userId).orElse(null);
+        StepRequestModel step = stepService.getById(stepId).orElse(null);
 
         if (user == null || step == null) {
             return false;
         }
 
-        UserStepDtoRequestModel userStepDtoRequestModel = new UserStepDtoRequestModel(
+        UserStepRequestModel userStepRequestModel = new UserStepRequestModel(
                 null, user.id(), step.id(), Status.ACTIVE.getValue(), null
         );
 
-        userStepDsGateway.save(userStepDtoRequestModel);
+        userStepDsGateway.save(userStepRequestModel);
 
         return true;
     }
 
     public Boolean endStep(int id) {
-        UserStepDtoRequestModel existingUserStep = getById(id)
+        UserStepRequestModel existingUserStep = getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User-Step not found"));
 
-        UserStepDtoRequestModel userStepDtoRequestModel = new UserStepDtoRequestModel(
+        UserStepRequestModel userStepRequestModel = new UserStepRequestModel(
                 existingUserStep.id(),
                 existingUserStep.userId(),
                 existingUserStep.stepId(),
@@ -90,7 +90,7 @@ public class UserStepService {
                 existingUserStep.imagePath()
         );
 
-        userStepDsGateway.save(userStepDtoRequestModel);
+        userStepDsGateway.save(userStepRequestModel);
         return true;
     }
 }

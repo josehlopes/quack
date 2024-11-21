@@ -1,21 +1,21 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 
 import java.util.Optional;
 import java.util.Set;
 
 public interface LessonDsGateway {
-    void save(LessonDtoRequestModel lesson);
+    void save(LessonRequestModel lesson);
 
-    Set<LessonDtoRequestModel> saveAll(Set<LessonDtoRequestModel> lessons);
+    Set<LessonRequestModel> saveAll(Set<LessonRequestModel> lessons);
 
-    Optional<LessonDtoRequestModel> findById(int id);
+    Optional<LessonRequestModel> findById(int id);
 
     boolean existsById(int id);
 
-    Iterable<LessonDtoRequestModel> findAll();
+    Iterable<LessonRequestModel> findAll();
 
     void deleteById(int id);
 }

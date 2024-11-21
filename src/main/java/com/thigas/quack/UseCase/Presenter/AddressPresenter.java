@@ -1,10 +1,10 @@
 package com.thigas.quack.UseCase.Presenter;
 
-import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.ResultDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 
 public interface AddressPresenter {
-    AddressInfoDtoResponseModel prepareGetAddressSuccessView(AddressInfoDtoResponseModel address);
+    AddressInfoResponseModel prepareGetAddressSuccessView(AddressInfoResponseModel address);
 
-    AddressInfoDtoResponseModel prepareGetAddressFailView(ResultDtoResponseModel error);
+    AddressInfoResponseModel prepareGetAddressFailView(GenericResponseModel error);
 }

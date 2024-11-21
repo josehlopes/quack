@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
 
 import java.util.Optional;
 
@@ -9,23 +9,23 @@ import java.util.Optional;
 //TODO: MÉTODO FINDBYEMAIL ESTÁ VOLTANDO UM DS (DATA SOURCE) POR CAUSA QUE PRECISO DA SENHA PARA COMPARAR NO LOGIN
 //TODO: GETBYID RETORNMANDO DS POR QUE PRECISO PARA FAZER UPDATE
 public interface UserDsGateway {
-    void save(UserDsDtoRequestModel user);
+    void save(UserDsRequestModel user);
 
-    Optional<UserDsDtoRequestModel> getById(Integer id);
+    Optional<UserDsRequestModel> getById(Integer id);
 
     Boolean findById(Integer id);
 
-    Optional<UserDsDtoRequestModel> getByEmail(String email);
+    Optional<UserDsRequestModel> getByEmail(String email);
 
-    Optional<UserDsDtoRequestModel> getByUsername(String username);
+    Optional<UserDsRequestModel> getByUsername(String username);
 
     Boolean findByEmail(String email);
 
     Boolean findByUsername(String username);
 
-    Iterable<UserDsDtoRequestModel> getAll();
+    Iterable<UserDsRequestModel> getAll();
 
-    Boolean update(UserDsDtoRequestModel user);
+    Boolean update(UserDsRequestModel user);
 
     Boolean deleteById(Integer id);
 }

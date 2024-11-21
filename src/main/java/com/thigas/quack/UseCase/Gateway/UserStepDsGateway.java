@@ -1,15 +1,15 @@
 package com.thigas.quack.UseCase.Gateway;
 
-import com.thigas.quack.UseCase.Model.Request.User.UserStepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
 
 import java.util.Optional;
 
 public interface UserStepDsGateway {
-    void save(UserStepDtoRequestModel userStep);
+    void save(UserStepRequestModel userStep);
 
-    Optional<UserStepDtoRequestModel> findById(int id);
+    Optional<UserStepRequestModel> findById(int id);
 
-    Iterable<UserStepDtoRequestModel> findAll();
+    Iterable<UserStepRequestModel> findAll();
 
     boolean existsById(int id);
 

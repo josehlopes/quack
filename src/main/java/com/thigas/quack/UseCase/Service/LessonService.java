@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
-import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -15,16 +15,16 @@ public class LessonService {
 
     private final LessonDsGateway lessonDsGateway;
 
-    public void create(LessonDtoRequestModel lessonDtoRequest) {
+    public void create(LessonRequestModel lessonDtoRequest) {
         lessonDsGateway.save(lessonDtoRequest);
     }
 
-    public Set<LessonDtoRequestModel> createAll(Set<LessonDtoRequestModel> lessonDtoRequests) {
+    public Set<LessonRequestModel> createAll(Set<LessonRequestModel> lessonDtoRequests) {
         if (lessonDtoRequests == null || lessonDtoRequests.isEmpty()) {
             throw new IllegalArgumentException("LessonDtoRequests list cannot be null or empty");
         }
 
-        Set<LessonDtoRequestModel> savedLessons;
+        Set<LessonRequestModel> savedLessons;
         try {
             savedLessons = lessonDsGateway.saveAll(lessonDtoRequests);
         } catch (Exception e) {
@@ -34,20 +34,20 @@ public class LessonService {
         return savedLessons;
     }
 
-    public Optional<LessonDtoRequestModel> getById(int id) {
+    public Optional<LessonRequestModel> getById(int id) {
         return lessonDsGateway.findById(id);
     }
 
-    public Iterable<LessonDtoRequestModel> getAll() {
-        Iterable<LessonDtoRequestModel> lessons = lessonDsGateway.findAll();
+    public Iterable<LessonRequestModel> getAll() {
+        Iterable<LessonRequestModel> lessons = lessonDsGateway.findAll();
         return StreamSupport.stream(lessons.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(LessonDtoRequestModel lessonDtoRequest) {
-        LessonDtoRequestModel existingLesson = lessonDsGateway.findById(lessonDtoRequest.id())
+    public void update(LessonRequestModel lessonDtoRequest) {
+        LessonRequestModel existingLesson = lessonDsGateway.findById(lessonDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found"));
-        LessonDtoRequestModel updatedLesson = new LessonDtoRequestModel(
+        LessonRequestModel updatedLesson = new LessonRequestModel(
                 lessonDtoRequest.id(),
                 lessonDtoRequest.title() != null ? lessonDtoRequest.title() : existingLesson.title(),
                 lessonDtoRequest.description() != null ? lessonDtoRequest.description() : existingLesson.description(),

@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.UserStepDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserStepRepository;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserStepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,19 +18,19 @@ public class UserStepDsGatewayImplementation implements UserStepDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(UserStepDtoRequestModel userStepDtoRequest) {
+    public void save(UserStepRequestModel userStepDtoRequest) {
         UserStepDataMapper toSaveUserStep = mapper.mapUserStepDtoRequestToDataMapper(userStepDtoRequest);
         repository.save(toSaveUserStep);
     }
 
     @Override
-    public Optional<UserStepDtoRequestModel> findById(int id) {
+    public Optional<UserStepRequestModel> findById(int id) {
         Optional<UserStepDataMapper> userStep = repository.findById(id);
         return userStep.map(mapper::mapUserStepDataMapperToDtoRequest);
     }
 
     @Override
-    public List<UserStepDtoRequestModel> findAll() {
+    public List<UserStepRequestModel> findAll() {
         List<UserStepDataMapper> userSteps = repository.findAll();
         return userSteps.stream()
                 .map(mapper::mapUserStepDataMapperToDtoRequest)

@@ -2,7 +2,7 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
-import com.thigas.quack.UseCase.Model.Request.User.UserAchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -21,25 +21,25 @@ public class UserAchievementService {
 
     private UserService userService;
 
-    public void create(UserAchievementDtoRequestModel userAchievementDTO) {
+    public void create(UserAchievementRequestModel userAchievementDTO) {
         userAchievementDsGateway.save(userAchievementDTO);
     }
 
-    public Optional<UserAchievementDtoRequestModel> getById(int id) {
+    public Optional<UserAchievementRequestModel> getById(int id) {
         return userAchievementDsGateway.findById(id);
     }
 
-    public Iterable<UserAchievementDtoRequestModel> getAll() {
-        Iterable<UserAchievementDtoRequestModel> userAchievements = userAchievementDsGateway.findAll();
+    public Iterable<UserAchievementRequestModel> getAll() {
+        Iterable<UserAchievementRequestModel> userAchievements = userAchievementDsGateway.findAll();
         return StreamSupport.stream(userAchievements.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(UserAchievementDtoRequestModel userAchievementDTO) {
-        UserAchievementDtoRequestModel existingUserAchievement = userAchievementDsGateway.findById(userAchievementDTO.id())
+    public void update(UserAchievementRequestModel userAchievementDTO) {
+        UserAchievementRequestModel existingUserAchievement = userAchievementDsGateway.findById(userAchievementDTO.id())
                 .orElseThrow(() -> new EntityNotFoundException("User-Achievement not found"));
 
-        UserAchievementDtoRequestModel updatedEntity = new UserAchievementDtoRequestModel(
+        UserAchievementRequestModel updatedEntity = new UserAchievementRequestModel(
                 userAchievementDTO.id(),
                 userAchievementDTO.userId() != null ? userAchievementDTO.userId() : existingUserAchievement.userId(),
                 userAchievementDTO.achievementId() != null ? userAchievementDTO.achievementId() : existingUserAchievement.achievementId(),
@@ -60,14 +60,14 @@ public class UserAchievementService {
 //            return false;
 //        }
 //
-//        UserDsDtoRequestModel user = userService.getById(userId).orElse(null);
-//        AchievementDtoRequestModel achievement = achievementService.getById(achievementId).orElse(null);
+//        UserDsRequestModel user = userService.getById(userId).orElse(null);
+//        AchievementRequestModel achievement = achievementService.getById(achievementId).orElse(null);
 //
 //        if (user == null || achievement == null) {
 //            return false;
 //        }
 //
-//        UserAchievementDtoRequestModel userAchievementDtoRequestModel = new UserAchievementDtoRequestModel(
+//        UserAchievementRequestModel userAchievementDtoRequestModel = new UserAchievementRequestModel(
 //                null, user.id(), achievement.id(), null, OffsetDateTime.now().toString(), Status.UNLOCKED.getValue()
 //        );
 //
@@ -77,10 +77,10 @@ public class UserAchievementService {
 //    }
 
     public Boolean markAchievementAsCompleted(int id) {
-        UserAchievementDtoRequestModel existingUserAchievement = getById(id)
+        UserAchievementRequestModel existingUserAchievement = getById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User-Achievement not found"));
 
-        UserAchievementDtoRequestModel userAchievementDtoRequestModel = new UserAchievementDtoRequestModel(
+        UserAchievementRequestModel userAchievementRequestModel = new UserAchievementRequestModel(
                 existingUserAchievement.id(),
                 existingUserAchievement.userId(),
                 existingUserAchievement.achievementId(),
@@ -89,7 +89,7 @@ public class UserAchievementService {
                 Status.FINISHED.getValue()
         );
 
-        userAchievementDsGateway.save(userAchievementDtoRequestModel);
+        userAchievementDsGateway.save(userAchievementRequestModel);
         return true;
     }
 }

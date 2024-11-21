@@ -5,7 +5,7 @@ import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -28,7 +28,7 @@ import java.util.stream.StreamSupport;
  * @see UserDsGateway
  * @see UserRepository
  * @see MapStructMapper
- * @see UserDsDtoRequestModel
+ * @see UserDsRequestModel
  * @see UserDataMapper
  */
 @AllArgsConstructor
@@ -43,7 +43,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @param requestModel O modelo de dados contendo as informações do usuário a ser salvo.
      */
     @Override
-    public void save(UserDsDtoRequestModel requestModel) {
+    public void save(UserDsRequestModel requestModel) {
         UserDataMapper userDataMapper = mapper.toDataMapper(requestModel);
         repository.save(userDataMapper);
     }
@@ -55,7 +55,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
      */
     @Override
-    public Optional<UserDsDtoRequestModel> getById(Integer id) {
+    public Optional<UserDsRequestModel> getById(Integer id) {
         Optional<UserDataMapper> user = repository.findById(id);
         return user.map(mapper::toDsModel);
     }
@@ -78,7 +78,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se a atualização foi bem-sucedida.
      * @throws EntityNotFoundException Se o usuário não for encontrado pelo ID fornecido.
      */
-    public Boolean update(UserDsDtoRequestModel user) {
+    public Boolean update(UserDsRequestModel user) {
         UserDataMapper existingUser = repository.findById(user.id())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         existingUser.setName(user.name());
@@ -100,7 +100,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Uma lista iterável contendo os modelos de dados dos usuários.
      */
     @Override
-    public Iterable<UserDsDtoRequestModel> getAll() {
+    public Iterable<UserDsRequestModel> getAll() {
         Iterable<UserDataMapper> users = repository.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .map(mapper::toDsModel)
@@ -126,7 +126,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
      */
     @Override
-    public Optional<UserDsDtoRequestModel> getByEmail(String email) {
+    public Optional<UserDsRequestModel> getByEmail(String email) {
         Optional<UserDataMapper> user = repository.findByEmail(email);
         return user.map(mapper::toDsModel);
     }
@@ -138,7 +138,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
      */
     @Override
-    public Optional<UserDsDtoRequestModel> getByUsername(String username) {
+    public Optional<UserDsRequestModel> getByUsername(String username) {
         Optional<UserDataMapper> user = repository.findByUsername(username);
         return user.map(mapper::toDsModel);
     }

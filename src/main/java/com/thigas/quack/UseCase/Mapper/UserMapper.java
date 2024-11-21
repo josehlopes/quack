@@ -1,9 +1,9 @@
 package com.thigas.quack.UseCase.Mapper;
 
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
-import com.thigas.quack.Domain.Entity.User;
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserInfoDtoResponseModel;
+import com.thigas.quack.Domain.Entity.Interface.User;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Response.UserInfoResponseModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -21,22 +21,22 @@ public interface UserMapper {
     @Mappings({
             @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     })
-    UserDsDtoRequestModel toDsModel(UserDataMapper user);
+    UserDsRequestModel toDsModel(UserDataMapper user);
 
     @Mappings({
             @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     })
-    UserDsDtoRequestModel toDsModel(User user);
+    UserDsRequestModel toDsModel(User user);
 
     @Mappings({
             @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     })
-    UserInfoDtoResponseModel toInfoDto(User user);
+    UserInfoResponseModel toInfoDto(User user);
 
     @Mappings({
             @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     })
-    UserDataMapper toDataMapper(UserDsDtoRequestModel userDsDtoRequestModel);
+    UserDataMapper toDataMapper(UserDsRequestModel userDsRequestModel);
 
     default String map(OffsetDateTime value) {
         return value != null ? value.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME) : null;

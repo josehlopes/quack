@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.TaskDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaTaskRepository;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class TaskDsGatewayImplementation implements TaskDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(TaskDtoRequestModel taskDtoRequest) {
+    public void save(TaskRequestModel taskDtoRequest) {
         TaskDataMapper toSaveTask = mapper.mapTaskDtoRequestToDataMapper(taskDtoRequest);
         repository.save(toSaveTask);
     }
@@ -29,13 +29,13 @@ public class TaskDsGatewayImplementation implements TaskDsGateway {
     }
 
     @Override
-    public Optional<TaskDtoRequestModel> findById(int id) {
+    public Optional<TaskRequestModel> findById(int id) {
         Optional<TaskDataMapper> task = repository.findById(id);
         return task.map(mapper::mapTaskDataMapperToDtoRequest);
     }
 
     @Override
-    public Iterable<TaskDtoRequestModel> findAll() {
+    public Iterable<TaskRequestModel> findAll() {
         Iterable<TaskDataMapper> tasks = repository.findAll();
         return StreamSupport.stream(tasks.spliterator(), false)
                 .map(mapper::mapTaskDataMapperToDtoRequest)

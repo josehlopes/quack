@@ -1,18 +1,18 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
-import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 
 import java.util.Optional;
 
 public interface StepDsGateway {
-    void save(StepDtoRequestModel step);
+    void save(StepRequestModel step);
 
     Boolean existsById(int id);
 
-    Optional<StepDtoRequestModel> findById(int id);
+    Optional<StepRequestModel> findById(int id);
 
-    Iterable<StepDtoRequestModel> findAll();
+    Iterable<StepRequestModel> findAll();
 
     void deleteById(int id);
 }

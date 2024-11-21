@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.UserAchievementDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserAchievementRepository;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserAchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -18,7 +18,7 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
     private final MapStructMapper mapper;
 
     @Override
-    public void save(UserAchievementDtoRequestModel userAchievementDtoRequest) {
+    public void save(UserAchievementRequestModel userAchievementDtoRequest) {
         UserAchievementDataMapper toSaveUserAchievement = mapper.mapUserAchievementDtoRequestToDataMapper(userAchievementDtoRequest);
         repository.save(toSaveUserAchievement);
     }
@@ -29,13 +29,13 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
     }
 
     @Override
-    public Optional<UserAchievementDtoRequestModel> findById(int id) {
+    public Optional<UserAchievementRequestModel> findById(int id) {
         Optional<UserAchievementDataMapper> userAchievement = repository.findById(id);
         return userAchievement.map(mapper::mapUserAchievementDataMapperToDtoRequest);
     }
 
     @Override
-    public Iterable<UserAchievementDtoRequestModel> findAll() {
+    public Iterable<UserAchievementRequestModel> findAll() {
         Iterable<UserAchievementDataMapper> userAchievements = repository.findAll();
         return StreamSupport.stream(userAchievements.spliterator(), false)
                 .map(mapper::mapUserAchievementDataMapperToDtoRequest)

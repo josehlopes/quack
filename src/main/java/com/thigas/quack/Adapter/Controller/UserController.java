@@ -4,10 +4,10 @@ import com.thigas.quack.UseCase.Boundary.AddressInputBoundary;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.UseCase.Model.Request.Address.AddressCreateDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.Address.AddressDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.AddressInfoDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.AddressCreateRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class UserController {
     private final AddressInputBoundary addressInput;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDsDtoRequestModel> getById(@PathVariable Integer id) {
+    public ResponseEntity<UserDsRequestModel> getById(@PathVariable Integer id) {
         try {
             return userDsGateway.getById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
@@ -37,9 +37,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<UserDsDtoRequestModel>> getAll() {
+    public ResponseEntity<Iterable<UserDsRequestModel>> getAll() {
         try {
-            Iterable<UserDsDtoRequestModel> users = userDsGateway.getAll();
+            Iterable<UserDsRequestModel> users = userDsGateway.getAll();
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDsDtoRequestModel userDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDsRequestModel userDTO) {
         try {
             if (id.equals(userDTO.id())) {
                 Boolean success = userInput.update(userDTO);
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/address/create")
-    public ResponseEntity<Void> createAddress(@RequestBody AddressCreateDtoRequestModel address) {
+    public ResponseEntity<Void> createAddress(@RequestBody AddressCreateRequestModel address) {
         try {
             Boolean success = addressInput.create(address);
             if (success) {
@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @GetMapping("/address/{userId}")
-    public ResponseEntity<AddressInfoDtoResponseModel> getAddressByUserId(@PathVariable Integer userId, @RequestParam Integer addressId) {
+    public ResponseEntity<AddressInfoResponseModel> getAddressByUserId(@PathVariable Integer userId, @RequestParam Integer addressId) {
         try {
             return addressDsGateway.getUserAddress(userId, addressId)
                     .map(address -> new ResponseEntity<>(address, HttpStatus.OK))
@@ -106,9 +106,9 @@ public class UserController {
     }
 
     @GetMapping("/address/getAll/{userId}")
-    public ResponseEntity<Iterable<AddressInfoDtoResponseModel>> getAllAddresses(@PathVariable Integer userId) {
+    public ResponseEntity<Iterable<AddressInfoResponseModel>> getAllAddresses(@PathVariable Integer userId) {
         try {
-            Iterable<AddressInfoDtoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
+            Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
             return new ResponseEntity<>(addresses, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -116,7 +116,7 @@ public class UserController {
     }
 
     @PutMapping("/address/update/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDsDtoRequestModel address) {
+    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDsRequestModel address) {
         try {
             if (!id.equals(address.id())) {
                 throw new IllegalArgumentException("Address id does not match");

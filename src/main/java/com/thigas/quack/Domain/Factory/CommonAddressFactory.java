@@ -1,7 +1,7 @@
 package com.thigas.quack.Domain.Factory;
 
-import com.thigas.quack.Domain.Entity.Address;
-import com.thigas.quack.Domain.Entity.CommonAddress;
+import com.thigas.quack.Domain.Entity.Interface.Address;
+import com.thigas.quack.Domain.Entity.Implementation.CommonAddress;
 
 public class CommonAddressFactory implements AddressFactory {
     @Override

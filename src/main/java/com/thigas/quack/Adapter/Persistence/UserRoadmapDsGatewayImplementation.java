@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserRoadmapRepository;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserRoadmapDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,19 +18,19 @@ public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway 
     private final MapStructMapper mapper;
 
     @Override
-    public void save(UserRoadmapDtoRequestModel userRoadmapDtoRequest) {
+    public void save(UserRoadmapRequestModel userRoadmapDtoRequest) {
         UserRoadmapDataMapper toSaveUserRoadmap = mapper.mapUserRoadmapDtoRequestToDataMapper(userRoadmapDtoRequest);
         repository.save(toSaveUserRoadmap);
     }
 
     @Override
-    public Optional<UserRoadmapDtoRequestModel> findById(int id) {
+    public Optional<UserRoadmapRequestModel> findById(int id) {
         Optional<UserRoadmapDataMapper> userRoadmap = repository.findById(id);
         return userRoadmap.map(mapper::mapUserRoadmapDataMapperToDtoRequest);
     }
 
     @Override
-    public List<UserRoadmapDtoRequestModel> findAll() {
+    public List<UserRoadmapRequestModel> findAll() {
         List<UserRoadmapDataMapper> userRoadmaps = repository.findAll();
         return userRoadmaps.stream()
                 .map(mapper::mapUserRoadmapDataMapperToDtoRequest)

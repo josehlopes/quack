@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
-import com.thigas.quack.UseCase.Model.Request.TaskDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -14,24 +14,24 @@ public class TaskService {
 
     private final TaskDsGateway taskDsGateway;
 
-    public void create(TaskDtoRequestModel taskDtoRequest) {
+    public void create(TaskRequestModel taskDtoRequest) {
         taskDsGateway.save(taskDtoRequest);
     }
 
-    public Optional<TaskDtoRequestModel> getById(int id) {
+    public Optional<TaskRequestModel> getById(int id) {
         return taskDsGateway.findById(id);
     }
 
-    public Iterable<TaskDtoRequestModel> getAll() {
-        Iterable<TaskDtoRequestModel> tasks = taskDsGateway.findAll();
+    public Iterable<TaskRequestModel> getAll() {
+        Iterable<TaskRequestModel> tasks = taskDsGateway.findAll();
         return StreamSupport.stream(tasks.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(TaskDtoRequestModel taskDtoRequest) {
-        TaskDtoRequestModel existingTask = taskDsGateway.findById(taskDtoRequest.id())
+    public void update(TaskRequestModel taskDtoRequest) {
+        TaskRequestModel existingTask = taskDsGateway.findById(taskDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Task not found"));
-        TaskDtoRequestModel updatedTask = new TaskDtoRequestModel(
+        TaskRequestModel updatedTask = new TaskRequestModel(
                 taskDtoRequest.id(),
                 taskDtoRequest.tasktext() != null ? taskDtoRequest.tasktext() : existingTask.tasktext(),
                 taskDtoRequest.stepsIds() != null ? taskDtoRequest.stepsIds() : existingTask.stepsIds(),

@@ -5,7 +5,7 @@ import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.StatisticsDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -21,19 +21,19 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(StatisticsDtoRequestModel statisticsRequest) {
+    public void save(StatisticsRequestModel statisticsRequest) {
         StatisticsDataMapper toSaveStatistics = mapper.mapStatisticsDtoRequestToDataMapper(statisticsRequest);
         statisticsRepository.save(toSaveStatistics);
     }
 
     @Override
-    public Optional<StatisticsDtoRequestModel> findById(int id) {
+    public Optional<StatisticsRequestModel> findById(int id) {
         Optional<StatisticsDataMapper> statistics = statisticsRepository.findById(id);
         return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
     }
 
     @Override
-    public Iterable<StatisticsDtoRequestModel> findAll() {
+    public Iterable<StatisticsRequestModel> findAll() {
         Iterable<StatisticsDataMapper> statistics = statisticsRepository.findAll();
         return StreamSupport.stream(statistics.spliterator(), false)
                 .map(mapper::mapStatisticsDataMapperToDtoRequest)
@@ -46,16 +46,16 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
     }
 
     @Override
-    public Optional<StatisticsDtoRequestModel> findByUserId(int userId) {
+    public Optional<StatisticsRequestModel> findByUserId(int userId) {
         Optional<StatisticsDataMapper> statistics = statisticsRepository.findByUserId(userId);
         return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
     }
 
     @Override
     public void incrementRoadmapsCompleted(int userId) {
-        StatisticsDtoRequestModel statistics = findByUserId(userId)
+        StatisticsRequestModel statistics = findByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
-        statistics = new StatisticsDtoRequestModel(
+        statistics = new StatisticsRequestModel(
                 statistics.id(), statistics.userId(), statistics.streakDays(), statistics.bestStreak(),
                 statistics.userLevel(), statistics.points(), statistics.userExperience(),
                 statistics.challengesCompletedCount(), statistics.roadmapsCompletedCount() + 1
@@ -65,10 +65,10 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
 //    @Override
 //    public void createInitialStatisticsForUser(int userId) {
-//        UserDsDtoRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
+//        UserDsRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
 //                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 //
-//        StatisticsDtoRequestModel statistics = new StatisticsDtoRequestModel(
+//        StatisticsRequestModel statistics = new StatisticsRequestModel(
 //                null, user.id(), 0, 0, 0, 0.0, 0.0, 0, 0
 //        );
 //        save(statistics);

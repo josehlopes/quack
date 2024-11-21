@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.UserLessonDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaUserLessonRepository;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.User.UserLessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,19 +18,19 @@ public class UserLessonDsGatewayImplementation implements UserLessonDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(UserLessonDtoRequestModel userLessonDtoRequest) {
+    public void save(UserLessonRequestModel userLessonDtoRequest) {
         UserLessonDataMapper toSaveUserLesson = mapper.mapUserLessonDtoRequestToDataMapper(userLessonDtoRequest);
         repository.save(toSaveUserLesson);
     }
 
     @Override
-    public Optional<UserLessonDtoRequestModel> findById(int id) {
+    public Optional<UserLessonRequestModel> findById(int id) {
         Optional<UserLessonDataMapper> userLesson = repository.findById(id);
         return userLesson.map(mapper::mapUserLessonDataMapperToDtoRequest);
     }
 
     @Override
-    public List<UserLessonDtoRequestModel> findAll() {
+    public List<UserLessonRequestModel> findAll() {
         List<UserLessonDataMapper> userLessons = repository.findAll();
         return userLessons.stream()
                 .map(mapper::mapUserLessonDataMapperToDtoRequest)

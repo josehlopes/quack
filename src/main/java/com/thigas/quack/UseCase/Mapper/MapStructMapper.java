@@ -2,9 +2,11 @@ package com.thigas.quack.UseCase.Mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thigas.quack.Adapter.Entity.*;
-import com.thigas.quack.UseCase.Model.Request.Address.AchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
 import com.thigas.quack.UseCase.Model.Request.*;
-import com.thigas.quack.UseCase.Model.Request.User.*;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -19,69 +21,68 @@ public interface MapStructMapper {
     //TODO: Talvez estudar sobre ModelMapper
 
 
-    AchievementDataMapper mapAchievementDtoRequestToDataMapper(AchievementDtoRequestModel achievementDtoRequestModel);
+    AchievementDataMapper mapAchievementDtoRequestToDataMapper(AchievementRequestModel achievementRequestModel);
 
-    AchievementDtoRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
+    AchievementRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
 
+    LessonDataMapper mapLessonDtoRequestToDataMapper(LessonRequestModel lessonRequestModel);
 
-    LessonDataMapper mapLessonDtoRequestToDataMapper(LessonDtoRequestModel lessonDtoRequestModel);
+    LessonRequestModel mapLessonDataMapperToDtoRequest(LessonDataMapper lessonDataMapper);
 
-    LessonDtoRequestModel mapLessonDataMapperToDtoRequest(LessonDataMapper lessonDataMapper);
+    RoadmapDataMapper mapRoadmapDtoRequestToDataMapper(RoadmapRequestModel roadmapRequestModel);
 
-    RoadmapDataMapper mapRoadmapDtoRequestToDataMapper(RoadmapDtoRequestModel roadmapDtoRequestModel);
+    RoadmapRequestModel mapRoadmapDataMapperToDtoRequest(RoadmapDataMapper roadmapDataMapper);
 
-    RoadmapDtoRequestModel mapRoadmapDataMapperToDtoRequest(RoadmapDataMapper roadmapDataMapper);
+    StatisticsDataMapper mapStatisticsDtoRequestToDataMapper(StatisticsRequestModel statisticsRequestModel);
 
-    StatisticsDataMapper mapStatisticsDtoRequestToDataMapper(StatisticsDtoRequestModel statisticsDtoRequestModel);
+    StatisticsRequestModel mapStatisticsDataMapperToDtoRequest(StatisticsDataMapper statisticsDataMapper);
 
-    StatisticsDtoRequestModel mapStatisticsDataMapperToDtoRequest(StatisticsDataMapper statisticsDataMapper);
+    StepDataMapper mapStepDtoRequestToDataMapper(StepRequestModel stepRequestModel);
 
-    StepDataMapper mapStepDtoRequestToDataMapper(StepDtoRequestModel stepDtoRequestModel);
-
-    StepDtoRequestModel mapStepDataMapperToDtoRequest(StepDataMapper stepDataMapper);
+    StepRequestModel mapStepDataMapperToDtoRequest(StepDataMapper stepDataMapper);
 
 //    StepLessonDataMapper  mapStepLessonDtoRequestToDataMapper (StepLessonDtoRequestModel statisticsDtoRequestModel);
 //    StepLessonDtoRequestModel  mapStepLessonDataMapperToDtoRequest (StepLessonDataMapper statisticsDataMapper);
 
-    TaskDataMapper mapTaskDtoRequestToDataMapper(TaskDtoRequestModel taskDtoRequestModel);
+    TaskDataMapper mapTaskDtoRequestToDataMapper(TaskRequestModel taskRequestModel);
 
-    TaskDtoRequestModel mapTaskDataMapperToDtoRequest(TaskDataMapper taskDataMapper);
+    TaskRequestModel mapTaskDataMapperToDtoRequest(TaskDataMapper taskDataMapper);
 
-    UserAchievementDataMapper mapUserAchievementDtoRequestToDataMapper(UserAchievementDtoRequestModel userAchievementDtoRequestModel);
+    UserAchievementDataMapper mapUserAchievementDtoRequestToDataMapper(UserAchievementRequestModel userAchievementRequestModel);
 
-    UserAchievementDtoRequestModel mapUserAchievementDataMapperToDtoRequest(UserAchievementDataMapper userAchievementDataMapper);
+    UserAchievementRequestModel mapUserAchievementDataMapperToDtoRequest(UserAchievementDataMapper userAchievementDataMapper);
 
-    UserLessonDataMapper mapUserLessonDtoRequestToDataMapper(UserLessonDtoRequestModel userLessonDtoRequestModel);
+    UserLessonDataMapper mapUserLessonDtoRequestToDataMapper(UserLessonRequestModel userLessonRequestModel);
 
-    UserLessonDtoRequestModel mapUserLessonDataMapperToDtoRequest(UserLessonDataMapper userLessonDataMapper);
+    UserLessonRequestModel mapUserLessonDataMapperToDtoRequest(UserLessonDataMapper userLessonDataMapper);
 
-    UserRoadmapDataMapper mapUserRoadmapDtoRequestToDataMapper(UserRoadmapDtoRequestModel userRoadmapDtoRequestModel);
+    UserRoadmapDataMapper mapUserRoadmapDtoRequestToDataMapper(UserRoadmapRequestModel userRoadmapRequestModel);
 
-    UserRoadmapDtoRequestModel mapUserRoadmapDataMapperToDtoRequest(UserRoadmapDataMapper userRoadmapDataMapper);
+    UserRoadmapRequestModel mapUserRoadmapDataMapperToDtoRequest(UserRoadmapDataMapper userRoadmapDataMapper);
 
-    UserStepDataMapper mapUserStepDtoRequestToDataMapper(UserStepDtoRequestModel userStepDtoRequestModel);
+    UserStepDataMapper mapUserStepDtoRequestToDataMapper(UserStepRequestModel userStepRequestModel);
 
-    UserStepDtoRequestModel mapUserStepDataMapperToDtoRequest(UserStepDataMapper userStepDataMapper);
+    UserStepRequestModel mapUserStepDataMapperToDtoRequest(UserStepDataMapper userStepDataMapper);
 
-    UserTaskDataMapper mapUserTaskDtoRequestToDataMapper(UserTaskDtoRequestModel userTaskDtoRequestModel);
+    UserTaskDataMapper mapUserTaskDtoRequestToDataMapper(UserTaskRequestModel userTaskRequestModel);
 
-    UserTaskDtoRequestModel mapUserTaskDataMapperToDtoRequest(UserTaskDataMapper userTaskDataMapper);
+    UserTaskRequestModel mapUserTaskDataMapperToDtoRequest(UserTaskDataMapper userTaskDataMapper);
 
-    default TaskTextDtoRequestModel mapStringToTaskTextDto(String tasktext) {
+    default TaskTextRequestModel mapStringToTaskTextDto(String tasktext) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(tasktext, TaskTextDtoRequestModel.class);
+            return objectMapper.readValue(tasktext, TaskTextRequestModel.class);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse JSON string", e);
         }
     }
 
-    default String mapTaskTextDtoToString(TaskTextDtoRequestModel value) {
+    default String mapTaskTextDtoToString(TaskTextRequestModel value) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(value);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to convert TaskTextDtoRequestModel to JSON string", e);
+            throw new RuntimeException("Failed to convert TaskTextRequestModel to JSON string", e);
         }
     }
 

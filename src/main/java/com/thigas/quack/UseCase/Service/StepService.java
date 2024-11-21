@@ -2,8 +2,8 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
-import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -20,24 +20,24 @@ public class StepService {
 
     private final LessonDsGateway lessonDsGateway;
 
-    public void create(StepDtoRequestModel stepDtoRequest) {
+    public void create(StepRequestModel stepDtoRequest) {
         stepDsGateway.save(stepDtoRequest);
     }
 
-    public Optional<StepDtoRequestModel> getById(int id) {
+    public Optional<StepRequestModel> getById(int id) {
         return stepDsGateway.findById(id);
     }
 
-    public Iterable<StepDtoRequestModel> getAll() {
-        Iterable<StepDtoRequestModel> steps = stepDsGateway.findAll();
+    public Iterable<StepRequestModel> getAll() {
+        Iterable<StepRequestModel> steps = stepDsGateway.findAll();
         return StreamSupport.stream(steps.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(StepDtoRequestModel stepDtoRequest) {
-        StepDtoRequestModel existingStep = stepDsGateway.findById(stepDtoRequest.id())
+    public void update(StepRequestModel stepDtoRequest) {
+        StepRequestModel existingStep = stepDsGateway.findById(stepDtoRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Step not found"));
-        StepDtoRequestModel updatedStep = new StepDtoRequestModel(
+        StepRequestModel updatedStep = new StepRequestModel(
                 stepDtoRequest.id(),
                 stepDtoRequest.roadmapsIds() != null ? stepDtoRequest.roadmapsIds() : existingStep.roadmapsIds(),
                 stepDtoRequest.lessonsIds() != null ? stepDtoRequest.lessonsIds() : existingStep.lessonsIds(),
@@ -54,10 +54,10 @@ public class StepService {
     }
 
     public void updateStatus(Integer id, int statusValue) {
-        Optional<StepDtoRequestModel> optionalStep = stepDsGateway.findById(id);
+        Optional<StepRequestModel> optionalStep = stepDsGateway.findById(id);
         if (optionalStep.isPresent()) {
-            StepDtoRequestModel step = optionalStep.get();
-            step = new StepDtoRequestModel(
+            StepRequestModel step = optionalStep.get();
+            step = new StepRequestModel(
                     step.id(),
                     step.roadmapsIds(),
                     step.lessonsIds(),
@@ -72,15 +72,15 @@ public class StepService {
         }
     }
 
-    public Set<LessonDtoRequestModel> verifyLessons(StepDtoRequestModel stepDto) {
-        Set<LessonDtoRequestModel> lessonSet = new HashSet<>();
+    public Set<LessonRequestModel> verifyLessons(StepRequestModel stepDto) {
+        Set<LessonRequestModel> lessonSet = new HashSet<>();
 
         if (stepDto.lessonsIds() == null || stepDto.lessonsIds().isEmpty()) {
             return lessonSet;
         }
 
         for (Integer lessonId : stepDto.lessonsIds()) {
-            LessonDtoRequestModel lesson = lessonDsGateway.findById(lessonId)
+            LessonRequestModel lesson = lessonDsGateway.findById(lessonId)
                     .orElseThrow(() -> new RuntimeException("Lesson not found with ID: " + lessonId));
             lessonSet.add(lesson);
         }
@@ -91,11 +91,11 @@ public class StepService {
         return stepDsGateway.existsById(userId);
     }
 
-    public void addLesson(StepDtoRequestModel step, Set<LessonDtoRequestModel> lessons) {
+    public void addLesson(StepRequestModel step, Set<LessonRequestModel> lessons) {
         // Implementation for adding lessons to a step
     }
 
-    public void removeLesson(StepDtoRequestModel step, LessonDtoRequestModel lesson) {
+    public void removeLesson(StepRequestModel step, LessonRequestModel lesson) {
         // Implementation for removing lessons from a step
     }
 }

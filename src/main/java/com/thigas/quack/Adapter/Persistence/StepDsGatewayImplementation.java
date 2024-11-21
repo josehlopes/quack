@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.StepDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaStepRepository;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.StepDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -18,13 +18,13 @@ public class StepDsGatewayImplementation implements StepDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(StepDtoRequestModel stepDtoRequest) {
+    public void save(StepRequestModel stepDtoRequest) {
         StepDataMapper toSaveStep = mapper.mapStepDtoRequestToDataMapper(stepDtoRequest);
         repository.save(toSaveStep);
     }
 
     @Override
-    public Optional<StepDtoRequestModel> findById(int id) {
+    public Optional<StepRequestModel> findById(int id) {
         Optional<StepDataMapper> step = repository.findById(id);
         return step.map(mapper::mapStepDataMapperToDtoRequest);
     }
@@ -35,7 +35,7 @@ public class StepDsGatewayImplementation implements StepDsGateway {
     }
 
     @Override
-    public Iterable<StepDtoRequestModel> findAll() {
+    public Iterable<StepRequestModel> findAll() {
         Iterable<StepDataMapper> steps = repository.findAll();
         return StreamSupport.stream(steps.spliterator(), false)
                 .map(mapper::mapStepDataMapperToDtoRequest)

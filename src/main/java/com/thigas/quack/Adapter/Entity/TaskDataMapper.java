@@ -1,7 +1,7 @@
 package com.thigas.quack.Adapter.Entity;
 
 import com.thigas.quack.UseCase.Mapper.TaskTextConverter;
-import com.thigas.quack.UseCase.Model.Request.TaskTextDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.TaskTextRequestModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,11 +28,11 @@ public class TaskDataMapper {
     @Column(columnDefinition = "jsonb")
     @Convert(converter = TaskTextConverter.class)
     @ColumnTransformer(write = "?::jsonb")
-    private TaskTextDtoRequestModel tasktext;
+    private TaskTextRequestModel tasktext;
     @Column(nullable = true)
     private String imagePath;
 
-    public TaskDataMapper(Integer id, Set<StepDataMapper> steps, TaskTextDtoRequestModel tasktext, String imagePath) {
+    public TaskDataMapper(Integer id, Set<StepDataMapper> steps, TaskTextRequestModel tasktext, String imagePath) {
         this.id = id;
         this.steps = steps;
         this.tasktext = tasktext;

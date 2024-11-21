@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.LessonDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaLessonRepository;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.LessonDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
     private final MapStructMapper mapper;
 
     @Override
-    public void save(LessonDtoRequestModel lessonDtoRequest) {
+    public void save(LessonRequestModel lessonDtoRequest) {
         LessonDataMapper toSaveLesson = mapper.mapLessonDtoRequestToDataMapper(lessonDtoRequest);
         repository.save(toSaveLesson);
     }
@@ -30,7 +30,7 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
     }
 
     @Override
-    public Set<LessonDtoRequestModel> saveAll(Set<LessonDtoRequestModel> lessons) {
+    public Set<LessonRequestModel> saveAll(Set<LessonRequestModel> lessons) {
         Set<LessonDataMapper> lessonDataMappers = lessons.stream()
                 .map(mapper::mapLessonDtoRequestToDataMapper)
                 .collect(Collectors.toSet());
@@ -41,13 +41,13 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
     }
 
     @Override
-    public Optional<LessonDtoRequestModel> findById(int id) {
+    public Optional<LessonRequestModel> findById(int id) {
         Optional<LessonDataMapper> lesson = repository.findById(id);
         return lesson.map(mapper::mapLessonDataMapperToDtoRequest);
     }
 
     @Override
-    public Set<LessonDtoRequestModel> findAll() {
+    public Set<LessonRequestModel> findAll() {
         List<LessonDataMapper> lessonDataMappers = repository.findAll();
         return lessonDataMappers.stream()
                 .map(mapper::mapLessonDataMapperToDtoRequest)

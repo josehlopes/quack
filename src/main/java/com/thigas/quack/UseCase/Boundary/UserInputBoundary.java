@@ -1,19 +1,19 @@
 package com.thigas.quack.UseCase.Boundary;
 
-import com.thigas.quack.UseCase.Model.Request.User.UserDsDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserLoginDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Request.User.UserRegisterDtoRequestModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserLoginDtoResponseModel;
-import com.thigas.quack.UseCase.Model.Response.User.UserRegisterDtoResponseModel;
+import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 
 
 //TODO: DEIXAR APENAS MÉTODOS RELACIONADOS A ENTRADA DE DADOS
 public interface UserInputBoundary {
-    UserRegisterDtoResponseModel register(UserRegisterDtoRequestModel requestModel);
+    ResponseWrapper<GenericResponseModel> register(UserRegisterRequestModel request);
 
-    UserLoginDtoResponseModel login(UserLoginDtoRequestModel requestModel);
+    ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel request);
 
-    Boolean update(UserDsDtoRequestModel userDto);
+    Boolean update(UserDsRequestModel request);
 
     Boolean delete(Integer id);
 

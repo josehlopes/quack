@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @AllArgsConstructor
-@RequestMapping("/api/code")
+@RequestMapping("/api/statusCode")
 public class CodeController {
 
     private final RunUserCodeUseCase runUserCodeUseCase;
 
     @PostMapping("/submit")
-    public String submitCode(@RequestParam("code") String userCode, Model model) {
+    public String submitCode(@RequestParam("statusCode") String userCode, Model model) {
         String result = runUserCodeUseCase.runTests(userCode);
         model.addAttribute("result", result);
         return "results";

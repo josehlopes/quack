@@ -1,6 +1,6 @@
 package com.thigas.quack.Domain.Factory;
 
-import com.thigas.quack.Domain.Entity.User;
+import com.thigas.quack.Domain.Entity.Interface.User;
 
 import java.time.LocalDate;
 
