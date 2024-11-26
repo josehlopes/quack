@@ -8,6 +8,8 @@ import com.thigas.quack.UseCase.Model.Request.AddressCreateRequestModel;
 import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +52,8 @@ public class UserController {
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDsRequestModel userDTO) {
         try {
             if (id.equals(userDTO.id())) {
-                Boolean success = userInput.update(userDTO);
-                if (success) {
+                ResponseWrapper<GenericResponseModel> success = userInput.update(userDTO);
+                if (success.getStatusCode() == 204) {
                     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
                 } else {
                     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,8 +69,8 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         try {
-            Boolean success = userInput.delete(id);
-            if (success) {
+            ResponseWrapper<GenericResponseModel> success = userInput.delete(id);
+            if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

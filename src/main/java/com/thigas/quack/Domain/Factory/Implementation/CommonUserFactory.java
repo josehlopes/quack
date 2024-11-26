@@ -1,7 +1,8 @@
-package com.thigas.quack.Domain.Factory;
+package com.thigas.quack.Domain.Factory.Implementation;
 
 import com.thigas.quack.Domain.Entity.Implementation.CommonUser;
 import com.thigas.quack.Domain.Entity.Interface.User;
+import com.thigas.quack.Domain.Factory.Interface.UserFactory;
 import com.thigas.quack.Domain.Utils.UsernameGenerator;
 
 import java.time.LocalDate;

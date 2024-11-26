@@ -13,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {MapperDefaults.class})
 public interface UserMapper {
 
     UserMapper MAPPER = Mappers.getMapper(UserMapper.class);
@@ -38,11 +38,4 @@ public interface UserMapper {
     })
     UserDataMapper toDataMapper(UserDsRequestModel userDsRequestModel);
 
-    default String map(OffsetDateTime value) {
-        return value != null ? value.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME) : null;
-    }
-
-    default OffsetDateTime map(String value) {
-        return value != null ? OffsetDateTime.parse(value, DateTimeFormatter.ISO_OFFSET_DATE_TIME) : null;
-    }
 }

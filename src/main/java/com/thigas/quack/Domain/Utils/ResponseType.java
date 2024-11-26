@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResponseType {
-    SUCCESS("Sucess"),
+    SUCCESS("Success"),
     ERROR("Error");
 
     private final String typeOfResponse;

@@ -1,4 +1,4 @@
-package com.thigas.quack.Domain.Factory;
+package com.thigas.quack.Domain.Factory.Interface;
 
 import com.thigas.quack.Domain.Entity.Interface.User;
 

@@ -23,12 +23,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ResponseWrapper<T> {
 
     private T data;             // Dados de sucesso (se houver)
-    private String errorMessage; // Mensagem de erro (se houver)
     private int statusCode;      // Código de status HTTP
 
     /**
@@ -40,27 +38,16 @@ public class ResponseWrapper<T> {
     public ResponseWrapper(T data, int statusCode) {
         this.data = data;
         this.statusCode = statusCode;
-        this.errorMessage = null;  // Nenhuma mensagem de erro para sucesso
     }
 
     /**
      * Construtor para uma resposta de erro.
      *
-     * @param errorMessage Mensagem de erro detalhando o motivo da falha.
      * @param statusCode Código de status HTTP (por exemplo, 400 para erro de solicitação).
      */
-    public ResponseWrapper(String errorMessage, int statusCode) {
-        this.errorMessage = errorMessage;
+    public ResponseWrapper(int statusCode) {
         this.statusCode = statusCode;
         this.data = null;  // Nenhum dado para erro
     }
 
-    /**
-     * Verifica se a resposta é de sucesso (se não houver mensagem de erro).
-     *
-     * @return Verdadeiro se for sucesso, falso se for erro.
-     */
-    public boolean isSuccess() {
-        return this.errorMessage == null;
-    }
 }

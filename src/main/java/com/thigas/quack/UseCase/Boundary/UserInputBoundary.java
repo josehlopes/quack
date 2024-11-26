@@ -13,8 +13,8 @@ public interface UserInputBoundary {
 
     ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel request);
 
-    Boolean update(UserDsRequestModel request);
+    ResponseWrapper<GenericResponseModel> update(UserDsRequestModel request);
 
-    Boolean delete(Integer id);
+    ResponseWrapper<GenericResponseModel> delete(Integer id);
 
 }

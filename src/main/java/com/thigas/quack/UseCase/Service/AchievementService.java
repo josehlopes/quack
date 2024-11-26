@@ -1,7 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
-import com.thigas.quack.UseCase.Model.Request.Address.AchievementDtoRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -14,28 +14,28 @@ public class AchievementService {
 
     private final AchievementDsGateway achievementDsGateway;
 
-    public void create(AchievementDtoRequestModel achievementDtoRequest) {
-        achievementDsGateway.save(achievementDtoRequest);
+    public void create(AchievementRequestModel achievementRequest) {
+        achievementDsGateway.save(achievementRequest);
     }
 
-    public Optional<AchievementDtoRequestModel> getById(int id) {
+    public Optional<AchievementRequestModel> getById(int id) {
         return achievementDsGateway.findById(id);
     }
 
-    public Iterable<AchievementDtoRequestModel> getAll() {
-        Iterable<AchievementDtoRequestModel> achievements = achievementDsGateway.findAll();
+    public Iterable<AchievementRequestModel> getAll() {
+        Iterable<AchievementRequestModel> achievements = achievementDsGateway.findAll();
         return StreamSupport.stream(achievements.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(AchievementDtoRequestModel achievementDtoRequest) {
-        AchievementDtoRequestModel existingAchievement = achievementDsGateway.findById(achievementDtoRequest.id())
+    public void update(AchievementRequestModel achievementRequest) {
+        AchievementRequestModel existingAchievement = achievementDsGateway.findById(achievementRequest.id())
                 .orElseThrow(() -> new EntityNotFoundException("Achievement not found"));
-        AchievementDtoRequestModel updatedAchievement = new AchievementDtoRequestModel(
-                achievementDtoRequest.id(),
-                achievementDtoRequest.name() != null ? achievementDtoRequest.name() : existingAchievement.name(),
-                achievementDtoRequest.description() != null ? achievementDtoRequest.description() : existingAchievement.description(),
-                achievementDtoRequest.imagePath() != null ? achievementDtoRequest.imagePath() : existingAchievement.imagePath()
+        AchievementRequestModel updatedAchievement = new AchievementRequestModel(
+                achievementRequest.id(),
+                achievementRequest.name() != null ? achievementRequest.name() : existingAchievement.name(),
+                achievementRequest.description() != null ? achievementRequest.description() : existingAchievement.description(),
+                achievementRequest.imagePath() != null ? achievementRequest.imagePath() : existingAchievement.imagePath()
         );
         achievementDsGateway.save(updatedAchievement);
     }

@@ -2,7 +2,7 @@ package com.thigas.quack.UseCase.Presenter;
 
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 
-public interface UserPresenter {
+public interface GenericPresenter {
 
     /**
      * Prepara a visualização de falha para a operação, encapsulando os dados de erro
