@@ -1,0 +1,52 @@
+package com.thigas.quack.Infrastructure.Security;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.thigas.quack.UseCase.Gateway.TokenGateway;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+@Service
+public class TokenProvider implements TokenGateway {
+
+    @Value("${api.security.token.secret}")
+    private String secret;
+
+    public String generateToken(String email) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.create()
+                    .withIssuer("quack")
+                    .withSubject(email)
+                    .withExpiresAt(this.generateExpirationDate())
+                    .sign(algorithm);
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Error while generating the JWT token for user: " + email, exception);
+        }
+    }
+
+    public String validateToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("quack")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch (JWTVerificationException exception) {
+            System.out.println("Token Validation Error: " + exception.getMessage());
+            throw new RuntimeException("Invalid or expired token: " + exception.getMessage(), exception);
+        }
+    }
+
+    @Override
+    public Instant generateExpirationDate() {
+        return LocalDateTime.now().plusHours(5).toInstant(ZoneOffset.UTC);
+    }
+}
