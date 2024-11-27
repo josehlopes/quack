@@ -4,7 +4,7 @@ import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Repository.AddressRepository;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
-import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     private final AddressMapper mapper;
 
     @Override
-    public void save(AddressDsRequestModel addressDtoRequest) {
+    public void save(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toSaveAddress = mapper.toDataMapper(addressDtoRequest);
         repository.save(toSaveAddress);
     }
@@ -45,7 +45,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean update(AddressDsRequestModel addressDtoRequest) {
+    public Boolean update(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toUpdateAddress = mapper.toDataMapper(addressDtoRequest);
         repository.update(toUpdateAddress);
         return true;
@@ -58,7 +58,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean existsById(Integer id) {
+    public Boolean findById(Integer id) {
         return repository.existsById(id);
     }
 }

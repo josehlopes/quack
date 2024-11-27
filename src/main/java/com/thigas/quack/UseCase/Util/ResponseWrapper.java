@@ -1,5 +1,6 @@
 package com.thigas.quack.UseCase.Util;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ResponseWrapper<T> {
 
-    private T data;             // Dados de sucesso (se houver)
+    @JsonProperty("data")
+    private T data;
+    // Dados de sucesso (se houver)
+    @JsonProperty("statusCode")
     private int statusCode;      // Código de status HTTP
 
     /**

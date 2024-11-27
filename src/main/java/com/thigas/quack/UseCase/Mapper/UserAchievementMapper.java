@@ -1,11 +1,8 @@
 package com.thigas.quack.UseCase.Mapper;
 
-import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Entity.UserAchievementDataMapper;
-import com.thigas.quack.Domain.Entity.Interface.Address;
 import com.thigas.quack.Domain.Entity.Interface.UserAchievement;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -18,13 +15,23 @@ public interface UserAchievementMapper {
     UserAchievementMapper MAPPER = Mappers.getMapper(UserAchievementMapper.class);
 
     @Mappings({
-            @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
+            @Mapping(target = "obtainedOn", source = "obtainedOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
     })
-    UserAchievementDsRequestModel toDsModel(UserAchievement userAchievement);
+    UserAchievementRequestModel toDsModel(UserAchievement userAchievement);
 
     @Mappings({
-            @Mapping(source = "registerOn", target = "registerOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX")
+            @Mapping(target = "obtainedOn", source = "obtainedOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"),
+            @Mapping(target = "user.id", source = "userId"),
+            @Mapping(target = "achievement.id", source = "achievementId")
     })
-    UserAchievementDataMapper toDataMapper(UserAchievementDsRequestModel userAchievementDsRequestModel);
+    UserAchievementDataMapper toDataMapper(UserAchievementRequestModel userAchievementRequestModel);
+
+
+    @Mappings({
+            @Mapping(target = "obtainedOn", source = "obtainedOn", dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"),
+            @Mapping(target = "userId", source = "user.id"),
+            @Mapping(target = "achievementId", source = "achievement.id")
+    })
+    UserAchievementRequestModel toDsModel(UserAchievementDataMapper userAchievementDataMapper);
 
 }

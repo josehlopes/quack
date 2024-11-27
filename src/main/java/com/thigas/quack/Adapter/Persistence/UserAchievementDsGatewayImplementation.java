@@ -1,49 +1,71 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.UserAchievementDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaUserAchievementRepository;
+import com.thigas.quack.Adapter.Repository.UserAchievementRepository;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDsRequestModel;
-import lombok.RequiredArgsConstructor;
+import com.thigas.quack.UseCase.Mapper.AchievementMapper;
+import com.thigas.quack.UseCase.Mapper.UserAchievementMapper;
+import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementUnlockRequestModel;
+import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserAchievementDsGatewayImplementation implements UserAchievementDsGateway {
 
-    private final JpaUserAchievementRepository repository;
-    private final MapStructMapper mapper;
+    private final UserAchievementRepository repository;
+    private final UserAchievementMapper mapper;
+    private final AchievementMapper achievementMapper;
 
     @Override
-    public void save(UserAchievementDsRequestModel userAchievementDtoRequest) {
-        UserAchievementDataMapper toSaveUserAchievement = mapper.mapUserAchievementDtoRequestToDataMapper(userAchievementDtoRequest);
-        repository.save(toSaveUserAchievement);
+    public Optional<UserAchievementRequestModel> getUserAchievementById(Integer id) {
+        Optional<UserAchievementDataMapper> userAchievement = repository.getById(id);
+        return userAchievement.map(mapper::toDsModel);
     }
 
     @Override
-    public boolean existsById(int id) {
-        return repository.existsById(id);
+    public Boolean findByUserIdAndAchievementId(Integer userId, Integer achievementId) {
+//        return repository.existsByUserIdAndAchievementId(userId, achievementId);
+        return true;
     }
 
     @Override
-    public Optional<UserAchievementDsRequestModel> findById(int id) {
-        Optional<UserAchievementDataMapper> userAchievement = repository.findById(id);
-        return userAchievement.map(mapper::mapUserAchievementDataMapperToDtoRequest);
-    }
-
-    @Override
-    public Iterable<UserAchievementDsRequestModel> findAll() {
-        Iterable<UserAchievementDataMapper> userAchievements = repository.findAll();
-        return StreamSupport.stream(userAchievements.spliterator(), false)
-                .map(mapper::mapUserAchievementDataMapperToDtoRequest)
+    public Iterable<AchievementRequestModel> getAllUserAchievements(Integer userId) {
+        return StreamSupport.stream(repository.getAllUserAchievements(userId).spliterator(), false)
+                .map(achievementMapper::toDsModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteById(int id) {
+    public void lockUserAchievement(Integer userAchievementId) {
+        Optional<UserAchievementDataMapper> userAchievement = repository.getById(userAchievementId);
+        userAchievement.ifPresent(achievement -> {
+            achievement.setIsActive(false);
+            repository.save(achievement);
+        });
+    }
+
+    @Override
+    public void save(UserAchievementRequestModel dataSourceModel) {
+        UserAchievementDataMapper userAchievementDataMapper = mapper.toDataMapper(dataSourceModel);
+        repository.save(userAchievementDataMapper);
+    }
+
+    @Override
+    public void unlockUserAchievement(UserAchievementUnlockRequestModel userAchievementUnlockRequestModel) {
+        Optional<UserAchievementDataMapper> userAchievement = repository.getById(userAchievementUnlockRequestModel.userId());
+        userAchievement.ifPresent(achievement -> {
+            achievement.setIsActive(true);
+            repository.save(achievement);
+        });
+    }
+
+    @Override
+    public void deleteUserAchievementById(Integer id) {
         repository.deleteById(id);
     }
 }

@@ -4,8 +4,6 @@ import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserLoginResponseModel;
-import com.thigas.quack.UseCase.Model.Response.UserRegisterResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +26,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("users/register")
+    @PostMapping("users/create")
     public ResponseEntity<ResponseWrapper<GenericResponseModel>> register(@Valid @RequestBody UserRegisterRequestModel registerBody) {
-        ResponseWrapper<GenericResponseModel> response = userInput.register(registerBody);
+        ResponseWrapper<GenericResponseModel> response = userInput.create(registerBody);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

@@ -7,8 +7,8 @@ import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
 import com.thigas.quack.UseCase.Model.Request.AddressCreateRequestModel;
-import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
@@ -34,7 +34,7 @@ public class AddressService implements AddressInputBoundary {
 
     @Override
     public ResponseWrapper<GenericResponseModel> create(AddressCreateRequestModel addressCreateRequestModel) {
-        UserDsRequestModel userDto = getUserById(addressCreateRequestModel.userId());
+        UserRequestModel userDto = getUserById(addressCreateRequestModel.userId());
 
         Address address = createAddress(addressCreateRequestModel, userDto.id());
 
@@ -47,7 +47,7 @@ public class AddressService implements AddressInputBoundary {
         return genericPresenter.prepareSuccessView(new GenericResponseModel(payload), 201);
     }
 
-    private UserDsRequestModel getUserById(Integer userId) {
+    private UserRequestModel getUserById(Integer userId) {
         return userDsGateway.getById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
@@ -65,27 +65,27 @@ public class AddressService implements AddressInputBoundary {
     }
 
     private void saveAddress(Address address) {
-        AddressDsRequestModel addressDsRequestModel = addressMapper.toDsModel(address);
-        addressDsGateway.save(addressDsRequestModel);
+        AddressRequestModel addressRequestModel = addressMapper.toDsModel(address);
+        addressDsGateway.save(addressRequestModel);
     }
 
     @Override
-    public Optional<AddressInfoResponseModel> getUserAddress(Integer userId, Integer addressId) {
-        return addressDsGateway.getUserAddress(userId, addressId);
+    public ResponseWrapper<Optional<AddressInfoResponseModel>> getUserAddress(Integer userId, Integer addressId) {
+        Optional<AddressInfoResponseModel> address = addressDsGateway.getUserAddress(userId, addressId);
+        return new ResponseWrapper<>(address, 200);
     }
 
     @Override
-    public Iterable<AddressInfoResponseModel> getAllUserAddresses(Integer userId) {
+    public ResponseWrapper<Iterable<AddressInfoResponseModel>> getAllUserAddresses(Integer userId) {
         Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
-        return StreamSupport.stream(addresses.spliterator(), false)
-                .collect(Collectors.toList());
+        return new ResponseWrapper<>(addresses, 200);
     }
 
     @Override
-    public ResponseWrapper<GenericResponseModel> update(AddressDsRequestModel addressDtoRequest) {
+    public ResponseWrapper<GenericResponseModel> update(AddressRequestModel addressDtoRequest) {
         AddressInfoResponseModel existingAddress = getAddressById(addressDtoRequest.id());
 
-        AddressDsRequestModel updatedAddress = updateAddressDetails(addressDtoRequest, existingAddress);
+        AddressRequestModel updatedAddress = updateAddressDetails(addressDtoRequest, existingAddress);
 
         addressDsGateway.update(updatedAddress);
         Map<String, Object> payload = PayloadUtil.createAddressPayload("Address updated successfully");
@@ -97,8 +97,8 @@ public class AddressService implements AddressInputBoundary {
                 .orElseThrow(() -> new EntityNotFoundException("Address not found"));
     }
 
-    private AddressDsRequestModel updateAddressDetails(AddressDsRequestModel addressDtoRequest, AddressInfoResponseModel existingAddress) {
-        return new AddressDsRequestModel(
+    private AddressRequestModel updateAddressDetails(AddressRequestModel addressDtoRequest, AddressInfoResponseModel existingAddress) {
+        return new AddressRequestModel(
                 addressDtoRequest.id(),
                 addressDtoRequest.userId(),
                 addressDtoRequest.street() != null ? addressDtoRequest.street() : existingAddress.street(),
@@ -113,7 +113,7 @@ public class AddressService implements AddressInputBoundary {
 
     @Override
     public ResponseWrapper<GenericResponseModel> delete(Integer id) {
-        if (!addressDsGateway.existsById(id)) {
+        if (!addressDsGateway.findById(id)) {
             throw new NoSuchElementException("Address not found");
         }
         addressDsGateway.deleteById(id);

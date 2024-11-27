@@ -1,21 +1,23 @@
 package com.thigas.quack.UseCase.Gateway;
 
-import com.thigas.quack.UseCase.Model.Request.UserAchievementDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementUnlockRequestModel;
 
 import java.util.Optional;
 
 public interface UserAchievementDsGateway {
-    Optional<UserAchievementDsRequestModel> findUserAchievementById(Integer id);
 
-    Boolean existsUserAchievementById(Integer id);
+    void save(UserAchievementRequestModel dataSourceModel);
+    void unlockUserAchievement(UserAchievementUnlockRequestModel dataSourceModel);
 
-    Boolean existsUserAchievementByUserIdAndAchievementId(Integer userId, Integer achievementId);
+    Optional<UserAchievementRequestModel> getUserAchievementById(Integer id);
 
-    void unlockUserAchievement(Integer userId, Integer achievementId);
+    Boolean findByUserIdAndAchievementId(Integer userId, Integer achievementId);
+
+    Iterable<AchievementRequestModel> getAllUserAchievements(Integer userId);
 
     void lockUserAchievement(Integer userAchievementId);
-
-    Iterable<UserAchievementDsRequestModel> findAllAchievementsByUser();
 
     void deleteUserAchievementById(Integer id);
 }

@@ -1,12 +1,12 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.AddressInputBoundary;
+import com.thigas.quack.UseCase.Boundary.UserAchievementInputBoundary;
 import com.thigas.quack.UseCase.Boundary.UserInputBoundary;
 import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
+import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
-import com.thigas.quack.UseCase.Model.Request.AddressCreateRequestModel;
-import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.*;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
@@ -26,9 +26,11 @@ public class UserController {
     private final UserDsGateway userDsGateway;
     private final AddressDsGateway addressDsGateway;
     private final AddressInputBoundary addressInput;
+    private final UserAchievementDsGateway userAchievementDsGateway;
+    private final UserAchievementInputBoundary userAchievementInput;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDsRequestModel> getById(@PathVariable Integer id) {
+    public ResponseEntity<UserRequestModel> getById(@PathVariable Integer id) {
         try {
             return userDsGateway.getById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
@@ -39,9 +41,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<UserDsRequestModel>> getAll() {
+    public ResponseEntity<Iterable<UserRequestModel>> getAll() {
         try {
-            Iterable<UserDsRequestModel> users = userDsGateway.getAll();
+            Iterable<UserRequestModel> users = userDsGateway.getAll();
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserDsRequestModel userDTO) {
+    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRequestModel userDTO) {
         try {
             if (id.equals(userDTO.id())) {
                 ResponseWrapper<GenericResponseModel> success = userInput.update(userDTO);
@@ -85,8 +87,8 @@ public class UserController {
     @PostMapping("/address/create")
     public ResponseEntity<Void> createAddress(@RequestBody AddressCreateRequestModel address) {
         try {
-            Boolean success = addressInput.create(address);
-            if (success) {
+            ResponseWrapper<GenericResponseModel> success = addressInput.create(address);
+            if (success.getStatusCode() == 201) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -118,14 +120,14 @@ public class UserController {
     }
 
     @PutMapping("/address/update/{id}")
-    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressDsRequestModel address) {
+    public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressRequestModel address) {
         try {
             if (!id.equals(address.id())) {
                 throw new IllegalArgumentException("Address id does not match");
             }
 
-            Boolean success = addressInput.update(address);
-            if (success) {
+            ResponseWrapper<GenericResponseModel> success = addressInput.update(address);
+            if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,14 +142,49 @@ public class UserController {
     @DeleteMapping("/address/delete/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
         try {
-            Boolean success = addressInput.delete(id);
-            if (success) {
+            ResponseWrapper<GenericResponseModel> success = addressInput.delete(id);
+            if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } catch (NoSuchElementException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/achievement/create")
+    public ResponseEntity<Void> createAchievement(@RequestBody UserAchievementUnlockRequestModel request) {
+        try {
+            ResponseWrapper<GenericResponseModel> success = userAchievementInput.unlockUserAchievement(request);
+            if (success.getStatusCode() == 201) {
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping("/achievement/{userId}")
+//    public ResponseEntity<AddressInfoResponseModel> getAddressByUserId(@PathVariable Integer userId, @RequestParam Integer addressId) {
+//        try {
+//            return addressDsGateway.getUserAddress(userId, addressId)
+//                    .map(address -> new ResponseEntity<>(address, HttpStatus.OK))
+//                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//        } catch (Exception ex) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+    @GetMapping("/achievement/getAll/{userId}")
+    public ResponseEntity<Iterable<AchievementRequestModel>> getAllUserAchievements(@PathVariable Integer userId) {
+        try {
+            Iterable<AchievementRequestModel> achievements = userAchievementDsGateway.getAllUserAchievements(userId);
+            return new ResponseEntity<>(achievements, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

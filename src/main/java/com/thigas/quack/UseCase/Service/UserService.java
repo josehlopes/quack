@@ -8,7 +8,7 @@ import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
@@ -35,7 +35,7 @@ public class UserService implements UserInputBoundary {
     private final EncoderGateway encoderGateway;
     private final UserMapper userMapper;
 
-    public ResponseWrapper<GenericResponseModel> register(UserRegisterRequestModel userRequest) {
+    public ResponseWrapper<GenericResponseModel> create(UserRegisterRequestModel userRequest) {
         if (isEmailInUse(userRequest.email())) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Email already in use"), 409);
         }
@@ -49,7 +49,7 @@ public class UserService implements UserInputBoundary {
         return genericPresenter.prepareSuccessView(new GenericResponseModel("User registered successfully", payload), 201);
     }
 
-    private boolean isEmailInUse(String email) {
+    private Boolean isEmailInUse(String email) {
         return userDsGateway.findByEmail(email);
     }
 
@@ -64,7 +64,7 @@ public class UserService implements UserInputBoundary {
     }
 
     private void saveUser(User user) {
-        UserDsRequestModel userDsModel = userMapper.toDsModel(user);
+        UserRequestModel userDsModel = userMapper.toDsModel(user);
         userDsGateway.save(userDsModel);
     }
 
@@ -72,15 +72,15 @@ public class UserService implements UserInputBoundary {
         return tokenGateway.generateToken(email);
     }
 
-    public Optional<UserDsRequestModel> findByEmail(String email) {
+    public Optional<UserRequestModel> findByEmail(String email) {
         return userDsGateway.getByEmail(email);
     }
 
-    public Optional<UserDsRequestModel> findByUsername(String username) {
+    public Optional<UserRequestModel> findByUsername(String username) {
         return userDsGateway.getByUsername(username);
     }
 
-    public boolean existsByEmailOrUsername(String email, String username) {
+    public Boolean existsByEmailOrUsername(String email, String username) {
         return userDsGateway.findByEmail(email) || userDsGateway.findByUsername(username);
     }
 
@@ -88,28 +88,28 @@ public class UserService implements UserInputBoundary {
         return userDsGateway.findById(userId);
     }
 
-    public Optional<UserDsRequestModel> getById(int id) {
+    public Optional<UserRequestModel> getById(int id) {
         return userDsGateway.getById(id);
     }
 
-    public Iterable<UserDsRequestModel> getAll() {
-        Iterable<UserDsRequestModel> users = userDsGateway.getAll();
+    public Iterable<UserRequestModel> getAll() {
+        Iterable<UserRequestModel> users = userDsGateway.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public ResponseWrapper<GenericResponseModel> update(UserDsRequestModel userDTO) {
-        UserDsRequestModel existingUser = userDsGateway.getById(userDTO.id())
+    public ResponseWrapper<GenericResponseModel> update(UserRequestModel userDTO) {
+        UserRequestModel existingUser = userDsGateway.getById(userDTO.id())
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
-        UserDsRequestModel updatedUser = updateUserDetails(userDTO, existingUser);
+        UserRequestModel updatedUser = updateUserDetails(userDTO, existingUser);
 
         userDsGateway.update(updatedUser);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("User updated"), 204);
     }
 
-    private UserDsRequestModel updateUserDetails(UserDsRequestModel userDTO, UserDsRequestModel existingUser) {
-        return new UserDsRequestModel(
+    private UserRequestModel updateUserDetails(UserRequestModel userDTO, UserRequestModel existingUser) {
+        return new UserRequestModel(
                 userDTO.id(),
                 userDTO.name() != null ? userDTO.name() : existingUser.name(),
                 userDTO.surname() != null ? userDTO.surname() : existingUser.surname(),
@@ -136,7 +136,7 @@ public class UserService implements UserInputBoundary {
 
     @Override
     public ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel userRequest) {
-        Optional<UserDsRequestModel> user = userDsGateway.getByEmail(userRequest.email());
+        Optional<UserRequestModel> user = userDsGateway.getByEmail(userRequest.email());
         if (user.isEmpty()) {
             return genericPresenter.prepareFailView(new GenericResponseModel("User not found"), 404);
         }

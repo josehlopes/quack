@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 public interface UserAchievement {
 
-    int getId();
+    Integer getId();
 
     Integer getUserId();
 
@@ -14,6 +14,6 @@ public interface UserAchievement {
 
     OffsetDateTime getObtainedOn();
 
-    Boolean getisActive();
+    Boolean getIsActive();
 
 }
