@@ -1,21 +1,19 @@
 package com.thigas.quack.Domain.Entity.Interface;
 
-import com.thigas.quack.Domain.Utils.Status;
-
 import java.time.OffsetDateTime;
 
 public interface UserAchievement {
 
-    int getId();
+    Integer getId();
 
-    User getUser();
+    Integer getUserId();
 
-    Achievement getAchievement();
+    Integer getAchievementId();
 
-    String getImagePath();
+    String getDescription();
 
     OffsetDateTime getObtainedOn();
 
-    Status getStatus();
+    Boolean getIsActive();
 
 }

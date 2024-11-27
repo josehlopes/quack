@@ -6,7 +6,6 @@ import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
 import com.thigas.quack.UseCase.Model.Request.*;
-import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -47,10 +46,6 @@ public interface MapStructMapper {
     TaskDataMapper mapTaskDtoRequestToDataMapper(TaskRequestModel taskRequestModel);
 
     TaskRequestModel mapTaskDataMapperToDtoRequest(TaskDataMapper taskDataMapper);
-
-    UserAchievementDataMapper mapUserAchievementDtoRequestToDataMapper(UserAchievementRequestModel userAchievementRequestModel);
-
-    UserAchievementRequestModel mapUserAchievementDataMapperToDtoRequest(UserAchievementDataMapper userAchievementDataMapper);
 
     UserLessonDataMapper mapUserLessonDtoRequestToDataMapper(UserLessonRequestModel userLessonRequestModel);
 

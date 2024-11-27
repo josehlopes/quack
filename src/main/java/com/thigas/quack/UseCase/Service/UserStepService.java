@@ -3,7 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.Domain.Utils.Status;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +62,7 @@ public class UserStepService {
             return false;
         }
 
-        UserDsRequestModel user = userService.getById(userId).orElse(null);
+        UserRequestModel user = userService.getById(userId).orElse(null);
         StepRequestModel step = stepService.getById(stepId).orElse(null);
 
         if (user == null || step == null) {

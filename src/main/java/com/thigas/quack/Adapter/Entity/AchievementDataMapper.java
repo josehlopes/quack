@@ -1,9 +1,7 @@
 package com.thigas.quack.Adapter.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -12,6 +10,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "achievement")
 public class AchievementDataMapper {
 
@@ -24,13 +24,6 @@ public class AchievementDataMapper {
     private String description;
     @Column(name = "image_path", nullable = false)
     private String imagePath;
-
-    public AchievementDataMapper(Integer id, String name, String description, String imagePath) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.imagePath = imagePath;
-    }
 
     @Override
     public final boolean equals(Object o) {

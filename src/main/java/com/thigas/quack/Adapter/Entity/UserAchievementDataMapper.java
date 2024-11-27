@@ -1,10 +1,8 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.time.OffsetDateTime;
 
@@ -12,34 +10,39 @@ import java.time.OffsetDateTime;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_achievement")
 public class UserAchievementDataMapper {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserDataMapper user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "achievement_id", nullable = false)
     @ToString.Exclude
     private AchievementDataMapper achievement;
-    @Column(name = "image_path")
-    private String imagePath;
-    @Column(name = "obtained_on")
+    @Column(name = "obtained_on", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private OffsetDateTime obtainedOn;
-    @Column(name = "status")
-    @Enumerated(EnumType.ORDINAL)
-    private Status status = Status.ACTIVE;
+    @Column(name = "is_active")
+    private Boolean isActive;
 
-    public UserAchievementDataMapper(Integer id, UserDataMapper user, AchievementDataMapper achievement, String imagePath, OffsetDateTime obtainedDate, Status status) {
-        this.id = id;
-        this.user = user;
-        this.achievement = achievement;
-        this.imagePath = imagePath;
-        this.obtainedOn = obtainedOn;
-        this.status = status;
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        UserAchievementDataMapper userAchievementDataMapper = (UserAchievementDataMapper) o;
+        return false;
     }
 
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

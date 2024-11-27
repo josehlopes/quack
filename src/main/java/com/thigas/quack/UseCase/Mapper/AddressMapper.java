@@ -2,24 +2,24 @@ package com.thigas.quack.UseCase.Mapper;
 
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Domain.Entity.Interface.Address;
-import com.thigas.quack.UseCase.Model.Request.AddressDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {MapperDefaults.class})
 public interface AddressMapper {
 
     AddressMapper MAPPER = Mappers.getMapper(AddressMapper.class);
 
     @Mapping(target = "user.id", source = "userId")
-    AddressDataMapper toDataMapper(AddressDsRequestModel addressDsRequestModel);
+    AddressDataMapper toDataMapper(AddressRequestModel addressRequestModel);
 
-    AddressDsRequestModel toDsModel(AddressDataMapper addressDataMapper);
+    AddressRequestModel toDsModel(AddressDataMapper addressDataMapper);
 
     AddressInfoResponseModel toInfoDto(AddressDataMapper addressDataMapper);
 
-    AddressDsRequestModel toDsModel(Address address);
+    AddressRequestModel toDsModel(Address address);
 }

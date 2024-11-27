@@ -65,7 +65,7 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
 //    @Override
 //    public void createInitialStatisticsForUser(int userId) {
-//        UserDsRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
+//        UserRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
 //                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 //
 //        StatisticsRequestModel statistics = new StatisticsRequestModel(

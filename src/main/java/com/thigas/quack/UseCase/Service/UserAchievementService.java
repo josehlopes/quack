@@ -1,95 +1,63 @@
 package com.thigas.quack.UseCase.Service;
 
-import com.thigas.quack.Domain.Utils.Status;
+import com.thigas.quack.Domain.Entity.Interface.UserAchievement;
+import com.thigas.quack.Domain.Factory.Interface.UserAchievementFactory;
+import com.thigas.quack.UseCase.Boundary.UserAchievementInputBoundary;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
+import com.thigas.quack.UseCase.Mapper.UserAchievementMapper;
+import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserAchievementRequestModel;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import com.thigas.quack.UseCase.Model.Request.UserAchievementUnlockRequestModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Presenter.GenericPresenter;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
+import lombok.AllArgsConstructor;
 
-import java.time.OffsetDateTime;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+public class UserAchievementService implements UserAchievementInputBoundary {
 
-public class UserAchievementService {
+    private final GenericPresenter genericPresenter;
+    private final UserAchievementDsGateway userAchievementDsGateway;
+    private final UserAchievementMapper userAchievementMapper;
+    private final UserAchievementFactory userAchievementFactory;
 
-    private UserAchievementDsGateway userAchievementDsGateway;
+    //TODO: RETORNANDO ERRO 500 ATÉ QUANDO A OPERAÇÃO É FEITA COM SUCESSO
+    @Override
+    public ResponseWrapper<GenericResponseModel> unlockUserAchievement(UserAchievementUnlockRequestModel userAchievementUnlockRequestModel) {
+        if (!userAchievementDsGateway.findByUserIdAndAchievementId(userAchievementUnlockRequestModel.userId(), userAchievementUnlockRequestModel.achievementId())) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("Achievement not found for user"), 404);
+        }
 
-    private AchievementService achievementService;
-
-    private UserService userService;
-
-    public void create(UserAchievementRequestModel userAchievementDTO) {
-        userAchievementDsGateway.save(userAchievementDTO);
+        UserAchievement userAchievement = createUserAchievement(userAchievementUnlockRequestModel.userId(), userAchievementUnlockRequestModel.achievementId(), userAchievementUnlockRequestModel.description());
+        saveUserAchievement(userAchievement);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievement unlocked successfully"), 200);
     }
 
-    public Optional<UserAchievementRequestModel> getById(int id) {
-        return userAchievementDsGateway.findById(id);
+    private UserAchievement createUserAchievement(Integer userId, Integer achievementId, String description) {
+        return userAchievementFactory.create(userId, achievementId, description);
     }
 
-    public Iterable<UserAchievementRequestModel> getAll() {
-        Iterable<UserAchievementRequestModel> userAchievements = userAchievementDsGateway.findAll();
-        return StreamSupport.stream(userAchievements.spliterator(), false)
-                .collect(Collectors.toList());
-    }
-
-    public void update(UserAchievementRequestModel userAchievementDTO) {
-        UserAchievementRequestModel existingUserAchievement = userAchievementDsGateway.findById(userAchievementDTO.id())
-                .orElseThrow(() -> new EntityNotFoundException("User-Achievement not found"));
-
-        UserAchievementRequestModel updatedEntity = new UserAchievementRequestModel(
-                userAchievementDTO.id(),
-                userAchievementDTO.userId() != null ? userAchievementDTO.userId() : existingUserAchievement.userId(),
-                userAchievementDTO.achievementId() != null ? userAchievementDTO.achievementId() : existingUserAchievement.achievementId(),
-                userAchievementDTO.imagePath() != null ? userAchievementDTO.imagePath() : existingUserAchievement.imagePath(),
-                userAchievementDTO.obtainedDate() != null ? userAchievementDTO.obtainedDate() : existingUserAchievement.obtainedDate(),
-                userAchievementDTO.status() != null ? userAchievementDTO.status() : existingUserAchievement.status()
-        );
-
-        userAchievementDsGateway.save(updatedEntity);
-    }
-
-    public void delete(int id) {
-        userAchievementDsGateway.deleteById(id);
-    }
-
-//    public Boolean unlockAchievement(int userId, int achievementId) {
-//        if (!userService.existsById(userId) || !achievementService.existsById(achievementId)) {
-//            return false;
-//        }
-//
-//        UserDsRequestModel user = userService.getById(userId).orElse(null);
-//        AchievementRequestModel achievement = achievementService.getById(achievementId).orElse(null);
-//
-//        if (user == null || achievement == null) {
-//            return false;
-//        }
-//
-//        UserAchievementRequestModel userAchievementDtoRequestModel = new UserAchievementRequestModel(
-//                null, user.id(), achievement.id(), null, OffsetDateTime.now().toString(), Status.UNLOCKED.getValue()
-//        );
-//
-//        userAchievementDsGateway.save(userAchievementDtoRequestModel);
-//
-//        return true;
-//    }
-
-    public Boolean markAchievementAsCompleted(int id) {
-        UserAchievementRequestModel existingUserAchievement = getById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User-Achievement not found"));
-
-        UserAchievementRequestModel userAchievementRequestModel = new UserAchievementRequestModel(
-                existingUserAchievement.id(),
-                existingUserAchievement.userId(),
-                existingUserAchievement.achievementId(),
-                existingUserAchievement.imagePath(),
-                OffsetDateTime.now().toString(),
-                Status.FINISHED.getValue()
-        );
-
+    private void saveUserAchievement(UserAchievement userAchievement) {
+        UserAchievementRequestModel userAchievementRequestModel = userAchievementMapper.toDsModel(userAchievement);
         userAchievementDsGateway.save(userAchievementRequestModel);
-        return true;
+    }
+
+    @Override
+    public ResponseWrapper<GenericResponseModel> lockUserAchievement(Integer userAchievementId) {
+        if (userAchievementDsGateway.getUserAchievementById(userAchievementId).isEmpty()) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("User achievement not found"), 404);
+        }
+
+        userAchievementDsGateway.lockUserAchievement(userAchievementId);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievement locked successfully"), 200);
+    }
+
+    public ResponseWrapper<GenericResponseModel> getUserAchievementsByUserId(Integer userId) {
+        Iterable<AchievementRequestModel> userAchievements = userAchievementDsGateway.getAllUserAchievements(userId);
+        Map<String, Object> payload = Map.of("achievements", userAchievements);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievements found", payload), 200);
     }
 }

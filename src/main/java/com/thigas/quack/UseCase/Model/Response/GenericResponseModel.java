@@ -1,38 +1,30 @@
+// src/main/java/com/thigas/quack/UseCase/Model/Response/GenericResponseModel.java
 package com.thigas.quack.UseCase.Model.Response;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
-/**
- * Modelo de resposta genérico que encapsula uma mensagem de texto.
- *
- * <p>Esta classe é usada para representar respostas genéricas que contêm apenas uma mensagem de texto.
- * A mensagem de texto não pode ser nula nem vazia.</p>
- *
- * <p>Exemplo de uso:</p>
- * <pre>
- * {@code
- * GenericResponseModel response = new GenericResponseModel("Operação bem-sucedida");
- * System.out.println(response.text()); // Saída: Operação bem-sucedida
- * }
- * </pre>
- *
- * @param text A mensagem de texto da resposta. Não pode ser nula nem vazia.
- * @throws NullPointerException se o texto for nulo.
- * @throws IllegalArgumentException se o texto for vazio.
- */
-public record GenericResponseModel(String text) {
+import java.util.Map;
 
-    /**
-     * Construtor para o modelo de resposta genérico.
-     *
-     * @param text A mensagem de texto da resposta. Não pode ser nula nem vazia.
-     * @throws NullPointerException se o texto for nulo.
-     * @throws IllegalArgumentException se o texto for vazio.
-     */
-    public GenericResponseModel {
-        Objects.requireNonNull(text, "Text cannot be null");
-        if (text.isBlank()) {
-            throw new IllegalArgumentException("Text cannot be blank");
+public record GenericResponseModel(String message, Map<String, Object> payload) {
+
+    public GenericResponseModel(String message) {
+        this(message, null);
+    }
+
+    public GenericResponseModel(Map<String, Object> payload) {
+        this(null, payload);
+    }
+
+    public GenericResponseModel() {
+        this(null, null);
+    }
+
+    @JsonCreator
+    public GenericResponseModel(String message, Map<String, Object> payload) {
+        if (message != null && message.isBlank()) {
+            throw new IllegalArgumentException("Message cannot be blank");
         }
+        this.message = message;
+        this.payload = payload;
     }
 }

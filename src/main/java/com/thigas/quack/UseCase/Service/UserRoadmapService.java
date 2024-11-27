@@ -6,7 +6,7 @@ import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserDsRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class UserRoadmapService {
             return false;
         }
 
-        UserDsRequestModel user = userDsGateway.getById(userId).orElse(null);
+        UserRequestModel user = userDsGateway.getById(userId).orElse(null);
         RoadmapRequestModel roadmap = roadmapDsGateway.findById(roadmapId).orElse(null);
 
         if (user == null || roadmap == null) {
