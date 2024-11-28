@@ -69,13 +69,11 @@ public class AddressService implements AddressInputBoundary {
         addressDsGateway.save(addressRequestModel);
     }
 
-    @Override
     public ResponseWrapper<Optional<AddressInfoResponseModel>> getUserAddress(Integer userId, Integer addressId) {
         Optional<AddressInfoResponseModel> address = addressDsGateway.getUserAddress(userId, addressId);
         return new ResponseWrapper<>(address, 200);
     }
 
-    @Override
     public ResponseWrapper<Iterable<AddressInfoResponseModel>> getAllUserAddresses(Integer userId) {
         Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
         return new ResponseWrapper<>(addresses, 200);

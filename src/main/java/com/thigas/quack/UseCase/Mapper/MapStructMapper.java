@@ -19,11 +19,6 @@ public interface MapStructMapper {
     //TODO: Estudar mais sobre mapstruct e ver como funciona os campos ignoraveis
     //TODO: Talvez estudar sobre ModelMapper
 
-
-    AchievementDataMapper mapAchievementDtoRequestToDataMapper(AchievementRequestModel achievementRequestModel);
-
-    AchievementRequestModel mapAchievementDataMapperToDtoRequest(AchievementDataMapper achievementDataMapper);
-
     LessonDataMapper mapLessonDtoRequestToDataMapper(LessonRequestModel lessonRequestModel);
 
     LessonRequestModel mapLessonDataMapperToDtoRequest(LessonDataMapper lessonDataMapper);
@@ -39,9 +34,6 @@ public interface MapStructMapper {
     StepDataMapper mapStepDtoRequestToDataMapper(StepRequestModel stepRequestModel);
 
     StepRequestModel mapStepDataMapperToDtoRequest(StepDataMapper stepDataMapper);
-
-//    StepLessonDataMapper  mapStepLessonDtoRequestToDataMapper (StepLessonDtoRequestModel statisticsDtoRequestModel);
-//    StepLessonDtoRequestModel  mapStepLessonDataMapperToDtoRequest (StepLessonDataMapper statisticsDataMapper);
 
     TaskDataMapper mapTaskDtoRequestToDataMapper(TaskRequestModel taskRequestModel);
 

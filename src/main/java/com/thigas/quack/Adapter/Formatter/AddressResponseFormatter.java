@@ -23,6 +23,6 @@ public class AddressResponseFormatter implements AddressPresenter {
 
     @Override
     public AddressInfoResponseModel prepareGetAddressFailView(GenericResponseModel error) {
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.text());
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, error.message());
     }
 }

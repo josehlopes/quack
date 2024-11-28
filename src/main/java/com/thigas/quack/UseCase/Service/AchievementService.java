@@ -2,49 +2,32 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
+import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AchievementService {
 
     private final AchievementDsGateway achievementDsGateway;
+    private final GenericPresenter genericPresenter;
 
-    public void create(AchievementRequestModel achievementRequest) {
-        achievementDsGateway.save(achievementRequest);
-    }
-
-    public Optional<AchievementRequestModel> getById(int id) {
-        return achievementDsGateway.findById(id);
+    public Optional<AchievementRequestModel> getById(Integer id) {
+        return achievementDsGateway.getById(id);
     }
 
     public Iterable<AchievementRequestModel> getAll() {
-        Iterable<AchievementRequestModel> achievements = achievementDsGateway.findAll();
+        Iterable<AchievementRequestModel> achievements = achievementDsGateway.getAll();
         return StreamSupport.stream(achievements.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public void update(AchievementRequestModel achievementRequest) {
-        AchievementRequestModel existingAchievement = achievementDsGateway.findById(achievementRequest.id())
-                .orElseThrow(() -> new EntityNotFoundException("Achievement not found"));
-        AchievementRequestModel updatedAchievement = new AchievementRequestModel(
-                achievementRequest.id(),
-                achievementRequest.name() != null ? achievementRequest.name() : existingAchievement.name(),
-                achievementRequest.description() != null ? achievementRequest.description() : existingAchievement.description(),
-                achievementRequest.imagePath() != null ? achievementRequest.imagePath() : existingAchievement.imagePath()
-        );
-        achievementDsGateway.save(updatedAchievement);
-    }
-
-    public void delete(int id) {
-        achievementDsGateway.deleteById(id);
-    }
-
-    public Boolean existsById(int achievementId) {
+    public Boolean existsById(Integer achievementId) {
         return achievementDsGateway.existsById(achievementId);
     }
 

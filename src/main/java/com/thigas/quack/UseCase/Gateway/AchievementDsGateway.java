@@ -7,14 +7,10 @@ import java.util.Optional;
 
 public interface AchievementDsGateway {
 
-    void save(AchievementRequestModel achievement);
+    Optional<AchievementRequestModel> getById(Integer id);
 
-    Optional<AchievementRequestModel> findById(int id);
+    Iterable<AchievementRequestModel> getAll();
 
-    Iterable<AchievementRequestModel> findAll();
-
-    void deleteById(int id);
-
-    Boolean existsById(int id);
+    Boolean existsById(Integer id);
 
 }

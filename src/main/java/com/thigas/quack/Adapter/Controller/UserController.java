@@ -10,6 +10,7 @@ import com.thigas.quack.UseCase.Model.Request.*;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserController {
 
     private final UserInputBoundary userInput;
