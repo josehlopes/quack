@@ -58,7 +58,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean findById(Integer id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 }

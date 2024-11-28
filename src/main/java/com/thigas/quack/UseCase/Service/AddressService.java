@@ -20,8 +20,6 @@ import lombok.AllArgsConstructor;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 public class AddressService implements AddressInputBoundary {
@@ -111,7 +109,7 @@ public class AddressService implements AddressInputBoundary {
 
     @Override
     public ResponseWrapper<GenericResponseModel> delete(Integer id) {
-        if (!addressDsGateway.findById(id)) {
+        if (!addressDsGateway.existsById(id)) {
             throw new NoSuchElementException("Address not found");
         }
         addressDsGateway.deleteById(id);

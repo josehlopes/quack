@@ -15,7 +15,7 @@ public interface AddressDsGateway {
 
     Optional<AddressInfoResponseModel> getById(Integer id);
 
-    Boolean findById(Integer id);
+    Boolean existsById(Integer id);
 
     Boolean update(AddressRequestModel dataSourceModel);
 

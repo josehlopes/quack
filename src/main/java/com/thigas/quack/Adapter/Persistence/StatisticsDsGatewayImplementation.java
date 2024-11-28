@@ -1,76 +1,58 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
+import com.thigas.quack.Adapter.Entity.UserDataMapper;
 import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
+import com.thigas.quack.Adapter.Repository.StatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.StatisticsMapper;
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
 
-    private final JpaStatisticsRepository statisticsRepository;
+    private final StatisticsRepository repository;
     private final UserRepository userRepository;
-    private final MapStructMapper mapper;
+    private final StatisticsMapper mapper;
 
     @Override
     public void save(StatisticsRequestModel statisticsRequest) {
-        StatisticsDataMapper toSaveStatistics = mapper.mapStatisticsDtoRequestToDataMapper(statisticsRequest);
-        statisticsRepository.save(toSaveStatistics);
+        StatisticsDataMapper toSaveStatistics = mapper.toDataMapper(statisticsRequest);
+        repository.save(toSaveStatistics);
     }
 
     @Override
-    public Optional<StatisticsRequestModel> findById(int id) {
-        Optional<StatisticsDataMapper> statistics = statisticsRepository.findById(id);
-        return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
+    public Optional<StatisticsRequestModel> getById(Integer id) {
+        Optional<StatisticsDataMapper> statistics = repository.getById(id);
+        return statistics.map(mapper::toDsModel);
     }
 
     @Override
-    public Iterable<StatisticsRequestModel> findAll() {
-        Iterable<StatisticsDataMapper> statistics = statisticsRepository.findAll();
-        return StreamSupport.stream(statistics.spliterator(), false)
-                .map(mapper::mapStatisticsDataMapperToDtoRequest)
+    public Iterable<StatisticsRequestModel> getAll() {
+        Iterable<StatisticsDataMapper> users = repository.getAll();
+        return StreamSupport.stream(users.spliterator(), false)
+                .map(mapper::toDsModel)
                 .collect(Collectors.toList());
     }
 
+
+    //TODO: MÉTODO ESTÁ INCORRETO, DEVE SER ALTERADO
     @Override
-    public void deleteById(int id) {
-        statisticsRepository.deleteById(id);
+    public Optional<StatisticsRequestModel> getByUserId(Integer userId) {
+        Optional<StatisticsDataMapper> statistics = repository.getById(userId);
+        return statistics.map(mapper::toDsModel);
     }
 
-    @Override
-    public Optional<StatisticsRequestModel> findByUserId(int userId) {
-        Optional<StatisticsDataMapper> statistics = statisticsRepository.findByUserId(userId);
-        return statistics.map(mapper::mapStatisticsDataMapperToDtoRequest);
-    }
 
-    @Override
-    public void incrementRoadmapsCompleted(int userId) {
-        StatisticsRequestModel statistics = findByUserId(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
-        statistics = new StatisticsRequestModel(
-                statistics.id(), statistics.userId(), statistics.streakDays(), statistics.bestStreak(),
-                statistics.userLevel(), statistics.points(), statistics.userExperience(),
-                statistics.challengesCompletedCount(), statistics.roadmapsCompletedCount() + 1
-        );
-        save(statistics);
-    }
 
-//    @Override
-//    public void createInitialStatisticsForUser(int userId) {
-//        UserRequestModel user = userRepository.findById(userId).map(mapper::mapUserDataMapperToUserDtoRequest)
-//                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-//
-//        StatisticsRequestModel statistics = new StatisticsRequestModel(
-//                null, user.id(), 0, 0, 0, 0.0, 0.0, 0, 0
-//        );
-//        save(statistics);
-//    }
+
 }
