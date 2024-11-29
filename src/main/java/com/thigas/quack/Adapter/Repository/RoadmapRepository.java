@@ -19,7 +19,7 @@ public class RoadmapRepository {
     private final EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Optional<RoadmapDataMapper> findById(Integer id) {
+    public Optional<RoadmapDataMapper> getById(Integer id) {
         try {
             return Optional.ofNullable(entityManager.find(RoadmapDataMapper.class, id));
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class RoadmapRepository {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<RoadmapDataMapper> findAll() {
+    public Iterable<RoadmapDataMapper> getAll() {
         try {
             TypedQuery<RoadmapDataMapper> query = entityManager.createQuery(
                     "SELECT r FROM RoadmapDataMapper r", RoadmapDataMapper.class);

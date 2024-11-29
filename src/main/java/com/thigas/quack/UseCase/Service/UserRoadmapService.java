@@ -66,7 +66,7 @@ public class UserRoadmapService {
         }
 
         UserRequestModel user = userDsGateway.getById(userId).orElse(null);
-        RoadmapRequestModel roadmap = roadmapDsGateway.findById(roadmapId).orElse(null);
+        RoadmapRequestModel roadmap = roadmapDsGateway.getById(roadmapId).orElse(null);
 
         if (user == null || roadmap == null) {
             return false;
