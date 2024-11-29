@@ -1,7 +1,7 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.RoadmapDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaRoadmapRepository;
+import com.thigas.quack.Adapter.Repository.RoadmapRepository;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
@@ -14,23 +14,18 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
 
-    private final JpaRoadmapRepository repository;
+    private final RoadmapRepository repository;
     private final MapStructMapper mapper;
 
-    @Override
-    public void save(RoadmapRequestModel roadmapDtoRequest) {
-        RoadmapDataMapper toSaveRoadmap = mapper.mapRoadmapDtoRequestToDataMapper(roadmapDtoRequest);
-        repository.save(toSaveRoadmap);
-    }
 
     @Override
-    public Optional<RoadmapRequestModel> findById(int id) {
+    public Optional<RoadmapRequestModel> findById(Integer id) {
         Optional<RoadmapDataMapper> roadmap = repository.findById(id);
         return roadmap.map(mapper::mapRoadmapDataMapperToDtoRequest);
     }
 
     @Override
-    public boolean existsById(int id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 
@@ -42,8 +37,4 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void deleteById(int id) {
-        repository.deleteById(id);
-    }
 }

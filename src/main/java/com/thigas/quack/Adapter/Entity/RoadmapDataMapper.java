@@ -34,17 +34,18 @@ public class RoadmapDataMapper {
     @JsonManagedReference
     @ToString.Exclude
     private Set<StepDataMapper> steps;
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
-    private Status status = Status.ACTIVE;
 
-    public RoadmapDataMapper(Integer id, String title, String description, String imagePath, Set<StepDataMapper> steps, Status status) {
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
+
+    public RoadmapDataMapper(Integer id, String title, String description, String imagePath, Set<StepDataMapper> steps, Boolean isActive) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.imagePath = imagePath;
         this.steps = steps;
-        this.status = status;
+        this.isActive = isActive;
     }
 
     @Override

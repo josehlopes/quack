@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface Roadmap {
 
-    int getId();
+    Integer getId();
 
     String getTitle();
 
