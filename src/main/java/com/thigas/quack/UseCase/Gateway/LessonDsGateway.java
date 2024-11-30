@@ -7,15 +7,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface LessonDsGateway {
-    void save(LessonRequestModel lesson);
+    Optional<LessonRequestModel> getById(Integer id);
 
-    Set<LessonRequestModel> saveAll(Set<LessonRequestModel> lessons);
+    boolean existsById(Integer id);
 
-    Optional<LessonRequestModel> findById(int id);
-
-    boolean existsById(int id);
-
-    Iterable<LessonRequestModel> findAll();
-
-    void deleteById(int id);
+    Iterable<LessonRequestModel> getAll();
 }

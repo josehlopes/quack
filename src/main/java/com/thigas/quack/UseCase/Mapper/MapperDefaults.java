@@ -1,7 +1,9 @@
 package com.thigas.quack.UseCase.Mapper;
 
+import com.google.gson.Gson;
 import com.thigas.quack.Adapter.Entity.StepDataMapper;
 import com.thigas.quack.Domain.Entity.Interface.Step;
+import com.thigas.quack.UseCase.Model.Request.TaskTextRequestModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;

@@ -1,16 +1,11 @@
 package com.thigas.quack.Domain.Entity.Interface;
 
-
 import java.util.Set;
 
 public interface Task {
 
-    int getId();
-
-    TaskText getTasktext();
-
+    Integer getId();
+    TaskText getTaskText();
     Set<Step> getSteps();
-
     String getImagePath();
-
 }

@@ -1,10 +1,18 @@
 package com.thigas.quack.UseCase.Service;
 
+import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
+import com.thigas.quack.UseCase.Mapper.LessonMapper;
+import com.thigas.quack.UseCase.Mapper.TaskMapper;
+import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Presenter.GenericPresenter;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -13,37 +21,42 @@ import java.util.stream.StreamSupport;
 public class TaskService {
 
     private final TaskDsGateway taskDsGateway;
+    private final GenericPresenter genericPresenter;
+    private final TaskMapper taskMapper;
 
-    public void create(TaskRequestModel taskDtoRequest) {
-        taskDsGateway.save(taskDtoRequest);
-    }
 
-    public Optional<TaskRequestModel> getById(int id) {
-        return taskDsGateway.findById(id);
-    }
+    public ResponseWrapper<GenericResponseModel> getById(int id) {
+        Optional<TaskRequestModel> task = taskDsGateway.getById(id);
 
-    public Iterable<TaskRequestModel> getAll() {
-        Iterable<TaskRequestModel> tasks = taskDsGateway.findAll();
-        return StreamSupport.stream(tasks.spliterator(), false)
-                .collect(Collectors.toList());
-    }
-
-    public void update(TaskRequestModel taskDtoRequest) {
-        TaskRequestModel existingTask = taskDsGateway.findById(taskDtoRequest.id())
-                .orElseThrow(() -> new EntityNotFoundException("Task not found"));
-        TaskRequestModel updatedTask = new TaskRequestModel(
-                taskDtoRequest.id(),
-                taskDtoRequest.tasktext() != null ? taskDtoRequest.tasktext() : existingTask.tasktext(),
-                taskDtoRequest.stepsIds() != null ? taskDtoRequest.stepsIds() : existingTask.stepsIds(),
-                taskDtoRequest.imagePath() != null ? taskDtoRequest.imagePath() : existingTask.imagePath()
-        );
-        taskDsGateway.save(updatedTask);
-    }
-
-    public void delete(int id) {
-        if (!taskDsGateway.existsById(id)) {
-            throw new IllegalArgumentException("Task not found with id: " + id);
+        if (task.isEmpty()) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("Task not found"), 404);
         }
-        taskDsGateway.deleteById(id);
+
+        Map<String, Object> payload = Map.of("lesson", task.get());
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Task found", payload), 200);
     }
+
+    public ResponseWrapper<GenericResponseModel> getAll() {
+        Iterable<TaskRequestModel> tasks = taskDsGateway.getAll();
+        Iterable<TaskRequestModel> taskList = StreamSupport.stream(tasks.spliterator(), false)
+                .collect(Collectors.toList());
+
+        if (!taskList.iterator().hasNext()) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("No tasks available"), 204);
+        }
+
+        Map<String, Object> payload = Map.of("tasks", taskList);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("All tasks retrieved", payload), 200);
+    }
+
+    public ResponseWrapper<GenericResponseModel> existsById(int id) {
+        boolean exists = taskDsGateway.existsById(id);
+
+        if (!exists) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("Task does not exist"), 404);
+        }
+
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Task exists"), 200);
+    }
+
 }

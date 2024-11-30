@@ -80,7 +80,7 @@ public class StepService {
         }
 
         for (Integer lessonId : stepDto.lessonsIds()) {
-            LessonRequestModel lesson = lessonDsGateway.findById(lessonId)
+            LessonRequestModel lesson = lessonDsGateway.getById(lessonId)
                     .orElseThrow(() -> new RuntimeException("Lesson not found with ID: " + lessonId));
             lessonSet.add(lesson);
         }

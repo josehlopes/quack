@@ -4,20 +4,13 @@ import java.util.Set;
 
 public interface Lesson {
 
-    int getId();
-
+    Integer getId();
     String getTitle();
-
     String getDescription();
-
     String getLanguage();
-
     String getImagePath();
-
-    boolean getCompleted();
-
+    Boolean getCompleted();
     String getLLink();
-
     Set<Step> getSteps();
 
 }

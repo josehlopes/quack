@@ -1,9 +1,7 @@
 package com.thigas.quack.Adapter.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.HashSet;
@@ -14,6 +12,8 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "lesson")
 public class LessonDataMapper {
 
@@ -36,16 +36,7 @@ public class LessonDataMapper {
     @ToString.Exclude
     private Set<StepDataMapper> steps = new HashSet<>();
 
-    public LessonDataMapper(Integer id, String title, String description, String language, String imagePath, boolean completed, String link, Set<StepDataMapper> steps) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.language = language;
-        this.imagePath = imagePath;
-        this.completed = completed;
-        this.link = link;
-        this.steps = steps;
-    }
+
 
     @Override
     public final boolean equals(Object o) {

@@ -3,9 +3,7 @@ package com.thigas.quack.Adapter.Entity;
 import com.thigas.quack.UseCase.Mapper.TaskTextConverter;
 import com.thigas.quack.UseCase.Model.Request.TaskTextRequestModel;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -14,8 +12,10 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "task")
 public class TaskDataMapper {
 
@@ -31,13 +31,6 @@ public class TaskDataMapper {
     private TaskTextRequestModel tasktext;
     @Column(nullable = true)
     private String imagePath;
-
-    public TaskDataMapper(Integer id, Set<StepDataMapper> steps, TaskTextRequestModel tasktext, String imagePath) {
-        this.id = id;
-        this.steps = steps;
-        this.tasktext = tasktext;
-        this.imagePath = imagePath;
-    }
 
     @Override
     public final boolean equals(Object o) {
