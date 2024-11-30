@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnTransformer;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,13 +23,13 @@ public class TaskDataMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tasks", fetch = FetchType.EAGER)
     @ToString.Exclude
-    private Set<StepDataMapper> steps;
+    private Set<StepDataMapper> steps = new HashSet<>();
     @Column(columnDefinition = "jsonb")
     @Convert(converter = TaskTextConverter.class)
     @ColumnTransformer(write = "?::jsonb")
-    private TaskTextRequestModel tasktext;
+    private TaskTextRequestModel taskText;
     @Column(nullable = true)
     private String imagePath;
 

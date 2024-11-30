@@ -1,5 +1,6 @@
 package com.thigas.quack.Adapter.Repository;
 
+import com.thigas.quack.Adapter.Entity.StepDataMapper;
 import com.thigas.quack.Adapter.Entity.TaskDataMapper;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import jakarta.persistence.EntityManager;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @AllArgsConstructor

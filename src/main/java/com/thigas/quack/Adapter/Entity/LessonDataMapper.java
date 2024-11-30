@@ -24,15 +24,15 @@ public class LessonDataMapper {
     private String title;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = true)
+    @Column
     private String language;
     @Column(name = "image_path", nullable = false)
     private String imagePath;
     @Column(name = "completed", nullable = false)
     private boolean completed = false;
-    @Column(name = "link", nullable = true)
+    @Column(name = "link")
     private String link;
-    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<StepDataMapper> steps = new HashSet<>();
 

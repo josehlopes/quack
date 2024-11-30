@@ -17,7 +17,7 @@ public class StatisticsDataMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserDataMapper user;
     @Column(name = "streak_days")
