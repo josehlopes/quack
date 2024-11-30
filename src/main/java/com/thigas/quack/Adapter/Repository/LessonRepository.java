@@ -1,6 +1,5 @@
 package com.thigas.quack.Adapter.Repository;
 
-import com.thigas.quack.Adapter.Entity.AchievementDataMapper;
 import com.thigas.quack.Adapter.Entity.LessonDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import jakarta.persistence.EntityManager;
@@ -46,7 +45,7 @@ public class LessonRepository {
         try {
             return entityManager.find(LessonDataMapper.class, id) != null;
         } catch (Exception e) {
-            logger.error("Erro ao verificar se achievement existe por ID: {}", e.getMessage(), e);
+            logger.error("Erro ao verificar se lesson existe por ID: {}", e.getMessage(), e);
         }
         return false;
     }

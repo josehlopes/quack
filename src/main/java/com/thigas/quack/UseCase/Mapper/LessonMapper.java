@@ -10,7 +10,6 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {MapperDefaults.class})
-
 public interface LessonMapper {
 
     LessonMapper MAPPER = Mappers.getMapper(LessonMapper.class);

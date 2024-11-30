@@ -19,7 +19,7 @@ public class LessonController {
     public ResponseEntity<LessonRequestModel> getById(@PathVariable Integer id) {
         try {
             return lessonDsGateway.getById(id)
-                    .map(roadmap -> new ResponseEntity<>(roadmap, HttpStatus.OK))
+                    .map(lesson -> new ResponseEntity<>(lesson, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

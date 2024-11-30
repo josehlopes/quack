@@ -1,8 +1,7 @@
 package com.thigas.quack.Adapter.Controller;
 
-import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
-import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
-import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
+import com.thigas.quack.UseCase.Gateway.StepDsGateway;
+import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/steps")
 @AllArgsConstructor
-public class TaskController {
-    private final TaskDsGateway taskDsGateway;
+public class StepController {
+    private final StepDsGateway stepDsGateway;
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskRequestModel> getById(@PathVariable Integer id) {
+    public ResponseEntity<StepRequestModel> getById(@PathVariable Integer id) {
         try {
-            return taskDsGateway.getById(id)
-                    .map(task -> new ResponseEntity<>(task, HttpStatus.OK))
+            return stepDsGateway.getById(id)
+                    .map(step -> new ResponseEntity<>(step, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,11 +28,11 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<TaskRequestModel>> getAll() {
+    public ResponseEntity<Iterable<StepRequestModel>> getAll() {
         try {
-            Iterable<TaskRequestModel> tasks = taskDsGateway.getAll();
-            if (tasks != null) {
-                return new ResponseEntity<>(tasks, HttpStatus.OK);
+            Iterable<StepRequestModel> steps = stepDsGateway.getAll();
+            if (steps != null) {
+                return new ResponseEntity<>(steps, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

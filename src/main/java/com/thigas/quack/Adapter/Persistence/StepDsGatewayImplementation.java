@@ -1,9 +1,9 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.StepDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaStepRepository;
+import com.thigas.quack.Adapter.Repository.StepRepository;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.StepMapper;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 import lombok.RequiredArgsConstructor;
 
@@ -14,36 +14,27 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class StepDsGatewayImplementation implements StepDsGateway {
 
-    private final JpaStepRepository repository;
-    private final MapStructMapper mapper;
+    private final StepRepository repository;
+    private final StepMapper mapper;
+
 
     @Override
-    public void save(StepRequestModel stepDtoRequest) {
-        StepDataMapper toSaveStep = mapper.mapStepDtoRequestToDataMapper(stepDtoRequest);
-        repository.save(toSaveStep);
+    public Optional<StepRequestModel> getById(Integer id) {
+        Optional<StepDataMapper> step = repository.getById(id);
+        return step.map(mapper::toDsModel);
     }
 
     @Override
-    public Optional<StepRequestModel> findById(int id) {
-        Optional<StepDataMapper> step = repository.findById(id);
-        return step.map(mapper::mapStepDataMapperToDtoRequest);
-    }
-
-    @Override
-    public Boolean existsById(int id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 
     @Override
-    public Iterable<StepRequestModel> findAll() {
-        Iterable<StepDataMapper> steps = repository.findAll();
+    public Iterable<StepRequestModel> getAll() {
+        Iterable<StepDataMapper> steps = repository.getAll();
         return StreamSupport.stream(steps.spliterator(), false)
-                .map(mapper::mapStepDataMapperToDtoRequest)
+                .map(mapper::toDsModel)
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public void deleteById(int id) {
-        repository.deleteById(id);
-    }
 }

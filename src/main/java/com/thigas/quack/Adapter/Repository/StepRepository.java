@@ -1,7 +1,7 @@
 package com.thigas.quack.Adapter.Repository;
 
-import com.thigas.quack.Adapter.Entity.TaskDataMapper;
-import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
+import com.thigas.quack.Adapter.Entity.StepDataMapper;
+import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -14,28 +14,28 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class TaskRepository {
-    private static final Logger logger = LoggerFactory.getLogger(TaskDsGateway.class);
+public class StepRepository {
+    private static final Logger logger = LoggerFactory.getLogger(StepDsGateway.class);
     private final EntityManager entityManager;
 
     @Transactional(readOnly = true)
-    public Optional<TaskDataMapper> getById(Integer id) {
+    public Optional<StepDataMapper> getById(Integer id) {
         try {
-            return Optional.ofNullable(entityManager.find(TaskDataMapper.class, id));
+            return Optional.ofNullable(entityManager.find(StepDataMapper.class, id));
         } catch (Exception e) {
-            logger.error("Erro ao buscar task por ID: {}", e.getMessage(), e);
+            logger.error("Erro ao buscar step por ID: {}", e.getMessage(), e);
         }
         return Optional.empty();
     }
 
     @Transactional(readOnly = true)
-    public Iterable<TaskDataMapper> getAll() {
+    public Iterable<StepDataMapper> getAll() {
         try {
-            TypedQuery<TaskDataMapper> query = entityManager.createQuery(
-                    "SELECT u FROM TaskDataMapper u", TaskDataMapper.class);
+            TypedQuery<StepDataMapper> query = entityManager.createQuery(
+                    "SELECT u FROM StepDataMapper u", StepDataMapper.class);
             return query.getResultList();
         } catch (Exception e) {
-            logger.error("Erro ao buscar todos as tasks: {}", e.getMessage(), e);
+            logger.error("Erro ao buscar todos os steps: {}", e.getMessage(), e);
         }
         return null;
     }
@@ -43,9 +43,9 @@ public class TaskRepository {
     @Transactional(readOnly = true)
     public Boolean existsById(Integer id) {
         try {
-            return entityManager.find(TaskDataMapper.class, id) != null;
+            return entityManager.find(StepDataMapper.class, id) != null;
         } catch (Exception e) {
-            logger.error("Erro ao verificar se task existe por ID: {}", e.getMessage(), e);
+            logger.error("Erro ao verificar se step existe por ID: {}", e.getMessage(), e);
         }
         return false;
     }
