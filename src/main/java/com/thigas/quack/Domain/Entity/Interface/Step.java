@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface Step {
 
-    int getId();
+    Integer getId();
 
     Set<Roadmap> getRoadmaps();
 

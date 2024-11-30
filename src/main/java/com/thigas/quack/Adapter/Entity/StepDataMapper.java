@@ -2,9 +2,7 @@ package com.thigas.quack.Adapter.Entity;
 
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.HashSet;
@@ -15,42 +13,40 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "step")
 public class StepDataMapper {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "roadmap_steps", joinColumns = @JoinColumn(name = "step_id"),
             inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     @ToString.Exclude
     private Set<RoadmapDataMapper> roadmaps = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_tasks", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     @ToString.Exclude
     private Set<TaskDataMapper> tasks = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     @ToString.Exclude
     private Set<LessonDataMapper> lessons = new HashSet<>();
+
     @Column(nullable = false)
     private String description;
+
     @Column(name = "image_path")
     private String imagePath;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
     private Status status = Status.ACTIVE;
-
-    public StepDataMapper(Integer id, Set<RoadmapDataMapper> roadmaps, Set<TaskDataMapper> tasks, Set<LessonDataMapper> lessons, String description, String imagePath, Status status) {
-        this.id = id;
-        this.roadmaps = roadmaps;
-        this.tasks = tasks;
-        this.lessons = lessons;
-        this.description = description;
-        this.imagePath = imagePath;
-        this.status = status;
-    }
 
     @Override
     public final boolean equals(Object o) {

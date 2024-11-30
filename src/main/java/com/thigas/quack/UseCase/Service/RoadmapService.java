@@ -1,6 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
+import com.thigas.quack.UseCase.Mapper.RoadmapMapper;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
@@ -17,6 +18,7 @@ public class RoadmapService {
 
     private final RoadmapDsGateway roadmapDsGateway;
     private final GenericPresenter genericPresenter;
+    private final RoadmapMapper roadmapMapper;
 
     public ResponseWrapper<GenericResponseModel> getById(Integer id) {
         Optional<RoadmapRequestModel> roadmap = roadmapDsGateway.getById(id);

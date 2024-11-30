@@ -3,11 +3,10 @@ package com.thigas.quack.Adapter.Entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,38 +14,37 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roadmap")
 public class RoadmapDataMapper {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false)
     private String description;
+
     @Column(name = "image_path", nullable = false)
     private String imagePath;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "roadmap_steps", joinColumns =
             {@JoinColumn(name = "step_id")}, inverseJoinColumns =
             {@JoinColumn(name = "roadmap_id")})
     @JsonManagedReference
     @ToString.Exclude
-    private Set<StepDataMapper> steps;
+    private Set<StepDataMapper> steps = new HashSet<>();
 
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    public RoadmapDataMapper(Integer id, String title, String description, String imagePath, Set<StepDataMapper> steps, Boolean isActive) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.imagePath = imagePath;
-        this.steps = steps;
-        this.isActive = isActive;
-    }
+
 
     @Override
     public final boolean equals(Object o) {

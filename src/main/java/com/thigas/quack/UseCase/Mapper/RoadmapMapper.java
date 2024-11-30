@@ -5,6 +5,7 @@ import com.thigas.quack.Domain.Entity.Interface.Roadmap;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.RoadmapInfoResponseModel;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -16,10 +17,11 @@ public interface RoadmapMapper {
 
     RoadmapDataMapper toDataMapper(RoadmapRequestModel roadmapRequestModel);
 
+    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepDataMapperToIds")
     RoadmapRequestModel toDsModel(RoadmapDataMapper roadmapDataMapper);
 
     RoadmapInfoResponseModel toInfoDto(RoadmapDataMapper roadmapDataMapper);
 
+    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepsToIds")
     RoadmapRequestModel toDsModel(Roadmap roadmap);
 }
-

@@ -6,5 +6,5 @@ import java.util.Set;
 
 
 public record RoadmapRequestModel(Integer id, String title, String description, String imagePath,
-                                  Set<Integer> stepsIds) {
+                                  Set<Integer> stepsId) {
 }
