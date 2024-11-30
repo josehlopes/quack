@@ -1,5 +1,6 @@
 package com.thigas.quack.UseCase.Service;
 
+import com.thigas.quack.Adapter.Entity.StepDataMapper;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.LessonMapper;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -59,4 +61,14 @@ public class TaskService {
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Task exists"), 200);
     }
 
+    public ResponseWrapper<GenericResponseModel> getStepsByTaskId(int taskId) {
+        Set<StepDataMapper> steps = taskDsGateway.getStepsByTaskId(taskId);
+
+        if (steps.isEmpty()) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("No steps found for the given task"), 404);
+        }
+
+        Map<String, Object> payload = Map.of("steps", steps);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Steps retrieved successfully", payload), 200);
+    }
 }

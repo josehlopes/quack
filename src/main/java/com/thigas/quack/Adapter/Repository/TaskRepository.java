@@ -51,4 +51,17 @@ public class TaskRepository {
         }
         return false;
     }
+
+    @Transactional(readOnly = true)
+    public Set<StepDataMapper> getStepsByTaskId(Integer taskId) {
+        try {
+            Optional<TaskDataMapper> taskOptional = getById(taskId);
+            if (taskOptional.isPresent()) {
+                return taskOptional.get().getSteps();
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao buscar steps para a task com ID {}: {}", taskId, e.getMessage(), e);
+        }
+        return Set.of(); // Retorna um conjunto vazio caso ocorra um erro
+    }
 }

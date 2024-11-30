@@ -1,5 +1,6 @@
 package com.thigas.quack.Adapter.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +32,7 @@ public class StepDataMapper {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_tasks", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     @ToString.Exclude
+    @JsonBackReference
     private Set<TaskDataMapper> tasks = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})

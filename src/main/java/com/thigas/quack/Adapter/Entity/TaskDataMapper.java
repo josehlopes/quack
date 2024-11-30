@@ -1,5 +1,6 @@
 package com.thigas.quack.Adapter.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thigas.quack.UseCase.Mapper.TaskTextConverter;
 import com.thigas.quack.UseCase.Model.Request.TaskTextRequestModel;
 import jakarta.persistence.*;
@@ -27,9 +28,10 @@ public class TaskDataMapper {
     @ToString.Exclude
     private Set<StepDataMapper> steps = new HashSet<>();
     @Column(columnDefinition = "jsonb")
+    @JsonManagedReference
     @Convert(converter = TaskTextConverter.class)
     @ColumnTransformer(write = "?::jsonb")
-    private TaskTextRequestModel taskText;
+    private TaskTextRequestModel tasktext;
     @Column(nullable = true)
     private String imagePath;
 
