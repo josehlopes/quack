@@ -17,15 +17,15 @@ public interface StepMapper {
 
     StepDataMapper toDataMapper(StepRequestModel stepRequestModel);
 
-    @Mapping(target = "roadmapsId", source = "roadmaps", qualifiedByName = "mapRoadmapDataMapperToIds")
-    @Mapping(target = "lessonsId", source = "lessons", qualifiedByName = "mapLessonDataMapperToIds")
-    @Mapping(target = "tasksId", source = "tasks", qualifiedByName = "mapTaskDataMapperToIds")
+    @Mapping(target = "roadmapsId", source = "roadmaps")
+    @Mapping(target = "lessonsId", source = "lessons")
+    @Mapping(target = "tasksId", source = "tasks")
     StepRequestModel toDsModel(StepDataMapper stepDataMapper);
 
     StepInfoResponseModel toInfoDto(StepDataMapper stepDataMapper);
 
-    @Mapping(target = "roadmapsId", source = "roadmaps", qualifiedByName = "mapRoadmapToIds")
-    @Mapping(target = "lessonsId", source = "lessons", qualifiedByName = "mapLessonToIds")
-    @Mapping(target = "tasksId", source = "tasks", qualifiedByName = "mapTaskToIds")
+    @Mapping(target = "roadmapsId", source = "roadmaps")
+    @Mapping(target = "lessonsId", source = "lessons")
+    @Mapping(target = "tasksId", source = "tasks")
     StepRequestModel toDsModel(Step step);
 }

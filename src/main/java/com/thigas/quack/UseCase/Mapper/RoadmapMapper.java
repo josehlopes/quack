@@ -17,11 +17,11 @@ public interface RoadmapMapper {
 
     RoadmapDataMapper toDataMapper(RoadmapRequestModel roadmapRequestModel);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepDataMapperToIds")
+    @Mapping(target = "stepsId", source = "steps")
     RoadmapRequestModel toDsModel(RoadmapDataMapper roadmapDataMapper);
 
     RoadmapInfoResponseModel toInfoDto(RoadmapDataMapper roadmapDataMapper);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepsToIds")
+    @Mapping(target = "stepsId", source = "steps")
     RoadmapRequestModel toDsModel(Roadmap roadmap);
 }

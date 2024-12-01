@@ -61,6 +61,6 @@ public class RoadmapRepository {
         } catch (Exception e) {
             logger.error("Erro ao buscar roadmaps por categoria: {}", e.getMessage(), e);
         }
-        return new ArrayList<>();  // Retorna uma lista vazia em caso de erro
+        return new ArrayList<>();
     }
 }

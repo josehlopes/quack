@@ -16,11 +16,11 @@ public interface LessonMapper {
 
     LessonDataMapper toDataMapper(LessonRequestModel lessonRequestModel);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepDataMapperToIds")
+    @Mapping(target = "stepsId", source = "steps")
     LessonRequestModel toDsModel(LessonDataMapper lessonDataMapper);
 
     LessonInfoResponseModel toInfoDto(LessonDataMapper lessonDataMapper);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepsToIds")
+    @Mapping(target = "stepsId", source = "steps")
     LessonRequestModel toDsModel(Lesson lesson);
 }

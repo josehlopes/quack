@@ -18,12 +18,12 @@ public interface TaskMapper {
 
     TaskDataMapper toDataMapper(TaskRequestModel taskRequestModel);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepDataMapperToIds")
+    @Mapping(target = "stepsId", source = "steps")
     TaskRequestModel toDsModel(TaskDataMapper taskDataMapper);
 
     TaskInfoResponseModel toInfoDto(TaskDataMapper taskDataMapper);
 
-    @Mapping(target = "stepsId", source = "steps", qualifiedByName = "mapStepsToIds")
+    @Mapping(target = "stepsId", source = "steps")
     TaskRequestModel toDsModel(Task task);
 
     default TaskTextRequestModel map(String value) {

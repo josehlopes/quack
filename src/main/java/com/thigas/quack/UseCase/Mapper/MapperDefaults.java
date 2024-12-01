@@ -16,6 +16,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -40,7 +41,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("idsToItemSetStep")
     default Set<Step> idsToItemSetStep(Set<Integer> ids, Set<Step> allSteps) {
         return ids.stream()
                 .map(id -> allSteps.stream()
@@ -50,7 +50,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("idsToItemSetRoadmap")
     default Set<Roadmap> idsToItemSetRoadmap(Set<Integer> ids, Set<Roadmap> allRoadmaps) {
         return ids.stream()
                 .map(id -> allRoadmaps.stream()
@@ -60,7 +59,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("idsToItemSetLesson")
     default Set<Lesson> idsToItemSetLesson(Set<Integer> ids, Set<Lesson> allLessons) {
         return ids.stream()
                 .map(id -> allLessons.stream()
@@ -70,7 +68,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("idsToItemSetTask")
     default Set<Task> idsToItemSetTask(Set<Integer> ids, Set<Task> allTasks) {
         return ids.stream()
                 .map(id -> allTasks.stream()
@@ -80,27 +77,24 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapStepsToIds")
+    default Set<Integer> mapStepsDataMapperToIds(Set<StepDataMapper> steps) {
+        if (steps == null || steps.isEmpty()) {
+            return new HashSet<>();
+        }
+        return steps.stream()
+                .map(StepDataMapper::getId)
+                .collect(Collectors.toSet());
+    }
+
     default Set<Integer> mapStepsToIds(Set<Step> steps) {
-        if (steps == null) {
-            return null;
+        if (steps == null || steps.isEmpty()) {
+            return new HashSet<>();
         }
         return steps.stream()
                 .map(Step::getId)
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapStepDataMapperToIds")
-    default Set<Integer> mapStepDataMapperToIds(Set<StepDataMapper> stepsData) {
-        if (stepsData == null) {
-            return null;
-        }
-        return stepsData.stream()
-                .map(StepDataMapper::getId)
-                .collect(Collectors.toSet());
-    }
-
-    @Named("mapRoadmapToIds")
     default Set<Integer> mapRoadmapToIds(Set<Roadmap> roadmaps) {
         if (roadmaps == null) {
             return null;
@@ -110,7 +104,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapRoadmapDataMapperToIds")
     default Set<Integer> mapRoadmapDataMapperToIds(Set<RoadmapDataMapper> roadmapsData) {
         if (roadmapsData == null) {
             return null;
@@ -120,7 +113,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapLessonToIds")
     default Set<Integer> mapLessonToIds(Set<Lesson> lessons) {
         if (lessons == null) {
             return null;
@@ -130,7 +122,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapLessonDataMapperToIds")
     default Set<Integer> mapLessonDataMapperToIds(Set<LessonDataMapper> lessonsData) {
         if (lessonsData == null) {
             return null;
@@ -140,7 +131,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapTaskToIds")
     default Set<Integer> mapTaskToIds(Set<Task> tasks) {
         if (tasks == null) {
             return null;
@@ -150,7 +140,6 @@ public interface MapperDefaults {
                 .collect(Collectors.toSet());
     }
 
-    @Named("mapTaskDataMapperToIds")
     default Set<Integer> mapTaskDataMapperToIds(Set<TaskDataMapper> tasksData) {
         if (tasksData == null) {
             return null;
