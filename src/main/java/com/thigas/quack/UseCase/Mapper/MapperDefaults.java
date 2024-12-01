@@ -17,6 +17,7 @@ import org.mapstruct.ReportingPolicy;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
@@ -28,6 +29,15 @@ public interface MapperDefaults {
 
     default OffsetDateTime map(String value) {
         return value != null ? OffsetDateTime.parse(value, DateTimeFormatter.ISO_OFFSET_DATE_TIME) : null;
+    }
+
+    default <T> Set<T> idsToItemSet(Set<Integer> ids, Set<T> allItems, Function<T, Integer> getId) {
+        return ids.stream()
+                .map(id -> allItems.stream()
+                        .filter(item -> getId.apply(item).equals(id))
+                        .findFirst()
+                        .orElse(null))
+                .collect(Collectors.toSet());
     }
 
     @Named("idsToItemSetStep")

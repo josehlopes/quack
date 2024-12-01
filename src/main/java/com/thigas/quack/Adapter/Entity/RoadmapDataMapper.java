@@ -44,7 +44,8 @@ public class RoadmapDataMapper {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-
+    @Column(nullable = false)
+    private String category;
 
     @Override
     public final boolean equals(Object o) {

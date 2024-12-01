@@ -38,5 +38,19 @@ public class RoadmapController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity<Iterable<RoadmapRequestModel>> getByCategory(@PathVariable String category) {
+        try {
+            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getByCategory(category);
+            if (roadmaps != null && roadmaps.iterator().hasNext()) {
+                return new ResponseEntity<>(roadmaps, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 

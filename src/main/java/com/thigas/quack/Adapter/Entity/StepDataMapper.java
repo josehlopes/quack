@@ -23,7 +23,7 @@ public class StepDataMapper {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "roadmap_steps", joinColumns = @JoinColumn(name = "step_id"),
             inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     @ToString.Exclude

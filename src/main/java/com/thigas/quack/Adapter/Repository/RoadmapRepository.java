@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
@@ -48,5 +49,18 @@ public class RoadmapRepository {
             logger.error("Erro ao buscar todos os roadmaps: {}", e.getMessage(), e);
         }
         return null;
+    }
+
+    @Transactional(readOnly = true)
+    public Iterable<RoadmapDataMapper> getByCategory(String category) {
+        try {
+            TypedQuery<RoadmapDataMapper> query = entityManager.createQuery(
+                    "SELECT r FROM RoadmapDataMapper r WHERE r.category = :category", RoadmapDataMapper.class);
+            query.setParameter("category", category);
+            return query.getResultList();
+        } catch (Exception e) {
+            logger.error("Erro ao buscar roadmaps por categoria: {}", e.getMessage(), e);
+        }
+        return new ArrayList<>();  // Retorna uma lista vazia em caso de erro
     }
 }

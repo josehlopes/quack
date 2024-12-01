@@ -53,4 +53,18 @@ public class RoadmapService {
 
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmap exists"), 200);
     }
+
+    public ResponseWrapper<GenericResponseModel> getByCategory(String category) {
+        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getByCategory(category);
+        Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
+                .collect(Collectors.toList());
+
+        if (!roadmapList.iterator().hasNext()) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("No roadmaps found for the given category"), 204);
+        }
+
+        Map<String, Object> payload = Map.of("roadmaps", roadmapList);
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmaps retrieved by category", payload), 200);
+    }
+
 }
