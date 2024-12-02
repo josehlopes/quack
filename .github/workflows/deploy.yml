@@ -17,6 +17,10 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
           
+     - name: "Create quack.p12 from GitHub Secrets"
+       run: |
+         echo "$QUACK_P12" | base64 --decode > src/main/resources/quack/quack.p12
+
      - name: "Build with Maven"
        run: mvn clean package -DskipTests
 
@@ -41,7 +45,6 @@ jobs:
          password: ${{ secrets.SSH_PASSWORD }}
          script:  |
            sudo cp -r /root/quack_backup/src/main/resources/quack /root/quack/src/main/resources/
-
 
      - name: "Run JAR using systemd on server"
        uses: appleboy/ssh-action@v0.1.8
