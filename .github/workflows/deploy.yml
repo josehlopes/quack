@@ -45,8 +45,20 @@ jobs:
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          port: ${{ secrets.REMOTE_PORT }}
          password: ${{ secrets.SSH_PASSWORD }}
-         script:  |
+         script: |
            sudo cp -r /root/quack_backup/src/main/resources/quack /root/quack/src/main/resources/
+
+     - name: "Set permissions for the quack folder"
+       uses: appleboy/ssh-action@v0.1.8
+       with:
+         host: ${{ secrets.REMOTE_HOST }}
+         username: ${{ secrets.REMOTE_USER }}
+         key: ${{ secrets.SSH_PRIVATE_KEY }}
+         port: ${{ secrets.REMOTE_PORT }}
+         password: ${{ secrets.SSH_PASSWORD }}
+         script: |
+           sudo chmod -R 755 /root/quack/src/main/resources/quack
+           sudo chmod 644 /root/quack/src/main/resources/quack/quack.p12
 
      - name: "Run JAR using systemd on server"
        uses: appleboy/ssh-action@v0.1.8
