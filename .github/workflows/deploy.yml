@@ -32,17 +32,6 @@ jobs:
          source: "target/quack-0.0.1-SNAPSHOT.jar"
          target: "/root/quack/"
 
-     - name: "Run JAR on server"
-       uses: appleboy/ssh-action@v0.1.8
-       with:
-         host: ${{ secrets.REMOTE_HOST }}
-         username: ${{ secrets.REMOTE_USER }}
-         key: ${{ secrets.SSH_PRIVATE_KEY }}
-         port: ${{ secrets.REMOTE_PORT }}
-         password: ${{ secrets.SSH_PASSWORD }}
-         script: |
-           nohup java -jar /root/quack/quack-0.0.1-SNAPSHOT.jar --no-dev --no-progress - a > /root/quack/quack.log 2>&1
-
      - name: "Run JAR using systemd on server"
        uses: appleboy/ssh-action@v0.1.8
        with:
