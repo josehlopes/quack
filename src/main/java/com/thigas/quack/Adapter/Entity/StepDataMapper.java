@@ -1,0 +1,68 @@
+package com.thigas.quack.Adapter.Entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.thigas.quack.Domain.Utils.Status;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@Getter
+@Setter
+@ToString
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "step")
+public class StepDataMapper {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "roadmap_steps", joinColumns = @JoinColumn(name = "step_id"),
+            inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
+    @ToString.Exclude
+    private Set<RoadmapDataMapper> roadmaps = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "step_tasks", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+    @ToString.Exclude
+    @JsonBackReference
+    private Set<TaskDataMapper> tasks = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @ToString.Exclude
+    private Set<LessonDataMapper> lessons = new HashSet<>();
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(name = "image_path")
+    private String imagePath;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status", nullable = false)
+    private Status status = Status.ACTIVE;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        StepDataMapper stepDataMapper = (StepDataMapper) o;
+        return getId() != null && Objects.equals(getId(), stepDataMapper.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+}
