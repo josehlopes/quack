@@ -29,7 +29,6 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           source: "target/quack-0.0.1-SNAPSHOT.jar"
           target: "/root/quack/"
-        if: success() && steps.Check_for_changes_in_JAR_file.outputs.exit_code != 0
 
       # Rodar o JAR no servidor
       - name: "Run JAR on server"
@@ -40,5 +39,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY}}
           port: ${{ secrets.REMOTE_PORT}}
           script: |
-            nohup java -jar /root/quack/quack-0.0.1-SNAPSHOT.jar --no-dev --no-progress - a > /root/quack/quack.log 2>&1 &
-        if: success() && steps.Check_for_changes_in_JAR_file.outputs.exit_code != 0
+            nohup java -jar /root/quack/quack-0.0.1-SNAPSHOT.jar --no-dev --no-progress - a > /root/quack/quack.log 2>&1
