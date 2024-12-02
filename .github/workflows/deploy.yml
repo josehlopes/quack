@@ -39,8 +39,9 @@ jobs:
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          port: ${{ secrets.REMOTE_PORT }}
          password: ${{ secrets.SSH_PASSWORD }}
-         source: "/root/quack_backup/src/main/resources/quack"
-         target: "/root/quack/src/main/resources/"
+         script:  |
+           sudo cp -r /root/quack_backup/src/main/resources/quack /root/quack/src/main/resources/
+
 
      - name: "Run JAR using systemd on server"
        uses: appleboy/ssh-action@v0.1.8
