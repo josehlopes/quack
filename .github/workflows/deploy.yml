@@ -20,8 +20,8 @@ jobs:
      - name: "Setup SSH"
        run: |
          mkdir -p ~/.ssh
-         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/quack-backend
-         chmod 600 ~/.ssh/quack-backend
+         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/quack_backend
+         chmod 600 ~/.ssh/quack_backend
          ssh -o StrictHostKeyChecking=no -T git@github.com
 
      - name: "Build with Maven"
