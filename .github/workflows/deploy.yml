@@ -27,6 +27,8 @@ jobs:
          username: ${{ secrets.REMOTE_USER }}
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          port: ${{ secrets.REMOTE_PORT }}
+         password: ${{ secrets.SSH_PASSWORD }}
+
          source: "target/quack-0.0.1-SNAPSHOT.jar"
          target: "/root/quack/"
 
@@ -37,6 +39,7 @@ jobs:
          username: ${{ secrets.REMOTE_USER }}
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          port: ${{ secrets.REMOTE_PORT }}
+         password: ${{ secrets.SSH_PASSWORD }}
          script: |
            nohup java -jar /root/quack/quack-0.0.1-SNAPSHOT.jar --no-dev --no-progress - a > /root/quack/quack.log 2>&1
 
@@ -47,5 +50,6 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
+        password: ${{ secrets.SSH_PASSWORD }}
         script: |
           sudo systemctl restart quack
