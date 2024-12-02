@@ -19,7 +19,7 @@ jobs:
           
      - name: "Create quack.p12 from GitHub Secrets"
        run: |
-        echo "$QUACK_P12" | base64 --decode | sudo tee /root/quack_backup/src/main/resources/quack/quack.p12 > /dev/null
+        echo "$QUACK_P12" | base64 --decode | sudo tee quack_backup/src/main/resources/quack/quack.p12 > /dev/null
 
 
      - name: "Build with Maven"
