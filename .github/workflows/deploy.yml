@@ -32,7 +32,7 @@ jobs:
          target: "/root/quack/"
 
      - name: "Copy resources to server"
-       uses: appleboy/scp-action@master
+       uses: appleboy/ssh-action@v0.1.8
        with:
          host: ${{ secrets.REMOTE_HOST }}
          username: ${{ secrets.REMOTE_USER }}
