@@ -81,24 +81,24 @@ public class UserRoadmapService {
         return true;
     }
 
-    public Boolean endRoadmap(int id) {
-        UserRoadmapRequestModel existingUserRoadmap = getById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
-
-        UserRoadmapRequestModel userRoadmapRequestModel = new UserRoadmapRequestModel(
-                existingUserRoadmap.id(),
-                existingUserRoadmap.userId(),
-                existingUserRoadmap.roadmapId(),
-                100.0,
-                existingUserRoadmap.startedAt(),
-                LocalDate.now().toString(),
-                Status.FINISHED.getValue()
-        );
-
-        userRoadmapDsGateway.save(userRoadmapRequestModel);
-
-        int userId = existingUserRoadmap.userId();
-        statisticsDsGateway.incrementRoadmapsCompleted(userId);
-        return true;
-    }
+//    public Boolean endRoadmap(int id) {
+//        UserRoadmapRequestModel existingUserRoadmap = getById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
+//
+//        UserRoadmapRequestModel userRoadmapRequestModel = new UserRoadmapRequestModel(
+//                existingUserRoadmap.id(),
+//                existingUserRoadmap.userId(),
+//                existingUserRoadmap.roadmapId(),
+//                100.0,
+//                existingUserRoadmap.startedAt(),
+//                LocalDate.now().toString(),
+//                Status.FINISHED.getValue()
+//        );
+//
+//        userRoadmapDsGateway.save(userRoadmapRequestModel);
+//
+//        int userId = existingUserRoadmap.userId();
+//        statisticsDsGateway.incrementRoadmapsCompleted(userId);
+//        return true;
+//    }
 }
