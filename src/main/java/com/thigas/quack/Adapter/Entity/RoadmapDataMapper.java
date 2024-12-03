@@ -36,8 +36,8 @@ public class RoadmapDataMapper {
     @JoinTable(name = "roadmap_steps", joinColumns =
             {@JoinColumn(name = "step_id")}, inverseJoinColumns =
             {@JoinColumn(name = "roadmap_id")})
-    @JsonManagedReference
     @ToString.Exclude
+    @JsonManagedReference
     private Set<StepDataMapper> steps = new HashSet<>();
 
 

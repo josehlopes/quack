@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,11 +58,16 @@ public class TaskRepository {
         try {
             Optional<TaskDataMapper> taskOptional = getById(taskId);
             if (taskOptional.isPresent()) {
-                return taskOptional.get().getSteps();
+                // Retorna apenas os steps, sem incluir roadmaps ou outras associações
+                Set<StepDataMapper> steps = taskOptional.get().getSteps();
+                steps.forEach(step -> step.setRoadmaps(null)); // Evita incluir roadmaps
+                return steps;
             }
         } catch (Exception e) {
             logger.error("Erro ao buscar steps para a task com ID {}: {}", taskId, e.getMessage(), e);
         }
         return Set.of(); // Retorna um conjunto vazio caso ocorra um erro
     }
+
+
 }
