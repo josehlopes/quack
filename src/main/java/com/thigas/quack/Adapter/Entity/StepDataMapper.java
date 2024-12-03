@@ -27,7 +27,6 @@ public class StepDataMapper {
     @JoinTable(name = "roadmap_steps", joinColumns = @JoinColumn(name = "step_id"),
             inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     @ToString.Exclude
-    @JsonBackReference
     private Set<RoadmapDataMapper> roadmaps = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -39,7 +38,6 @@ public class StepDataMapper {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     @ToString.Exclude
-    @JsonBackReference
     private Set<LessonDataMapper> lessons = new HashSet<>();
 
     @Column(nullable = false)

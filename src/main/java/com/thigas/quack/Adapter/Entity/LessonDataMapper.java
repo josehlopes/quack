@@ -1,6 +1,5 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -33,9 +32,8 @@ public class LessonDataMapper {
     private boolean completed = false;
     @Column(name = "link")
     private String link;
-    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.EAGER)
     @ToString.Exclude
-    @JsonManagedReference
     private Set<StepDataMapper> steps = new HashSet<>();
 
 
