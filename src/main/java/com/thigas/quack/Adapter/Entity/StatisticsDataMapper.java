@@ -1,9 +1,7 @@
 package com.thigas.quack.Adapter.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -11,6 +9,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_statistic")
 public class StatisticsDataMapper {
 
@@ -21,31 +21,27 @@ public class StatisticsDataMapper {
     @JoinColumn(name = "user_id", nullable = false)
     private UserDataMapper user;
     @Column(name = "streak_days")
-    private int streakDays;
+    private Integer streakDays;
     @Column(name = "best_streak")
-    private int bestStreak;
+    private Integer bestStreak;
     @Column(name = "level")
-    private int userLevel;
+    private Integer level;
+    @Column(name = "next_level")
+    private Integer nextLevel;
     @Column(name = "experience")
-    private Double userExperience;
+    private Double experience;
+    @Column(name = "experience_to_next_level")
+    private Double experienceToNextLevel;
     @Column(name = "challenges_completed_count")
-    private int challengesCompletedCount;
+    private Integer challengesCompletedCount;
     @Column(name = "roadmaps_completed_count")
-    private int roadmapsCompletedCount;
+    private Integer roadmapsCompletedCount;
+    @Column(name = "achievements_unlocked_count")
+    private Integer achievementsUnlockedCount;
+    @Column(name = "achievements_locked_count")
+    private Integer achievementsLockedCount;
     @Column(name = "points", nullable = false)
     private Double points = 0.0;
-
-    public StatisticsDataMapper(Integer id, UserDataMapper user, int streakDays, int bestStreak, int userLevel, Double userExperience, int challengesCompletedCount, int roadmapsCompletedCount, Double points) {
-        this.id = id;
-        this.user = user;
-        this.streakDays = streakDays;
-        this.bestStreak = bestStreak;
-        this.userLevel = userLevel;
-        this.userExperience = userExperience;
-        this.challengesCompletedCount = challengesCompletedCount;
-        this.roadmapsCompletedCount = roadmapsCompletedCount;
-        this.points = points;
-    }
 
     @Override
     public final boolean equals(Object o) {

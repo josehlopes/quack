@@ -34,6 +34,8 @@ public class UserService implements UserInputBoundary {
     private final EncoderInputBoundary encoderInputBoundary;
     private final EncoderGateway encoderGateway;
     private final UserMapper userMapper;
+    private final StatisticsService statisticsService;
+
 
     public ResponseWrapper<GenericResponseModel> create(UserRegisterRequestModel userRequest) {
         if (isEmailInUse(userRequest.email())) {
@@ -45,6 +47,8 @@ public class UserService implements UserInputBoundary {
 
         String token = generateToken(user.getEmail());
         Map<String, Object> payload = PayloadUtil.createRegisterPayload(token);
+
+        createInitialUserStatistics(user.getEmail());
 
         return genericPresenter.prepareSuccessView(new GenericResponseModel("User registered successfully", payload), 201);
     }
@@ -61,11 +65,17 @@ public class UserService implements UserInputBoundary {
                 userRequest.name(), userRequest.surname(), userRequest.phone(), userRequest.email(), encodedPassword,
                 encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
         );
+
     }
 
     private void saveUser(User user) {
         UserRequestModel userDsModel = userMapper.toDsModel(user);
         userDsGateway.save(userDsModel);
+    }
+
+    private void createInitialUserStatistics(String email) {
+        Optional<UserRequestModel> user = userDsGateway.getByEmail(email);
+        statisticsService.create(user.get().id());
     }
 
     private String generateToken(String email) {
