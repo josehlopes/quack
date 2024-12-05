@@ -1,6 +1,7 @@
 package com.thigas.quack.Adapter.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,7 @@ public class StepDataMapper {
     @JoinTable(name = "roadmap_steps", joinColumns = @JoinColumn(name = "step_id"),
             inverseJoinColumns = @JoinColumn(name = "roadmap_id"))
     @ToString.Exclude
+    @JsonIgnore
     private Set<RoadmapDataMapper> roadmaps = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
@@ -38,6 +40,7 @@ public class StepDataMapper {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "step_lesson", joinColumns = @JoinColumn(name = "step_id"), inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     @ToString.Exclude
+    @JsonIgnore
     private Set<LessonDataMapper> lessons = new HashSet<>();
 
     @Column(nullable = false)

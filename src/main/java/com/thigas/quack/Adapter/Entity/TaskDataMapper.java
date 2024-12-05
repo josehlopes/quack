@@ -24,14 +24,17 @@ public class TaskDataMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToMany(mappedBy = "tasks", fetch = FetchType.EAGER)
+
+    @ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<StepDataMapper> steps = new HashSet<>();
-    @Column(columnDefinition = "jsonb")
     @JsonManagedReference
+    private Set<StepDataMapper> steps = new HashSet<>();
+
+    @Column(columnDefinition = "jsonb")
     @Convert(converter = TaskTextConverter.class)
     @ColumnTransformer(write = "?::jsonb")
     private TaskTextRequestModel tasktext;
+
     @Column(nullable = true)
     private String imagePath;
 

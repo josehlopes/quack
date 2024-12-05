@@ -19,4 +19,5 @@ public class TaskTextConverter implements AttributeConverter<TaskTextRequestMode
     public TaskTextRequestModel convertToEntityAttribute(String dbData) {
         return GSON.fromJson(dbData, TaskTextRequestModel.class);
     }
+
 }
