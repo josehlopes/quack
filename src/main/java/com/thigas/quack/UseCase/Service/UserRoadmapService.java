@@ -1,14 +1,19 @@
 package com.thigas.quack.UseCase.Service;
 
+import com.thigas.quack.Domain.Entity.Interface.UserRoadmap;
+import com.thigas.quack.Domain.Factory.Interface.UserRoadmapFactory;
 import com.thigas.quack.Domain.Utils.Status;
+import com.thigas.quack.UseCase.Boundary.UserRoadmapInputBoundary;
 import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
-import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
+import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
+import com.thigas.quack.UseCase.Model.Request.*;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -16,89 +21,32 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
-public class UserRoadmapService {
+@AllArgsConstructor
+public class UserRoadmapService implements UserRoadmapInputBoundary {
 
-    private UserRoadmapDsGateway userRoadmapDsGateway;
-    private RoadmapDsGateway roadmapDsGateway;
-    private UserDsGateway userDsGateway;
-    private StatisticsDsGateway statisticsDsGateway;
+    private final UserRoadmapDsGateway userRoadmapDsGateway;
+    private final RoadmapDsGateway roadmapDsGateway;
+    private final UserDsGateway userDsGateway;
+    private final StatisticsDsGateway statisticsDsGateway;
+    private final UserRoadmapFactory userRoadmapFactory;
+    private final UserRoadmapMapper userRoadmapMapper;
+    private final StatisticsService statisticsService;
+
 
     //TODO: ALTERAR NOME DOS MÉTODOS
-    public void create(UserRoadmapRequestModel userRoadmapDtoRequest) {
-        userRoadmapDsGateway.save(userRoadmapDtoRequest);
-    }
-
-    public Optional<UserRoadmapRequestModel> getById(int id) {
-        return userRoadmapDsGateway.findById(id);
-    }
-
-    public Iterable<UserRoadmapRequestModel> getAll() {
-        Iterable<UserRoadmapRequestModel> userRoadmaps = userRoadmapDsGateway.findAll();
-        return StreamSupport.stream(userRoadmaps.spliterator(), false)
-                .collect(Collectors.toList());
-    }
-
-    public void update(UserRoadmapRequestModel userRoadmapDtoRequest) {
-        UserRoadmapRequestModel existingUserRoadmap = userRoadmapDsGateway.findById(userRoadmapDtoRequest.id())
-                .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
-
-        UserRoadmapRequestModel updatedEntity = new UserRoadmapRequestModel(
-                userRoadmapDtoRequest.id(),
-                userRoadmapDtoRequest.userId() != null ? userRoadmapDtoRequest.userId() : existingUserRoadmap.userId(),
-                userRoadmapDtoRequest.roadmapId() != null ? userRoadmapDtoRequest.roadmapId() : existingUserRoadmap.roadmapId(),
-                userRoadmapDtoRequest.progress() != null ? userRoadmapDtoRequest.progress() : existingUserRoadmap.progress(),
-                userRoadmapDtoRequest.startedAt() != null ? userRoadmapDtoRequest.startedAt() : existingUserRoadmap.startedAt(),
-                userRoadmapDtoRequest.finishedAt() != null ? userRoadmapDtoRequest.finishedAt() : existingUserRoadmap.finishedAt(),
-                userRoadmapDtoRequest.status() != null ? userRoadmapDtoRequest.status() : existingUserRoadmap.status()
-        );
-
-        userRoadmapDsGateway.save(updatedEntity);
-    }
-
-    public void delete(int id) {
-        userRoadmapDsGateway.deleteById(id);
-    }
-
-    public Boolean startRoadmap(int userId, int roadmapId) {
-        if (!userDsGateway.findById(userId) || !roadmapDsGateway.existsById(roadmapId)) {
-            return false;
+    @Override
+    public ResponseWrapper<GenericResponseModel> startRoadmap(StartRoadmapRequestModel request) {
+        UserRoadmap userRoadmap = userRoadmapFactory.create(request.userId(), request.roadmapId());
+        if (saveUserRoadmap(userRoadmap)) {
+            statisticsService.addExperience(request.userId(), 20.0);
+            return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
         }
+        return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
 
-        UserRequestModel user = userDsGateway.getById(userId).orElse(null);
-        RoadmapRequestModel roadmap = roadmapDsGateway.getById(roadmapId).orElse(null);
-
-        if (user == null || roadmap == null) {
-            return false;
-        }
-
-        UserRoadmapRequestModel userRoadmapRequestModel = new UserRoadmapRequestModel(
-                null, user.id(), roadmap.id(), 0.0, LocalDate.now().toString(), null, Status.ACTIVE.getValue()
-        );
-
-        userRoadmapDsGateway.save(userRoadmapRequestModel);
-
-        return true;
     }
 
-//    public Boolean endRoadmap(int id) {
-//        UserRoadmapRequestModel existingUserRoadmap = getById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("User-Roadmap not found"));
-//
-//        UserRoadmapRequestModel userRoadmapRequestModel = new UserRoadmapRequestModel(
-//                existingUserRoadmap.id(),
-//                existingUserRoadmap.userId(),
-//                existingUserRoadmap.roadmapId(),
-//                100.0,
-//                existingUserRoadmap.startedAt(),
-//                LocalDate.now().toString(),
-//                Status.FINISHED.getValue()
-//        );
-//
-//        userRoadmapDsGateway.save(userRoadmapRequestModel);
-//
-//        int userId = existingUserRoadmap.userId();
-//        statisticsDsGateway.incrementRoadmapsCompleted(userId);
-//        return true;
-//    }
+    private Boolean saveUserRoadmap(UserRoadmap userRoadmap) {
+        UserRoadmapRequestModel userRoadmapRequestModel = userRoadmapMapper.toDsModel(userRoadmap);
+        return userRoadmapDsGateway.save(userRoadmapRequestModel);
+    }
 }

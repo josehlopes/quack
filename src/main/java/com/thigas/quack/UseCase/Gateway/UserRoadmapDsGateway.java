@@ -1,19 +1,22 @@
 package com.thigas.quack.UseCase.Gateway;
 
-
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRoadmapDsGateway {
-    void save(UserRoadmapRequestModel roadmapUser);
+    Boolean save(UserRoadmapRequestModel dataSourceModel);
 
-    Optional<UserRoadmapRequestModel> findById(int id);
+    void startRoadmap(UserRoadmapRequestModel dataSourceModel);
 
-    List<UserRoadmapRequestModel> findAll();
+    Optional<UserRoadmapRequestModel> getUserRoadmapById(Integer id);
 
-    boolean existsById(int id);
+    Boolean findByUserIdAndRoadmapId(Integer userId, Integer achievementId);
 
-    void deleteById(int id);
+    Iterable<RoadmapRequestModel> getAllUserRoadmaps(Integer userId);
+
+    void endRoadmap(Integer userRoadmapId);
+
+    void deleteUserRoadmapById(Integer userRoadmapId);
 }

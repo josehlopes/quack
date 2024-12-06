@@ -2,9 +2,7 @@ package com.thigas.quack.Adapter.Entity;
 
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -14,6 +12,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_roadmap")
 public class UserRoadmapDataMapper {
 
@@ -29,22 +29,12 @@ public class UserRoadmapDataMapper {
     @Column(name = "progress", nullable = false)
     private Double progress;
     @Column(name = "started_at", columnDefinition = "DATE", nullable = false)
-    private LocalDate startedAt;
-    @Column(name = "finished_at", columnDefinition = "DATE", nullable = true)
-    private LocalDate finishedAt;
+    private LocalDate startedIn;
+    @Column(name = "finished_at", columnDefinition = "DATE")
+    private LocalDate finishedIn;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)
-    private Status status = Status.ACTIVE;
-
-    public UserRoadmapDataMapper(Integer id, UserDataMapper user, RoadmapDataMapper roadmap, Double progress, LocalDate startedAt, LocalDate finishedAt, Status status) {
-        this.id = id;
-        this.user = user;
-        this.roadmap = roadmap;
-        this.progress = progress;
-        this.startedAt = startedAt;
-        this.finishedAt = finishedAt;
-        this.status = status;
-    }
+    private Status status;
 
     @Override
     public final boolean equals(Object o) {

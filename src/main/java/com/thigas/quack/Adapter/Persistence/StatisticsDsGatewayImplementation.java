@@ -29,6 +29,12 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
         StatisticsDataMapper toSaveStatistics = mapper.toDataMapper(statisticsRequest);
         repository.save(toSaveStatistics);
     }
+    
+    @Override
+    public void update(StatisticsRequestModel statisticsRequest) {
+        StatisticsDataMapper toUpdateStatistics = mapper.toDataMapper(statisticsRequest);
+        repository.update(toUpdateStatistics);
+    }
 
     @Override
     public Optional<StatisticsRequestModel> getById(Integer id) {

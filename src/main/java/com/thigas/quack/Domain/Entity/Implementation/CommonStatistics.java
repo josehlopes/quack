@@ -37,11 +37,12 @@ public class CommonStatistics implements Statistics {
     @Override
     public void addExperience(Double experience) {
         this.experience += experience;
-        if (this.experience >= experienceToNextLevel) {
+        while (this.experience >= experienceToNextLevel) {
             this.level++;
             this.experienceToNextLevel = calculateExperienceToNextLevel(this.experience);
         }
     }
+
 
     @Override
     public void setNextLevel() {

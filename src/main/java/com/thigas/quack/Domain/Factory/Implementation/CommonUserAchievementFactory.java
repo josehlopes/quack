@@ -10,7 +10,6 @@ public class CommonUserAchievementFactory implements UserAchievementFactory {
     @Override
     public UserAchievement create(Integer userId, Integer achievementId, String description) {
         OffsetDateTime obtainedOn = OffsetDateTime.now();
-        Boolean isActive = true;
-        return new CommonUserAchievement(null, userId, achievementId, description, obtainedOn, isActive);
+        return new CommonUserAchievement(null, userId, achievementId, description, obtainedOn, true);
     }
 }

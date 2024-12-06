@@ -23,6 +23,7 @@ public class UserAchievementService implements UserAchievementInputBoundary {
     private final UserAchievementDsGateway userAchievementDsGateway;
     private final UserAchievementMapper userAchievementMapper;
     private final UserAchievementFactory userAchievementFactory;
+    private final StatisticsService statisticsService;
 
     //TODO: RETORNANDO ERRO 500 ATÉ QUANDO A OPERAÇÃO É FEITA COM SUCESSO
     @Override
@@ -32,6 +33,7 @@ public class UserAchievementService implements UserAchievementInputBoundary {
         }
 
         UserAchievement userAchievement = createUserAchievement(userAchievementUnlockRequestModel.userId(), userAchievementUnlockRequestModel.achievementId(), userAchievementUnlockRequestModel.description());
+        statisticsService.addExperience(userAchievementUnlockRequestModel.userId(), 10.0);
         saveUserAchievement(userAchievement);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievement unlocked successfully"), 200);
     }

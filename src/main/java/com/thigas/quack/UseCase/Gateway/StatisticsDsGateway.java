@@ -10,6 +10,6 @@ public interface StatisticsDsGateway {
     Optional<StatisticsRequestModel> getById(Integer id);
     Iterable<StatisticsRequestModel> getAll();
     Optional<StatisticsRequestModel> getByUserId(Integer userId);
-
+    void update(StatisticsRequestModel statistics);
 
 }

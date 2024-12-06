@@ -2,6 +2,7 @@ package com.thigas.quack.UseCase.Mapper;
 
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
+import com.thigas.quack.Domain.Entity.Implementation.CommonStatistics;
 import com.thigas.quack.Domain.Entity.Interface.Statistics;
 import com.thigas.quack.Domain.Entity.Interface.User;
 import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
@@ -24,5 +25,7 @@ public interface StatisticsMapper {
 
     @Mapping(target = "userId", source = "user.id")
     StatisticsRequestModel toDsModel(StatisticsDataMapper statisticsDataMapper);
+
+    CommonStatistics toEntity(StatisticsRequestModel statisticsRequestModel);
 
 }

@@ -29,7 +29,7 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
 
     @Override
     public Boolean findByUserIdAndAchievementId(Integer userId, Integer achievementId) {
-//        return repository.existsByUserIdAndAchievementId(userId, achievementId);
+        repository.existsByUserIdAndAchievementId(userId, achievementId);
         return true;
     }
 
