@@ -9,6 +9,7 @@ import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.StatisticsMapper;
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
+import com.thigas.quack.UseCase.Model.Response.StatisticsInfoResponseModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -54,11 +55,7 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
     //TODO: MÉTODO ESTÁ INCORRETO, DEVE SER ALTERADO
     @Override
     public Optional<StatisticsRequestModel> getByUserId(Integer userId) {
-        Optional<StatisticsDataMapper> statistics = repository.getById(userId);
+        Optional<StatisticsDataMapper> statistics = repository.getUserStatistics(userId);
         return statistics.map(mapper::toDsModel);
     }
-
-
-
-
 }

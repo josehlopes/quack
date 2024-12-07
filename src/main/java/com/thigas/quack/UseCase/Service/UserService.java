@@ -8,10 +8,12 @@ import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
+import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Model.Response.StatisticsInfoResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import com.thigas.quack.UseCase.Util.PayloadUtil;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
@@ -160,5 +162,9 @@ public class UserService implements UserInputBoundary {
         Map<String, Object> payload = PayloadUtil.createLoginPayload(user.get().id(), token);
 
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Login successfully", payload), 200);
+    }
+
+    public StatisticsRequestModel getStatistics(Integer userId) {
+        return statisticsService.getByUserId(userId).get();
     }
 }

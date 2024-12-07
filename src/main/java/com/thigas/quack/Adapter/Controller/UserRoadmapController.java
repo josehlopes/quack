@@ -2,7 +2,6 @@ package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserRoadmapInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/users/user-roadmap")
+@RequestMapping("/api/users/roadmaps")
 @AllArgsConstructor
 public class UserRoadmapController {
 
@@ -22,15 +21,13 @@ public class UserRoadmapController {
 
     @PostMapping("/start")
     public ResponseEntity<Void> createRoadmap(@RequestBody StartRoadmapRequestModel request) {
-        try {
-            ResponseWrapper<GenericResponseModel> success = userRoadmapInput.startRoadmap(request);
+        ResponseWrapper<GenericResponseModel> success = userRoadmapInput.startRoadmap(request);
             if (success.getStatusCode() == 201) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
-            } else {
+            } else if (success.getStatusCode() == 400) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
 }

@@ -29,7 +29,7 @@ public interface Statistics {
 
     Double getPoints();
 
-    Boolean setBestStreak(Integer streakDays);
+    void updateBestStreak(Integer streakDays);
     void addExperience(Double experience);
     void setNextLevel();
     void setExperienceToNextLevel();

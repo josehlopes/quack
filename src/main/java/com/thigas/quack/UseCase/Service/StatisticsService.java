@@ -6,20 +6,21 @@ import com.thigas.quack.Domain.Factory.Interface.StatisticsFactory;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.StatisticsMapper;
-import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StatisticsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(StatisticsService.class);
+
     private final StatisticsDsGateway statisticsGateway;
     private final StatisticsMapper statisticsMapper;
-    private final UserDsGateway userRepository;
+    private final UserDsGateway userDsGateway;
     private final StatisticsFactory statisticsFactory;
 
 
@@ -33,8 +34,8 @@ public class StatisticsService {
         statisticsGateway.save(statisticsRequestModel);
     }
 
-    public void updateStatistics(Statistics statistics) {
-        statisticsGateway.update(statisticsMapper.toDsModel(statistics));
+    public void updateStatistics(StatisticsRequestModel statistics) {
+        statisticsGateway.update(statistics);
     }
 
     public Optional<StatisticsRequestModel> getByUserId(Integer id) {
@@ -44,11 +45,28 @@ public class StatisticsService {
     public void addExperience(Integer userId, Double experience) {
         StatisticsRequestModel existingStatistic = getByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
-
-        Statistics toSave = statisticsMapper.toEntity(existingStatistic);
-        toSave.addExperience(experience);
-        saveStatistics(toSave);
+        CommonStatistics statistics = statisticsMapper.toEntity(existingStatistic);
+        statistics.addExperience(20.0);
+        StatisticsRequestModel newStatistics = statisticsMapper.toDsModel(statistics);
+        updateStatistics(newStatistics);
     }
+
+//    public StatisticsRequestModel updateStatisticsDetails(StatisticsRequestModel oldStatistics, StatisticsRequestModel newStatistics) {
+//        return new StatisticsRequestModel(
+//                oldStatistics.userId(),
+//                oldStatistics.streakDays() != null ? oldStatistics.streakDays() : newStatistics.streakDays(),
+//                oldStatistics.bestStreak() != null? oldStatistics.bestStreak() : newStatistics.bestStreak(),
+//                oldStatistics.level() != null ? oldStatistics.level() : newStatistics.level(),
+//                oldStatistics.nextLevel() !=  null ? oldStatistics.nextLevel() : newStatistics.level(),
+//                oldStatistics.points() != null ? oldStatistics.points() : newStatistics.points(),
+//                oldStatistics.experience() != null ? oldStatistics.experience() : newStatistics.experience(),
+//                oldStatistics.experienceToNextLevel() != null ? oldStatistics.experienceToNextLevel() : newStatistics.experienceToNextLevel(),
+//                oldStatistics.challengesCompletedCount() != null ? oldStatistics.challengesCompletedCount() : newStatistics.challengesCompletedCount(),
+//                oldStatistics.roadmapsCompletedCount() != null ? oldStatistics.roadmapsCompletedCount() : newStatistics.roadmapsCompletedCount(),
+//                oldStatistics.achievementsUnlockedCount() != null ? oldStatistics.achievementsUnlockedCount() : newStatistics.achievementsUnlockedCount(),
+//                oldStatistics.achievementsLockedCount() != null ? oldStatistics.achievementsLockedCount() : newStatistics.achievementsLockedCount()
+//        );
+//    }
 
 
 }

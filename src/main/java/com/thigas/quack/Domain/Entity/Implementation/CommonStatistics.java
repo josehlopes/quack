@@ -1,14 +1,16 @@
 package com.thigas.quack.Domain.Entity.Implementation;
 
 import com.thigas.quack.Domain.Entity.Interface.Statistics;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommonStatistics implements Statistics {
+
+    private static final Logger logger = LoggerFactory.getLogger(CommonStatistics.class);
 
     private Integer id;
     private Integer userId;
@@ -26,22 +28,24 @@ public class CommonStatistics implements Statistics {
 
 
     @Override
-    public Boolean setBestStreak(Integer streakDays) {
+    public void updateBestStreak(Integer streakDays) {
         if (streakDays > this.bestStreak) {
+            logger.info("Definindo melhor streak para {} dias.", streakDays);
             this.bestStreak = streakDays;
-            return true;
         }
-        return false;
     }
 
     @Override
     public void addExperience(Double experience) {
+        logger.debug("Adicionando {} de experiência.", experience);
         this.experience += experience;
         while (this.experience >= experienceToNextLevel) {
             this.level++;
-            this.experienceToNextLevel = calculateExperienceToNextLevel(this.experience);
+            this.experience -= experienceToNextLevel;
+            this.experienceToNextLevel = calculateExperienceToNextLevel(Double.valueOf(this.level));
         }
     }
+
 
 
     @Override
@@ -60,8 +64,8 @@ public class CommonStatistics implements Statistics {
     }
 
     @Override
-    public Boolean isLevelUp(Double experience) {
-        return experience >= experienceToNextLevel;
+    public Boolean isLevelUp(Double additionalExperience) {
+        return (this.experience + additionalExperience) >= this.experienceToNextLevel;
     }
 
     @Override

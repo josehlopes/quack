@@ -20,9 +20,9 @@ public class UserRoadmapRepository {
     private final EntityManager entityManager;
 
     @Transactional
-    public Boolean save(UserRoadmapDataMapper roadmap) {
+    public Boolean save(UserRoadmapDataMapper userRoadmap) {
         try {
-            entityManager.persist(roadmap);
+            entityManager.persist(userRoadmap);
             return true;
         } catch (Exception e) {
             logger.error("Erro ao salvar roadmap: {}", e.getMessage(), e);

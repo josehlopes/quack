@@ -2,6 +2,7 @@ package com.thigas.quack.UseCase.Gateway;
 
 
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
+import com.thigas.quack.UseCase.Model.Response.StatisticsInfoResponseModel;
 
 import java.util.Optional;
 
