@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface UserAchievementDsGateway {
 
-    void save(UserAchievementRequestModel dataSourceModel);
-
-    void unlockUserAchievement(UserAchievementUnlockRequestModel dataSourceModel);
+    void saveUserAchievement(UserAchievementRequestModel request);
 
     Optional<UserAchievementRequestModel> getUserAchievementById(Integer id);
 

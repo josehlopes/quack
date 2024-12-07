@@ -2,15 +2,12 @@ package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserLessonInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.CompletedLessonRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users/user-lesson")
@@ -36,7 +33,7 @@ public class UserLessonController {
     @GetMapping("/exists/{userId}/{lessonId}")
     public ResponseEntity<GenericResponseModel> findByUserIdAndLessonId(@PathVariable Integer userId, @PathVariable Integer lessonId) {
         try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.findByUserIdAndLessonId(userId, lessonId);
+            ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserIdAndLessonId(userId, lessonId);
             return ResponseEntity.status(HttpStatus.valueOf(response.getStatusCode())).body(response.getData());
         } catch (Exception ex) {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,7 +43,7 @@ public class UserLessonController {
     @GetMapping("/{id}")
     public ResponseEntity<GenericResponseModel> findById(@PathVariable Integer id) {
         try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.findById(id);
+            ResponseWrapper<GenericResponseModel> response = userLessonInput.getById(id);
             return new ResponseEntity<>(response.getData(), HttpStatus.valueOf(response.getStatusCode()));
         } catch (Exception ex) {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,7 +53,7 @@ public class UserLessonController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<GenericResponseModel> findByUserId(@PathVariable Integer userId) {
         try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.findByUserId(userId);
+            ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserId(userId);
             return new ResponseEntity<>(response.getData(), HttpStatus.valueOf(response.getStatusCode()));
         } catch (Exception ex) {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);

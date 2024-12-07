@@ -17,7 +17,7 @@ public class RoadmapController {
     @GetMapping("/{id}")
     public ResponseEntity<RoadmapRequestModel> getById(@PathVariable Integer id) {
         try {
-            return roadmapDsGateway.getById(id)
+            return roadmapDsGateway.getRoadmapById(id)
                     .map(roadmap -> new ResponseEntity<>(roadmap, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
@@ -28,7 +28,7 @@ public class RoadmapController {
     @GetMapping
     public ResponseEntity<Iterable<RoadmapRequestModel>> getAll() {
         try {
-            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAll();
+            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmaps();
             if (roadmaps != null) {
                 return new ResponseEntity<>(roadmaps, HttpStatus.OK);
             } else {
@@ -42,7 +42,7 @@ public class RoadmapController {
     @GetMapping("/category/{category}")
     public ResponseEntity<Iterable<RoadmapRequestModel>> getByCategory(@PathVariable String category) {
         try {
-            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getByCategory(category);
+            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmapByCategory(category);
             if (roadmaps != null && roadmaps.iterator().hasNext()) {
                 return new ResponseEntity<>(roadmaps, HttpStatus.OK);
             } else {

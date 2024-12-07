@@ -20,4 +20,8 @@ public interface UserRoadmap {
 
     Status getStatus();
 
+    void addProgress(Double progress);
+    void updateStatus(Status status);
+    void updateFinishedIn(LocalDate finishedIn);
+
 }

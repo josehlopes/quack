@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface AchievementDsGateway {
 
-    Optional<AchievementRequestModel> getById(Integer id);
+    Optional<AchievementRequestModel> getAchievementById(Integer id);
 
-    Iterable<AchievementRequestModel> getAll();
+    Iterable<AchievementRequestModel> getAllAchievements();
 
     Boolean existsById(Integer id);
 

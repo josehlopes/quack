@@ -2,14 +2,10 @@ package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
-import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,11 +19,11 @@ public class StepService {
 
 
     public Optional<StepRequestModel> getById(Integer id) {
-        return stepDsGateway.getById(id);
+        return stepDsGateway.getStepById(id);
     }
 
     public Iterable<StepRequestModel> getAll() {
-        Iterable<StepRequestModel> steps = stepDsGateway.getAll();
+        Iterable<StepRequestModel> steps = stepDsGateway.getAllSteps();
         return StreamSupport.stream(steps.spliterator(), false)
                 .collect(Collectors.toList());
     }
@@ -37,7 +33,7 @@ public class StepService {
 
 //
 //    public void updateStatus(Integer id, Integer statusValue) {
-//        Optional<StepRequestModel> optionalStep = stepDsGateway.findById(id);
+//        Optional<StepRequestModel> optionalStep = stepDsGateway.getAchievementById(id);
 //        if (optionalStep.isPresent()) {
 //            StepRequestModel step = optionalStep.get();
 //            step = new StepRequestModel(
@@ -49,7 +45,7 @@ public class StepService {
 //                    step.imagePath(),
 //                    statusValue
 //            );
-//            stepDsGateway.save(step);
+//            stepDsGateway.saveUserRoadmap(step);
 //        } else {
 //            throw new IllegalArgumentException("Step not found with id: " + id);
 //        }
@@ -63,7 +59,7 @@ public class StepService {
 //        }
 //
 //        for (Integer lessonId : stepDto.lessonsIds()) {
-//            LessonRequestModel lesson = lessonDsGateway.getById(lessonId)
+//            LessonRequestModel lesson = lessonDsGateway.getUserRoadmapById(lessonId)
 //                    .orElseThrow(() -> new RuntimeException("Lesson not found with ID: " + lessonId));
 //            lessonSet.add(lesson);
 //        }

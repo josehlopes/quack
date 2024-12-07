@@ -19,7 +19,7 @@ public class StepDsGatewayImplementation implements StepDsGateway {
 
 
     @Override
-    public Optional<StepRequestModel> getById(Integer id) {
+    public Optional<StepRequestModel> getStepById(Integer id) {
         Optional<StepDataMapper> step = repository.getById(id);
         return step.map(mapper::toDsModel);
     }
@@ -30,7 +30,7 @@ public class StepDsGatewayImplementation implements StepDsGateway {
     }
 
     @Override
-    public Iterable<StepRequestModel> getAll() {
+    public Iterable<StepRequestModel> getAllSteps() {
         Iterable<StepDataMapper> steps = repository.getAll();
         return StreamSupport.stream(steps.spliterator(), false)
                 .map(mapper::toDsModel)

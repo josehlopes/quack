@@ -27,13 +27,13 @@ public class TaskDsGatewayImplementation implements TaskDsGateway {
     }
 
     @Override
-    public Optional<TaskRequestModel> getById(Integer id) {
+    public Optional<TaskRequestModel> getTaskById(Integer id) {
         Optional<TaskDataMapper> task = repository.getById(id);
         return task.map(mapper::toDsModel);
     }
 
     @Override
-    public Iterable<TaskRequestModel> getAll() {
+    public Iterable<TaskRequestModel> getAllTasks() {
         Iterable<TaskDataMapper> tasks = repository.getAll();
         return StreamSupport.stream(tasks.spliterator(), false)
                 .map(mapper::toDsModel)

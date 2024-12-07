@@ -26,9 +26,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("users/create")
+    @PostMapping("users/createAddress")
     public ResponseEntity<ResponseWrapper<GenericResponseModel>> register(@Valid @RequestBody UserRegisterRequestModel registerBody) {
-        ResponseWrapper<GenericResponseModel> response = userInput.create(registerBody);
+        ResponseWrapper<GenericResponseModel> response = userInput.createUser(registerBody);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

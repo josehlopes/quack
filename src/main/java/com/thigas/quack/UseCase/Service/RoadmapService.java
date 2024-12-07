@@ -21,7 +21,7 @@ public class RoadmapService {
     private final RoadmapMapper roadmapMapper;
 
     public ResponseWrapper<GenericResponseModel> getById(Integer id) {
-        Optional<RoadmapRequestModel> roadmap = roadmapDsGateway.getById(id);
+        Optional<RoadmapRequestModel> roadmap = roadmapDsGateway.getRoadmapById(id);
 
         if (roadmap.isEmpty()) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Roadmap not found"), 404);
@@ -32,7 +32,7 @@ public class RoadmapService {
     }
 
     public ResponseWrapper<GenericResponseModel> getAll() {
-        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAll();
+        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmaps();
         Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
                 .collect(Collectors.toList());
 
@@ -55,7 +55,7 @@ public class RoadmapService {
     }
 
     public ResponseWrapper<GenericResponseModel> getByCategory(String category) {
-        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getByCategory(category);
+        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmapByCategory(category);
         Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
                 .collect(Collectors.toList());
 

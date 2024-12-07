@@ -4,12 +4,11 @@ package com.thigas.quack.UseCase.Gateway;
 import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 
 import java.util.Optional;
-import java.util.Set;
 
 public interface LessonDsGateway {
-    Optional<LessonRequestModel> getById(Integer id);
+    Optional<LessonRequestModel> getLessonById(Integer id);
 
-    boolean existsById(Integer id);
+    Boolean existsById(Integer id);
 
-    Iterable<LessonRequestModel> getAll();
+    Iterable<LessonRequestModel> getAllLessons();
 }

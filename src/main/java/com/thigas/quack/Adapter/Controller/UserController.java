@@ -7,11 +7,9 @@ import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserAchievementDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Model.Request.*;
-import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +31,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserRequestModel> getById(@PathVariable Integer id) {
         try {
-            return userDsGateway.getById(id)
+            return userDsGateway.getUserById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
@@ -44,7 +42,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Iterable<UserRequestModel>> getAll() {
         try {
-            Iterable<UserRequestModel> users = userDsGateway.getAll();
+            Iterable<UserRequestModel> users = userDsGateway.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,7 +53,7 @@ public class UserController {
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRequestModel userDTO) {
         try {
             if (id.equals(userDTO.id())) {
-                ResponseWrapper<GenericResponseModel> success = userInput.update(userDTO);
+                ResponseWrapper<GenericResponseModel> success = userInput.updateUser(userDTO);
                 if (success.getStatusCode() == 204) {
                     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
                 } else {
@@ -72,7 +70,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         try {
-            ResponseWrapper<GenericResponseModel> success = userInput.delete(id);
+            ResponseWrapper<GenericResponseModel> success = userInput.deleteUser(id);
             if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {

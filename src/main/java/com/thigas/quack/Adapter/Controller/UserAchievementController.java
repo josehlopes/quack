@@ -20,7 +20,7 @@ public class UserAchievementController {
     private final UserAchievementInputBoundary userAchievementInput;
     private final UserAchievementDsGateway userAchievementDsGateway;
 
-    @PostMapping("create")
+    @PostMapping("createAddress")
     public ResponseEntity<Void> createAchievement(@RequestBody UserAchievementUnlockRequestModel request) {
         try {
             ResponseWrapper<GenericResponseModel> success = userAchievementInput.unlockUserAchievement(request);
@@ -34,7 +34,7 @@ public class UserAchievementController {
         }
     }
 
-    @GetMapping("getAll/{userId}")
+    @GetMapping("getAllAchievements/{userId}")
     public ResponseEntity<Iterable<AchievementRequestModel>> getAllUserAchievements(@PathVariable Integer userId) {
         try {
             Iterable<AchievementRequestModel> achievements = userAchievementDsGateway.getAllUserAchievements(userId);

@@ -22,10 +22,10 @@ public class UserAddressController {
     private final AddressInputBoundary addressInput;
     private final AddressDsGateway addressDsGateway;
 
-    @PostMapping("/create")
+    @PostMapping("/createAddress")
     public ResponseEntity<Void> createAddress(@RequestBody AddressCreateRequestModel address) {
         try {
-            ResponseWrapper<GenericResponseModel> success = addressInput.create(address);
+            ResponseWrapper<GenericResponseModel> success = addressInput.createAddress(address);
             if (success.getStatusCode() == 201) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } else {
@@ -47,7 +47,7 @@ public class UserAddressController {
         }
     }
 
-    @GetMapping("/getAll/{userId}")
+    @GetMapping("/getAllAchievements/{userId}")
     public ResponseEntity<Iterable<AddressInfoResponseModel>> getAllAddresses(@PathVariable Integer userId) {
         try {
             Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
@@ -57,14 +57,14 @@ public class UserAddressController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/updateUserRoadmap/{id}")
     public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressRequestModel address) {
         try {
             if (!id.equals(address.id())) {
-                throw new IllegalArgumentException("Address id does not match");
+                throw new IllegalArgumentException("Address id does not matchPassword");
             }
 
-            ResponseWrapper<GenericResponseModel> success = addressInput.update(address);
+            ResponseWrapper<GenericResponseModel> success = addressInput.updateAddress(address);
             if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
@@ -77,7 +77,7 @@ public class UserAddressController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
         try {
             ResponseWrapper<GenericResponseModel> success = addressInput.delete(id);

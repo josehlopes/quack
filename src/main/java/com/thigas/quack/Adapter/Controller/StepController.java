@@ -19,7 +19,7 @@ public class StepController {
     @GetMapping("/{id}")
     public ResponseEntity<StepRequestModel> getById(@PathVariable Integer id) {
         try {
-            return stepDsGateway.getById(id)
+            return stepDsGateway.getStepById(id)
                     .map(step -> new ResponseEntity<>(step, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
@@ -30,7 +30,7 @@ public class StepController {
     @GetMapping
     public ResponseEntity<Iterable<StepRequestModel>> getAll() {
         try {
-            Iterable<StepRequestModel> steps = stepDsGateway.getAll();
+            Iterable<StepRequestModel> steps = stepDsGateway.getAllSteps();
             if (steps != null) {
                 return new ResponseEntity<>(steps, HttpStatus.OK);
             } else {

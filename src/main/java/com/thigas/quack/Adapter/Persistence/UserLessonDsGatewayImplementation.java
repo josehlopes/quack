@@ -19,14 +19,14 @@ public class UserLessonDsGatewayImplementation implements UserLessonDsGateway {
     private final UserLessonMapper mapper;
 
     @Override
-    public Boolean save(UserLessonRequestModel userLessonRequestModel) {
+    public Boolean saveUserLesson(UserLessonRequestModel userLessonRequestModel) {
         UserLessonDataMapper toSaveUserRoadmap = mapper.toDataMapper(userLessonRequestModel);
         return repository.save(toSaveUserRoadmap);
     }
 
 
     @Override
-    public void completedLesson(Integer userId, Integer lessonId, Boolean completed) {
+    public void completeLesson(Integer userId, Integer lessonId, Boolean completed) {
         Optional<UserLessonDataMapper> userLesson = repository.findByUserIdAndLessonId(userId, lessonId);
         userLesson.ifPresent(lesson -> {
             lesson.setCompleted(completed);
@@ -35,17 +35,17 @@ public class UserLessonDsGatewayImplementation implements UserLessonDsGateway {
     }
 
     @Override
-    public Optional<UserLessonDataMapper> findByUserIdAndLessonId(Integer userId, Integer lessonId) {
+    public Optional<UserLessonDataMapper> getByUserIdAndLessonId(Integer userId, Integer lessonId) {
         return repository.findByUserIdAndLessonId(userId, lessonId);
     }
 
     @Override
-    public Optional<UserLessonDataMapper> findById(Integer id) {
+    public Optional<UserLessonDataMapper> getUserLessonById(Integer id) {
         return repository.findById(id);
     }
 
     @Override
-    public List<UserLessonDataMapper> findByUserId(Integer userId) {
+    public List<UserLessonDataMapper> getByUserId(Integer userId) {
         return repository.findByUserId(userId);
     }
 

@@ -1,6 +1,7 @@
 package com.thigas.quack.UseCase.Mapper;
 
 import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
+import com.thigas.quack.Domain.Entity.Implementation.CommonUserRoadmap;
 import com.thigas.quack.Domain.Entity.Interface.UserRoadmap;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import org.mapstruct.Mapper;
@@ -28,4 +29,6 @@ public interface UserRoadmapMapper {
             @Mapping(target = "roadmapId", source = "roadmap.id")
     })
     UserRoadmapRequestModel toDsModel(UserRoadmapDataMapper userRoadmapDataMapper);
+
+    CommonUserRoadmap toEntity(UserRoadmapRequestModel userRoadmapRequestModel);    
 }

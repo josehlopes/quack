@@ -24,44 +24,22 @@ public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway 
     private final RoadmapMapper roadmapMapper;
 
     @Override
-    public Boolean save(UserRoadmapRequestModel userRoadmapDtoRequest) {
+    public Boolean saveUserRoadmap(UserRoadmapRequestModel userRoadmapDtoRequest) {
         UserRoadmapDataMapper toSaveUserRoadmap = mapper.toDataMapper(userRoadmapDtoRequest);
         return repository.save(toSaveUserRoadmap);
     }
 
     @Override
-    public void startRoadmap(UserRoadmapRequestModel dataSourceModel) {
-        UserRoadmapDataMapper userRoadmapDataMapper = mapper.toDataMapper(dataSourceModel);
-        repository.save(userRoadmapDataMapper);
+    public UserRoadmapRequestModel updateUserRoadmap(UserRoadmapRequestModel userRoadmap) {
+        UserRoadmapDataMapper userRoadmapDataMapper = mapper.toDataMapper(userRoadmap);
+        repository.update(userRoadmapDataMapper);
+        return userRoadmap;
     }
 
     @Override
     public Optional<UserRoadmapRequestModel> getUserRoadmapById(Integer id) {
         Optional<UserRoadmapDataMapper> userRoadmap = repository.getById(id);
         return userRoadmap.map(mapper::toDsModel);
-    }
-
-    @Override
-    public Boolean findByUserIdAndRoadmapId(Integer userId, Integer achievementId) {
-        return null;
-    }
-
-    @Override
-    public Iterable<RoadmapRequestModel> getAllUserRoadmaps(Integer userId) {
-        return StreamSupport.stream(repository.getAllUserRoadmaps(userId).spliterator(), false)
-                .map(roadmapMapper::toDsModel)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void endRoadmap(Integer userRoadmapId) {
-
-    }
-
-
-    @Override
-    public void deleteUserRoadmapById(Integer id) {
-        repository.deleteById(id);
     }
 
 }

@@ -20,4 +20,21 @@ public class CommonUserRoadmap implements UserRoadmap {
     private LocalDate finishedIn;
     private Status status;
 
+    @Override
+    public void addProgress(Double progress) {
+        this.progress += progress;
+        if (this.progress >= 100.0) {
+            updateStatus(Status.FINISHED);
+        }
+    }
+
+    @Override
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public void updateFinishedIn(LocalDate finishedIn) {
+        this.finishedIn = finishedIn;
+    }
 }

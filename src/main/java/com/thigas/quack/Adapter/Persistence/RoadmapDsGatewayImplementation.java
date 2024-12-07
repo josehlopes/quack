@@ -19,7 +19,7 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
     private final RoadmapMapper mapper;
 
     @Override
-    public Optional<RoadmapRequestModel> getById(Integer id) {
+    public Optional<RoadmapRequestModel> getRoadmapById(Integer id) {
         Optional<RoadmapDataMapper> roadmap = repository.getById(id);
         return roadmap.map(mapper::toDsModel);
     }
@@ -30,7 +30,7 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
     }
 
     @Override
-    public Iterable<RoadmapRequestModel> getAll() {
+    public Iterable<RoadmapRequestModel> getAllRoadmaps() {
         Iterable<RoadmapDataMapper> roadmaps = repository.getAll();
         return StreamSupport.stream(roadmaps.spliterator(), false)
                 .map(mapper::toDsModel)
@@ -38,7 +38,7 @@ public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
     }
 
     @Override
-    public Iterable<RoadmapRequestModel> getByCategory(String category) {
+    public Iterable<RoadmapRequestModel> getAllRoadmapByCategory(String category) {
         Iterable<RoadmapDataMapper> roadmaps = repository.getByCategory(category);
         return StreamSupport.stream(roadmaps.spliterator(), false)
                 .map(mapper::toDsModel)

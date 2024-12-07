@@ -10,7 +10,7 @@ public class BCryptEncoderInputBoundary implements EncoderInputBoundary {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
-    public String encode(String password) {
+    public String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
 }

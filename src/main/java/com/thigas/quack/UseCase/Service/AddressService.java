@@ -31,7 +31,7 @@ public class AddressService implements AddressInputBoundary {
     private final UserDsGateway userDsGateway;
 
     @Override
-    public ResponseWrapper<GenericResponseModel> create(AddressCreateRequestModel addressCreateRequestModel) {
+    public ResponseWrapper<GenericResponseModel> createAddress(AddressCreateRequestModel addressCreateRequestModel) {
         UserRequestModel userDto = getUserById(addressCreateRequestModel.userId());
 
         Address address = createAddress(addressCreateRequestModel, userDto.id());
@@ -46,7 +46,7 @@ public class AddressService implements AddressInputBoundary {
     }
 
     private UserRequestModel getUserById(Integer userId) {
-        return userDsGateway.getById(userId)
+        return userDsGateway.getUserById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
@@ -64,7 +64,7 @@ public class AddressService implements AddressInputBoundary {
 
     private void saveAddress(Address address) {
         AddressRequestModel addressRequestModel = addressMapper.toDsModel(address);
-        addressDsGateway.save(addressRequestModel);
+        addressDsGateway.saveAddress(addressRequestModel);
     }
 
     public ResponseWrapper<Optional<AddressInfoResponseModel>> getUserAddress(Integer userId, Integer addressId) {
@@ -78,12 +78,12 @@ public class AddressService implements AddressInputBoundary {
     }
 
     @Override
-    public ResponseWrapper<GenericResponseModel> update(AddressRequestModel addressDtoRequest) {
+    public ResponseWrapper<GenericResponseModel> updateAddress(AddressRequestModel addressDtoRequest) {
         AddressInfoResponseModel existingAddress = getAddressById(addressDtoRequest.id());
 
         AddressRequestModel updatedAddress = updateAddressDetails(addressDtoRequest, existingAddress);
 
-        addressDsGateway.update(updatedAddress);
+        addressDsGateway.updateAddress(updatedAddress);
         Map<String, Object> payload = PayloadUtil.createAddressPayload("Address updated successfully");
         return genericPresenter.prepareSuccessView(new GenericResponseModel(payload), 204);
     }
@@ -108,7 +108,7 @@ public class AddressService implements AddressInputBoundary {
     }
 
     @Override
-    public ResponseWrapper<GenericResponseModel> delete(Integer id) {
+    public ResponseWrapper<GenericResponseModel> deleteAddress(Integer id) {
         if (!addressDsGateway.existsById(id)) {
             throw new NoSuchElementException("Address not found");
         }
