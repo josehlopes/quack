@@ -9,8 +9,7 @@ public interface Lesson {
     String getDescription();
     String getLanguage();
     String getImagePath();
-    Boolean getCompleted();
-    String getLLink();
+    String getLink();
     Set<Step> getSteps();
 
 }

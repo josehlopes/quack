@@ -4,14 +4,14 @@ import com.thigas.quack.Domain.Utils.Status;
 
 public interface UserLesson {
 
-    int getId();
+    Integer getId();
 
-    User getUser();
+    Integer getUserId();
 
-    Lesson getLesson();
+    Integer getLessonId();
 
-    Status getStatus();
+    Boolean getCompleted();
 
-    String getImagePath();
+    void setCompleted(Boolean completed);
 
 }

@@ -1,18 +1,23 @@
 package com.thigas.quack.UseCase.Gateway;
 
 
+import com.thigas.quack.Adapter.Entity.UserLessonDataMapper;
 import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserLessonDsGateway {
-    void save(UserLessonRequestModel userLesson);
 
-    Optional<UserLessonRequestModel> findById(int id);
+    Boolean save(UserLessonRequestModel dataSourceModel);
 
-    Iterable<UserLessonRequestModel> findAll();
+    void completedLesson(Integer userId, Integer lessonId, Boolean completed);
 
-    boolean existsById(int id);
+    Optional<UserLessonDataMapper> findByUserIdAndLessonId(Integer userId, Integer lessonId);
 
-    void deleteById(int id);
+    Optional<UserLessonDataMapper> findById(Integer id);
+
+    List<UserLessonDataMapper> findByUserId(Integer userId);
+
+    void deleteUserLessonById(Integer userLessonId);
 }
