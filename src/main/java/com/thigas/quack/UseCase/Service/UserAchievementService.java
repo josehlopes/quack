@@ -32,7 +32,7 @@ public class UserAchievementService implements UserAchievementInputBoundary {
         }
 
         UserAchievement userAchievement = createUserAchievement(userAchievementUnlockRequestModel.userId(), userAchievementUnlockRequestModel.achievementId(), userAchievementUnlockRequestModel.description());
-        statisticsService.addExperience(userAchievementUnlockRequestModel.userId(), 10.0);
+        statisticsService.addExperience(userAchievementUnlockRequestModel.userId(), 30.0);
         saveUserAchievement(userAchievement);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievement unlocked successfully"), 200);
     }

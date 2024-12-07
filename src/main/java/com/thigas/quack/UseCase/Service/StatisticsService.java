@@ -49,6 +49,14 @@ public class StatisticsService {
         saveUpdatedStatistics(statistics);
     }
 
+    public void addRoadmapCompleteCount(Integer userId) {
+        StatisticsRequestModel existingStatistic = getExistingStatistic(userId);
+        CommonStatistics statistics = statisticsMapper.toEntity(existingStatistic);
+        updateRoadmapCompleteCount(statistics);
+        saveUpdatedStatistics(statistics);
+
+    }
+
     private StatisticsRequestModel getExistingStatistic(Integer userId) {
         return getByUserId(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Statistics not found for user ID: " + userId));
@@ -56,6 +64,10 @@ public class StatisticsService {
 
     private void updateExperience(CommonStatistics statistics, Double experience) {
         statistics.addExperience(experience);
+    }
+
+    private void updateRoadmapCompleteCount(CommonStatistics statistics) {
+        statistics.updateRoadmapsCompletedCount();
     }
 
     private void saveUpdatedStatistics(CommonStatistics statistics) {

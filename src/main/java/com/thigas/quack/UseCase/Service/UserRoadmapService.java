@@ -33,7 +33,7 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
     public ResponseWrapper<GenericResponseModel> startRoadmap(StartRoadmapRequestModel request) {
         UserRoadmap userRoadmap = userRoadmapFactory.create(request.userId(), request.roadmapId());
         if (saveUserRoadmap(userRoadmap)) {
-            statisticsService.addExperience(request.userId(), 20.0);
+            statisticsService.addExperience(request.userId(), 50.0);
             return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
         }
         return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
@@ -48,10 +48,13 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
         return userRoadmapDsGateway.getUserRoadmapById(userRoadmapId).get();
     }
 
+    //TODO: USAR MÉTODO TODA VEZ QUE CONCLUIR UM STEP
     private Boolean completeRoadmap(UserRoadmapRequestModel userRoadmap) {
         UserRoadmapRequestModel existingUserRoadmap = getUserRoadmap(userRoadmap.id());
         if (isRoadmapComplete(userRoadmap)) {
             updateRoadmapStatusToFinished(existingUserRoadmap);
+            statisticsService.addRoadmapCompleteCount(existingUserRoadmap.userId());
+            statisticsService.addExperience(existingUserRoadmap.userId(), 200.0);
             return true;
         } else {
             return false;

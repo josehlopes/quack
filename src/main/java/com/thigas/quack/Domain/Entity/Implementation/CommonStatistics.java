@@ -77,4 +77,7 @@ public class CommonStatistics implements Statistics {
         this.points -= points;
     }
 
+    @Override
+    public void updateRoadmapsCompletedCount() { this.roadmapsCompletedCount += 1; }
+
 }

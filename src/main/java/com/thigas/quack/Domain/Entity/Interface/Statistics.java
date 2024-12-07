@@ -39,4 +39,5 @@ public interface Statistics {
     Boolean isLevelUp(Double experience);
     void addPoints(Double points);
     void removePoints(Double points);
+    void updateRoadmapsCompletedCount();
 }
