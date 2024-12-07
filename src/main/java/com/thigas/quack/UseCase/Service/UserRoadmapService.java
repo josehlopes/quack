@@ -42,7 +42,6 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
             return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
         }
         return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
-
     }
 
     private Boolean saveUserRoadmap(UserRoadmap userRoadmap) {

@@ -25,12 +25,12 @@ public class CommonStatistics implements Statistics {
     private Integer achievementsUnlockedCount;
     private Integer achievementsLockedCount;
     private Double points;
+    private Boolean isActive;
 
 
     @Override
     public void updateBestStreak(Integer streakDays) {
         if (streakDays > this.bestStreak) {
-            logger.info("Definindo melhor streak para {} dias.", streakDays);
             this.bestStreak = streakDays;
         }
     }
@@ -41,20 +41,19 @@ public class CommonStatistics implements Statistics {
         this.experience += experience;
         while (this.experience >= experienceToNextLevel) {
             this.level++;
+            updateNextLevel();
             this.experience -= experienceToNextLevel;
             this.experienceToNextLevel = calculateExperienceToNextLevel(Double.valueOf(this.level));
         }
     }
 
-
-
     @Override
-    public void setNextLevel() {
+    public void updateNextLevel() {
         this.nextLevel = this.level + 1;
     }
 
     @Override
-    public void setExperienceToNextLevel() {
+    public void updateExperienceToNextLevel() {
         this.experienceToNextLevel = calculateExperienceToNextLevel(this.experience);
     }
 

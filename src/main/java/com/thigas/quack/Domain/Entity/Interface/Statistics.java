@@ -29,10 +29,12 @@ public interface Statistics {
 
     Double getPoints();
 
+    Boolean getIsActive();
+
     void updateBestStreak(Integer streakDays);
     void addExperience(Double experience);
-    void setNextLevel();
-    void setExperienceToNextLevel();
+    void updateNextLevel();
+    void updateExperienceToNextLevel();
     Double calculateExperienceToNextLevel(Double experience);
     Boolean isLevelUp(Double experience);
     void addPoints(Double points);
