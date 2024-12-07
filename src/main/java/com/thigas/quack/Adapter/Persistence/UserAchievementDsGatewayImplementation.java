@@ -54,16 +54,7 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
         UserAchievementDataMapper userAchievementDataMapper = mapper.toDataMapper(dataSourceModel);
         repository.save(userAchievementDataMapper);
     }
-
-    @Override
-    public void unlockUserAchievement(UserAchievementUnlockRequestModel userAchievementUnlockRequestModel) {
-        Optional<UserAchievementDataMapper> userAchievement = repository.getById(userAchievementUnlockRequestModel.userId());
-        userAchievement.ifPresent(achievement -> {
-            achievement.setIsActive(true);
-            repository.save(achievement);
-        });
-    }
-
+    
     @Override
     public void deleteUserAchievementById(Integer id) {
         repository.deleteById(id);

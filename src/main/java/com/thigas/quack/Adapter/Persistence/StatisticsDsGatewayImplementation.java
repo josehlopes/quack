@@ -43,15 +43,6 @@ public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {
         return statistics.map(mapper::toDsModel);
     }
 
-    @Override
-    public Iterable<StatisticsRequestModel> getAllStatistics() {
-        Iterable<StatisticsDataMapper> users = repository.getAll();
-        return StreamSupport.stream(users.spliterator(), false)
-                .map(mapper::toDsModel)
-                .collect(Collectors.toList());
-    }
-
-
     //TODO: MÉTODO ESTÁ INCORRETO, DEVE SER ALTERADO
     @Override
     public Optional<StatisticsRequestModel> getByUserId(Integer userId) {

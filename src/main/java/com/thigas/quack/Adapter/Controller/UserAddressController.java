@@ -80,7 +80,7 @@ public class UserAddressController {
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
         try {
-            ResponseWrapper<GenericResponseModel> success = addressInput.delete(id);
+            ResponseWrapper<GenericResponseModel> success = addressInput.deleteAddress(id);
             if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {

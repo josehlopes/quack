@@ -6,5 +6,4 @@ public interface UserLesson {
     Integer getUserId();
     Integer getLessonId();
     Boolean getCompleted();
-    void setCompleted(Boolean completed);
 }
