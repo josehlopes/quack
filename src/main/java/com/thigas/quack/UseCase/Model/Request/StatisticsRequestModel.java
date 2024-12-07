@@ -4,5 +4,5 @@ public record StatisticsRequestModel(Integer id, Integer userId, Integer streakD
                                      Integer level, Integer nextLevel, Double points, Double experience,
                                      Double experienceToNextLevel, Integer challengesCompletedCount,
                                      Integer roadmapsCompletedCount, Integer achievementsUnlockedCount,
-                                     Integer achievementsLockedCount) {
+                                     Integer achievementsLockedCount, Boolean isActive) {
 }

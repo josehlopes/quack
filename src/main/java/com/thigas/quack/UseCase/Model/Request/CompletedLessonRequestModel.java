@@ -1,4 +1,4 @@
 package com.thigas.quack.UseCase.Model.Request;
 
-public record CompletedLessonRequestModel(Integer userId, Integer lessonId, Boolean completed) {
+public record   CompletedLessonRequestModel(Integer userId, Integer lessonId) {
 }

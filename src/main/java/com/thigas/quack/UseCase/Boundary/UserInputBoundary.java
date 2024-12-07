@@ -17,5 +17,4 @@ public interface UserInputBoundary {
 
     ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel request);
 
-
 }
