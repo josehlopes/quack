@@ -18,44 +18,48 @@ public class UserLessonController {
 
     @PostMapping("/complete")
     public ResponseEntity<Void> completeLesson(@RequestBody CompletedLessonRequestModel request) {
-        try {
-            ResponseWrapper<GenericResponseModel> success = userLessonInput.completedLesson(request);
-            if (success.getStatusCode() == 200) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception ex) {
+        ResponseWrapper<GenericResponseModel> success = userLessonInput.completedLesson(request);
+        if (success.getStatusCode() == 200) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else if (success.getStatusCode() == 404) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/exists/{userId}/{lessonId}")
     public ResponseEntity<GenericResponseModel> findByUserIdAndLessonId(@PathVariable Integer userId, @PathVariable Integer lessonId) {
-        try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserIdAndLessonId(userId, lessonId);
-            return ResponseEntity.status(HttpStatus.valueOf(response.getStatusCode())).body(response.getData());
-        } catch (Exception ex) {
+        ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserIdAndLessonId(userId, lessonId);
+        if (response.getStatusCode() == 200) {
+            return ResponseEntity.ok(response.getData());
+        } else if (response.getStatusCode() == 404) {
+            return new ResponseEntity<>(new GenericResponseModel("Not found", null), HttpStatus.NOT_FOUND);
+        } else {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GenericResponseModel> findById(@PathVariable Integer id) {
-        try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.getById(id);
-            return new ResponseEntity<>(response.getData(), HttpStatus.valueOf(response.getStatusCode()));
-        } catch (Exception ex) {
+        ResponseWrapper<GenericResponseModel> response = userLessonInput.getById(id);
+        if (response.getStatusCode() == 200) {
+            return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+        } else if (response.getStatusCode() == 404) {
+            return new ResponseEntity<>(new GenericResponseModel("Not found", null), HttpStatus.NOT_FOUND);
+        } else {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<GenericResponseModel> findByUserId(@PathVariable Integer userId) {
-        try {
-            ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserId(userId);
-            return new ResponseEntity<>(response.getData(), HttpStatus.valueOf(response.getStatusCode()));
-        } catch (Exception ex) {
+        ResponseWrapper<GenericResponseModel> response = userLessonInput.getByUserId(userId);
+        if (response.getStatusCode() == 200) {
+            return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+        } else if (response.getStatusCode() == 404) {
+            return new ResponseEntity<>(new GenericResponseModel("Not found", null), HttpStatus.NOT_FOUND);
+        } else {
             return new ResponseEntity<>(new GenericResponseModel("Internal server error", null), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

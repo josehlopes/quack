@@ -14,5 +14,4 @@ public class CommonUserLesson implements UserLesson {
     private Integer UserId;
     private Integer lessonId;
     private Boolean completed;
-
 }

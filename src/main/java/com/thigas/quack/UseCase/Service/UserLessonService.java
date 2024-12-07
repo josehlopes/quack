@@ -26,7 +26,7 @@ public class UserLessonService implements UserLessonInputBoundary {
 
     @Override
     public ResponseWrapper<GenericResponseModel> completedLesson(CompletedLessonRequestModel request) {
-        UserLesson userLesson = userLessonFactory.create(request.userId(), request.lessonId());
+        UserLesson userLesson = userLessonFactory.create(request.userId(), request.lessonId(), true);
 
         if (userLessonDsGateway.saveUserLesson(userLessonMapper.toDsModel(userLesson))) {
             return new ResponseWrapper<>(new GenericResponseModel("Lesson completed successfully"), 200);

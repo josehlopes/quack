@@ -6,7 +6,7 @@ import com.thigas.quack.Domain.Factory.Interface.UserLessonFactory;
 
 public class CommonUserLessonFactory implements UserLessonFactory {
     @Override
-    public UserLesson create(Integer userId, Integer lessonId){
-        return new CommonUserLesson(null, userId, lessonId,false);
+    public UserLesson create(Integer userId, Integer lessonId, Boolean completed){
+        return new CommonUserLesson(null, userId, lessonId,true);
     }
 }
