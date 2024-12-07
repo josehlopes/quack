@@ -9,15 +9,15 @@ import java.util.Optional;
 
 public interface UserLessonDsGateway {
 
-    Boolean save(UserLessonRequestModel dataSourceModel);
+    Boolean saveUserLesson(UserLessonRequestModel dataSourceModel);
 
-    void completedLesson(Integer userId, Integer lessonId, Boolean completed);
+    void completeLesson(Integer userId, Integer lessonId, Boolean completed);
 
-    Optional<UserLessonDataMapper> findByUserIdAndLessonId(Integer userId, Integer lessonId);
+    Optional<UserLessonDataMapper> getByUserIdAndLessonId(Integer userId, Integer lessonId);
 
-    Optional<UserLessonDataMapper> findById(Integer id);
+    Optional<UserLessonDataMapper> getUserLessonById(Integer id);
 
-    List<UserLessonDataMapper> findByUserId(Integer userId);
+    List<UserLessonDataMapper> getByUserId(Integer userId);
 
     void deleteUserLessonById(Integer userLessonId);
 }

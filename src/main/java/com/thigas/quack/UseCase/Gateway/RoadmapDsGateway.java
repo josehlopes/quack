@@ -5,8 +5,8 @@ import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import java.util.Optional;
 
 public interface RoadmapDsGateway {
-    Optional<RoadmapRequestModel> getById(Integer id);
-    Iterable<RoadmapRequestModel> getAll();
+    Optional<RoadmapRequestModel> getRoadmapById(Integer id);
+    Iterable<RoadmapRequestModel> getAllRoadmaps();
     Boolean existsById(Integer id);
-    Iterable<RoadmapRequestModel> getByCategory(String category);
+    Iterable<RoadmapRequestModel> getAllRoadmapByCategory(String category);
 }

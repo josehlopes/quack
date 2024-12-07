@@ -27,17 +27,18 @@ public class UserLessonService implements UserLessonInputBoundary {
     @Override
     public ResponseWrapper<GenericResponseModel> completedLesson(CompletedLessonRequestModel request) {
         UserLesson userLesson = userLessonFactory.create(request.userId(), request.lessonId());
-        userLesson.setCompleted(true);
-        if (userLessonDsGateway.save(userLessonMapper.toDsModel(userLesson))) {
+        userLesson.setCompleted(request.completed());
+
+        if (userLessonDsGateway.saveUserLesson(userLessonMapper.toDsModel(userLesson))) {
             return new ResponseWrapper<>(new GenericResponseModel("Lesson completed successfully"), 200);
         }
+
         return new ResponseWrapper<>(new GenericResponseModel("Error completing lesson"), 400);
     }
 
-
     @Override
-    public ResponseWrapper<GenericResponseModel> findByUserIdAndLessonId(Integer userId, Integer lessonId) {
-        Optional<UserLessonDataMapper> userLesson = userLessonDsGateway.findByUserIdAndLessonId(userId, lessonId);
+    public ResponseWrapper<GenericResponseModel> getByUserIdAndLessonId(Integer userId, Integer lessonId) {
+        Optional<UserLessonDataMapper> userLesson = userLessonDsGateway.getByUserIdAndLessonId(userId, lessonId);
         if (userLesson.isPresent()) {
             UserLessonRequestModel lessonResponse = new UserLessonRequestModel(
                     userLesson.get().getId(),
@@ -53,8 +54,8 @@ public class UserLessonService implements UserLessonInputBoundary {
         return new ResponseWrapper<>(new GenericResponseModel("Lesson not found for the user", null), 404);
     }
 
-    public ResponseWrapper<GenericResponseModel> findById(Integer id) {
-        Optional<UserLessonDataMapper> userLesson = userLessonDsGateway.findById(id);
+    public ResponseWrapper<GenericResponseModel> getById(Integer id) {
+        Optional<UserLessonDataMapper> userLesson = userLessonDsGateway.getUserLessonById(id);
         if (userLesson.isPresent()) {
             UserLessonRequestModel lessonResponse = new UserLessonRequestModel(
                     userLesson.get().getId(),
@@ -70,8 +71,8 @@ public class UserLessonService implements UserLessonInputBoundary {
         return new ResponseWrapper<>(new GenericResponseModel("UserLesson not found", null), 404);
     }
 
-    public ResponseWrapper<GenericResponseModel> findByUserId(Integer userId) {
-        List<UserLessonDataMapper> userLessons = userLessonDsGateway.findByUserId(userId);
+    public ResponseWrapper<GenericResponseModel> getByUserId(Integer userId) {
+        List<UserLessonDataMapper> userLessons = userLessonDsGateway.getByUserId(userId);
         if (!userLessons.isEmpty()) {
             List<UserLessonRequestModel> lessonResponses = userLessons.stream().map(ul -> new UserLessonRequestModel(
                     ul.getId(),

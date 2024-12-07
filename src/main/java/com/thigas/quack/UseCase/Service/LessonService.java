@@ -6,12 +6,10 @@ import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,7 +21,7 @@ public class LessonService {
     private final LessonMapper lessonMapper;
 
     public ResponseWrapper<GenericResponseModel> getById(int id) {
-        Optional<LessonRequestModel> lesson = lessonDsGateway.getById(id);
+        Optional<LessonRequestModel> lesson = lessonDsGateway.getLessonById(id);
 
         if (lesson.isEmpty()) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Lesson not found"), 404);
@@ -34,7 +32,7 @@ public class LessonService {
     }
 
     public ResponseWrapper<GenericResponseModel> getAll() {
-        Iterable<LessonRequestModel> lessons = lessonDsGateway.getAll();
+        Iterable<LessonRequestModel> lessons = lessonDsGateway.getAllLessons();
         Iterable<LessonRequestModel> lessonList = StreamSupport.stream(lessons.spliterator(), false)
                 .collect(Collectors.toList());
 

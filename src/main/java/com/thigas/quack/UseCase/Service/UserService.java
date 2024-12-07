@@ -13,7 +13,6 @@ import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
-import com.thigas.quack.UseCase.Model.Response.StatisticsInfoResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import com.thigas.quack.UseCase.Util.PayloadUtil;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
@@ -39,12 +38,12 @@ public class UserService implements UserInputBoundary {
     private final StatisticsService statisticsService;
 
 
-    public ResponseWrapper<GenericResponseModel> create(UserRegisterRequestModel userRequest) {
+    public ResponseWrapper<GenericResponseModel> createUser(UserRegisterRequestModel userRequest) {
         if (isEmailInUse(userRequest.email())) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Email already in use"), 409);
         }
 
-        User user = createUser(userRequest);
+        User user = createUserFromRequest(userRequest);
         saveUser(user);
 
         String token = generateToken(user.getEmail());
@@ -56,12 +55,12 @@ public class UserService implements UserInputBoundary {
     }
 
     private Boolean isEmailInUse(String email) {
-        return userDsGateway.findByEmail(email);
+        return userDsGateway.existsByEmail(email);
     }
 
-    private User createUser(UserRegisterRequestModel userRequest) {
-        String encodedPassword = encoderInputBoundary.encode(userRequest.password());
-        String encodedCpf = encoderInputBoundary.encode(userRequest.cpf());
+    private User createUserFromRequest(UserRegisterRequestModel userRequest) {
+        String encodedPassword = encoderInputBoundary.encodePassword(userRequest.password());
+        String encodedCpf = encoderInputBoundary.encodePassword(userRequest.cpf());
 
         return userFactory.create(
                 userRequest.name(), userRequest.surname(), userRequest.phone(), userRequest.email(), encodedPassword,
@@ -72,7 +71,7 @@ public class UserService implements UserInputBoundary {
 
     private void saveUser(User user) {
         UserRequestModel userDsModel = userMapper.toDsModel(user);
-        userDsGateway.save(userDsModel);
+        userDsGateway.saveUser(userDsModel);
     }
 
     private void createInitialUserStatistics(String email) {
@@ -93,30 +92,30 @@ public class UserService implements UserInputBoundary {
     }
 
     public Boolean existsByEmailOrUsername(String email, String username) {
-        return userDsGateway.findByEmail(email) || userDsGateway.findByUsername(username);
+        return userDsGateway.existsByEmail(email) || userDsGateway.existsByUsername(username);
     }
 
     public Boolean existsById(int userId) {
-        return userDsGateway.findById(userId);
+        return userDsGateway.existsById(userId);
     }
 
     public Optional<UserRequestModel> getById(int id) {
-        return userDsGateway.getById(id);
+        return userDsGateway.getUserById(id);
     }
 
     public Iterable<UserRequestModel> getAll() {
-        Iterable<UserRequestModel> users = userDsGateway.getAll();
+        Iterable<UserRequestModel> users = userDsGateway.getAllUsers();
         return StreamSupport.stream(users.spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    public ResponseWrapper<GenericResponseModel> update(UserRequestModel userDTO) {
-        UserRequestModel existingUser = userDsGateway.getById(userDTO.id())
+    public ResponseWrapper<GenericResponseModel> updateUser(UserRequestModel userDTO) {
+        UserRequestModel existingUser = userDsGateway.getUserById(userDTO.id())
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         UserRequestModel updatedUser = updateUserDetails(userDTO, existingUser);
 
-        userDsGateway.update(updatedUser);
+        userDsGateway.updateUser(updatedUser);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("User updated"), 204);
     }
 
@@ -138,11 +137,11 @@ public class UserService implements UserInputBoundary {
         );
     }
 
-    public ResponseWrapper<GenericResponseModel> delete(Integer id) {
-        if (!userDsGateway.findById(id)) {
+    public ResponseWrapper<GenericResponseModel> deleteUser(Integer id) {
+        if (!userDsGateway.existsById(id)) {
             throw new NoSuchElementException("User not found");
         }
-        userDsGateway.deleteById(id);
+        userDsGateway.deleteUserById(id);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("User deleted"), 200);
     }
 
@@ -153,7 +152,7 @@ public class UserService implements UserInputBoundary {
             return genericPresenter.prepareFailView(new GenericResponseModel("User not found"), 404);
         }
 
-        if (!encoderGateway.match(userRequest.password(), user.get().password())) {
+        if (!encoderGateway.matchPassword(userRequest.password(), user.get().password())) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Invalid password"), 401);
         }
 

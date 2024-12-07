@@ -43,7 +43,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @param requestModel O modelo de dados contendo as informações do usuário a ser salvo.
      */
     @Override
-    public void save(UserRequestModel requestModel) {
+    public void saveUser(UserRequestModel requestModel) {
         UserDataMapper userDataMapper = mapper.toDataMapper(requestModel);
         repository.save(userDataMapper);
     }
@@ -55,7 +55,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Um {@link Optional} contendo o modelo de dados do usuário, caso encontrado.
      */
     @Override
-    public Optional<UserRequestModel> getById(Integer id) {
+    public Optional<UserRequestModel> getUserById(Integer id) {
         Optional<UserDataMapper> user = repository.findById(id);
         return user.map(mapper::toDsModel);
     }
@@ -67,7 +67,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se o usuário existir, {@code false} caso contrário.
      */
     @Override
-    public Boolean findById(Integer id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 
@@ -78,7 +78,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se a atualização foi bem-sucedida.
      * @throws EntityNotFoundException Se o usuário não for encontrado pelo ID fornecido.
      */
-    public Boolean update(UserRequestModel user) {
+    public Boolean updateUser(UserRequestModel user) {
         UserDataMapper existingUser = repository.findById(user.id())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         existingUser.setName(user.name());
@@ -100,7 +100,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return Uma lista iterável contendo os modelos de dados dos usuários.
      */
     @Override
-    public Iterable<UserRequestModel> getAll() {
+    public Iterable<UserRequestModel> getAllUsers() {
         Iterable<UserDataMapper> users = repository.getAll();
         return StreamSupport.stream(users.spliterator(), false)
                 .map(mapper::toDsModel)
@@ -114,7 +114,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return
      */
     @Override
-    public Boolean deleteById(Integer id) {
+    public Boolean deleteUserById(Integer id) {
         repository.deleteById(id);
         return true;
     }
@@ -150,7 +150,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se o usuário existir, {@code false} caso contrário.
      */
     @Override
-    public Boolean findByEmail(String email) {
+    public Boolean existsByEmail(String email) {
         return repository.existsByEmail(email);
     }
 
@@ -161,7 +161,7 @@ public class UserDsGatewayImplementation implements UserDsGateway {
      * @return {@code true} se o usuário existir, {@code false} caso contrário.
      */
     @Override
-    public Boolean findByUsername(String username) {
+    public Boolean existsByUsername(String username) {
         return repository.existsByUsername(username);
     }
 }

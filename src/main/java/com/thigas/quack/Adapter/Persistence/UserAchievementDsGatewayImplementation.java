@@ -50,7 +50,7 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
     }
 
     @Override
-    public void save(UserAchievementRequestModel dataSourceModel) {
+    public void saveUserAchievement(UserAchievementRequestModel dataSourceModel) {
         UserAchievementDataMapper userAchievementDataMapper = mapper.toDataMapper(dataSourceModel);
         repository.save(userAchievementDataMapper);
     }

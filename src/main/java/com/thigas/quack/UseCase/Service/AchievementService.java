@@ -3,9 +3,7 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.AchievementDsGateway;
 import com.thigas.quack.UseCase.Model.Request.AchievementRequestModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,11 +16,11 @@ public class AchievementService {
     private final GenericPresenter genericPresenter;
 
     public Optional<AchievementRequestModel> getById(Integer id) {
-        return achievementDsGateway.getById(id);
+        return achievementDsGateway.getAchievementById(id);
     }
 
     public Iterable<AchievementRequestModel> getAll() {
-        Iterable<AchievementRequestModel> achievements = achievementDsGateway.getAll();
+        Iterable<AchievementRequestModel> achievements = achievementDsGateway.getAllAchievements();
         return StreamSupport.stream(achievements.spliterator(), false)
                 .collect(Collectors.toList());
     }

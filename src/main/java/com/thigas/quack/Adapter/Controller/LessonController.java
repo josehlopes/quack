@@ -18,7 +18,7 @@ public class LessonController {
     @GetMapping("/{id}")
     public ResponseEntity<LessonRequestModel> getById(@PathVariable Integer id) {
         try {
-            return lessonDsGateway.getById(id)
+            return lessonDsGateway.getLessonById(id)
                     .map(lesson -> new ResponseEntity<>(lesson, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
@@ -29,7 +29,7 @@ public class LessonController {
     @GetMapping
     public ResponseEntity<Iterable<LessonRequestModel>> getAll() {
         try {
-            Iterable<LessonRequestModel> lessons = lessonDsGateway.getAll();
+            Iterable<LessonRequestModel> lessons = lessonDsGateway.getAllLessons();
             if (lessons != null) {
                 return new ResponseEntity<>(lessons, HttpStatus.OK);
             } else {

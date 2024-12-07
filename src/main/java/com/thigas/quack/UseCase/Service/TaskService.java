@@ -1,16 +1,12 @@
 package com.thigas.quack.UseCase.Service;
 
 import com.thigas.quack.Adapter.Entity.StepDataMapper;
-import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
-import com.thigas.quack.UseCase.Mapper.LessonMapper;
 import com.thigas.quack.UseCase.Mapper.TaskMapper;
-import com.thigas.quack.UseCase.Model.Request.LessonRequestModel;
 import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -28,7 +24,7 @@ public class TaskService {
 
 
     public ResponseWrapper<GenericResponseModel> getById(int id) {
-        Optional<TaskRequestModel> task = taskDsGateway.getById(id);
+        Optional<TaskRequestModel> task = taskDsGateway.getTaskById(id);
 
         if (task.isEmpty()) {
             return genericPresenter.prepareFailView(new GenericResponseModel("Task not found"), 404);
@@ -39,7 +35,7 @@ public class TaskService {
     }
 
     public ResponseWrapper<GenericResponseModel> getAll() {
-        Iterable<TaskRequestModel> tasks = taskDsGateway.getAll();
+        Iterable<TaskRequestModel> tasks = taskDsGateway.getAllTasks();
         Iterable<TaskRequestModel> taskList = StreamSupport.stream(tasks.spliterator(), false)
                 .collect(Collectors.toList());
 

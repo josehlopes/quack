@@ -19,7 +19,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     private final AddressMapper mapper;
 
     @Override
-    public void save(AddressRequestModel addressDtoRequest) {
+    public void saveAddress(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toSaveAddress = mapper.toDataMapper(addressDtoRequest);
         repository.save(toSaveAddress);
     }
@@ -45,7 +45,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean update(AddressRequestModel addressDtoRequest) {
+    public Boolean updateAddress(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toUpdateAddress = mapper.toDataMapper(addressDtoRequest);
         repository.update(toUpdateAddress);
         return true;

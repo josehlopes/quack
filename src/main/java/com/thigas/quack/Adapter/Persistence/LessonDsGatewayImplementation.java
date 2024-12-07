@@ -21,18 +21,18 @@ public class LessonDsGatewayImplementation implements LessonDsGateway {
 
 
     @Override
-    public boolean existsById(Integer id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 
     @Override
-    public Optional<LessonRequestModel> getById(Integer id) {
+    public Optional<LessonRequestModel> getLessonById(Integer id) {
         Optional<LessonDataMapper> lesson = repository.getById(id);
         return lesson.map(mapper::toDsModel);
     }
 
     @Override
-    public Set<LessonRequestModel> getAll() {
+    public Set<LessonRequestModel> getAllLessons() {
         Iterable<LessonDataMapper> lessonDataMappers = repository.getAll();
 
         return StreamSupport.stream(lessonDataMappers.spliterator(), false)

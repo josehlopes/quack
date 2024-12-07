@@ -22,7 +22,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<TaskRequestModel> getById(@PathVariable Integer id) {
         try {
-            return taskDsGateway.getById(id)
+            return taskDsGateway.getTaskById(id)
                     .map(task -> new ResponseEntity<>(task, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
         } catch (Exception ex) {
@@ -33,7 +33,7 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<Iterable<TaskRequestModel>> getAll() {
         try {
-            Iterable<TaskRequestModel> tasks = taskDsGateway.getAll();
+            Iterable<TaskRequestModel> tasks = taskDsGateway.getAllTasks();
             if (tasks != null) {
                 return new ResponseEntity<>(tasks, HttpStatus.OK);
             } else {

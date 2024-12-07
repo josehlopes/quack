@@ -29,7 +29,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         var token = recoverToken(request);
 
-        if (request.getRequestURI().equals("/api/users/create") || request.getRequestURI().equals("/api/users/login")) {
+        if (request.getRequestURI().equals("/api/users/createAddress") || request.getRequestURI().equals("/api/users/login")) {
             filterChain.doFilter(request, response);
             return;
         }

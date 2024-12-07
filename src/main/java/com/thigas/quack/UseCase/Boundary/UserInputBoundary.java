@@ -9,11 +9,11 @@ import com.thigas.quack.UseCase.Util.ResponseWrapper;
 
 //TODO: DEIXAR APENAS MÉTODOS RELACIONADOS A ENTRADA DE DADOS
 public interface UserInputBoundary {
-    ResponseWrapper<GenericResponseModel> create(UserRegisterRequestModel request);
+    ResponseWrapper<GenericResponseModel> createUser(UserRegisterRequestModel request);
 
-    ResponseWrapper<GenericResponseModel> update(UserRequestModel request);
+    ResponseWrapper<GenericResponseModel> updateUser(UserRequestModel request);
 
-    ResponseWrapper<GenericResponseModel> delete(Integer id);
+    ResponseWrapper<GenericResponseModel> deleteUser(Integer id);
 
     ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel request);
 

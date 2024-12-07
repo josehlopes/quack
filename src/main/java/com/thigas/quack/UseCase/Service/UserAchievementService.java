@@ -14,7 +14,6 @@ import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class UserAchievementService implements UserAchievementInputBoundary {
@@ -33,7 +32,7 @@ public class UserAchievementService implements UserAchievementInputBoundary {
         }
 
         UserAchievement userAchievement = createUserAchievement(userAchievementUnlockRequestModel.userId(), userAchievementUnlockRequestModel.achievementId(), userAchievementUnlockRequestModel.description());
-        statisticsService.addExperience(userAchievementUnlockRequestModel.userId(), 10.0);
+        statisticsService.addExperience(userAchievementUnlockRequestModel.userId(), 30.0);
         saveUserAchievement(userAchievement);
         return genericPresenter.prepareSuccessView(new GenericResponseModel("Achievement unlocked successfully"), 200);
     }
@@ -44,7 +43,7 @@ public class UserAchievementService implements UserAchievementInputBoundary {
 
     private void saveUserAchievement(UserAchievement userAchievement) {
         UserAchievementRequestModel userAchievementRequestModel = userAchievementMapper.toDsModel(userAchievement);
-        userAchievementDsGateway.save(userAchievementRequestModel);
+        userAchievementDsGateway.saveUserAchievement(userAchievementRequestModel);
     }
 
     @Override
