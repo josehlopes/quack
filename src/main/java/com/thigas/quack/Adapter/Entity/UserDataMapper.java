@@ -64,18 +64,10 @@ public class UserDataMapper {
     @ManyToMany
     @JoinTable(
             name = "user_followers",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "followed_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private Set<UserDataMapper> followers = new HashSet<>();
-    
-    @ManyToMany
-    @JoinTable(
-            name = "user_followings",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id")
-    )
-    private Set<UserDataMapper> followings = new HashSet<>();
+    private Set<UserDataMapper> followersAndFollowing = new HashSet<>();
     
     @Override
     public final boolean equals(Object o) {

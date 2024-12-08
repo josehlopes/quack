@@ -1,8 +1,8 @@
 package com.thigas.quack.Domain.Entity.Interface;
 
-public interface UserFollowers {
+public interface UserFollowersAndFollowing {
     Integer getId();
-    Integer getUserId();
+    Integer getFollowedId();
     Integer getFollowerId();
     Boolean getIsActive();
     

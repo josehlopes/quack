@@ -1,9 +1,7 @@
 package com.thigas.quack.Adapter.Repository;
 
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
-import com.thigas.quack.Adapter.Entity.UserFollowersDataMapper;
-import com.thigas.quack.Adapter.Entity.UserFollowingDataMapper;
-import com.thigas.quack.Domain.Entity.Interface.UserFollowers;
+import com.thigas.quack.Adapter.Entity.UserFollowersAndFollowingDataMapper;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -21,7 +19,7 @@ public class UserRelationshipRepository {
     private final EntityManager entityManager;
     
     @Transactional
-    public void saveFollowing(UserFollowingDataMapper userFollowing) {
+    public void saveFollowing(UserFollowersAndFollowingDataMapper userFollowing) {
         try {
             entityManager.persist(userFollowing);
         } catch (Exception e) {
@@ -30,7 +28,7 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public void saveFollower(UserFollowersDataMapper userFollower) {
+    public void saveFollower(UserFollowersAndFollowingDataMapper userFollower) {
         try {
             entityManager.persist(userFollower);
         } catch (Exception e) {
@@ -39,7 +37,7 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public void updateFollowing(UserFollowingDataMapper userFollowing) {
+    public void updateFollowing(UserFollowersAndFollowingDataMapper userFollowing) {
         try {
             entityManager.merge(userFollowing);
         } catch (Exception e) {
@@ -48,7 +46,7 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public void updateFollower(UserFollowersDataMapper userFollower) {
+    public void updateFollower(UserFollowersAndFollowingDataMapper userFollower) {
         try {
             entityManager.merge(userFollower);
         } catch (Exception e) {
@@ -57,9 +55,9 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public UserFollowingDataMapper findFollowingRelationship(Integer userId, Integer followingId) {
+    public UserFollowersAndFollowingDataMapper findFollowingRelationship(Integer userId, Integer followingId) {
         try {
-            return entityManager.createQuery("SELECT uf FROM UserFollowingDataMapper uf WHERE uf.user.id = :userId AND uf.following.id = :followingId", UserFollowingDataMapper.class)
+            return entityManager.createQuery("SELECT uf FROM UserFollowingDataMapper uf WHERE uf.user.id = :userId AND uf.following.id = :followingId", UserFollowersAndFollowingDataMapper.class)
                     .setParameter("userId", userId)
                     .setParameter("followingId", followingId)
                     .getSingleResult();
@@ -70,9 +68,9 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public UserFollowersDataMapper findFollowerRelationship(Integer userId, Integer followerId) {
+    public UserFollowersAndFollowingDataMapper findFollowerRelationship(Integer userId, Integer followerId) {
         try {
-            return entityManager.createQuery("SELECT uf FROM UserFollowersDataMapper uf WHERE uf.user.id = :userId AND uf.follower.id = :followerId", UserFollowersDataMapper.class)
+            return entityManager.createQuery("SELECT uf FROM UserFollowersAndFollowingDataMapper uf WHERE uf.user.id = :userId AND uf.follower.id = :followerId", UserFollowersAndFollowingDataMapper.class)
                     .setParameter("userId", userId)
                     .setParameter("followerId", followerId)
                     .getSingleResult();
@@ -85,7 +83,7 @@ public class UserRelationshipRepository {
     @Transactional
     public List<UserDataMapper> getAllFollowers(Integer userId) {
         try {
-            return entityManager.createQuery("SELECT uf.follower FROM UserFollowersDataMapper uf WHERE uf.user.id = :userId", UserDataMapper.class)
+            return entityManager.createQuery("SELECT uf.follower FROM UserFollowersAndFollowingDataMapper uf WHERE uf.user.id = :userId", UserDataMapper.class)
                     .setParameter("userId", userId)
                     .getResultList();
         } catch (Exception e) {

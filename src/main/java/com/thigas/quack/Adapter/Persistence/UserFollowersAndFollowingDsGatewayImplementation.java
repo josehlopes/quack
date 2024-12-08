@@ -1,12 +1,12 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.UserDataMapper;
-import com.thigas.quack.Adapter.Entity.UserFollowersDataMapper;
+import com.thigas.quack.Adapter.Entity.UserFollowersAndFollowingDataMapper;
 import com.thigas.quack.Adapter.Repository.UserRelationshipRepository;
-import com.thigas.quack.UseCase.Gateway.UserRelationshipDsGateway;
+import com.thigas.quack.UseCase.Gateway.UserFollowersAndFollowingDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Mapper.UserRelationshipMapper;
-import com.thigas.quack.UseCase.Model.Request.UserFollowersRequestModel;
+import com.thigas.quack.UseCase.Mapper.UserFollowersAndFollowingMapper;
+import com.thigas.quack.UseCase.Model.Request.UserFollowersAndFollowingRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import lombok.AllArgsConstructor;
 
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class UserRelationshipDsGatewayImplementation implements UserRelationshipDsGateway {
+public class UserFollowersAndFollowingDsGatewayImplementation implements UserFollowersAndFollowingDsGateway {
     
     private final UserRelationshipRepository repository;
-    private final UserRelationshipMapper mapper;
+    private final UserFollowersAndFollowingMapper mapper;
     private final UserMapper userMapper;
     
     @Override
@@ -39,19 +39,19 @@ public class UserRelationshipDsGatewayImplementation implements UserRelationship
     }
     
     @Override
-    public UserFollowersRequestModel findFollowerRelationship(Integer userId, Integer followerId) {
+    public UserFollowersAndFollowingRequestModel findFollowerRelationship(Integer userId, Integer followerId) {
         return mapper.toDsModel(repository.findFollowerRelationship(userId, followerId));
     }
     
     @Override
-    public void updateFollowerRelationship(UserFollowersRequestModel userFollowers) {
-        UserFollowersDataMapper toUpdateUserFollowers = mapper.toDataMapper(userFollowers);
+    public void updateFollowerRelationship(UserFollowersAndFollowingRequestModel userFollowers) {
+        UserFollowersAndFollowingDataMapper toUpdateUserFollowers = mapper.toDataMapper(userFollowers);
         repository.updateFollower(toUpdateUserFollowers);
     }
     
     @Override
-    public void saveFollowerRelationship(UserFollowersRequestModel userFollowers) {
-        UserFollowersDataMapper toSaveUserFollowers = mapper.toDataMapper(userFollowers);
+    public void saveFollowerRelationship(UserFollowersAndFollowingRequestModel userFollowers) {
+        UserFollowersAndFollowingDataMapper toSaveUserFollowers = mapper.toDataMapper(userFollowers);
         repository.saveFollower(toSaveUserFollowers);
     }
 }

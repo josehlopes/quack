@@ -1,6 +1,6 @@
 package com.thigas.quack.Adapter.Controller;
 
-import com.thigas.quack.UseCase.Boundary.UserRelationshipInputBoundary;
+import com.thigas.quack.UseCase.Boundary.UserFollowersAndFollowingInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.UserRelationshipRequestModel;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserRelationshipController {
     
-    private final UserRelationshipInputBoundary userRelationshipInputBoundary;
+    private final UserFollowersAndFollowingInputBoundary userFollowersAndFollowingInputBoundary;
     
     @PostMapping("/follow")
     public void follow(@RequestBody UserRelationshipRequestModel request) {
-        userRelationshipInputBoundary.follow(request);
+        userFollowersAndFollowingInputBoundary.follow(request);
     }
     @PutMapping("/unfollow")
     public void unfollow(@RequestBody UserRelationshipRequestModel request) {
-        userRelationshipInputBoundary.unfollow(request);
+        userFollowersAndFollowingInputBoundary.unfollow(request);
     }
     
     @GetMapping("/followers")
     public void getFollowers(@RequestBody Integer userId) {
-        userRelationshipInputBoundary.getFollowers(userId);
+        userFollowersAndFollowingInputBoundary.getFollowers(userId);
     }
     
     @GetMapping("/following")
     public void getFollowing(@RequestBody Integer userId) {
-        userRelationshipInputBoundary.getFollowing(userId);
+        userFollowersAndFollowingInputBoundary.getFollowing(userId);
     }
 }

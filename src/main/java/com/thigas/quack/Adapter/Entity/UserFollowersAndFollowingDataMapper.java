@@ -12,22 +12,22 @@ import java.util.Objects;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_followings")
-public class UserFollowingDataMapper {
+@Table(name = "user_followers")
+public class UserFollowersAndFollowingDataMapper {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "followed_id", nullable = false)
     @ToString.Exclude
     private UserDataMapper user;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "following_id", nullable = false)
+    @JoinColumn(name = "follower_id", nullable = false)
     @ToString.Exclude
-    private UserDataMapper following;
+    private UserDataMapper follower;
     
     @Column(name = "is_active")
     private Boolean isActive;
@@ -39,7 +39,7 @@ public class UserFollowingDataMapper {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        UserFollowingDataMapper that = (UserFollowingDataMapper) o;
+        UserFollowersAndFollowingDataMapper that = (UserFollowersAndFollowingDataMapper) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
     

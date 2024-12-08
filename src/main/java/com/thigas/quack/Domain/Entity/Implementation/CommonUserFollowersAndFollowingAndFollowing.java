@@ -1,6 +1,6 @@
 package com.thigas.quack.Domain.Entity.Implementation;
 
-import com.thigas.quack.Domain.Entity.Interface.UserFollowers;
+import com.thigas.quack.Domain.Entity.Interface.UserFollowersAndFollowing;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommonUserFollowers implements UserFollowers {
+public class CommonUserFollowersAndFollowingAndFollowing implements UserFollowersAndFollowing {
     private Integer id;
-    private Integer userId;
+    private Integer followedId;
     private Integer followerId;
     private Boolean isActive;
     
