@@ -5,13 +5,14 @@ import com.thigas.quack.Adapter.Repository.JpaUserStepRepository;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserStepDsGatewayImplementation implements UserStepDsGateway {
 
     private final JpaUserStepRepository repository;
@@ -24,7 +25,7 @@ public class UserStepDsGatewayImplementation implements UserStepDsGateway {
     }
 
     @Override
-    public Optional<UserStepRequestModel> findById(int id) {
+    public Optional<UserStepRequestModel> findById(Integer id) {
         Optional<UserStepDataMapper> userStep = repository.findById(id);
         return userStep.map(mapper::mapUserStepDataMapperToDtoRequest);
     }
@@ -38,12 +39,12 @@ public class UserStepDsGatewayImplementation implements UserStepDsGateway {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         repository.deleteById(id);
     }
 
     @Override
-    public boolean existsById(int id) {
+    public boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 }

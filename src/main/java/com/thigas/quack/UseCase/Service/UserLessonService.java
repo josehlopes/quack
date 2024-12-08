@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class UserLessonService implements UserLessonInputBoundary {
@@ -98,7 +97,7 @@ public class UserLessonService implements UserLessonInputBoundary {
                         ul.getUser().getId(),
                         ul.getLesson().getId(),
                         ul.getCompleted()
-                )).collect(Collectors.toList());
+                )).toList();
                 
                 return new ResponseWrapper<>(
                         new GenericResponseModel("UserLessons found for the user", Map.of("lessons", lessonResponses)), 200

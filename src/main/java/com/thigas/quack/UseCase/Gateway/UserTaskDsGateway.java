@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface UserTaskDsGateway {
     void save(UserTaskRequestModel userTask);
 
-    Optional<UserTaskRequestModel> findById(int id);
+    Optional<UserTaskRequestModel> findById(Integer id);
 
     Iterable<UserTaskRequestModel> findAll();
 
-    Boolean existsById(int id);
+    Boolean existsById(Integer id);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 }

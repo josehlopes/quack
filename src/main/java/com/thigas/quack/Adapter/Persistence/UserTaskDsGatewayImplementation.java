@@ -5,13 +5,14 @@ import com.thigas.quack.Adapter.Repository.JpaUserTaskRepository;
 import com.thigas.quack.UseCase.Gateway.UserTaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Model.Request.UserTaskRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
 
     private final JpaUserTaskRepository repository;
@@ -24,7 +25,7 @@ public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
     }
 
     @Override
-    public Optional<UserTaskRequestModel> findById(int id) {
+    public Optional<UserTaskRequestModel> findById(Integer id) {
         Optional<UserTaskDataMapper> userTask = repository.findById(id);
         return userTask.map(mapper::mapUserTaskDataMapperToDtoRequest);
     }
@@ -38,12 +39,12 @@ public class UserTaskDsGatewayImplementation implements UserTaskDsGateway {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Integer id) {
         repository.deleteById(id);
     }
 
     @Override
-    public Boolean existsById(int id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 }

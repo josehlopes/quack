@@ -6,13 +6,14 @@ import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
 import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AddressDsGatewayImplementation implements AddressDsGateway {
 
     private final AddressRepository repository;

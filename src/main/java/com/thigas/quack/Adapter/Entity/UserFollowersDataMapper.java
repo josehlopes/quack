@@ -1,6 +1,5 @@
 package com.thigas.quack.Adapter.Entity;
 
-import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -13,21 +12,26 @@ import java.util.Objects;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_lesson")
-public class UserLessonDataMapper {
-
+@Table(name = "user_followers")
+public class UserFollowersDataMapper {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude
     private UserDataMapper user;
-    @ManyToOne
-    @JoinColumn(name = "lesson_id", nullable = false)
-    private LessonDataMapper lesson;
-    @Column(name = "completed", nullable = false)
-    private Boolean completed = false;
-
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "follower_id", nullable = false)
+    @ToString.Exclude
+    private UserDataMapper follower;
+    
+    @Column(name = "is_active")
+    private Boolean isActive;
+    
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
@@ -35,13 +39,12 @@ public class UserLessonDataMapper {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        UserLessonDataMapper that = (UserLessonDataMapper) o;
+        UserFollowersDataMapper that = (UserFollowersDataMapper) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
-
+    
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
-
 }

@@ -5,6 +5,7 @@ import com.thigas.quack.Adapter.Repository.UserLessonRepository;
 import com.thigas.quack.UseCase.Gateway.UserLessonDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserLessonMapper;
 import com.thigas.quack.UseCase.Model.Request.UserLessonRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserLessonDsGatewayImplementation implements UserLessonDsGateway {
 
     private final UserLessonRepository repository;
