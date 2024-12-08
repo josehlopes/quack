@@ -30,60 +30,40 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserRequestModel> getById(@PathVariable Integer id) {
-        try {
             return userDsGateway.getUserById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping
     public ResponseEntity<Iterable<UserRequestModel>> getAll() {
-        try {
             Iterable<UserRequestModel> users = userDsGateway.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRequestModel userDTO) {
-        try {
-            if (id.equals(userDTO.id())) {
-                ResponseWrapper<GenericResponseModel> success = userInput.updateUser(userDTO);
-                if (success.getStatusCode() == 204) {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-                } else {
-                    return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
+        if (id.equals(userDTO.id())) {
+            ResponseWrapper<GenericResponseModel> success = userInput.updateUser(userDTO);
+            if (success.getStatusCode() == 204) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        try {
             ResponseWrapper<GenericResponseModel> success = userInput.deleteUser(id);
             if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (NoSuchElementException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-
 
 
 }

@@ -10,16 +10,19 @@ import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
-import com.thigas.quack.UseCase.Model.Request.*;
+import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
+import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
-
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @AllArgsConstructor
 public class UserRoadmapService implements UserRoadmapInputBoundary {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(UserRoadmapService.class);
+    
     private final UserRoadmapDsGateway userRoadmapDsGateway;
     private final RoadmapDsGateway roadmapDsGateway;
     private final UserDsGateway userDsGateway;
@@ -28,36 +31,55 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
     private final UserRoadmapMapper userRoadmapMapper;
     private final StatisticsService statisticsService;
 
-    //TODO: ALTERAR NOME DOS MÉTODOS
     @Override
     public ResponseWrapper<GenericResponseModel> startRoadmap(StartRoadmapRequestModel request) {
-        UserRoadmap userRoadmap = userRoadmapFactory.create(request.userId(), request.roadmapId());
-        if (saveUserRoadmap(userRoadmap)) {
-            statisticsService.addExperience(request.userId(), 50.0);
-            return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
+        try {
+            UserRoadmap userRoadmap = userRoadmapFactory.create(request.userId(), request.roadmapId());
+            if (saveUserRoadmap(userRoadmap)) {
+                statisticsService.addExperience(request.userId(), 50.0);
+                return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
+            }
+            return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
+        } catch (Exception e) {
+            logger.error("Error starting roadmap for user ID: {}", request.userId(), e);
+            return new ResponseWrapper<>(new GenericResponseModel("Error starting roadmap"), 500);
         }
-        return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
     }
 
     private Boolean saveUserRoadmap(UserRoadmap userRoadmap) {
-        UserRoadmapRequestModel userRoadmapRequestModel = userRoadmapMapper.toDsModel(userRoadmap);
-        return userRoadmapDsGateway.saveUserRoadmap(userRoadmapRequestModel);
+        try {
+            UserRoadmapRequestModel userRoadmapRequestModel = userRoadmapMapper.toDsModel(userRoadmap);
+            return userRoadmapDsGateway.saveUserRoadmap(userRoadmapRequestModel);
+        } catch (Exception e) {
+            logger.error("Error saving user roadmap", e);
+            throw new RuntimeException("Error saving user roadmap");
+        }
     }
 
     private UserRoadmapRequestModel getUserRoadmap(Integer userRoadmapId) {
-        return userRoadmapDsGateway.getUserRoadmapById(userRoadmapId).get();
+        try {
+            return userRoadmapDsGateway.getUserRoadmapById(userRoadmapId)
+                    .orElseThrow(() -> new RuntimeException("User roadmap not found"));
+        } catch (Exception e) {
+            logger.error("Error getting user roadmap by ID: {}", userRoadmapId, e);
+            throw new RuntimeException("Error getting user roadmap");
+        }
     }
 
-    //TODO: USAR MÉTODO TODA VEZ QUE CONCLUIR UM STEP
     private Boolean completeRoadmap(UserRoadmapRequestModel userRoadmap) {
-        UserRoadmapRequestModel existingUserRoadmap = getUserRoadmap(userRoadmap.id());
-        if (isRoadmapComplete(userRoadmap)) {
-            updateRoadmapStatusToFinished(existingUserRoadmap);
-            statisticsService.addRoadmapCompleteCount(existingUserRoadmap.userId());
-            statisticsService.addExperience(existingUserRoadmap.userId(), 200.0);
-            return true;
-        } else {
-            return false;
+        try {
+            UserRoadmapRequestModel existingUserRoadmap = getUserRoadmap(userRoadmap.id());
+            if (isRoadmapComplete(userRoadmap)) {
+                updateRoadmapStatusToFinished(existingUserRoadmap);
+                statisticsService.addRoadmapCompleteCount(existingUserRoadmap.userId());
+                statisticsService.addExperience(existingUserRoadmap.userId(), 200.0);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error("Error completing roadmap for user roadmap ID: {}", userRoadmap.id(), e);
+            throw new RuntimeException("Error completing roadmap");
         }
     }
 
@@ -66,7 +88,12 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
     }
 
     private void updateRoadmapStatusToFinished(UserRoadmapRequestModel userRoadmap) {
-        CommonUserRoadmap commonUserRoadmap = userRoadmapMapper.toEntity(userRoadmap);
-        commonUserRoadmap.updateStatus(Status.FINISHED);
+        try {
+            CommonUserRoadmap commonUserRoadmap = userRoadmapMapper.toEntity(userRoadmap);
+            commonUserRoadmap.updateStatus(Status.FINISHED);
+        } catch (Exception e) {
+            logger.error("Error updating roadmap status to finished", e);
+            throw new RuntimeException("Error updating roadmap status");
+        }
     }
 }

@@ -16,41 +16,29 @@ public class RoadmapController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RoadmapRequestModel> getById(@PathVariable Integer id) {
-        try {
             return roadmapDsGateway.getRoadmapById(id)
                     .map(roadmap -> new ResponseEntity<>(roadmap, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping
     public ResponseEntity<Iterable<RoadmapRequestModel>> getAll() {
-        try {
             Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmaps();
             if (roadmaps != null) {
                 return new ResponseEntity<>(roadmaps, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<Iterable<RoadmapRequestModel>> getByCategory(@PathVariable String category) {
-        try {
             Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmapByCategory(category);
             if (roadmaps != null && roadmaps.iterator().hasNext()) {
                 return new ResponseEntity<>(roadmaps, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 }
 

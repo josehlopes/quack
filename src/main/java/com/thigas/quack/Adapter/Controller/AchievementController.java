@@ -19,22 +19,14 @@ public class AchievementController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AchievementRequestModel> getById(@PathVariable Integer id) {
-        try {
             return achievementDsGateway.getAchievementById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping
     public ResponseEntity<Iterable<AchievementRequestModel>> getAll() {
-        try {
             Iterable<AchievementRequestModel> achievements = achievementDsGateway.getAllAchievements();
             return new ResponseEntity<>(achievements, HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 }

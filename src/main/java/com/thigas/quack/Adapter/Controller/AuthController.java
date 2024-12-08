@@ -19,16 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserInputBoundary userInput;
-
+    
     @PostMapping("users/login")
-    public ResponseEntity<ResponseWrapper<GenericResponseModel>> login(@Valid @RequestBody UserLoginRequestModel loginBody) {
+    public ResponseEntity<ResponseWrapper<GenericResponseModel>> login(@RequestBody UserLoginRequestModel loginBody) {
         ResponseWrapper<GenericResponseModel> response = userInput.login(loginBody);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
-    @PostMapping("users/createAddress")
-    public ResponseEntity<ResponseWrapper<GenericResponseModel>> register(@Valid @RequestBody UserRegisterRequestModel registerBody) {
+    
+    @PostMapping("users/register")
+    public ResponseEntity<ResponseWrapper<GenericResponseModel>> register(@RequestBody UserRegisterRequestModel registerBody) {
         ResponseWrapper<GenericResponseModel> response = userInput.createUser(registerBody);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        HttpStatus status = HttpStatus.valueOf(response.getStatusCode());
+        return ResponseEntity.status(status).body(response);
     }
 }

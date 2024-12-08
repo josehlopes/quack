@@ -22,16 +22,12 @@ public class UserAchievementController {
 
     @PostMapping("createAddress")
     public ResponseEntity<Void> createAchievement(@RequestBody UserAchievementUnlockRequestModel request) {
-        try {
             ResponseWrapper<GenericResponseModel> success = userAchievementInput.unlockUserAchievement(request);
             if (success.getStatusCode() == 201) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
     @GetMapping("getAllAchievements/{userId}")

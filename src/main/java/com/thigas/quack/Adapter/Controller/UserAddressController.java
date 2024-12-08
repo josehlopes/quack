@@ -79,18 +79,12 @@ public class UserAddressController {
 
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
-        try {
             ResponseWrapper<GenericResponseModel> success = addressInput.deleteAddress(id);
             if (success.getStatusCode() == 204) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        } catch (NoSuchElementException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 }

@@ -3,13 +3,13 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StepService {
 
     private final StepDsGateway stepDsGateway;

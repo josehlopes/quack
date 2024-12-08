@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
@@ -29,7 +30,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         var token = recoverToken(request);
 
-        if (request.getRequestURI().equals("/api/users/createAddress") || request.getRequestURI().equals("/api/users/login")) {
+        if (request.getRequestURI().equals("/api/users/register") || request.getRequestURI().equals("/api/users/login")) {
             filterChain.doFilter(request, response);
             return;
         }
