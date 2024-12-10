@@ -9,6 +9,7 @@ import com.thigas.quack.UseCase.Mapper.RoadmapMapper;
 import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway {
 
     private final UserRoadmapRepository repository;

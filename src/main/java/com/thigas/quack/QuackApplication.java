@@ -13,8 +13,10 @@ import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.TypeFilter;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages = "com.thigas.quack.Adapter.Repository")
 public class QuackApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(QuackApplication.class);

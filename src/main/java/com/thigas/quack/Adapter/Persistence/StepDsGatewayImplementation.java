@@ -5,13 +5,14 @@ import com.thigas.quack.Adapter.Repository.StepRepository;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Mapper.StepMapper;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StepDsGatewayImplementation implements StepDsGateway {
 
     private final StepRepository repository;

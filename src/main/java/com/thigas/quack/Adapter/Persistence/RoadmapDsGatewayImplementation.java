@@ -6,13 +6,14 @@ import com.thigas.quack.UseCase.Gateway.RoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.RoadmapMapper;
 import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class RoadmapDsGatewayImplementation implements RoadmapDsGateway {
 
     private final RoadmapRepository repository;

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users/user-lesson")
+@RequestMapping("/api/users/lessons")
 @AllArgsConstructor
 public class UserLessonController {
 

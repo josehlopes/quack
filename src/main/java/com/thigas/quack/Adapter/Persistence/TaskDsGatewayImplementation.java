@@ -7,6 +7,7 @@ import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.TaskMapper;
 import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class TaskDsGatewayImplementation implements TaskDsGateway {
 
     private final TaskRepository repository;

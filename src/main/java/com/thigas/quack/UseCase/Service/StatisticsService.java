@@ -10,13 +10,14 @@ import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.StatisticsMapper;
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StatisticsService {
     
     private static final Logger logger = LoggerFactory.getLogger(StatisticsService.class);

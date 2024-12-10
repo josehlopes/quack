@@ -1,22 +1,14 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
-import com.thigas.quack.Adapter.Entity.UserDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaStatisticsRepository;
 import com.thigas.quack.Adapter.Repository.StatisticsRepository;
 import com.thigas.quack.Adapter.Repository.UserRepository;
 import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.StatisticsMapper;
 import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
-import com.thigas.quack.UseCase.Model.Response.StatisticsInfoResponseModel;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 public class StatisticsDsGatewayImplementation implements StatisticsDsGateway {

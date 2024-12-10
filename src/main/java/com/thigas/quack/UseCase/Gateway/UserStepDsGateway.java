@@ -7,11 +7,11 @@ import java.util.Optional;
 public interface UserStepDsGateway {
     void save(UserStepRequestModel userStep);
 
-    Optional<UserStepRequestModel> findById(int id);
+    Optional<UserStepRequestModel> findById(Integer id);
 
     Iterable<UserStepRequestModel> findAll();
 
-    boolean existsById(int id);
+    boolean existsById(Integer id);
 
-    void deleteById(int id);
+    void deleteById(Integer id);
 }
