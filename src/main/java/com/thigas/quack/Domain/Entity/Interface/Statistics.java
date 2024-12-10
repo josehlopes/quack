@@ -31,6 +31,9 @@ public interface Statistics {
 
     Boolean getIsActive();
 
+    void setIsActive(Boolean isActive);
+
+
     void updateBestStreak(Integer streakDays);
     void addExperience(Double experience);
     void updateNextLevel();

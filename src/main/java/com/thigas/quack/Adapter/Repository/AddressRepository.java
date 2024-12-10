@@ -1,6 +1,7 @@
 package com.thigas.quack.Adapter.Repository;
 
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
+import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -100,6 +102,5 @@ public class AddressRepository {
             logger.error("Erro ao excluir endereço por ID: {}", e.getMessage(), e);
         }
     }
-
 
 }

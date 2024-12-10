@@ -17,4 +17,5 @@ public interface UserInputBoundary {
 
     ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel request);
 
+    ResponseWrapper<GenericResponseModel> deactivateUser(Integer id);
 }

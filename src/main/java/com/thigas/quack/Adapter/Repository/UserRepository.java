@@ -213,4 +213,17 @@ public class UserRepository {
             logger.error("Erro ao excluir usuário por ID: {}", e.getMessage(), e);
         }
     }
+
+    @Transactional
+    public void deactivateById(Integer id) {
+        try {
+            UserDataMapper user = entityManager.find(UserDataMapper.class, id);
+            if (user != null) {
+                user.setIsActive(false);
+                entityManager.merge(user);
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao desativar usuário por ID: {}", e.getMessage(), e);
+        }
+    }
 }

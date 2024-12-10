@@ -12,6 +12,7 @@ public class AddressResponseFormatter implements AddressPresenter {
     public AddressInfoResponseModel prepareGetAddressSuccessView(AddressInfoResponseModel address) {
         return new AddressInfoResponseModel(
                 address.id(),
+                address.userId(),
                 address.street(),
                 address.city(),
                 address.state(),

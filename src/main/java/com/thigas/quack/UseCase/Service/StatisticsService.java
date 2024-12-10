@@ -1,5 +1,7 @@
 package com.thigas.quack.UseCase.Service;
 
+import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
+import com.thigas.quack.Adapter.Repository.StatisticsRepository;
 import com.thigas.quack.Domain.Entity.Implementation.CommonStatistics;
 import com.thigas.quack.Domain.Entity.Interface.Statistics;
 import com.thigas.quack.Domain.Factory.Interface.StatisticsFactory;
@@ -23,6 +25,7 @@ public class StatisticsService {
     private final StatisticsMapper statisticsMapper;
     private final UserDsGateway userDsGateway;
     private final StatisticsFactory statisticsFactory;
+    private final StatisticsRepository statisticsRepository;
     
     public void create(Integer userId) {
         try {
@@ -111,6 +114,35 @@ public class StatisticsService {
         } catch (Exception e) {
             logger.error("Error saving updated statistics", e);
             throw new RuntimeException("Error saving updated statistics");
+        }
+    }
+
+    public void deactivateStatisticsByUserId(Integer userId) {
+        Optional<StatisticsRequestModel> statisticsOptional = statisticsGateway.getByUserId(userId);
+
+        if (statisticsOptional.isPresent()) {
+            StatisticsRequestModel stats = statisticsOptional.get();
+
+            StatisticsRequestModel updatedStatistics = new StatisticsRequestModel(
+                    stats.id(),
+                    stats.userId(),
+                    stats.streakDays(),
+                    stats.bestStreak(),
+                    stats.level(),
+                    stats.nextLevel(),
+                    stats.points(),
+                    stats.experience(),
+                    stats.experienceToNextLevel(),
+                    stats.challengesCompletedCount(),
+                    stats.roadmapsCompletedCount(),
+                    stats.achievementsUnlockedCount(),
+                    stats.achievementsLockedCount(),
+                    false
+            );
+
+            statisticsGateway.updateStatistics(updatedStatistics);
+        } else {
+            throw new IllegalArgumentException("Estatísticas não encontradas para o usuário com ID: " + userId);
         }
     }
 }

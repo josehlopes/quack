@@ -10,5 +10,4 @@ public interface StatisticsDsGateway {
     Optional<StatisticsRequestModel> getStatisticsById(Integer id);
     Optional<StatisticsRequestModel> getByUserId(Integer userId);
     void updateStatistics(StatisticsRequestModel request);
-
 }

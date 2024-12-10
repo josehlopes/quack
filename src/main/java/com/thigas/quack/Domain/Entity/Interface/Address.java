@@ -20,6 +20,8 @@ public interface Address {
 
     Boolean getIsActive();
 
+    void setIsActive(Boolean isActive);
+
     Boolean isValid();
 
     Boolean isCepValid();

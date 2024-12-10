@@ -141,7 +141,7 @@ public class AddressService implements AddressInputBoundary {
                 true
         );
     }
-    
+
     @Override
     public ResponseWrapper<GenericResponseModel> deleteAddress(Integer id) {
         try {
@@ -156,4 +156,52 @@ public class AddressService implements AddressInputBoundary {
             return genericPresenter.prepareFailView(new GenericResponseModel("Error deleting address"), 500);
         }
     }
+
+//    public ResponseWrapper<GenericResponseModel> deactivateAddressByUserId(Integer userId, Integer addressId) {
+//        try {
+//            Optional<AddressInfoResponseModel> addressOptional = addressDsGateway.getUserAddress(userId, addressId);
+//
+//            if (addressOptional.isEmpty()) {
+//                return genericPresenter.prepareFailView(
+//                        new GenericResponseModel("Address not found for the given user and address ID"),
+//                        404
+//                );
+//            }
+//
+//            AddressInfoResponseModel address = addressOptional.get();
+//
+//            AddressRequestModel updatedAddress = new AddressRequestModel(
+//                    address.id(),
+//                    address.userId(),
+//                    address.street(),
+//                    address.city(),
+//                    address.state(),
+//                    address.country(),
+//                    address.zipCode(),
+//                    address.number(),
+//                    false
+//            );
+//
+//            boolean isUpdated = addressDsGateway.updateAddress(updatedAddress);
+//
+//            if (!isUpdated) {
+//                return genericPresenter.prepareFailView(
+//                        new GenericResponseModel("Failed to deactivate address"),
+//                        500
+//                );
+//            }
+//
+//            Map<String, Object> payload = PayloadUtil.createAddressPayload("Address deactivated successfully");
+//            return genericPresenter.prepareSuccessView(new GenericResponseModel(payload), 200);
+//
+//        } catch (Exception e) {
+//            logger.error("Error deactivating address for userId={}, addressId={}", userId, addressId, e);
+//            return genericPresenter.prepareFailView(
+//                    new GenericResponseModel("Error deactivating address"),
+//                    500
+//            );
+//        }
+//    }
+
+
 }
