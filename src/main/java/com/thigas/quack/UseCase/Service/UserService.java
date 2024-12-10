@@ -248,20 +248,20 @@ public class UserService implements UserInputBoundary {
                 throw new NoSuchElementException("User not found");
             }
 
-//            logger.info("Deactivating addresses for user with ID: {}", userId);
-//            Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
-//            if (addresses == null || !addresses.iterator().hasNext()) {
-//                logger.warn("No addresses found for user with ID: {}", userId);
-//            } else {
-//                for (AddressInfoResponseModel address : addresses) {
-//                    try {
-//                        addressService.deactivateAddressByUserId(userId, address.id());
-//                        logger.info("Address with ID {} deactivated for user with ID {}", address.id(), userId);
-//                    } catch (Exception e) {
-//                        logger.error("Error deactivating address with ID {} for user with ID {}", address.id(), userId, e);
-//                    }
-//                }
-//            }
+            logger.info("Deactivating addresses for user with ID: {}", userId);
+            Iterable<AddressInfoResponseModel> addresses = addressDsGateway.getAllUserAddresses(userId);
+            if (addresses == null || !addresses.iterator().hasNext()) {
+                logger.warn("No addresses found for user with ID: {}", userId);
+            } else {
+                for (AddressInfoResponseModel address : addresses) {
+                    try {
+                        addressService.deactivateAddressByUserId(userId, address.id());
+                        logger.info("Address with ID {} deactivated for user with ID {}", address.id(), userId);
+                    } catch (Exception e) {
+                        logger.error("Error deactivating address with ID {} for user with ID {}", address.id(), userId, e);
+                    }
+                }
+            }
 
             try {
                 logger.info("Deactivating statistics for user with ID: {}", userId);

@@ -103,4 +103,17 @@ public class AddressRepository {
         }
     }
 
+    @Transactional
+    public int updateAddressIsActive(Integer id, boolean isActive) {
+        try {
+            return entityManager.createQuery("UPDATE AddressDataMapper a SET a.isActive = :isActive WHERE a.id = :id")
+                    .setParameter("isActive", isActive)
+                    .setParameter("id", id)
+                    .executeUpdate();
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar isActive do endereço: {}", e.getMessage(), e);
+            return 0;
+        }
+    }
+
 }

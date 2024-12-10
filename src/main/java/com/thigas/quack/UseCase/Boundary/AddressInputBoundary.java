@@ -12,5 +12,5 @@ public interface AddressInputBoundary {
 
     ResponseWrapper<GenericResponseModel> deleteAddress(Integer id);
 
-//    ResponseWrapper<GenericResponseModel> deactivateAddressByUserId(Integer id, Integer userId);
+    ResponseWrapper<GenericResponseModel> deactivateAddressByUserId(Integer id, Integer userId);
 }

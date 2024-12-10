@@ -20,4 +20,6 @@ public interface AddressDsGateway {
     Boolean updateAddress(AddressRequestModel request);
 
     Boolean deleteById(Integer id);
+
+    Boolean updateAddressIsActive(Integer id, boolean isActive);
 }

@@ -61,4 +61,11 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
+
+    @Override
+    public Boolean updateAddressIsActive(Integer id, boolean isActive) {
+        int rowsUpdated = repository.updateAddressIsActive(id, isActive);
+        return rowsUpdated > 0;
+    }
+
 }
