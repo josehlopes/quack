@@ -76,24 +76,7 @@ public class UserAddressController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @PutMapping("/deactivateAddress/{userId}/{addressId}")
-    public ResponseEntity<Void> deactivateAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
-        try {
-            ResponseWrapper<GenericResponseModel> success = addressInput.deactivateAddressByUserId(userId, addressId);
-
-            if (success.getStatusCode() == 200) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else if (success.getStatusCode() == 404) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
+    
     @PutMapping("/deactivateAddress/{userId}/{addressId}")
     public ResponseEntity<Void> deactivateAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
         try {
