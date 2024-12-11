@@ -14,13 +14,13 @@ public interface UserFollowersAndFollowingMapper {
     UserFollowersAndFollowingMapper MAPPER = Mappers.getMapper(UserFollowersAndFollowingMapper.class);
     
     @Mappings({
-            @Mapping(target = "followedId", source = "user.id"),
+            @Mapping(target = "followedId", source = "followed.id"),
             @Mapping(target = "followerId", source = "follower.id"),
     })
     UserFollowersAndFollowingRequestModel toDsModel(UserFollowersAndFollowingDataMapper userFollowersAndFollowingDataMapper);
     
     @Mappings({
-            @Mapping(target = "user.id", source = "followedId"),
+            @Mapping(target = "followed.id", source = "followedId"),
             @Mapping(target = "follower.id", source = "followerId"),
     })
     UserFollowersAndFollowingDataMapper toDataMapper(UserFollowersAndFollowingRequestModel userRelationshipRequestModel);

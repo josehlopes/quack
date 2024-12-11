@@ -151,7 +151,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.5.12</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -195,10 +194,10 @@
                     </annotationProcessorPaths>
                     <showWarnings>true</showWarnings>
                     <compilerArgs>
-                        <!--                        <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>-->
-                        <!--                        <arg>-Amapstruct.verbose=true</arg>-->
-                        <!--                        <arg>-Amapstruct.defaultComponentModel=spring</arg>-->
-                        <!--                        <arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>-->
+                        <!--<arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>-->
+                        <!--<arg>-Amapstruct.verbose=true</arg>-->
+                        <!--<arg>-Amapstruct.defaultComponentModel=spring</arg>-->
+                        <!--<arg>-Amapstruct.suppressGeneratorVersionInfoComment=true</arg>-->
                     </compilerArgs>
                 </configuration>
             </plugin>

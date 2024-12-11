@@ -28,8 +28,6 @@ public class UserFollowersAndFollowingDsGatewayImplementation implements UserFol
                 .collect(Collectors.toList());
     }
     
-    
-
     @Override
     public List<UserRequestModel> getFollowing(Integer userId) {
         List<UserDataMapper> followings = repository.getAllFollowing(userId);
@@ -39,8 +37,8 @@ public class UserFollowersAndFollowingDsGatewayImplementation implements UserFol
     }
     
     @Override
-    public UserFollowersAndFollowingRequestModel findFollowerRelationship(Integer userId, Integer followerId) {
-        return mapper.toDsModel(repository.findFollowerRelationship(userId, followerId));
+    public UserFollowersAndFollowingRequestModel findFollowerRelationship(Integer followedId, Integer followerId) {
+        return mapper.toDsModel(repository.findRelationship(followedId, followerId));
     }
     
     @Override

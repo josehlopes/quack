@@ -43,9 +43,13 @@ public class UserFollowersAndFollowingService implements UserFollowersAndFollowi
     @Override
     public void unfollow(UserRelationshipRequestModel request) {
         UserFollowersAndFollowingRequestModel existingRelationship = userFollowersAndFollowingDsGateway.findFollowerRelationship(request.followedId(), request.followerId());
+        UserFollowersAndFollowingRequestModel existingInverseRelation = userFollowersAndFollowingDsGateway.findFollowerRelationship(request.followerId(), request.followedId());
+
         if (existingRelationship != null) {
             UserFollowersAndFollowingRequestModel newStatus = changeRelationshipStatus(existingRelationship);
+            UserFollowersAndFollowingRequestModel newInverseStatus = changeRelationshipStatus(existingInverseRelation);
             userFollowersAndFollowingDsGateway.updateFollowerRelationship(newStatus);
+            userFollowersAndFollowingDsGateway.updateFollowerRelationship(newInverseStatus);
         }
     }
     
@@ -60,13 +64,11 @@ public class UserFollowersAndFollowingService implements UserFollowersAndFollowi
     }
     
     private UserFollowersAndFollowingRequestModel changeRelationshipStatus(UserFollowersAndFollowingRequestModel userFollowers) {
-        UserFollowersAndFollowingRequestModel newRelationship = new UserFollowersAndFollowingRequestModel(userFollowers.id(), userFollowers.followedId(), userFollowers.followerId(), !userFollowers.isActive());
-        return userFollowers;
+        return new UserFollowersAndFollowingRequestModel(userFollowers.id(), userFollowers.followedId(), userFollowers.followerId(), !userFollowers.isActive());
     }
     
     private UserFollowersAndFollowingRequestModel changeInverseRelationshipStatus(UserFollowersAndFollowingRequestModel userFollowers) {
-        UserFollowersAndFollowingRequestModel newRelationship = new UserFollowersAndFollowingRequestModel(userFollowers.id(), userFollowers.followerId(), userFollowers.followedId(), !userFollowers.isActive());
-        return userFollowers;
+        return new UserFollowersAndFollowingRequestModel(userFollowers.id(), userFollowers.followerId(), userFollowers.followedId(), !userFollowers.isActive());
     }
     
     private UserFollowersAndFollowingRequestModel createRequestModel(UserFollowersAndFollowing userFollowersAndFollowing) {
@@ -76,7 +78,4 @@ public class UserFollowersAndFollowingService implements UserFollowersAndFollowi
     private UserFollowersAndFollowingRequestModel createInverseRequestModel(UserFollowersAndFollowing userFollowersAndFollowing) {
         return new UserFollowersAndFollowingRequestModel(userFollowersAndFollowing.getId(), userFollowersAndFollowing.getFollowedId(), userFollowersAndFollowing.getFollowerId(),  userFollowersAndFollowing.getIsActive());
     }
-    
-    
-    
 }

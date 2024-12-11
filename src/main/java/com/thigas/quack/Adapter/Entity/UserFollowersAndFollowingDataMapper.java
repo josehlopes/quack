@@ -19,12 +19,12 @@ public class UserFollowersAndFollowingDataMapper {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "followed_id", nullable = false)
     @ToString.Exclude
-    private UserDataMapper user;
+    private UserDataMapper followed;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id", nullable = false)
     @ToString.Exclude
     private UserDataMapper follower;

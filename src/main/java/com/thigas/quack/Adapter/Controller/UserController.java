@@ -29,20 +29,20 @@ public class UserController {
     private final UserAchievementInputBoundary userAchievementInput;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserRequestModel> getById(@PathVariable Integer id) {
+    public ResponseEntity<UserRequestModel> getUserById(@PathVariable Integer id) {
             return userDsGateway.getUserById(id)
                     .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<UserRequestModel>> getAll() {
+    public ResponseEntity<Iterable<UserRequestModel>> getAllUsers() {
             Iterable<UserRequestModel> users = userDsGateway.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody UserRequestModel userDTO) {
+    public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody UserRequestModel userDTO) {
         if (id.equals(userDTO.id())) {
             ResponseWrapper<GenericResponseModel> success = userInput.updateUser(userDTO);
             if (success.getStatusCode() == 204) {
@@ -54,16 +54,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-            ResponseWrapper<GenericResponseModel> success = userInput.deleteUser(id);
-            if (success.getStatusCode() == 204) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
 
     @PutMapping("/deactivate/{id}")
     public ResponseEntity<Void> deactivateUser(@PathVariable Integer id) {
@@ -79,6 +69,24 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+<<<<<<< Updated upstream
+
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<Void> deactivateUser(@PathVariable Integer id) {
+        try {
+            ResponseWrapper<GenericResponseModel> response = userInput.deactivateUser(id);
+            if (response.getStatusCode() == 200) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+=======
+>>>>>>> Stashed changes
     }
 
 }

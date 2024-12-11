@@ -37,15 +37,6 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public void updateFollowing(UserFollowersAndFollowingDataMapper userFollowing) {
-        try {
-            entityManager.merge(userFollowing);
-        } catch (Exception e) {
-            logger.error("Error updating following relationship: {}", e.getMessage(), e);
-        }
-    }
-    
-    @Transactional
     public void updateFollower(UserFollowersAndFollowingDataMapper userFollower) {
         try {
             entityManager.merge(userFollower);
@@ -55,23 +46,10 @@ public class UserRelationshipRepository {
     }
     
     @Transactional
-    public UserFollowersAndFollowingDataMapper findFollowingRelationship(Integer userId, Integer followingId) {
+    public UserFollowersAndFollowingDataMapper findRelationship(Integer followedId, Integer followerId) {
         try {
-            return entityManager.createQuery("SELECT uf FROM UserFollowingDataMapper uf WHERE uf.user.id = :userId AND uf.following.id = :followingId", UserFollowersAndFollowingDataMapper.class)
-                    .setParameter("userId", userId)
-                    .setParameter("followingId", followingId)
-                    .getSingleResult();
-        } catch (Exception e) {
-            logger.error("Error finding following relationship: {}", e.getMessage(), e);
-            return null;
-        }
-    }
-    
-    @Transactional
-    public UserFollowersAndFollowingDataMapper findFollowerRelationship(Integer userId, Integer followerId) {
-        try {
-            return entityManager.createQuery("SELECT uf FROM UserFollowersAndFollowingDataMapper uf WHERE uf.user.id = :userId AND uf.follower.id = :followerId", UserFollowersAndFollowingDataMapper.class)
-                    .setParameter("userId", userId)
+            return entityManager.createQuery("SELECT uf FROM UserFollowersAndFollowingDataMapper uf WHERE uf.followed.id = :followedId AND uf.follower.id = :followerId", UserFollowersAndFollowingDataMapper.class)
+                    .setParameter("followedId", followedId)
                     .setParameter("followerId", followerId)
                     .getSingleResult();
         } catch (Exception e) {
@@ -83,7 +61,8 @@ public class UserRelationshipRepository {
     @Transactional
     public List<UserDataMapper> getAllFollowers(Integer userId) {
         try {
-            return entityManager.createQuery("SELECT uf.follower FROM UserFollowersAndFollowingDataMapper uf WHERE uf.user.id = :userId", UserDataMapper.class)
+            return entityManager.createQuery(
+                            "SELECT uf.follower FROM UserFollowersAndFollowingDataMapper uf WHERE uf.followed.id = :userId AND uf.isActive = true", UserDataMapper.class)
                     .setParameter("userId", userId)
                     .getResultList();
         } catch (Exception e) {
@@ -91,11 +70,13 @@ public class UserRelationshipRepository {
             return List.of();
         }
     }
+
     
     @Transactional
     public List<UserDataMapper> getAllFollowing(Integer userId) {
         try {
-            return entityManager.createQuery("SELECT uf.following FROM UserFollowingDataMapper uf WHERE uf.user.id = :userId", UserDataMapper.class)
+            return entityManager.createQuery(
+                            "SELECT uf.followed FROM UserFollowersAndFollowingDataMapper uf WHERE uf.follower.id = :userId AND uf.isActive = true", UserDataMapper.class)
                     .setParameter("userId", userId)
                     .getResultList();
         } catch (Exception e) {
@@ -103,5 +84,6 @@ public class UserRelationshipRepository {
             return List.of();
         }
     }
+
     
 }

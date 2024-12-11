@@ -57,7 +57,7 @@ public class UserAddressController {
         }
     }
 
-    @PutMapping("/updateUserRoadmap/{id}")
+    @PutMapping("/updateAddress/{id}")
     public ResponseEntity<Void> updateAddress(@PathVariable Integer id, @RequestBody AddressRequestModel address) {
         try {
             if (!id.equals(address.id())) {
@@ -77,14 +77,21 @@ public class UserAddressController {
         }
     }
 
-    @DeleteMapping("/deleteUser/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
-            ResponseWrapper<GenericResponseModel> success = addressInput.deleteAddress(id);
-            if (success.getStatusCode() == 204) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PutMapping("/deactivateAddress/{userId}/{addressId}")
+    public ResponseEntity<Void> deactivateAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
+        try {
+            ResponseWrapper<GenericResponseModel> success = addressInput.deactivateAddressByUserId(userId, addressId);
+
+            if (success.getStatusCode() == 200) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else if (success.getStatusCode() == 404) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/deactivateAddress/{userId}/{addressId}")

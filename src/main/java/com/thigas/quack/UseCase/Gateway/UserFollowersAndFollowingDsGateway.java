@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserFollowersAndFollowingDsGateway {
     List<UserRequestModel> getFollowers(Integer userId);
     List<UserRequestModel> getFollowing(Integer userId);
-    UserFollowersAndFollowingRequestModel findFollowerRelationship(Integer userId, Integer followerId);
+    UserFollowersAndFollowingRequestModel findFollowerRelationship(Integer followedId, Integer followerId);
     void updateFollowerRelationship(UserFollowersAndFollowingRequestModel userFollowers);
     void saveFollowerRelationship(UserFollowersAndFollowingRequestModel userFollowers);
 }
