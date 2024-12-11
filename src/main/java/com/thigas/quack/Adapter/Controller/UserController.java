@@ -69,24 +69,5 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-<<<<<<< Updated upstream
-
-    @PutMapping("/deactivate/{id}")
-    public ResponseEntity<Void> deactivateUser(@PathVariable Integer id) {
-        try {
-            ResponseWrapper<GenericResponseModel> response = userInput.deactivateUser(id);
-            if (response.getStatusCode() == 200) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-=======
->>>>>>> Stashed changes
     }
-
 }
