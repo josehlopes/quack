@@ -1,49 +1,46 @@
 package com.thigas.quack.Adapter.Persistence;
 
+import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
 import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaUserRoadmapRepository;
+import com.thigas.quack.Adapter.Repository.UserRoadmapRepository;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.RoadmapMapper;
+import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway {
 
-    private final JpaUserRoadmapRepository repository;
-    private final MapStructMapper mapper;
+    private final UserRoadmapRepository repository;
+    private final UserRoadmapMapper mapper;
+    private final RoadmapMapper roadmapMapper;
 
     @Override
-    public void save(UserRoadmapRequestModel userRoadmapDtoRequest) {
-        UserRoadmapDataMapper toSaveUserRoadmap = mapper.mapUserRoadmapDtoRequestToDataMapper(userRoadmapDtoRequest);
-        repository.save(toSaveUserRoadmap);
+    public Boolean saveUserRoadmap(UserRoadmapRequestModel userRoadmapDtoRequest) {
+        UserRoadmapDataMapper toSaveUserRoadmap = mapper.toDataMapper(userRoadmapDtoRequest);
+        return repository.save(toSaveUserRoadmap);
     }
 
     @Override
-    public Optional<UserRoadmapRequestModel> findById(int id) {
-        Optional<UserRoadmapDataMapper> userRoadmap = repository.findById(id);
-        return userRoadmap.map(mapper::mapUserRoadmapDataMapperToDtoRequest);
+    public UserRoadmapRequestModel updateUserRoadmap(UserRoadmapRequestModel userRoadmap) {
+        UserRoadmapDataMapper userRoadmapDataMapper = mapper.toDataMapper(userRoadmap);
+        repository.update(userRoadmapDataMapper);
+        return userRoadmap;
     }
 
     @Override
-    public List<UserRoadmapRequestModel> findAll() {
-        List<UserRoadmapDataMapper> userRoadmaps = repository.findAll();
-        return userRoadmaps.stream()
-                .map(mapper::mapUserRoadmapDataMapperToDtoRequest)
-                .collect(Collectors.toList());
+    public Optional<UserRoadmapRequestModel> getUserRoadmapById(Integer id) {
+        Optional<UserRoadmapDataMapper> userRoadmap = repository.getById(id);
+        return userRoadmap.map(mapper::toDsModel);
     }
 
-    @Override
-    public void deleteById(int id) {
-        repository.deleteById(id);
-    }
-
-    @Override
-    public boolean existsById(int id) {
-        return repository.existsById(id);
-    }
 }

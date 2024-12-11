@@ -2,9 +2,7 @@ package com.thigas.quack.Adapter.Entity;
 
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -13,6 +11,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_task")
 public class UserTaskDataMapper {
 
@@ -30,15 +30,7 @@ public class UserTaskDataMapper {
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status = Status.ACTIVE;
-
-    public UserTaskDataMapper(Integer id, UserDataMapper user, TaskDataMapper task, String imagePath, Status status) {
-        this.id = id;
-        this.user = user;
-        this.task = task;
-        this.imagePath = imagePath;
-        this.status = status;
-    }
-
+    
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;

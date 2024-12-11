@@ -29,7 +29,7 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
 
     @Override
     public Boolean findByUserIdAndAchievementId(Integer userId, Integer achievementId) {
-//        return repository.existsByUserIdAndAchievementId(userId, achievementId);
+        repository.existsByUserIdAndAchievementId(userId, achievementId);
         return true;
     }
 
@@ -50,20 +50,11 @@ public class UserAchievementDsGatewayImplementation implements UserAchievementDs
     }
 
     @Override
-    public void save(UserAchievementRequestModel dataSourceModel) {
+    public void saveUserAchievement(UserAchievementRequestModel dataSourceModel) {
         UserAchievementDataMapper userAchievementDataMapper = mapper.toDataMapper(dataSourceModel);
         repository.save(userAchievementDataMapper);
     }
-
-    @Override
-    public void unlockUserAchievement(UserAchievementUnlockRequestModel userAchievementUnlockRequestModel) {
-        Optional<UserAchievementDataMapper> userAchievement = repository.getById(userAchievementUnlockRequestModel.userId());
-        userAchievement.ifPresent(achievement -> {
-            achievement.setIsActive(true);
-            repository.save(achievement);
-        });
-    }
-
+    
     @Override
     public void deleteUserAchievementById(Integer id) {
         repository.deleteById(id);

@@ -7,6 +7,8 @@ import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Optional;
@@ -15,56 +17,78 @@ import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 public class RoadmapService {
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(RoadmapService.class);
+    
     private final RoadmapDsGateway roadmapDsGateway;
     private final GenericPresenter genericPresenter;
     private final RoadmapMapper roadmapMapper;
-
+    
     public ResponseWrapper<GenericResponseModel> getById(Integer id) {
-        Optional<RoadmapRequestModel> roadmap = roadmapDsGateway.getById(id);
-
-        if (roadmap.isEmpty()) {
-            return genericPresenter.prepareFailView(new GenericResponseModel("Roadmap not found"), 404);
+        try {
+            Optional<RoadmapRequestModel> roadmap = roadmapDsGateway.getRoadmapById(id);
+            
+            if (roadmap.isEmpty()) {
+                return genericPresenter.prepareFailView(new GenericResponseModel("Roadmap not found"), 404);
+            }
+            
+            Map<String, Object> payload = Map.of("roadmap", roadmap.get());
+            return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmap found", payload), 200);
+        } catch (Exception e) {
+            logger.error("Error getting roadmap by ID: {}", id, e);
+            return genericPresenter.prepareFailView(new GenericResponseModel("Error getting roadmap"), 500);
         }
-
-        Map<String, Object> payload = Map.of("roadmap", roadmap.get());
-        return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmap found", payload), 200);
     }
-
+    
     public ResponseWrapper<GenericResponseModel> getAll() {
-        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAll();
-        Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
-                .collect(Collectors.toList());
-
-        if (!roadmapList.iterator().hasNext()) {
-            return genericPresenter.prepareFailView(new GenericResponseModel("No roadmaps available"), 204);
+        try {
+            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmaps();
+            Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
+                    .collect(Collectors.toList());
+            
+            if (!roadmapList.iterator().hasNext()) {
+                return genericPresenter.prepareFailView(new GenericResponseModel("No roadmaps available"), 204);
+            }
+            
+            Map<String, Object> payload = Map.of("roadmaps", roadmapList);
+            return genericPresenter.prepareSuccessView(new GenericResponseModel("All roadmaps retrieved", payload), 200);
+        } catch (Exception e) {
+            logger.error("Error getting all roadmaps", e);
+            return genericPresenter.prepareFailView(new GenericResponseModel("Error getting all roadmaps"), 500);
         }
-
-        Map<String, Object> payload = Map.of("roadmaps", roadmapList);
-        return genericPresenter.prepareSuccessView(new GenericResponseModel("All roadmaps retrieved", payload), 200);
     }
-
+    
     public ResponseWrapper<GenericResponseModel> existsById(Integer roadmapId) {
-        boolean exists = roadmapDsGateway.existsById(roadmapId);
-
-        if (!exists) {
-            return genericPresenter.prepareFailView(new GenericResponseModel("Roadmap does not exist"), 404);
+        try {
+            boolean exists = roadmapDsGateway.existsById(roadmapId);
+            
+            if (!exists) {
+                return genericPresenter.prepareFailView(new GenericResponseModel("Roadmap does not exist"), 404);
+            }
+            
+            return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmap exists"), 200);
+        } catch (Exception e) {
+            logger.error("Error checking if roadmap exists by ID: {}", roadmapId, e);
+            return genericPresenter.prepareFailView(new GenericResponseModel("Error checking if roadmap exists"), 500);
         }
-
-        return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmap exists"), 200);
     }
-
+    
     public ResponseWrapper<GenericResponseModel> getByCategory(String category) {
-        Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getByCategory(category);
-        Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
-                .collect(Collectors.toList());
-
-        if (!roadmapList.iterator().hasNext()) {
-            return genericPresenter.prepareFailView(new GenericResponseModel("No roadmaps found for the given category"), 204);
+        try {
+            Iterable<RoadmapRequestModel> roadmaps = roadmapDsGateway.getAllRoadmapByCategory(category);
+            Iterable<RoadmapRequestModel> roadmapList = StreamSupport.stream(roadmaps.spliterator(), false)
+                    .collect(Collectors.toList());
+            
+            if (!roadmapList.iterator().hasNext()) {
+                return genericPresenter.prepareFailView(new GenericResponseModel("No roadmaps found for the given category"), 204);
+            }
+            
+            Map<String, Object> payload = Map.of("roadmaps", roadmapList);
+            return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmaps retrieved by category", payload), 200);
+        } catch (Exception e) {
+            logger.error("Error getting roadmaps by category: {}", category, e);
+            return genericPresenter.prepareFailView(new GenericResponseModel("Error getting roadmaps by category"), 500);
         }
-
-        Map<String, Object> payload = Map.of("roadmaps", roadmapList);
-        return genericPresenter.prepareSuccessView(new GenericResponseModel("Roadmaps retrieved by category", payload), 200);
     }
-
+    
 }

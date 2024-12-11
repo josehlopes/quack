@@ -6,18 +6,22 @@ import java.time.LocalDate;
 
 public interface UserRoadmap {
 
-    int getId();
+    Integer getId();
 
-    User getUser();
+    Integer getUserId();
 
-    Roadmap getRoadmap();
+    Integer getRoadmapId();
 
     Double getProgress();
 
-    LocalDate getStartedOn();
+    LocalDate getStartedIn();
 
-    LocalDate getFinishedOn();
+    LocalDate getFinishedIn();
 
     Status getStatus();
+
+    void addProgress(Double progress);
+    void updateStatus(Status status);
+    void updateFinishedIn(LocalDate finishedIn);
 
 }

@@ -2,9 +2,7 @@ package com.thigas.quack.Adapter.Entity;
 
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -13,6 +11,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_lesson")
 public class UserLessonDataMapper {
 
@@ -25,19 +25,8 @@ public class UserLessonDataMapper {
     @ManyToOne
     @JoinColumn(name = "lesson_id", nullable = false)
     private LessonDataMapper lesson;
-    @Column(nullable = true)
-    private String imagePath;
-    @Column(name = "status")
-    @Enumerated(EnumType.ORDINAL)
-    private Status status = Status.ACTIVE;
-
-    public UserLessonDataMapper(Integer id, UserDataMapper user, LessonDataMapper lesson, String imagePath, Status status) {
-        this.id = id;
-        this.user = user;
-        this.lesson = lesson;
-        this.imagePath = imagePath;
-        this.status = status;
-    }
+    @Column(name = "completed", nullable = false)
+    private Boolean completed = false;
 
     @Override
     public final boolean equals(Object o) {

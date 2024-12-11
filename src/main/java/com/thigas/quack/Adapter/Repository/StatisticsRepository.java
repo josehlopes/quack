@@ -48,6 +48,19 @@ public class StatisticsRepository {
     }
 
     @Transactional(readOnly = true)
+    public Optional<StatisticsDataMapper> getUserStatistics(Integer userId) {
+        try {
+            TypedQuery<StatisticsDataMapper> query = entityManager.createQuery(
+                    "SELECT a FROM StatisticsDataMapper a WHERE a.user.id = :user_id", StatisticsDataMapper.class);
+            query.setParameter("user_id", userId);
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (Exception e) {
+            logger.error("Erro ao buscar endereço do usuário: {}", e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    @Transactional(readOnly = true)
     public Boolean existsById(Integer id) {
         try {
             return entityManager.find(StatisticsDataMapper.class, id) != null;

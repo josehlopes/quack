@@ -16,19 +16,25 @@ import java.util.Set;
 
 @Repository
 @AllArgsConstructor
-public class TaskRepository {
+public class    TaskRepository {
     private static final Logger logger = LoggerFactory.getLogger(TaskDsGateway.class);
     private final EntityManager entityManager;
 
     @Transactional(readOnly = true)
     public Optional<TaskDataMapper> getById(Integer id) {
         try {
-            return Optional.ofNullable(entityManager.find(TaskDataMapper.class, id));
+            TaskDataMapper task = entityManager.find(TaskDataMapper.class, id);
+            if (task != null) {
+                System.out.println("Task encontrado: " + task);
+                System.out.println("TaskText: " + task.getTasktext());
+            }
+            return Optional.ofNullable(task);
         } catch (Exception e) {
             logger.error("Erro ao buscar task por ID: {}", e.getMessage(), e);
         }
         return Optional.empty();
     }
+
 
     @Transactional(readOnly = true)
     public Iterable<TaskDataMapper> getAll() {

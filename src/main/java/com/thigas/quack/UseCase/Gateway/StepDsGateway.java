@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface StepDsGateway {
     Boolean existsById(Integer id);
 
-    Optional<StepRequestModel> getById(Integer id);
+    Optional<StepRequestModel> getStepById(Integer id);
 
-    Iterable<StepRequestModel> getAll();
+    Iterable<StepRequestModel> getAllSteps();
 
 }

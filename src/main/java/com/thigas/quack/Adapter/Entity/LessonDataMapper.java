@@ -28,8 +28,6 @@ public class LessonDataMapper {
     private String language;
     @Column(name = "image_path", nullable = false)
     private String imagePath;
-    @Column(name = "completed", nullable = false)
-    private boolean completed = false;
     @Column(name = "link")
     private String link;
     @ManyToMany(mappedBy = "lessons", fetch = FetchType.EAGER)

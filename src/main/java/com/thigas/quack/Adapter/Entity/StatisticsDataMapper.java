@@ -17,7 +17,7 @@ public class StatisticsDataMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserDataMapper user;
     @Column(name = "streak_days")
@@ -42,6 +42,8 @@ public class StatisticsDataMapper {
     private Integer achievementsLockedCount;
     @Column(name = "points", nullable = false)
     private Double points = 0.0;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     @Override
     public final boolean equals(Object o) {

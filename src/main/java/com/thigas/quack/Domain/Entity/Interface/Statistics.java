@@ -29,12 +29,18 @@ public interface Statistics {
 
     Double getPoints();
 
-    Boolean setBestStreak(Integer streakDays);
+    Boolean getIsActive();
+
+    void setIsActive(Boolean isActive);
+
+
+    void updateBestStreak(Integer streakDays);
     void addExperience(Double experience);
-    void setNextLevel();
-    void setExperienceToNextLevel();
+    void updateNextLevel();
+    void updateExperienceToNextLevel();
     Double calculateExperienceToNextLevel(Double experience);
     Boolean isLevelUp(Double experience);
     void addPoints(Double points);
     void removePoints(Double points);
+    void updateRoadmapsCompletedCount();
 }

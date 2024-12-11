@@ -6,23 +6,15 @@ import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
 import java.util.Optional;
 
 public interface UserDsGateway {
-    void save(UserRequestModel dataSourceModel);
-
-    Optional<UserRequestModel> getById(Integer id);
-
-    Boolean findById(Integer id);
-
+    void saveUser(UserRequestModel request);
+    Optional<UserRequestModel> getUserById(Integer id);
+    Boolean existsById(Integer id);
     Optional<UserRequestModel> getByEmail(String email);
-
     Optional<UserRequestModel> getByUsername(String username);
-
-    Boolean findByEmail(String email);
-
-    Boolean findByUsername(String username);
-
-    Iterable<UserRequestModel> getAll();
-
-    Boolean update(UserRequestModel dataSourceModel);
-
-    Boolean deleteById(Integer id);
+    Boolean existsByEmail(String email);
+    Boolean existsByUsername(String username);
+    Iterable<UserRequestModel> getAllUsers();
+    Boolean updateUser(UserRequestModel request);
+    Boolean deleteUserById(Integer id);
+    Boolean deactivateUserById(Integer id);
 }

@@ -111,6 +111,7 @@ public interface User {
      */
     Boolean getIsActive();
 
+    void setIsActive(Boolean isActive);
 
     /**
      * Verifica se a senha do usuário é válida.

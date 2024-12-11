@@ -10,7 +10,7 @@ public class BCryptEncoderGateway implements EncoderGateway {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
-    public Boolean match(String password, String encodedPassword) {
+    public Boolean matchPassword(String password, String encodedPassword) {
         return passwordEncoder.matches(password, encodedPassword);
     }
 }

@@ -1,6 +1,7 @@
 package com.thigas.quack.Adapter.Repository;
 
 import com.thigas.quack.Adapter.Entity.AddressDataMapper;
+import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Repository
@@ -101,5 +103,17 @@ public class AddressRepository {
         }
     }
 
+    @Transactional
+    public int updateAddressIsActive(Integer id, boolean isActive) {
+        try {
+            return entityManager.createQuery("UPDATE AddressDataMapper a SET a.isActive = :isActive WHERE a.id = :id")
+                    .setParameter("isActive", isActive)
+                    .setParameter("id", id)
+                    .executeUpdate();
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar isActive do endereço: {}", e.getMessage(), e);
+            return 0;
+        }
+    }
 
 }

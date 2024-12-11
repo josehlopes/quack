@@ -19,13 +19,13 @@ public class AchievementDsGatewayImplementation implements AchievementDsGateway 
     private final AchievementMapper mapper;
 
     @Override
-    public Optional<AchievementRequestModel> getById(Integer id) {
+    public Optional<AchievementRequestModel> getAchievementById(Integer id) {
         Optional<AchievementDataMapper> achievement = repository.getById(id);
         return achievement.map(mapper::toDsModel);
     }
 
     @Override
-    public Iterable<AchievementRequestModel> getAll() {
+    public Iterable<AchievementRequestModel> getAllAchievements() {
         Iterable<AchievementDataMapper> achievements = repository.getAll();
 
         return StreamSupport.stream(achievements.spliterator(), false)

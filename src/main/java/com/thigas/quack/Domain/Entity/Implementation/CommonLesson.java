@@ -19,6 +19,6 @@ public class CommonLesson implements Lesson {
     private String language;
     private String imagePath;
     private Boolean completed;
-    private String lLink;
+    private String link;
     private Set<Step> steps;
 }

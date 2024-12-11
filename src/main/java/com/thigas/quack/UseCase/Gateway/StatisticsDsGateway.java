@@ -6,10 +6,8 @@ import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
 import java.util.Optional;
 
 public interface StatisticsDsGateway {
-    void save(StatisticsRequestModel statistics);
-    Optional<StatisticsRequestModel> getById(Integer id);
-    Iterable<StatisticsRequestModel> getAll();
+    void saveStatistics(StatisticsRequestModel request);
+    Optional<StatisticsRequestModel> getStatisticsById(Integer id);
     Optional<StatisticsRequestModel> getByUserId(Integer userId);
-
-
+    void updateStatistics(StatisticsRequestModel request);
 }

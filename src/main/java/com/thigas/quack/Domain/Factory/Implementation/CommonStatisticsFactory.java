@@ -19,7 +19,8 @@ public class CommonStatisticsFactory implements StatisticsFactory {
             Integer achievementsUnlockedCount = 0;
             Integer achievementsLockedCount = 0;
             Double points = 0.0;
-            return new CommonStatistics(null, userId, streakDays, bestStreak, level, nextLevel, experience, experienceToNextLevel, challengesCompletedCount, roadmapsCompletedCount, achievementsUnlockedCount, achievementsLockedCount, points);
+            Boolean isActive = true;
+            return new CommonStatistics(null, userId, streakDays, bestStreak, level, nextLevel, experience, experienceToNextLevel, challengesCompletedCount, roadmapsCompletedCount, achievementsUnlockedCount, achievementsLockedCount, points, isActive);
         }
     }
 }

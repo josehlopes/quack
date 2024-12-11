@@ -6,20 +6,21 @@ import com.thigas.quack.UseCase.Gateway.AddressDsGateway;
 import com.thigas.quack.UseCase.Mapper.AddressMapper;
 import com.thigas.quack.UseCase.Model.Request.AddressRequestModel;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AddressDsGatewayImplementation implements AddressDsGateway {
 
     private final AddressRepository repository;
     private final AddressMapper mapper;
 
     @Override
-    public void save(AddressRequestModel addressDtoRequest) {
+    public void saveAddress(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toSaveAddress = mapper.toDataMapper(addressDtoRequest);
         repository.save(toSaveAddress);
     }
@@ -45,7 +46,7 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     }
 
     @Override
-    public Boolean update(AddressRequestModel addressDtoRequest) {
+    public Boolean updateAddress(AddressRequestModel addressDtoRequest) {
         AddressDataMapper toUpdateAddress = mapper.toDataMapper(addressDtoRequest);
         repository.update(toUpdateAddress);
         return true;
@@ -61,4 +62,11 @@ public class AddressDsGatewayImplementation implements AddressDsGateway {
     public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
+
+    @Override
+    public Boolean updateAddressIsActive(Integer id, boolean isActive) {
+        int rowsUpdated = repository.updateAddressIsActive(id, isActive);
+        return rowsUpdated > 0;
+    }
+
 }

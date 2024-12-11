@@ -24,6 +24,7 @@ public interface TaskMapper {
     TaskInfoResponseModel toInfoDto(TaskDataMapper taskDataMapper);
 
     @Mapping(target = "stepsId", source = "steps")
+    @Mapping(target = "tasktext", source = "taskText")
     TaskRequestModel toDsModel(Task task);
 
     default TaskTextRequestModel map(String value) {

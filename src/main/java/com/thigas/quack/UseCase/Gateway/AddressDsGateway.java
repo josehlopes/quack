@@ -7,7 +7,7 @@ import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import java.util.Optional;
 
 public interface AddressDsGateway {
-    void save(AddressRequestModel dataSourceModel);
+    void saveAddress(AddressRequestModel request);
 
     Optional<AddressInfoResponseModel> getUserAddress(Integer userId, Integer addressId);
 
@@ -17,7 +17,9 @@ public interface AddressDsGateway {
 
     Boolean existsById(Integer id);
 
-    Boolean update(AddressRequestModel dataSourceModel);
+    Boolean updateAddress(AddressRequestModel request);
 
     Boolean deleteById(Integer id);
+
+    Boolean updateAddressIsActive(Integer id, boolean isActive);
 }

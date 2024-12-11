@@ -7,6 +7,7 @@ import com.thigas.quack.UseCase.Gateway.TaskDsGateway;
 import com.thigas.quack.UseCase.Mapper.MapStructMapper;
 import com.thigas.quack.UseCase.Mapper.TaskMapper;
 import com.thigas.quack.UseCase.Model.Request.TaskRequestModel;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -14,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class TaskDsGatewayImplementation implements TaskDsGateway {
 
     private final TaskRepository repository;
@@ -27,13 +28,13 @@ public class TaskDsGatewayImplementation implements TaskDsGateway {
     }
 
     @Override
-    public Optional<TaskRequestModel> getById(Integer id) {
+    public Optional<TaskRequestModel> getTaskById(Integer id) {
         Optional<TaskDataMapper> task = repository.getById(id);
         return task.map(mapper::toDsModel);
     }
 
     @Override
-    public Iterable<TaskRequestModel> getAll() {
+    public Iterable<TaskRequestModel> getAllTasks() {
         Iterable<TaskDataMapper> tasks = repository.getAll();
         return StreamSupport.stream(tasks.spliterator(), false)
                 .map(mapper::toDsModel)
