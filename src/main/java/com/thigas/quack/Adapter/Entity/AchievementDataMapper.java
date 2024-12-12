@@ -24,6 +24,8 @@ public class AchievementDataMapper {
     private String description;
     @Column(name = "image_path", nullable = false)
     private String imagePath;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     @Override
     public final boolean equals(Object o) {

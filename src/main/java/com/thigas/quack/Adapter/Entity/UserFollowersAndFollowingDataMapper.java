@@ -29,7 +29,7 @@ public class UserFollowersAndFollowingDataMapper {
     @ToString.Exclude
     private UserDataMapper follower;
     
-    @Column(name = "is_active")
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;
     
     @Override

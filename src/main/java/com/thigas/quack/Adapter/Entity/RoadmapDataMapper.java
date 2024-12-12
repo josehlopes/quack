@@ -27,7 +27,7 @@ public class RoadmapDataMapper {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "image_path", nullable = false)
@@ -40,8 +40,7 @@ public class RoadmapDataMapper {
     @ToString.Exclude
     @JsonManagedReference
     private Set<StepDataMapper> steps = new HashSet<>();
-
-
+    
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 

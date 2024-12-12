@@ -17,8 +17,8 @@ public class CommonRoadmap implements Roadmap {
     private String title;
     private String description;
     private String imagePath;
-    private Status status;
     private Set<Step> steps;
     private String category;
+    private Boolean isActive;
 }
 

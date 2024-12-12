@@ -25,6 +25,11 @@ public class UserStepDataMapper {
     @ManyToOne
     @JoinColumn(name = "step_id", nullable = false)
     private StepDataMapper step;
+<<<<<<< Updated upstream
+=======
+    @Column(name = "image_path")
+    private String imagePath;
+>>>>>>> Stashed changes
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status = Status.ACTIVE;

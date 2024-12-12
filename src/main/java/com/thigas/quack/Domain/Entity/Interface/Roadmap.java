@@ -11,7 +11,7 @@ public interface Roadmap {
     String getTitle();
     String getDescription();
     String getImagePath();
-    Status getStatus();
     Set<Step> getSteps();
     String getCategory();
+    Boolean getIsActive();
 }

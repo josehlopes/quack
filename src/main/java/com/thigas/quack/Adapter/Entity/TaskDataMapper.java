@@ -35,7 +35,6 @@ public class TaskDataMapper {
     @ColumnTransformer(write = "?::jsonb")
     private TaskTextRequestModel tasktext;
 
-    @Column(nullable = true)
     private String imagePath;
 
     @Override

@@ -44,15 +44,16 @@ public class StepDataMapper {
     @JsonIgnore
     private Set<LessonDataMapper> lessons = new HashSet<>();
 
-    @Column(nullable = false)
     private String description;
+    
+    @Column(nullable = false)
+    private String title;
 
     @Column(name = "image_path")
     private String imagePath;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status", nullable = false)
-    private Status status = Status.ACTIVE;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive;
 
     @Override
     public final boolean equals(Object o) {
