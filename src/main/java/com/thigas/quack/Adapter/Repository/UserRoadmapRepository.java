@@ -111,4 +111,20 @@ public class UserRoadmapRepository {
             logger.error("Erro ao excluir roadmap por ID: {}", e.getMessage(), e);
         }
     }
+
+    @Transactional
+    public void updateProgressToComplete(Integer id) {
+        try {
+            UserRoadmapDataMapper userRoadmap = entityManager.find(UserRoadmapDataMapper.class, id);
+            if (userRoadmap != null) {
+                userRoadmap.setProgress(100.0);
+                entityManager.merge(userRoadmap);
+            } else {
+                throw new RuntimeException("User roadmap not found for ID: " + id);
+            }
+        } catch (Exception e) {
+            logger.error("Erro ao atualizar o progresso para 100% do roadmap ID: {}", id, e);
+            throw new RuntimeException("Erro ao atualizar o progresso do roadmap", e);
+        }
+    }
 }

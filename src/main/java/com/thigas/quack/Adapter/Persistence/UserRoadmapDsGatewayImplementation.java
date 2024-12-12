@@ -43,4 +43,17 @@ public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway 
         return userRoadmap.map(mapper::toDsModel);
     }
 
+    @Override
+    public UserRoadmapRequestModel updateProgressToComplete(UserRoadmapRequestModel userRoadmap) {
+        try {
+            repository.updateProgressToComplete(userRoadmap.id());
+
+            Optional<UserRoadmapDataMapper> updatedUserRoadmap = repository.getById(userRoadmap.id());
+            return updatedUserRoadmap.map(mapper::toDsModel)
+                    .orElseThrow(() -> new RuntimeException("User roadmap not found after progress update"));
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating roadmap progress to 100%", e);
+        }
+    }
+
 }
