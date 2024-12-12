@@ -1,6 +1,7 @@
 package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserRoadmapInputBoundary;
+import com.thigas.quack.UseCase.Model.Request.CompleteRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
@@ -20,14 +21,29 @@ public class UserRoadmapController {
     private final UserRoadmapInputBoundary userRoadmapInput;
 
     @PostMapping("/start")
-    public ResponseEntity<Void> createRoadmap(@RequestBody StartRoadmapRequestModel request) {
+    public ResponseEntity<GenericResponseModel> createRoadmap(@RequestBody StartRoadmapRequestModel request) {
         ResponseWrapper<GenericResponseModel> success = userRoadmapInput.startRoadmap(request);
-            if (success.getStatusCode() == 201) {
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            } else if (success.getStatusCode() == 400) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            } else {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        if (success.getStatusCode() == 201) {
+            return new ResponseEntity<>(success.getData(), HttpStatus.CREATED);
+        } else if (success.getStatusCode() == 400) {
+            return new ResponseEntity<>(success.getData(), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(success.getData(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @PostMapping("/complete")
+    public ResponseEntity<GenericResponseModel> completeRoadmap(@RequestBody CompleteRoadmapRequestModel request) {
+        ResponseWrapper<GenericResponseModel> response = userRoadmapInput.completeRoadmap(request);
+        if (response.getStatusCode() == 200) {
+            return new ResponseEntity<>(response.getData(), HttpStatus.OK);
+        } else if (response.getStatusCode() == 400) {
+            return new ResponseEntity<>(response.getData(), HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(response.getData(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

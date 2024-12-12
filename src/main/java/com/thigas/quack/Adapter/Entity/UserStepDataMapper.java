@@ -25,8 +25,6 @@ public class UserStepDataMapper {
     @ManyToOne
     @JoinColumn(name = "step_id", nullable = false)
     private StepDataMapper step;
-    @Column(nullable = true)
-    private String imagePath;
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)
     private Status status = Status.ACTIVE;
