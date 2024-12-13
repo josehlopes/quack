@@ -3,12 +3,14 @@ package com.thigas.quack.Domain.Entity.Interface;
 
 public interface Achievement {
 
-    int getId();
+    Integer getId();
 
     String getName();
 
     String getDescription();
 
     String getImagePath();
+    
+    Boolean getIsActive();
 
 }

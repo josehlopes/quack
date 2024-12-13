@@ -25,7 +25,7 @@ public class UserTaskDataMapper {
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
     private TaskDataMapper task;
-    @Column(nullable = true)
+    @Column(name = "image_path")
     private String imagePath;
     @Column(name = "status")
     @Enumerated(EnumType.ORDINAL)

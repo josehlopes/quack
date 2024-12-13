@@ -11,5 +11,6 @@ public interface Lesson {
     String getImagePath();
     String getLink();
     Set<Step> getSteps();
+    Boolean getIsActive();
 
 }

@@ -1,5 +1,6 @@
 package com.thigas.quack.Adapter.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.*;
@@ -26,21 +27,21 @@ public class RoadmapDataMapper {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "image_path", nullable = false)
     private String imagePath;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name = "roadmap_steps", joinColumns =
-            {@JoinColumn(name = "step_id")}, inverseJoinColumns =
-            {@JoinColumn(name = "roadmap_id")})
+    @JoinTable(name = "roadmap_steps",
+            joinColumns = @JoinColumn(name = "roadmap_id"),
+            inverseJoinColumns = @JoinColumn(name = "step_id"))
     @ToString.Exclude
+    @JsonManagedReference
     private Set<StepDataMapper> steps = new HashSet<>();
-
-
-    @Column(name = "is_active", nullable = false)
+    
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
     @Column(nullable = false)

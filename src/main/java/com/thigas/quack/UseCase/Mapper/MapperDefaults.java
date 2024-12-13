@@ -13,7 +13,9 @@ import com.thigas.quack.UseCase.Model.Request.TaskTextRequestModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -148,4 +150,14 @@ public interface MapperDefaults {
                 .map(TaskDataMapper::getId)
                 .collect(Collectors.toSet());
     }
+    
+    @Named("getContent")
+    default byte[] getContent(MultipartFile file) {
+        try {
+            return file.getBytes();
+        } catch (IOException e) {
+            throw new RuntimeException("Erro ao processar o arquivo", e);
+        }
+    }
+
 }

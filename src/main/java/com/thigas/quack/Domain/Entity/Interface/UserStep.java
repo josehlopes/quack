@@ -4,14 +4,11 @@ import com.thigas.quack.Domain.Utils.Status;
 
 public interface UserStep {
 
-    int getId();
+    Integer getId();
 
-    User getUser();
+    Integer getUserId();
 
-    Step getStep();
+    Integer getStepId();
 
     Status getStatus();
-
-    String getImagePath();
-
 }

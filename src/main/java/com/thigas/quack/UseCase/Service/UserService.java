@@ -9,10 +9,7 @@ import com.thigas.quack.UseCase.Gateway.EncoderGateway;
 import com.thigas.quack.UseCase.Gateway.TokenGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserMapper;
-import com.thigas.quack.UseCase.Model.Request.StatisticsRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserLoginRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRegisterRequestModel;
-import com.thigas.quack.UseCase.Model.Request.UserRequestModel;
+import com.thigas.quack.UseCase.Model.Request.*;
 import com.thigas.quack.UseCase.Model.Response.AddressInfoResponseModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Presenter.GenericPresenter;
@@ -22,11 +19,15 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -45,21 +46,21 @@ public class UserService implements UserInputBoundary {
     private final StatisticsService statisticsService;
     private final AddressService addressService;
     private final AddressDsGateway addressDsGateway;
-
+    
     public ResponseWrapper<GenericResponseModel> createUser(UserRegisterRequestModel userRequest) {
         try {
             if (isEmailInUse(userRequest.email())) {
                 return genericPresenter.prepareFailView(new GenericResponseModel("Email already in use"), 409);
             }
-
+            
             User user = createUserFromRequest(userRequest);
             saveUser(user);
-
+            
             String token = generateToken(user.getEmail());
             Map<String, Object> payload = PayloadUtil.createRegisterPayload(token);
-
+            
             createInitialUserStatistics(user.getEmail());
-
+            
             return genericPresenter.prepareSuccessView(new GenericResponseModel("User registered successfully", payload), 201);
         } catch (Exception e) {
             logger.error("Error creating user", e);
@@ -70,14 +71,14 @@ public class UserService implements UserInputBoundary {
     private Boolean isEmailInUse(String email) {
         return userDsGateway.existsByEmail(email);
     }
-
+    
     private User createUserFromRequest(UserRegisterRequestModel userRequest) {
         String encodedPassword = encoderInputBoundary.encodePassword(userRequest.password());
         String encodedCpf = encoderInputBoundary.encodePassword(userRequest.cpf());
-
+        
         return userFactory.create(
                 userRequest.name(), userRequest.surname(), userRequest.phone(), userRequest.email(), encodedPassword,
-                encodedCpf, LocalDate.parse(userRequest.bornDate()), userRequest.imagePath()
+                encodedCpf, LocalDate.parse(userRequest.bornDate())
         );
     }
 
@@ -193,20 +194,7 @@ public class UserService implements UserInputBoundary {
                 userDTO.isActive() != null ? userDTO.isActive() : existingUser.isActive()
         );
     }
-
-    public ResponseWrapper<GenericResponseModel> deleteUser(Integer id) {
-        try {
-            if (!userDsGateway.existsById(id)) {
-                throw new NoSuchElementException("User not found");
-            }
-            userDsGateway.deleteUserById(id);
-            return genericPresenter.prepareSuccessView(new GenericResponseModel("User deleted"), 200);
-        } catch (Exception e) {
-            logger.error("Error deleting user with ID: {}", id, e);
-            return genericPresenter.prepareFailView(new GenericResponseModel("Error deleting user"), 500);
-        }
-    }
-
+    
     @Override
     public ResponseWrapper<GenericResponseModel> login(UserLoginRequestModel userRequest) {
         try {
@@ -283,6 +271,51 @@ public class UserService implements UserInputBoundary {
             return genericPresenter.prepareFailView(new GenericResponseModel("Error deactivating user and addresses"), 500);
         }
     }
-
+    
+    @Override
+    public ResponseWrapper<GenericResponseModel> saveProfileImage(Integer userId, ProfileImageRequestModel file) throws IOException {
+        UserRequestModel existingUser = userDsGateway.getUserById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        
+        String uploadDir = "src/main/resources/static/images/users/";
+        String fileName = UUID.randomUUID().toString() + "_" + file.originalFileName();
+        Path path = Paths.get(uploadDir + fileName);
+        Files.createDirectories(path.getParent());
+        
+        logger.info("Saving file to: " + path.toString());
+        
+        try (InputStream inputStream = new ByteArrayInputStream(file.content())) {
+            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+            logger.info("File saved successfully.");
+        } catch (IOException e) {
+            logger.error("Error saving file: " + e.getMessage());
+            throw e;
+        }
+        
+        if (!Files.exists(path)) {
+            logger.error("File not found after saving: " + path.toString());
+            throw new IOException("File not found after saving");
+        }
+        
+        UserRequestModel updatedUser = new UserRequestModel(
+                existingUser.id(),
+                existingUser.name(),
+                existingUser.surname(),
+                existingUser.fullName(),
+                existingUser.username(),
+                existingUser.phone(),
+                existingUser.email(),
+                existingUser.password(),
+                existingUser.cpf(),
+                existingUser.bornDate(),
+                existingUser.registerOn(),
+                path.toString(),
+                existingUser.isActive()
+        );
+        
+        userDsGateway.updateUser(updatedUser);
+        
+        return genericPresenter.prepareSuccessView(new GenericResponseModel("File saved and user updated successfully"), 200);
+    }
 
 }

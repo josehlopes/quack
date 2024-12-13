@@ -8,4 +8,5 @@ public interface UserRoadmapDsGateway {
     Boolean saveUserRoadmap(UserRoadmapRequestModel dataSourceModel);
     UserRoadmapRequestModel updateUserRoadmap(UserRoadmapRequestModel userRoadmap);
     Optional<UserRoadmapRequestModel> getUserRoadmapById(Integer id);
+    UserRoadmapRequestModel updateProgressToComplete(UserRoadmapRequestModel userRoadmap);
 }

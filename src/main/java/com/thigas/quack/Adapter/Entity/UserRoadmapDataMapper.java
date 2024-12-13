@@ -28,9 +28,9 @@ public class UserRoadmapDataMapper {
     private RoadmapDataMapper roadmap;
     @Column(name = "progress", nullable = false)
     private Double progress;
-    @Column(name = "started_at", columnDefinition = "DATE", nullable = false)
+    @Column(name = "started_in", columnDefinition = "DATE", nullable = false)
     private LocalDate startedIn;
-    @Column(name = "finished_at", columnDefinition = "DATE")
+    @Column(name = "finished_in", columnDefinition = "DATE")
     private LocalDate finishedIn;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status", nullable = false)

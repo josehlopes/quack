@@ -10,6 +10,7 @@ import com.thigas.quack.UseCase.Gateway.StatisticsDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
+import com.thigas.quack.UseCase.Model.Request.CompleteRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
@@ -17,6 +18,10 @@ import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 public class UserRoadmapService implements UserRoadmapInputBoundary {
@@ -37,7 +42,11 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
             UserRoadmap userRoadmap = userRoadmapFactory.create(request.userId(), request.roadmapId());
             if (saveUserRoadmap(userRoadmap)) {
                 statisticsService.addExperience(request.userId(), 50.0);
-                return new ResponseWrapper<>(new GenericResponseModel("Roadmap started successfully"), 201);
+
+                Map<String, Object> responseData = new HashMap<>();
+                responseData.put("id", userRoadmap.getId());
+                GenericResponseModel responseModel = new GenericResponseModel("Roadmap started successfully", responseData);
+                return new ResponseWrapper<>(responseModel, 201);
             }
             return new ResponseWrapper<>(new GenericResponseModel("Roadmap start error"), 400);
         } catch (Exception e) {
@@ -66,26 +75,55 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
         }
     }
 
-    private Boolean completeRoadmap(UserRoadmapRequestModel userRoadmap) {
+    @Override
+    public ResponseWrapper<GenericResponseModel> completeRoadmap(CompleteRoadmapRequestModel request) {
         try {
-            UserRoadmapRequestModel existingUserRoadmap = getUserRoadmap(userRoadmap.id());
-            if (isRoadmapComplete(userRoadmap)) {
+            UserRoadmapRequestModel existingUserRoadmap = getUserRoadmap(request.id());
+
+            existingUserRoadmap = updateProgressToComplete(existingUserRoadmap);
+
+            if (isRoadmapComplete(existingUserRoadmap)) {
                 updateRoadmapStatusToFinished(existingUserRoadmap);
+
                 statisticsService.addRoadmapCompleteCount(existingUserRoadmap.userId());
                 statisticsService.addExperience(existingUserRoadmap.userId(), 200.0);
-                return true;
+
+                return new ResponseWrapper<>(new GenericResponseModel("Roadmap completed successfully"), 200);
             } else {
-                return false;
+                return new ResponseWrapper<>(new GenericResponseModel("Roadmap is not yet complete"), 400);
             }
+        } catch (RuntimeException e) {
+            logger.error("Error completing roadmap for user roadmap ID: {}", request.id(), e);
+            return new ResponseWrapper<>(new GenericResponseModel("Error completing roadmap"), 500);
+        }
+    }
+
+
+    private UserRoadmapRequestModel updateProgressToComplete(UserRoadmapRequestModel userRoadmap) {
+        try {
+            userRoadmap = new UserRoadmapRequestModel(
+                    userRoadmap.id(),
+                    userRoadmap.userId(),
+                    userRoadmap.roadmapId(),
+                    100.0,
+                    userRoadmap.startedIn(),
+                    userRoadmap.finishedIn(),
+                    userRoadmap.status()
+
+            );
+            userRoadmapDsGateway.updateProgressToComplete(userRoadmap);
+            return userRoadmap;
         } catch (Exception e) {
-            logger.error("Error completing roadmap for user roadmap ID: {}", userRoadmap.id(), e);
-            throw new RuntimeException("Error completing roadmap");
+            logger.error("Error updating roadmap progress to 100%", e);
+            throw new RuntimeException("Error updating roadmap progress");
         }
     }
 
     private boolean isRoadmapComplete(UserRoadmapRequestModel userRoadmap) {
+        logger.info("Checking if roadmap is complete. Progress: {}", userRoadmap.progress());
         return userRoadmap.progress() == 100.0;
     }
+
 
     private void updateRoadmapStatusToFinished(UserRoadmapRequestModel userRoadmap) {
         try {

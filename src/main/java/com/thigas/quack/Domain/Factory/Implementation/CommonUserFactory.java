@@ -41,22 +41,17 @@ public class CommonUserFactory implements UserFactory {
      * @param password  A senha do usuário.
      * @param cpf       O CPF do usuário.
      * @param bornAt    A data de nascimento do usuário.
-     * @param imagePath O caminho para a imagem de perfil do usuário.
      * @return Uma instância de {@link CommonUser} preenchida com os dados fornecidos e gerados.
      */
     @Override
     public User create(String name, String surname, String phone, String email, String password,
-                       String cpf, LocalDate bornAt, String imagePath) {
-        // Gera a data de registro como o momento atual
+                       String cpf, LocalDate bornAt) {
         OffsetDateTime registerOn = OffsetDateTime.now();
 
-        // Gera o nome completo concatenando nome e sobrenome
         String fullName = name + " " + surname;
 
-        // Gera o nome de usuário com base no nome e sobrenome
         String username = UsernameGenerator.generateUsername(name, surname);
 
-        // Retorna uma nova instância de CommonUser
-        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, imagePath, true);
+        return new CommonUser(null, name, surname, fullName, username, phone, email, password, cpf, bornAt, registerOn, null,true);
     }
 }

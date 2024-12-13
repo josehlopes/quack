@@ -22,7 +22,7 @@ public class LessonDataMapper {
     private Integer id;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
     @Column
     private String language;
@@ -30,9 +30,11 @@ public class LessonDataMapper {
     private String imagePath;
     @Column(name = "link")
     private String link;
-    @ManyToMany(mappedBy = "lessons", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<StepDataMapper> steps = new HashSet<>();
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    private Boolean isActive;
 
 
 

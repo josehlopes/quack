@@ -76,7 +76,7 @@ public class UserAddressController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @PutMapping("/deactivateAddress/{userId}/{addressId}")
     public ResponseEntity<Void> deactivateAddress(@PathVariable Integer userId, @PathVariable Integer addressId) {
         try {
