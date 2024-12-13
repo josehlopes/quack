@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quack()</title>
+  <!-- Incluindo o CSS do CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
+  <!-- Tema opcional do CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css">
+  <style>
+    .response-container {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Insira o Código Python</h1>
+<h3>Atividade:</h3>
+<h4>Faça um programa que calcule a área de um retângulo, esse retângulo possui 5 de comprimento e 3 de largura. Calcule a área e exiba o resultado.</h4>
+<p>Depois, clique em enviar para que possamos corrigir a atividade.</p>
+
+<!-- Área para o editor de código -->
+<form id="codeForm">
+  <textarea id="code" name="code"></textarea><br>
+  <button type="submit">Enviar</button>
+</form>
+
+<!-- Exibir a resposta do backend -->
+<div class="response-container" id="response"></div>
+
+<!-- Incluindo o JS do CodeMirror -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+<!-- Incluindo o modo Python -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
+
+<script>
+  // Inicializando o CodeMirror no textarea
+  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    mode: "python",
+    theme: "dracula", // opcional, pode escolher outro tema
+    indentUnit: 4,
+    indentWithTabs: true,
+    tabMode: "indent"
+  });
+
+  // Enviar o código para o backend
+  document.getElementById('codeForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const code = editor.getValue();
+
+    try {
+      const response = await fetch('/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      const result = await response.json();
+      document.getElementById('response').innerHTML = `<h4>Resultado da Avaliação:</h4><pre>${result.message}</pre>`;
+    } catch (error) {
+      document.getElementById('response').innerHTML = '<h4>Erro ao enviar o código. Tente novamente.</h4>';
+    }
+  });
+</script>
+</body>
+
+</html>
