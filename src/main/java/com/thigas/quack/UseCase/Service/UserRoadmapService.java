@@ -107,7 +107,7 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
                     userRoadmap.roadmapId(),
                     100.0,
                     userRoadmap.startedIn(),
-                    userRoadmap.finishedIn(),
+                    LocalDateTime.now().toLocalDate().toString(),
                     2
 
             );
@@ -133,4 +133,6 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
             throw new RuntimeException("Error updating roadmap status");
         }
     }
+
+
 }
