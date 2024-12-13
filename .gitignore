@@ -29,6 +29,7 @@ local.properties
 
 # Ignorar arquivos de configuração
 /src/main/resources/application.properties
+src/main/resources/static/images
 
 
 # External tool builders
