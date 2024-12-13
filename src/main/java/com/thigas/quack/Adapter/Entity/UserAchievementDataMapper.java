@@ -27,7 +27,7 @@ public class UserAchievementDataMapper {
     private AchievementDataMapper achievement;
     @Column(name = "obtained_on", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false)
     private OffsetDateTime obtainedOn;
-    @Column(name = "is_active")
+    @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
     private Boolean isActive;
 
     @Override

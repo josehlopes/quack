@@ -52,7 +52,7 @@ public class StepDataMapper {
     @Column(name = "image_path")
     private String imagePath;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
     @Override

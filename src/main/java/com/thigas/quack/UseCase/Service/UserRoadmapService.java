@@ -111,9 +111,7 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
                     userRoadmap.status()
 
             );
-
             userRoadmapDsGateway.updateProgressToComplete(userRoadmap);
-
             return userRoadmap;
         } catch (Exception e) {
             logger.error("Error updating roadmap progress to 100%", e);

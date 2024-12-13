@@ -33,7 +33,7 @@ public class LessonDataMapper {
     @ManyToMany(mappedBy = "lessons", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<StepDataMapper> steps = new HashSet<>();
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
 

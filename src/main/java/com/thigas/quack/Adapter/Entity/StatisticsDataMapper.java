@@ -42,7 +42,7 @@ public class StatisticsDataMapper {
     private Integer achievementsLockedCount;
     @Column(name = "points", nullable = false)
     private Double points = 0.0;
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
     @Override

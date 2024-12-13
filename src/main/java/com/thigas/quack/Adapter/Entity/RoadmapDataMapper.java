@@ -41,7 +41,7 @@ public class RoadmapDataMapper {
     @JsonManagedReference
     private Set<StepDataMapper> steps = new HashSet<>();
     
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean isActive;
 
     @Column(nullable = false)

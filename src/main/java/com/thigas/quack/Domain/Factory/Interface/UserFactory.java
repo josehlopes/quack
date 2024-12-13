@@ -31,5 +31,5 @@ public interface UserFactory {
      * @param imagePath O caminho para a imagem de perfil do usuário.
      * @return Uma instância de {@link User}.
      */
-    User create(String name, String surname, String phone, String email, String password, String cpf, LocalDate bornAt, String imagePath);
+    User create(String name, String surname, String phone, String email, String password, String cpf, LocalDate bornAt);
 }
