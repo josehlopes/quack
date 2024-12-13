@@ -108,7 +108,7 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
                     100.0,
                     userRoadmap.startedIn(),
                     userRoadmap.finishedIn(),
-                    userRoadmap.status()
+                    2
 
             );
             userRoadmapDsGateway.updateProgressToComplete(userRoadmap);
@@ -120,7 +120,6 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
     }
 
     private boolean isRoadmapComplete(UserRoadmapRequestModel userRoadmap) {
-        logger.info("Checking if roadmap is complete. Progress: {}", userRoadmap.progress());
         return userRoadmap.progress() == 100.0;
     }
 
