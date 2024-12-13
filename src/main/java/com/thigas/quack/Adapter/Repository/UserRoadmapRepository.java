@@ -2,6 +2,7 @@ package com.thigas.quack.Adapter.Repository;
 
 import com.thigas.quack.Adapter.Entity.RoadmapDataMapper;
 import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
+import com.thigas.quack.Domain.Utils.Status;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -118,6 +120,8 @@ public class UserRoadmapRepository {
             UserRoadmapDataMapper userRoadmap = entityManager.find(UserRoadmapDataMapper.class, id);
             if (userRoadmap != null) {
                 userRoadmap.setProgress(100.0);
+                userRoadmap.setStatus(Status.FINISHED);
+                userRoadmap.setFinishedIn(LocalDateTime.now().toLocalDate());
                 entityManager.merge(userRoadmap);
             } else {
                 throw new RuntimeException("User roadmap not found for ID: " + id);
