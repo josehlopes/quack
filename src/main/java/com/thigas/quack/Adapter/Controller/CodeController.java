@@ -29,11 +29,11 @@ public class CodeController {
             PrintUserFruitsEvaluation printUserFruitsEvaluation
     ) {
         evaluations = new HashMap<>();
-        evaluations.put("area", areaEvaluation);
-        evaluations.put("evenOdd", evenOddEvaluation);
-        evaluations.put("average", averageEvaluation);
-        evaluations.put("maxNumber", maxNumberEvaluation);
-        evaluations.put("fruits", printUserFruitsEvaluation);
+        evaluations.put("retangulo", areaEvaluation);
+        evaluations.put("ParOuImpar", evenOddEvaluation);
+        evaluations.put("Media", averageEvaluation);
+        evaluations.put("NumeroMax", maxNumberEvaluation);
+        evaluations.put("Frutas", printUserFruitsEvaluation);
     }
 
     @PostMapping
