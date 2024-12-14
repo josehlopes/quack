@@ -29,7 +29,7 @@ public class CodeController {
             PrintUserFruitsEvaluation printUserFruitsEvaluation
     ) {
         evaluations = new HashMap<>();
-        evaluations.put("retangulo", areaEvaluation);
+        evaluations.put("Retangulo", areaEvaluation);
         evaluations.put("ParOuImpar", evenOddEvaluation);
         evaluations.put("Media", averageEvaluation);
         evaluations.put("NumeroMax", maxNumberEvaluation);
