@@ -90,7 +90,7 @@ public class UserRoadmapRepository {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<RoadmapDataMapper> getAllUserRoadmaps(Integer userId) {
+    public Iterable<RoadmapDataMapper> findAllUserRoadmaps(Integer userId) {
         try {
             TypedQuery<RoadmapDataMapper> query = entityManager.createQuery(
                     "SELECT a.roadmap FROM UserRoadmapDataMapper a WHERE a.user.id = :user_id", RoadmapDataMapper.class);
@@ -131,4 +131,18 @@ public class UserRoadmapRepository {
             throw new RuntimeException("Erro ao atualizar o progresso do roadmap", e);
         }
     }
+
+    @Transactional(readOnly = true)
+    public Iterable<RoadmapDataMapper> getAllUserRoadmaps(Integer userId) {
+        try {
+            TypedQuery<RoadmapDataMapper> query = entityManager.createQuery(
+                    "SELECT a.roadmap FROM UserRoadmapDataMapper a WHERE a.user.id = :user_id", RoadmapDataMapper.class);
+            query.setParameter("user_id", userId);
+            return query.getResultList();
+        } catch (Exception e) {
+            logger.error("Erro ao buscar roadmaps do usuário: {}", e.getMessage(), e);
+            throw new RuntimeException("Erro ao buscar roadmaps", e);
+        }
+    }
+
 }

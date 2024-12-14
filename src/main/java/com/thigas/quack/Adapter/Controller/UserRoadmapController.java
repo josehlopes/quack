@@ -2,16 +2,18 @@ package com.thigas.quack.Adapter.Controller;
 
 import com.thigas.quack.UseCase.Boundary.UserRoadmapInputBoundary;
 import com.thigas.quack.UseCase.Model.Request.CompleteRoadmapRequestModel;
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
 import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users/roadmaps")
@@ -45,5 +47,18 @@ public class UserRoadmapController {
         }
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<GenericResponseModel> getUserRoadmapsByUserId(@PathVariable Integer userId) {
+        ResponseWrapper<List<RoadmapRequestModel>> response = userRoadmapInput.getUserRoadmapsByUserId(userId);
+        if (response.getStatusCode() == 200) {
+            Map<String, Object> responseData = new HashMap<>();
+            responseData.put("roadmaps", response.getData());  // Add the roadmaps list inside the map
+            return new ResponseEntity<>(new GenericResponseModel("User roadmaps found", responseData), HttpStatus.OK);
+        } else if (response.getStatusCode() == 404) {
+            return new ResponseEntity<>(new GenericResponseModel("No user roadmaps found for this user"), HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(new GenericResponseModel("Error retrieving user roadmaps"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
