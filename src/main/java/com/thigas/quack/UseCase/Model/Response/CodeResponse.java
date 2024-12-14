@@ -1,4 +1,4 @@
-package com.thigas.quack.Domain.Entity.Interface;
+package com.thigas.quack.UseCase.Model.Response;
 
 public class CodeResponse {
     private String message;

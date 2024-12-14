@@ -1,36 +1,55 @@
 package com.thigas.quack.Adapter.Controller;
 
-import com.thigas.quack.Domain.Entity.Interface.CodeRequest;
-import com.thigas.quack.Domain.Entity.Interface.CodeResponse;
-import com.thigas.quack.UseCase.Service.CodeEvaluationService;
-import com.thigas.quack.UseCase.Service.RunUserCodeUseCase;
-import lombok.AllArgsConstructor;
+import com.thigas.quack.UseCase.Boundary.ActivityEvaluation;
+import com.thigas.quack.UseCase.Model.Request.CodeRequest;
+import com.thigas.quack.UseCase.Model.Response.CodeResponse;
+import com.thigas.quack.UseCase.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/submit")
 public class CodeController {
 
-    private final CodeEvaluationService evaluationService;
+    private final Map<String, ActivityEvaluation> evaluations;
 
     @Autowired
-    public CodeController(CodeEvaluationService evaluationService) {
-        this.evaluationService = evaluationService;
+    public CodeController(
+            AreaCalculationEvaluation areaEvaluation,
+            EvenOddEvaluation evenOddEvaluation,
+            AverageCalculationEvaluation averageEvaluation,
+            MaxNumberEvaluation maxNumberEvaluation,
+            PrintUserFruitsEvaluation printUserFruitsEvaluation
+    ) {
+        evaluations = new HashMap<>();
+        evaluations.put("area", areaEvaluation);
+        evaluations.put("evenOdd", evenOddEvaluation);
+        evaluations.put("average", averageEvaluation);
+        evaluations.put("maxNumber", maxNumberEvaluation);
+        evaluations.put("fruits", printUserFruitsEvaluation);
     }
 
     @PostMapping
     public CodeResponse submitCode(@RequestBody CodeRequest codeRequest) {
-        String evaluationMessage = evaluationService.evaluateCode(codeRequest.getCode());
-        CodeResponse response = new CodeResponse();
-        response.setMessage(evaluationMessage);
-        return response;
+        String activity = codeRequest.getActivity();
+        ActivityEvaluation evaluation = evaluations.get(activity);
+
+        if (evaluation != null) {
+            String evaluationMessage = evaluation.evaluate(codeRequest.getCode());
+            CodeResponse response = new CodeResponse();
+            response.setMessage(evaluationMessage);
+            return response;
+        } else {
+            CodeResponse response = new CodeResponse();
+            response.setMessage("Atividade não encontrada.");
+            return response;
+        }
     }
 }
-
