@@ -1,5 +1,6 @@
 package com.thigas.quack.Adapter.Persistence;
 
+import com.thigas.quack.Adapter.Entity.RoadmapDataMapper;
 import com.thigas.quack.Adapter.Entity.StatisticsDataMapper;
 import com.thigas.quack.Adapter.Entity.UserRoadmapDataMapper;
 import com.thigas.quack.Adapter.Repository.UserRoadmapRepository;
@@ -55,5 +56,14 @@ public class UserRoadmapDsGatewayImplementation implements UserRoadmapDsGateway 
             throw new RuntimeException("Error updating roadmap progress to 100%", e);
         }
     }
+
+    @Override
+    public List<RoadmapRequestModel> getAllUserRoadmaps(Integer userId) {
+        Iterable<RoadmapDataMapper> roadmaps = repository.getAllUserRoadmaps(userId);
+        return StreamSupport.stream(roadmaps.spliterator(), false)
+                .map(roadmapMapper::toDsModel)
+                .collect(Collectors.toList());
+    }
+
 
 }

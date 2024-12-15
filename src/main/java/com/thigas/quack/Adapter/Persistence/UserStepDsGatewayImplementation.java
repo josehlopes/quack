@@ -1,12 +1,11 @@
 package com.thigas.quack.Adapter.Persistence;
 
 import com.thigas.quack.Adapter.Entity.UserStepDataMapper;
-import com.thigas.quack.Adapter.Repository.JpaUserStepRepository;
+import com.thigas.quack.Adapter.Repository.UserStepRepository;
 import com.thigas.quack.UseCase.Gateway.UserStepDsGateway;
-import com.thigas.quack.UseCase.Mapper.MapStructMapper;
+import com.thigas.quack.UseCase.Mapper.UserStepMapper;
 import com.thigas.quack.UseCase.Model.Request.UserStepRequestModel;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,26 +14,40 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserStepDsGatewayImplementation implements UserStepDsGateway {
 
-    private final JpaUserStepRepository repository;
-    private final MapStructMapper mapper;
+    private final UserStepRepository repository;
+    private final UserStepMapper mapper;
 
     @Override
     public void save(UserStepRequestModel userStepDtoRequest) {
-        UserStepDataMapper toSaveUserStep = mapper.mapUserStepDtoRequestToDataMapper(userStepDtoRequest);
+        UserStepDataMapper toSaveUserStep = mapper.toDataMapper(userStepDtoRequest);
         repository.save(toSaveUserStep);
     }
 
     @Override
-    public Optional<UserStepRequestModel> findById(Integer id) {
-        Optional<UserStepDataMapper> userStep = repository.findById(id);
-        return userStep.map(mapper::mapUserStepDataMapperToDtoRequest);
+    public void update(UserStepRequestModel userStepDtoRequest) {
+        UserStepDataMapper userStepToUpdate = mapper.toDataMapper(userStepDtoRequest);
+        repository.update(userStepToUpdate);
     }
 
     @Override
-    public List<UserStepRequestModel> findAll() {
-        List<UserStepDataMapper> userSteps = repository.findAll();
+    public List<UserStepRequestModel> getStepsByUserId(Integer userId) {
+        List<UserStepDataMapper> userSteps = repository.getUserStepsByUserId(userId);
         return userSteps.stream()
-                .map(mapper::mapUserStepDataMapperToDtoRequest)
+                .map(mapper::toDsModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<UserStepRequestModel> getById(Integer id) {
+        Optional<UserStepDataMapper> userStep = repository.getById(id);
+        return userStep.map(mapper::toDsModel);
+    }
+
+    @Override
+    public List<UserStepRequestModel> getAll() {
+        List<UserStepDataMapper> userSteps = (List<UserStepDataMapper>) repository.getAllUserSteps();
+        return userSteps.stream()
+                .map(mapper::toDsModel)
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +57,7 @@ public class UserStepDsGatewayImplementation implements UserStepDsGateway {
     }
 
     @Override
-    public boolean existsById(Integer id) {
+    public Boolean existsById(Integer id) {
         return repository.existsById(id);
     }
 }

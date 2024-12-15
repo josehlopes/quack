@@ -11,6 +11,7 @@ import com.thigas.quack.UseCase.Gateway.UserDsGateway;
 import com.thigas.quack.UseCase.Gateway.UserRoadmapDsGateway;
 import com.thigas.quack.UseCase.Mapper.UserRoadmapMapper;
 import com.thigas.quack.UseCase.Model.Request.CompleteRoadmapRequestModel;
+import com.thigas.quack.UseCase.Model.Request.RoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.StartRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Request.UserRoadmapRequestModel;
 import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
@@ -20,7 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -107,8 +110,8 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
                     userRoadmap.roadmapId(),
                     100.0,
                     userRoadmap.startedIn(),
-                    userRoadmap.finishedIn(),
-                    userRoadmap.status()
+                    LocalDateTime.now().toLocalDate().toString(),
+                    2
 
             );
             userRoadmapDsGateway.updateProgressToComplete(userRoadmap);
@@ -120,7 +123,6 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
     }
 
     private boolean isRoadmapComplete(UserRoadmapRequestModel userRoadmap) {
-        logger.info("Checking if roadmap is complete. Progress: {}", userRoadmap.progress());
         return userRoadmap.progress() == 100.0;
     }
 
@@ -132,6 +134,20 @@ public class UserRoadmapService implements UserRoadmapInputBoundary {
         } catch (Exception e) {
             logger.error("Error updating roadmap status to finished", e);
             throw new RuntimeException("Error updating roadmap status");
+        }
+    }
+
+    @Override
+    public ResponseWrapper<List<RoadmapRequestModel>> getUserRoadmapsByUserId(Integer userId) {
+        try {
+            List<RoadmapRequestModel> roadmaps = userRoadmapDsGateway.getAllUserRoadmaps(userId);
+            if (roadmaps.isEmpty()) {
+                return new ResponseWrapper<>(Collections.emptyList(), 404);
+            }
+            return new ResponseWrapper<>(roadmaps, 200);
+        } catch (Exception e) {
+            logger.error("Error retrieving roadmaps for user ID: {}", userId, e);
+            return new ResponseWrapper<>(Collections.emptyList(), 500);
         }
     }
 }
