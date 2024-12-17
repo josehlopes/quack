@@ -47,10 +47,10 @@ public class RoadmapDataMapper {
     @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
+    @Column(name="subtitle", nullable = false, columnDefinition = "TEXT")
     private String subtitle;
 
-    @Column(nullable = false)
+    @Column(name ="color", nullable = false, columnDefinition = "TEXT")
     private String color;
 
     @Override
