@@ -14,4 +14,6 @@ public interface Roadmap {
     Set<Step> getSteps();
     String getCategory();
     Boolean getIsActive();
+    String getSubtitle();
+    String getColor();
 }
