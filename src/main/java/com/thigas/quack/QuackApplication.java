@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.thigas.quack.Adapter.Repository")
+@EntityScan(basePackages = "com.thigas.quack.Adapter.Entity")
 public class QuackApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(QuackApplication.class);
