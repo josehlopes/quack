@@ -20,5 +20,7 @@ public class CommonRoadmap implements Roadmap {
     private Set<Step> steps;
     private String category;
     private Boolean isActive;
+    private String subtitle;
+    private String color;
 }
 

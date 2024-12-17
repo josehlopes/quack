@@ -47,6 +47,12 @@ public class RoadmapDataMapper {
     @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private String subtitle;
+
+    @Column(nullable = false)
+    private String color;
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
