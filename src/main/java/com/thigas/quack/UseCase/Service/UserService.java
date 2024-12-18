@@ -18,6 +18,8 @@ import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -272,60 +274,85 @@ public class UserService implements UserInputBoundary {
         }
     }
     
-    @Override
-    public ResponseWrapper<GenericResponseModel> saveProfileImage(Integer userId, ProfileImageRequestModel file) throws IOException {
-        UserRequestModel existingUser = userDsGateway.getUserById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
-        
-        String baseDir = System.getProperty("user.dir");
-        String uploadDir = Paths.get(baseDir, "src/main/resources/static/images/users/").toString();
-        
-        String sanitizedFileName = file.originalFileName().replaceAll("[^a-zA-Z0-9._-]", "_");
-        String fileName = UUID.randomUUID().toString() + "_" + sanitizedFileName;
-        
-        Path path = Paths.get(uploadDir, fileName);
-        
-        Files.createDirectories(path.getParent());
-        
-        logger.info("Saving file to: " + path.toString());
-        
-        try (InputStream inputStream = new ByteArrayInputStream(file.content())) {
-            Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
-            logger.info("File saved successfully at: " + path.toString());
-        } catch (IOException e) {
-            logger.error("Error saving file: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
-        
-        if (!Files.exists(path)) {
-            logger.error("File not found after saving: " + path.toString());
-            throw new IOException("File not found after saving");
-        }
-        logger.info("File exists? " + Files.exists(path));
-        logger.info("File size: " + Files.size(path));
-        
-        UserRequestModel updatedUser = new UserRequestModel(
-                existingUser.id(),
-                existingUser.name(),
-                existingUser.surname(),
-                existingUser.fullName(),
-                existingUser.username(),
-                existingUser.phone(),
-                existingUser.email(),
-                existingUser.password(),
-                existingUser.cpf(),
-                existingUser.bornDate(),
-                existingUser.registerOn(),
-                path.toString(),
-                existingUser.isActive()
-        );
-        
-        userDsGateway.updateUser(updatedUser);
-        
-        // Retornar sucesso
-        return genericPresenter.prepareSuccessView(new GenericResponseModel("File saved and user updated successfully"), 200);
+
+@Override
+public ResponseWrapper<GenericResponseModel> saveProfileImage(Integer userId, ProfileImageRequestModel file) throws IOException {
+    UserRequestModel existingUser = userDsGateway.getUserById(userId)
+            .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+    String baseDir = System.getProperty("user.dir");
+    String uploadDir = Paths.get(baseDir, "src/main/resources/static/images/users/").toString();
+
+    String sanitizedFileName = file.originalFileName().replaceAll("[^a-zA-Z0-9._-]", "_");
+    String shortUUID = UUID.randomUUID().toString().substring(0, 8);
+    String fileExtension = getFileExtension(file.originalFileName());
+    String fileName = shortUUID + "_" + md5Hash(sanitizedFileName) + fileExtension;
+
+    Path path = Paths.get(uploadDir, fileName);
+
+    Files.createDirectories(path.getParent());
+
+    logger.info("Saving file to: " + path.toString());
+
+    try (InputStream inputStream = new ByteArrayInputStream(file.content())) {
+        Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
+        logger.info("File saved successfully at: " + path.toString());
+    } catch (IOException e) {
+        logger.error("Error saving file: " + e.getMessage());
+        e.printStackTrace();
+        throw e;
     }
+
+    if (!Files.exists(path)) {
+        logger.error("File not found after saving: " + path.toString());
+        throw new IOException("File not found after saving");
+    }
+    logger.info("File exists? " + Files.exists(path));
+    logger.info("File size: " + Files.size(path));
+
+    UserRequestModel updatedUser = new UserRequestModel(
+            existingUser.id(),
+            existingUser.name(),
+            existingUser.surname(),
+            existingUser.fullName(),
+            existingUser.username(),
+            existingUser.phone(),
+            existingUser.email(),
+            existingUser.password(),
+            existingUser.cpf(),
+            existingUser.bornDate(),
+            existingUser.registerOn(),
+            path.toString(),
+            existingUser.isActive()
+    );
+
+    userDsGateway.updateUser(updatedUser);
+
+    // Retornar sucesso
+    return genericPresenter.prepareSuccessView(new GenericResponseModel("File saved and user updated successfully"), 200);
+}
+
+private String md5Hash(String input) {
+    try {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest(input.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for (byte b : messageDigest) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException("MD5 algorithm not found", e);
+    }
+}
+
+private String getFileExtension(String fileName) {
+    int lastIndexOfDot = fileName.lastIndexOf(".");
+    if (lastIndexOfDot == -1) {
+        return ""; // No extension found
+    }
+    return fileName.substring(lastIndexOfDot);
+}
 
     
     
