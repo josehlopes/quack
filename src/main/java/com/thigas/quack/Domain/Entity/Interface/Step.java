@@ -11,4 +11,5 @@ public interface Step {
     String getDescription();
     String getImagePath();
     Boolean getIsActive();
+    String getTitle();
 }

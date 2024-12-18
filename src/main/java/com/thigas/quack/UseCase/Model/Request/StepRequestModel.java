@@ -6,5 +6,5 @@ import java.util.Set;
 
 
 public record StepRequestModel(Integer id, Set<Integer> roadmapsId, Set<Integer> lessonsId, Set<Integer> tasksId,
-                               String description, String imagePath, Status status) {
+                               String description, String imagePath, Status status, String title) {
 }

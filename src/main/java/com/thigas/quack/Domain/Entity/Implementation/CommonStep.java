@@ -22,5 +22,6 @@ public class CommonStep implements Step {
     private String description;
     private String imagePath;
     private Boolean isActive;
+    private String title;
 
 }
