@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -49,4 +51,20 @@ public class StepRepository {
         }
         return false;
     }
+
+    @Transactional(readOnly = true)
+    public List<StepDataMapper> getStepsByRoadmapId(Integer roadmapId) {
+        try {
+            TypedQuery<StepDataMapper> query = entityManager.createQuery(
+                    "SELECT s FROM StepDataMapper s JOIN s.roadmaps r WHERE r.id = :roadmapId",
+                    StepDataMapper.class
+            );
+            query.setParameter("roadmapId", roadmapId);
+            return query.getResultList();
+        } catch (Exception e) {
+            logger.error("Erro ao buscar steps por roadmapId: {}", e.getMessage(), e);
+        }
+        return Collections.emptyList();
+    }
+
 }

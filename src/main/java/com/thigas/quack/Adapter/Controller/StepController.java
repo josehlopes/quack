@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/steps")
 @AllArgsConstructor
@@ -32,4 +34,15 @@ public class StepController {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
     }
+
+    @GetMapping("/roadmaps/{roadmapId}/steps")
+    public ResponseEntity<List<StepRequestModel>> getStepsByRoadmapId(@PathVariable Integer roadmapId) {
+        List<StepRequestModel> steps = stepDsGateway.getStepsByRoadmapId(roadmapId);
+        if (steps.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(steps, HttpStatus.OK);
+        }
+    }
+
 }

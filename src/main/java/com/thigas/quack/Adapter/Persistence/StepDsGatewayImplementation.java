@@ -8,6 +8,7 @@ import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -34,6 +35,14 @@ public class StepDsGatewayImplementation implements StepDsGateway {
     public Iterable<StepRequestModel> getAllSteps() {
         Iterable<StepDataMapper> steps = repository.getAll();
         return StreamSupport.stream(steps.spliterator(), false)
+                .map(mapper::toDsModel)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<StepRequestModel> getStepsByRoadmapId(Integer roadmapId) {
+        List<StepDataMapper> steps = repository.getStepsByRoadmapId(roadmapId);
+        return steps.stream()
                 .map(mapper::toDsModel)
                 .collect(Collectors.toList());
     }

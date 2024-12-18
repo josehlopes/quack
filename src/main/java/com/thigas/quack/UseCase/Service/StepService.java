@@ -3,8 +3,13 @@ package com.thigas.quack.UseCase.Service;
 import com.thigas.quack.UseCase.Gateway.LessonDsGateway;
 import com.thigas.quack.UseCase.Gateway.StepDsGateway;
 import com.thigas.quack.UseCase.Model.Request.StepRequestModel;
+import com.thigas.quack.UseCase.Model.Response.GenericResponseModel;
+import com.thigas.quack.UseCase.Presenter.GenericPresenter;
+import com.thigas.quack.UseCase.Util.ResponseWrapper;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -13,8 +18,8 @@ import java.util.stream.StreamSupport;
 public class StepService {
 
     private final StepDsGateway stepDsGateway;
-
     private final LessonDsGateway lessonDsGateway;
+    private final GenericPresenter genericPresenter;
 
 
 
@@ -28,6 +33,20 @@ public class StepService {
                 .collect(Collectors.toList());
     }
 
+    public ResponseWrapper<GenericResponseModel> getStepsByRoadmapId(Integer roadmapId) {
+        try {
+            List<StepRequestModel> steps = stepDsGateway.getStepsByRoadmapId(roadmapId);
+
+            if (steps.isEmpty()) {
+                return genericPresenter.prepareFailView(new GenericResponseModel("No steps found for the given roadmap"), 404);
+            }
+
+            Map<String, Object> payload = Map.of("steps", steps);
+            return genericPresenter.prepareSuccessView(new GenericResponseModel("Steps retrieved successfully", payload), 200);
+        } catch (Exception e) {
+            return genericPresenter.prepareFailView(new GenericResponseModel("Error getting steps by roadmap ID"), 500);
+        }
+    }
 
 
 
